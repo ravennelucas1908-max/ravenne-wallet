@@ -198,6 +198,7 @@ async function screenPass() {
     try {
       if (creating) {
         const container = { profiles: { default: { name: "default", wallets: [], btcWallets: [], xmrWallets: [], history: [], chainTx: [], network: "eth" } }, active: "default" };
+        await bridge.invoke("gate_write", { password: pw });
         await bridge.invoke("vault_write_encrypted", { password: pw, payload: container });
         state.password = pw;
         state.vault = await bridge.invoke("vault_unlock", { password: pw });
@@ -225,6 +226,7 @@ async function screenPass() {
 
 /* ── mini-setup : main + receiving addresses, depuis le GUI ── */
 async function screenSetup() {
+  go("s-wallet");                    // bascule VERS l'écran wallet avant d'afficher le setup
   const pane = $("tab-overview");
   document.querySelectorAll(".tabpane").forEach(p => p.classList.add("hidden"));
   document.querySelectorAll(".tab").forEach(b => b.style.display = "none");

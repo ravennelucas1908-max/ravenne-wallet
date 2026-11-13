@@ -237,6 +237,22 @@ fn ct_eq(a: &[u8], b: &[u8]) -> bool {
     a.iter().zip(b).fold(0u8, |acc, (x, y)| acc | (x ^ y)) == 0
 }
 
+
+#[tauri::command]
+fn gate_write(password: String) -> Result<(), String> {
+    // meme format que le CLI: sel aleatoire + scrypt(N=16384) -> hash hex
+    let salt = {
+        let mut b = [0u8; 16];
+        getrandom::getrandom(&mut b).expect("csprng");
+        b
+    };
+    let hash = scrypt_key(&password, &salt).map_err(|e| e.to_string())?;
+    let out = json!({ "v": 1, "salt": hex::encode(salt), "hash": hex::encode(hash) });
+    fs::write(gate_path(), serde_json::to_string_pretty(&out).unwrap()).map_err(|e| e.to_string())?;
+    harden(&gate_path());
+    Ok(())
+}
+
 #[tauri::command]
 fn gate_verify(password: String) -> bool {
     let Some(meta) = fs::read_to_string(gate_path()).ok().and_then(|s| serde_json::from_str::<Value>(&s).ok()) else { return false; };
@@ -420,7 +436,7 @@ pub fn run() {
             send_webhook, gate_verify, vault_unlock, vault_write_encrypted,
             vault_backup, vault_restore, vault_wipe,
             clipboard_copy, clipboard_copy_autoclear, open_terminal,
-            set_close_to_tray, emit_lock, ui_log, get_hwid_debug, vault_exists,
+            set_close_to_tray, emit_lock, ui_log, get_hwid_debug, vault_exists, gate_write,
         ])
         .on_window_event(|window, event| {
             if let tauri::WindowEvent::CloseRequested { api, .. } = event {

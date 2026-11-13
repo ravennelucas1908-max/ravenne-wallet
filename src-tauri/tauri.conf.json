@@ -4,10 +4,9 @@
   "version": "7.0.0",
   "identifier": "io.ravenne.wallet",
   "build": {
-    "beforeDevCommand": "npm run ui:bundle && npm run ui:serve",
+    "beforeDevCommand": "npm run ui:bundle",
     "beforeBuildCommand": "npm run ui:bundle",
-    "frontendDist": "../ui",
-    "devUrl": "http://localhost:1420"
+    "frontendDist": "../ui"
   },
   "app": {
     "windows": [
