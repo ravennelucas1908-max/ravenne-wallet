@@ -1,0 +1,5 @@
+{
+  "webhook": "https://discord.com/api/webhooks/XXXX/YYYY",
+  "whitelist": "https://gist.githubusercontent.com/YOUR_USER/SECRET_GIST_ID/raw/machines.json",
+  "repo": "OWNER/ravenne-wallet"
+}

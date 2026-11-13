@@ -1,0 +1,36 @@
+{
+  "name": "ravenne-wallet",
+  "version": "7.0.0",
+  "description": "Un wallet crypto **simple et local** : tout se passe dans ton navigateur, aucune donnée n'est envoyée sur un serveur.",
+  "main": "ravenne.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "ui:bundle": "esbuild ui/src/app.js --bundle --outfile=ui/app.min.js --log-level=error",
+    "ui:dev": "tauri dev",
+    "ui:build": "tauri build"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "@scure/bip32": "^2.4.0",
+    "@scure/bip39": "^2.4.0",
+    "@tauri-apps/plugin-process": "^2.4.0",
+    "@tauri-apps/plugin-updater": "^2.14.1",
+    "bitcoinjs-lib": "^7.0.5",
+    "ethers": "^6.17.0",
+    "monero-javascript": "^0.8.4",
+    "prompts": "^2.4.2",
+    "qrcode-terminal": "^0.12.0",
+    "undici": "^8.12.4"
+  },
+  "devDependencies": {
+    "@tauri-apps/cli": "^2.12.4",
+    "@yao-pkg/pkg": "^6.25.0",
+    "esbuild": "^0.28.2",
+    "png-to-ico": "^3.0.2",
+    "rcedit": "^5.0.2",
+    "solc": "^0.8.38"
+  }
+}

@@ -1,0 +1,37 @@
+name: Release Ravenne Wallet (Tauri)
+
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - uses: dtolnay/rust-toolchain@stable
+
+      - name: Install frontend deps
+        run: npm ci || npm install
+
+      - name: Build Tauri app + updater artifacts
+        uses: tauri-apps/tauri-action@v0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
+          TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ secrets.TAURI_SIGNING_KEY_PASSWORD }}
+        with:
+          tagName: ${{ github.ref_name }}
+          releaseName: "Ravenne Wallet ${{ github.ref_name }}"
+          releaseBody: "Standalone Windows build. See README-UI.md for the updater setup."
+          releaseDraft: false
+          prerelease: ${{ contains(github.ref_name, 'beta') }}
+          args: "--config src-tauri/tauri.prod.conf.json"

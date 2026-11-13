@@ -1,0 +1,335 @@
+/* ═══════════════════════════════════════════════════════════════════════
+   RAVENNE WALLET — thème sobre monochrome + glow
+   Tokens nommés. Le glow n'est JAMAIS décoratif : uniquement focus/succès/
+   onglet actif/carte survolée/bouton principal.
+   Chaque règle motion est annotée  // spec #n  (voir mission §4).
+   ═══════════════════════════════════════════════════════════════════════ */
+
+:root {
+  /* ── couleurs (sombre par défaut) ── */
+  --bg: #0b0c0e;
+  --card: #141518;
+  --border: #24262b;
+  --text: #e7e9ee;
+  --gray: #8a90a0;
+  --white: #ffffff;
+  --ok: #dfeee2;            /* vert très désaturé (texte) */
+  --ok-solid: #7da886;
+  --warn: #e8e2cf;
+  --err: #eecaca;
+  --err-solid: #b06a6a;
+  --glow-color: rgba(231, 233, 238, 0.28);
+
+  /* ── layout ── */
+  --radius: 14px;
+  --grid: 4px;
+  --mono: "Cascadia Code", ui-monospace, Consolas, monospace;
+  --sans: "Segoe UI", system-ui, sans-serif;
+
+  /* ── motion tokens (spec mission §4) ── */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);      /* spec #1 entrées */
+  --ease-inout: cubic-bezier(0.65, 0, 0.35, 1);   /* spec #8 déplacements */
+  --dur-in: 380ms;          /* spec #1 : entrée ≤ 400 ms */
+  --dur-out: calc(var(--dur-in) * 0.8);           /* spec #12 : sortie 20 % plus courte */
+  --dur-menu: 200ms;        /* spec #2 : menus 150-250 ms */
+  --dur-pop: 220ms;         /* spec #9 : popovers */
+  --dur-icon: 180ms;        /* spec #15 : crossfade icônes */
+  --dur-settle: 420ms;      /* spec #14 : révélations avec settle */
+  --stagger: 30ms;          /* spec #3 : décalage des lignes */
+  --press: 0.97;            /* spec #4 : boutons à l'appui */
+  --stretch: 1.12;          /* spec #5 : étire 12 % sur l'axe du mouvement */
+  --pop-in: 0.95;           /* spec #9 : popover entre à 0,95 */
+}
+
+[data-theme="light"] {
+  --bg: #f4f4f6;
+  --card: #ffffff;
+  --border: #d9dae0;
+  --text: #17181b;
+  --gray: #5f6572;
+  --white: #000000;
+  --ok: #274d31;
+  --ok-solid: #3f7a4c;
+  --warn: #584d26;
+  --err: #6b2727;
+  --err-solid: #a04b4b;
+  --glow-color: rgba(23, 24, 27, 0.18);
+}
+
+/* intensité du glow (réglage) */
+:root { --glow-mult: 1; }
+[data-glow="off"]  { --glow-mult: 0; }
+[data-glow="soft"] { --glow-mult: 0.6; }
+[data-glow="strong"] { --glow-mult: 1.4; }
+
+/* animations désactivables (réglage) + accessibilité — spec #17 */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+[data-motion="off"] *, [data-motion="off"] *::before, [data-motion="off"] *::after {
+  animation-duration: 0.01ms !important;
+  transition-duration: 0.01ms !important;
+}
+
+/* ── base ── */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: 14px;
+  overflow: hidden;
+  transition: background var(--dur-inout) var(--ease-inout); /* spec #8 */
+}
+button, input, select, textarea { font-family: inherit; font-size: inherit; color: inherit; }
+.mono { font-family: var(--mono); }
+
+h1, h2, h3 { color: var(--white); font-weight: 600; letter-spacing: -0.01em; }
+
+/* ── écrans (crossfade simultané — spec #13) ── */
+.screen {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: calc(var(--grid) * 10);
+  opacity: 0;
+  visibility: hidden;              /* retire de l'arbre accessible + clics */
+  pointer-events: none;
+  transform: translateY(6px);
+  transition:
+    opacity var(--dur-in) var(--ease-out),        /* spec #1 entrée */
+    transform var(--dur-in) var(--ease-out),
+    filter var(--dur-in) var(--ease-out);
+}
+.screen.on {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateY(0);
+  transition-delay: 0s;
+}
+.screen.leaving {                                   /* spec #13 : l'ancien sort */
+  opacity: 0;
+  transform: translateY(-6px) scaleX(var(--stretch)); /* spec #5 : étire sur l'axe du mouvement */
+  transition:
+    opacity var(--dur-out) var(--ease-out),
+    transform var(--dur-out) var(--ease-out);
+}
+
+/* ── cartes ── */
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: calc(var(--grid) * 6);
+  transition: border-color var(--dur-menu) var(--ease-out),
+              box-shadow var(--dur-menu) var(--ease-out),
+              transform var(--dur-menu) var(--ease-out);
+}
+.card.hoverable:hover {
+  border-color: var(--gray);
+  box-shadow: 0 0 0 1px var(--glow-color), 0 0 calc(18px * var(--glow-mult)) var(--glow-color); /* glow survol */
+  transform: translateY(-2px);
+}
+
+/* grande carte : révélation avec settle — spec #14 */
+.reveal {
+  animation: settle var(--dur-settle) var(--ease-out);
+}
+@keyframes settle {
+  from { opacity: 0; transform: scale(1.04) translateY(8px); }
+  70%  { transform: scale(0.998) translateY(0); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+/* ── boutons (spec #4 : appui 0,97 + spec #5 stretch) ── */
+.btn {
+  border: 1px solid var(--border);
+  background: var(--card);
+  color: var(--text);
+  border-radius: 10px;
+  padding: 10px 18px;
+  cursor: pointer;
+  transition:
+    transform 120ms var(--ease-out),
+    box-shadow var(--dur-menu) var(--ease-out),
+    border-color var(--dur-menu) var(--ease-out),
+    background var(--dur-menu) var(--ease-out);
+  user-select: none;
+}
+.btn:hover { border-color: var(--gray); }
+.btn:active { transform: scale(var(--press)) scaleY(calc(2 - var(--press))); } /* spec #4 + #5 squash */
+.btn.primary {
+  background: var(--white);
+  color: var(--bg);
+  border-color: transparent;
+  font-weight: 600;
+}
+.btn.primary:hover {
+  box-shadow: 0 0 calc(16px * var(--glow-mult)) var(--glow-color); /* glow bouton principal */
+}
+.btn.danger { border-color: var(--err-solid); color: var(--err); }
+.btn:disabled { opacity: 0.45; cursor: not-allowed; }
+
+/* ── champs ── */
+input[type="text"], input[type="password"], input[type="number"], select {
+  width: 100%;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 10px 12px;
+  outline: none;
+  transition: border-color var(--dur-menu) var(--ease-out),
+              box-shadow var(--dur-menu) var(--ease-out);
+}
+input:focus, select:focus {
+  border-color: var(--gray);
+  box-shadow: 0 0 0 1px var(--glow-color), 0 0 calc(14px * var(--glow-mult)) var(--glow-color); /* glow focus */
+}
+
+/* ── menus déroulants (spec #2 : 150-250 ms, scale 0.96→1 + fade) ── */
+.dropdown { position: relative; }
+.dropdown-menu {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  min-width: 220px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 6px;
+  z-index: 50;
+  opacity: 0;
+  transform: scale(0.96);
+  transform-origin: top left;                       /* spec #10 : origine sur le déclencheur */
+  pointer-events: none;
+  transition:
+    opacity var(--dur-menu) var(--ease-out),
+    transform var(--dur-menu) var(--ease-out);
+}
+.dropdown.open .dropdown-menu {
+  opacity: 1;
+  transform: scale(1);
+  pointer-events: auto;
+}
+.dropdown-menu button {
+  display: block; width: 100%; text-align: left;
+  background: none; border: none; padding: 9px 12px;
+  border-radius: 8px; cursor: pointer; color: var(--text);
+}
+.dropdown-menu button:hover { background: var(--bg); }
+
+/* ── popovers (spec #9 : entrent à 0,95 → 1, origin sur le déclencheur) ── */
+.popover {
+  position: absolute;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  z-index: 60;
+  opacity: 0;
+  transform: scale(var(--pop-in));
+  transition:
+    opacity var(--dur-pop) var(--ease-out),
+    transform var(--dur-pop) var(--ease-out);
+}
+.popover.open { opacity: 1; transform: scale(1); }
+
+/* ── listes : stagger 30 ms — spec #3 ── */
+.stagger > * {
+  opacity: 0;
+  transform: translateY(6px);
+  animation: row-in var(--dur-in) var(--ease-out) forwards;
+  animation-delay: calc(var(--i, 0) * var(--stagger));
+}
+@keyframes row-in {
+  to { opacity: 1; transform: translateY(0) scaleY(calc(1 + (var(--stretch) - 1) * 0.3)); }
+}
+.stagger > *.done { animation: none; opacity: 1; transform: none; }
+
+/* ── pulsation de réussite — spec #7 ── */
+.pulse-success { animation: pulse-ok 450ms var(--ease-out); }
+@keyframes pulse-ok {
+  0%   { box-shadow: 0 0 0 0 var(--glow-color); }
+  45%  { box-shadow: 0 0 0 6px var(--glow-color), 0 0 22px var(--glow-color); }
+  100% { box-shadow: 0 0 0 0 transparent; }
+}
+
+/* ── icônes d'état : crossfade + flou — spec #15 ── */
+.state-icon { position: relative; width: 22px; height: 22px; }
+.state-icon span {
+  position: absolute; inset: 0;
+  transition: opacity var(--dur-icon) var(--ease-out), filter var(--dur-icon) var(--ease-out);
+}
+.state-icon .new { opacity: 0; filter: blur(4px); }
+.state-icon.swap .old { opacity: 0; filter: blur(4px); }
+.state-icon.swap .new { opacity: 1; filter: blur(0); }
+
+/* ── FLIP : déplacement continu d'éléments partagés — spec #16 ── */
+.flip-moving {
+  transition: none;               /* la transformation est pilotée en JS (spec #6 arc) */
+  will-change: transform;
+  z-index: 40;
+}
+
+/* ── mode discret (soldes floutés, révélés au survol) ── */
+[data-discreet="on"] .balance-val { filter: blur(7px); transition: filter 160ms var(--ease-out); }
+[data-discreet="on"] .balance-val:hover { filter: blur(0); }
+
+/* ── divers ── */
+.row { display: flex; gap: calc(var(--grid) * 2); align-items: center; }
+.grow { flex: 1; }
+.dim { color: var(--gray); }
+.ok { color: var(--ok-solid); }
+.err { color: var(--err-solid); }
+.warn { color: var(--warn); }
+.hidden { display: none !important; }
+
+.toasts { position: fixed; right: 16px; bottom: 16px; display: flex; flex-direction: column; gap: 8px; z-index: 200; }
+.toast {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 12px; padding: 10px 14px; max-width: 340px;
+  opacity: 0; transform: translateY(8px);
+  transition: opacity var(--dur-in) var(--ease-out), transform var(--dur-in) var(--ease-out);
+}
+.toast.on { opacity: 1; transform: translateY(0); }
+
+.modal-back {
+  position: fixed; inset: 0; background: rgba(0,0,0,0.5);
+  display: flex; align-items: center; justify-content: center; z-index: 100;
+  opacity: 0; pointer-events: none;
+  transition: opacity var(--dur-in) var(--ease-out);
+}
+.modal-back.on { opacity: 1; pointer-events: auto; }
+.modal { max-width: 520px; }
+.modal-back.on .modal { animation: settle var(--dur-settle) var(--ease-out); } /* spec #14 */
+
+/* ── écran mode : deux grandes cartes (entrées décalées — spec #3) ── */
+.mode-cards { display: flex; gap: 24px; }
+.mode-card {
+  width: 320px; height: 220px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px;
+  cursor: pointer;
+}
+.mode-card .ic { font-size: 42px; color: var(--white); }
+.mode-card .glowline {
+  width: 46px; height: 2px; background: var(--gray); border-radius: 2px;
+  transition: width var(--dur-in) var(--ease-out), background var(--dur-menu), box-shadow var(--dur-menu);
+}
+.mode-card:hover .glowline {
+  width: 92px; background: var(--white);
+  box-shadow: 0 0 calc(12px * var(--glow-mult)) var(--glow-color);
+}
+
+/* ── rubber-band aux limites de scroll — spec #11 (unique exception élastique) ── */
+.scrollbox {
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+.rubber { transition: transform 260ms var(--ease-inout); } /* piloté en JS aux extrémités */

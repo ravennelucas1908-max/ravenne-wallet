@@ -1,0 +1,426 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ravenne Wallet</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🪶</text></svg>">
+<script src="https://cdn.jsdelivr.net/npm/ethers@6.13.4/dist/ethers.umd.min.js"></script>
+<style>
+  :root{
+    --bg:#0d0f14; --card:#151923; --card2:#1b2130; --border:#262e40;
+    --text:#e8ecf4; --muted:#8b94a7; --accent:#8b5cf6; --accent2:#a78bfa;
+    --ok:#34d399; --warn:#fbbf24; --err:#f87171; --mono:ui-monospace,'Cascadia Code',Consolas,monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,sans-serif;min-height:100vh;
+       background-image:radial-gradient(1000px 500px at 80% -10%, rgba(139,92,246,.12), transparent)}
+  .wrap{max-width:920px;margin:0 auto;padding:24px 16px 80px}
+
+  header{display:flex;align-items:center;gap:12px;padding:8px 0 28px}
+  .logo{width:42px;height:42px;border-radius:12px;background:linear-gradient(135deg,var(--accent),#6d28d9);
+        display:flex;align-items:center;justify-content:center;font-size:22px}
+  header h1{font-size:22px;font-weight:700}
+  header .sub{color:var(--muted);font-size:13px;margin-top:2px}
+
+  .card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:22px;margin-bottom:18px}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  @media(max-width:760px){.grid2{grid-template-columns:1fr}}
+  h2{font-size:16px;margin-bottom:6px}
+  .hint{color:var(--muted);font-size:13px;line-height:1.5;margin-bottom:14px}
+
+  label{display:block;font-size:12px;color:var(--muted);margin:12px 0 5px;text-transform:uppercase;letter-spacing:.5px}
+  input,textarea,select{width:100%;background:var(--card2);border:1px solid var(--border);border-radius:10px;
+    color:var(--text);padding:10px 12px;font-size:14px;outline:none;font-family:inherit}
+  textarea{font-family:var(--mono);font-size:13px;resize:vertical;min-height:74px}
+  input:focus,textarea:focus{border-color:var(--accent)}
+  select{cursor:pointer}
+
+  .btn{border:none;border-radius:10px;padding:11px 18px;font-size:14px;font-weight:600;cursor:pointer;
+       display:inline-flex;align-items:center;gap:8px;transition:filter .15s}
+  .btn:disabled{opacity:.5;cursor:not-allowed}
+  .btn:hover:not(:disabled){filter:brightness(1.12)}
+  .btn-primary{background:linear-gradient(135deg,var(--accent),#7c3aed);color:#fff}
+  .btn-ghost{background:var(--card2);color:var(--text);border:1px solid var(--border)}
+  .btn-danger{background:transparent;color:var(--err);border:1px solid var(--err)}
+  .btn-sm{padding:7px 12px;font-size:13px}
+  .btn-block{width:100%;justify-content:center;margin-top:14px}
+
+  .tabs{display:flex;gap:6px;background:var(--card2);border-radius:10px;padding:4px;margin-bottom:16px}
+  .tabs button{flex:1;background:transparent;border:none;color:var(--muted);padding:8px;font-size:13px;
+               font-weight:600;border-radius:8px;cursor:pointer}
+  .tabs button.on{background:var(--accent);color:#fff}
+
+  .addr-box{display:flex;align-items:center;gap:10px;background:var(--card2);border:1px solid var(--border);
+            border-radius:10px;padding:10px 12px}
+  .addr-box .a{font-family:var(--mono);font-size:13px;word-break:break-all;flex:1}
+  .addr-box button{flex-shrink:0}
+
+  .bal{font-size:34px;font-weight:700;font-family:var(--mono);margin:4px 0}
+  .bal small{font-size:15px;color:var(--muted);font-weight:400}
+
+  .words{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:14px 0}
+  @media(max-width:520px){.words{grid-template-columns:repeat(2,1fr)}}
+  .words div{background:var(--card2);border:1px solid var(--border);border-radius:10px;padding:9px 11px;
+             font-family:var(--mono);font-size:14px;display:flex;gap:8px}
+  .words b{color:var(--accent2);font-weight:600;min-width:18px}
+
+  .warn-box{background:rgba(251,191,36,.08);border:1px solid rgba(251,191,36,.35);border-radius:12px;
+            padding:12px 14px;font-size:13px;line-height:1.55;color:#fde68a;margin-bottom:14px}
+  .danger-box{background:rgba(248,113,113,.08);border:1px solid rgba(248,113,113,.35);border-radius:12px;
+            padding:12px 14px;font-size:13px;line-height:1.55;color:#fca5a5;margin-bottom:14px}
+  .ok-box{background:rgba(52,211,153,.08);border:1px solid rgba(52,211,153,.35);border-radius:12px;
+          padding:12px 14px;font-size:13px;line-height:1.55;color:#6ee7b7;margin-bottom:14px;display:none}
+
+  .check{display:flex;gap:10px;align-items:flex-start;margin:14px 0;font-size:13.5px;line-height:1.5;cursor:pointer}
+  .check input{width:17px;height:17px;margin-top:1px;accent-color:var(--accent)}
+
+  .row{display:flex;gap:10px;flex-wrap:wrap}
+  .row>*{flex:1;min-width:150px}
+
+  .secret{font-family:var(--mono);font-size:13px;word-break:break-all;background:var(--card2);
+          border:1px dashed var(--err);border-radius:10px;padding:10px 12px;margin-top:8px;color:#fecaca}
+
+  details{border:1px solid var(--border);border-radius:12px;padding:12px 14px;margin-bottom:10px;background:var(--card2)}
+  details summary{cursor:pointer;font-size:13.5px;color:var(--muted);font-weight:600}
+  details[open] summary{margin-bottom:8px;color:var(--text)}
+
+  a{color:var(--accent2)}
+
+  #toasts{position:fixed;right:16px;bottom:16px;display:flex;flex-direction:column;gap:8px;z-index:99}
+  .toast{background:var(--card2);border:1px solid var(--border);border-left:4px solid var(--accent);
+         border-radius:10px;padding:10px 14px;font-size:13px;max-width:320px;box-shadow:0 8px 24px rgba(0,0,0,.4)}
+  .toast.ok{border-left-color:var(--ok)} .toast.err{border-left-color:var(--err)} .toast.warn{border-left-color:var(--warn)}
+
+  footer{color:var(--muted);font-size:12px;text-align:center;margin-top:30px;line-height:1.6}
+  .offline{display:none}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="logo">🪶</div>
+    <div>
+      <h1>Ravenne Wallet</h1>
+      <div class="sub">Ton wallet crypto local — Ethereum · Polygon · BNB Chain · Arbitrum</div>
+    </div>
+  </header>
+
+  <div id="lib-error" class="danger-box offline">
+    ⚠️ Impossible de charger la librairie ethers.js. Vérifie ta connexion internet puis recharge la page
+    (il faut internet une seule fois pour charger la librairie ; la création de wallet reste 100&nbsp;% locale).
+  </div>
+
+  <!-- ══════════ ACCUEIL : CRÉER / IMPORTER ══════════ -->
+  <section id="view-setup">
+    <div class="grid2">
+
+      <div class="card">
+        <h2>✨ Créer un nouveau wallet</h2>
+        <p class="hint">Génère une phrase secrète de 12 mots, une adresse et une clé privée.
+        Tout est créé <b>localement dans ton navigateur</b>, rien n'est envoyé sur internet.</p>
+        <button class="btn btn-primary btn-block" id="btn-create">🚀 Créer mon wallet</button>
+      </div>
+
+      <div class="card">
+        <h2>📥 Importer un wallet</h2>
+        <p class="hint">Récupère un wallet existant avec sa phrase secrète, sa clé privée ou son fichier keystore.</p>
+
+        <div class="tabs">
+          <button class="on" data-tab="phrase">Phrase</button>
+          <button data-tab="privkey">Clé privée</button>
+          <button data-tab="keystore">Keystore</button>
+        </div>
+
+        <div id="tab-phrase">
+          <label>Phrase secrète (12 ou 24 mots)</label>
+          <textarea id="in-phrase" placeholder="ex : radar blanket cabbage ..."></textarea>
+          <button class="btn btn-primary btn-block" id="btn-import-phrase">Importer</button>
+        </div>
+
+        <div id="tab-privkey" style="display:none">
+          <label>Clé privée</label>
+          <input id="in-privkey" type="password" placeholder="0x...">
+          <button class="btn btn-primary btn-block" id="btn-import-privkey">Importer</button>
+        </div>
+
+        <div id="tab-keystore" style="display:none">
+          <label>Fichier keystore (.json)</label>
+          <input id="in-ks-file" type="file" accept=".json,application/json">
+          <label>Mot de passe du keystore</label>
+          <input id="in-ks-pass" type="password" placeholder="Mot de passe choisi à l'export">
+          <button class="btn btn-primary btn-block" id="btn-import-keystore">Importer</button>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ══════════ SAUVEGARDE DE LA PHRASE ══════════ -->
+  <section id="view-backup" style="display:none">
+    <div class="card">
+      <div class="warn-box">⚠️ <b>Étape la plus importante :</b> note ces 12 mots sur papier (ou ailleurs en sécurité),
+      dans l'ordre. C'est la <b>seule</b> façon de récupérer ton wallet si tu perds tes fichiers.
+      Ne les partage <b>jamais</b> avec personne — qui a la phrase a les fonds.</div>
+      <h2>🔐 Ta phrase secrète</h2>
+      <div class="words" id="words"></div>
+      <label class="check"><input type="checkbox" id="chk-backup">
+        J'ai bien noté ma phrase secrète en lieu sûr et je comprends qu'elle ne peut pas être récupérée si je la perds.</label>
+      <button class="btn btn-primary btn-block" id="btn-continue" disabled>Continuer →</button>
+    </div>
+  </section>
+
+  <!-- ══════════ TABLEAU DE BORD ══════════ -->
+  <section id="view-dash" style="display:none">
+
+    <div class="card">
+      <div class="row" style="align-items:center">
+        <div style="flex:2">
+          <label style="margin-top:0">Adresse du wallet</label>
+          <div class="addr-box">
+            <span class="a" id="addr"></span>
+            <button class="btn btn-ghost btn-sm" data-copy="addr">📋 Copier</button>
+          </div>
+        </div>
+        <div style="flex:1;min-width:170px">
+          <label style="margin-top:0">Réseau</label>
+          <select id="net-sel">
+            <option value="eth">Ethereum</option>
+            <option value="poly">Polygon</option>
+            <option value="bsc">BNB Chain</option>
+            <option value="arb">Arbitrum</option>
+          </select>
+        </div>
+      </div>
+
+      <label>Solde</label>
+      <div class="bal" id="balance">— <small id="bal-sym"></small></div>
+      <button class="btn btn-ghost btn-sm" id="btn-refresh">🔄 Actualiser le solde</button>
+      <span style="color:var(--muted);font-size:12px;margin-left:8px">même adresse sur tous les réseaux</span>
+    </div>
+
+    <div class="grid2">
+      <div class="card">
+        <h2>📤 Envoyer</h2>
+        <p class="hint">Envoie des crypto vers une autre adresse. Vérifie bien l'adresse : une transaction est irréversible.</p>
+        <label>Adresse destinataire</label>
+        <input id="to" placeholder="0x...">
+        <label>Montant</label>
+        <input id="amount" type="number" step="any" min="0" placeholder="0.01">
+        <div class="ok-box" id="tx-result"></div>
+        <button class="btn btn-primary btn-block" id="btn-send">Envoyer</button>
+      </div>
+
+      <div class="card">
+        <h2>🛡️ Sécurité & sauvegarde</h2>
+        <details>
+          <summary>💾 Exporter le keystore (fichier chiffré)</summary>
+          <p class="hint" style="margin:8px 0 0">Fichier JSON chiffré par un mot de passe. Tu pourras le réimporter ici plus tard.</p>
+          <label>Mot de passe (8 caractères min.)</label>
+          <input id="ks-pass" type="password" placeholder="Choisis un bon mot de passe">
+          <button class="btn btn-primary btn-block" id="btn-export">Télécharger le keystore</button>
+        </details>
+        <details>
+          <summary>👁️ Afficher mes clés</summary>
+          <div class="danger-box" style="margin:10px 0 0">Ne montre jamais ta clé privée ni ta phrase en public,
+          devant une caméra, ou à quelqu'un qui te la demande (même un "support").</div>
+          <button class="btn btn-ghost btn-sm" style="margin-top:10px" id="btn-show-keys">Afficher (je suis seul·e)</button>
+          <div id="keys" style="display:none">
+            <label style="margin-top:12px">Clé privée</label>
+            <div class="secret" id="privkey-out"></div>
+            <label style="margin-top:12px">Phrase secrète</label>
+            <div class="secret" id="phrase-out"></div>
+          </div>
+        </details>
+        <button class="btn btn-danger btn-block" id="btn-lock" style="margin-top:4px">🔒 Verrouiller le wallet</button>
+      </div>
+    </div>
+
+  </section>
+
+  <footer>
+    Ravenne Wallet — fonctionne 100&nbsp;% localement dans ton navigateur.<br>
+    Seules les demandes de solde et d'envoi vont vers un RPC public (nothing else leaves your device).<br>
+    ⚠️ Projet éducatif : pour de grosses sommes, utilise un hardware wallet (Ledger, Trezor…).
+  </footer>
+</div>
+
+<div id="toasts"></div>
+
+<script>
+/* ─────────── Config ─────────── */
+const NET = {
+  eth:  { rpc:'https://ethereum-rpc.publicnode.com',       sym:'ETH', ex:'https://etherscan.io' },
+  poly: { rpc:'https://polygon-bor-rpc.publicnode.com',    sym:'POL', ex:'https://polygonscan.com' },
+  bsc:  { rpc:'https://bsc-rpc.publicnode.com',            sym:'BNB', ex:'https://bscscan.com' },
+  arb:  { rpc:'https://arbitrum-one-rpc.publicnode.com',   sym:'ETH', ex:'https://arbiscan.io' },
+};
+let wallet = null, net = NET.eth;
+
+const $ = id => document.getElementById(id);
+const show = v => ['setup','backup','dash'].forEach(x => $('view-'+x).style.display = (x===v?'':'none'));
+const provider = () => new ethers.JsonRpcProvider(net.rpc);
+
+function notify(msg, type='info'){
+  const t = document.createElement('div');
+  t.className = 'toast '+type; t.textContent = msg;
+  $('toasts').appendChild(t); setTimeout(()=>t.remove(), 5000);
+}
+async function copyText(txt){
+  try { await navigator.clipboard.writeText(txt); notify('Copié ✓','ok'); }
+  catch { notify('Copie impossible','err'); }
+}
+const shortErr = e => (e.shortMessage || e.message || 'Erreur').slice(0,140);
+
+/* ─────────── Création ─────────── */
+$('btn-create').onclick = () => {
+  wallet = ethers.Wallet.createRandom();           // généré localement (crypto du navigateur)
+  const words = wallet.mnemonic.phrase.split(' ');
+  $('words').innerHTML = words.map((w,i)=>`<div><b>${i+1}</b>${w}</div>`).join('');
+  $('chk-backup').checked = false;
+  $('btn-continue').disabled = true;
+  show('backup');
+};
+$('chk-backup').onchange = e => $('btn-continue').disabled = !e.target.checked;
+$('btn-continue').onclick = () => { enterDash(); };
+
+/* ─────────── Import ─────────── */
+document.querySelectorAll('.tabs button').forEach(b => b.onclick = () => {
+  document.querySelectorAll('.tabs button').forEach(x=>x.classList.remove('on'));
+  b.classList.add('on');
+  ['phrase','privkey','keystore'].forEach(t => $('tab-'+t).style.display = (t===b.dataset.tab ? '' : 'none'));
+});
+
+$('btn-import-phrase').onclick = () => {
+  const phrase = $('in-phrase').value.trim().split(/\s+/).join(' ').toLowerCase();
+  if (!ethers.Mnemonic.isValidMnemonic(phrase)) return notify('Phrase secrète invalide (vérifie les mots et l\'ordre)','err');
+  wallet = ethers.HDNodeWallet.fromPhrase(phrase);
+  enterDash();
+};
+
+$('btn-import-privkey').onclick = () => {
+  let pk = $('in-privkey').value.trim();
+  if (!pk) return notify('Entre ta clé privée','err');
+  if (!pk.startsWith('0x')) pk = '0x' + pk;
+  try { wallet = new ethers.Wallet(pk); } catch { return notify('Clé privée invalide','err'); }
+  enterDash();
+};
+
+let ksJson = null;
+$('in-ks-file').onchange = async e => {
+  const f = e.target.files[0]; if (!f) return;
+  ksJson = await f.text();
+};
+$('btn-import-keystore').onclick = async () => {
+  if (!ksJson) return notify('Choisis d\'abord ton fichier keystore','err');
+  const pw = $('in-ks-pass').value;
+  try { wallet = await ethers.Wallet.fromEncryptedJson(ksJson, pw); }
+  catch { return notify('Keystore ou mot de passe invalide','err'); }
+  enterDash();
+};
+
+/* ─────────── Tableau de bord ─────────── */
+function enterDash(){
+  $('addr').textContent = wallet.address;
+  $('keys').style.display = 'none';
+  $('tx-result').style.display = 'none';
+  $('privkey-out').textContent = wallet.privateKey;
+  $('phrase-out').textContent = wallet.mnemonic ? wallet.mnemonic.phrase : '(importé par clé privée : pas de phrase)';
+  show('dash');
+  refreshBalance();
+}
+
+$('net-sel').onchange = e => { net = NET[e.target.value]; refreshBalance(); };
+$('btn-refresh').onclick = refreshBalance;
+
+async function refreshBalance(){
+  $('balance').innerHTML = '… <small></small>';
+  try {
+    const bal = await provider().getBalance(wallet.address);
+    $('balance').innerHTML = `${ethers.formatEther(bal)} <small id="bal-sym">${net.sym}</small>`;
+  } catch {
+    $('balance').innerHTML = '— <small>réseau injoignable</small>';
+    notify('Impossible de joindre le réseau — réessaie plus tard','err');
+  }
+}
+
+/* ─────────── Envoi ─────────── */
+$('btn-send').onclick = async () => {
+  const to = $('to').value.trim(), amt = $('amount').value.trim();
+  try { ethers.getAddress(to); } catch { return notify('Adresse destinataire invalide','err'); }
+  let value;
+  try { value = ethers.parseEther(amt); } catch { return notify('Montant invalide (ex : 0.01)','err'); }
+  if (value <= 0n) return notify('Le montant doit être positif','err');
+
+  const btn = $('btn-send');
+  btn.disabled = true; btn.textContent = '⏳ Signature & envoi…';
+  try {
+    const prov = provider();
+    const bal = await prov.getBalance(wallet.address);
+    if (bal <= value) return notify(`Solde insuffisant (tu as ${ethers.formatEther(bal)} ${net.sym}, frais non compris)`,'err');
+
+    const tx = await wallet.connect(prov).sendTransaction({ to, value });
+    btn.textContent = '⏳ Confirmation…';
+    notify('Transaction diffusée ✓ en attente de confirmation…','ok');
+    showTx('pending', tx.hash);
+
+    const rc = await tx.wait();
+    const fee = ethers.formatEther(rc.gasUsed * rc.effectiveGasPrice);
+    showTx('ok', tx.hash, fee);
+    notify('Transaction confirmée ✓','ok');
+    refreshBalance();
+  } catch (e) {
+    notify(shortErr(e), 'err');
+    $('tx-result').style.display = 'none';
+  } finally {
+    btn.disabled = false; btn.textContent = 'Envoyer';
+  }
+};
+
+function showTx(state, hash, fee){
+  const box = $('tx-result');
+  box.style.display = 'block';
+  box.innerHTML = state === 'pending'
+    ? `⏳ Transaction en cours :<br><a href="${net.ex}/tx/${hash}" target="_blank">${hash.slice(0,20)}…</a>`
+    : `✅ Envoyé ! Frais : ${fee} ${net.sym}<br><a href="${net.ex}/tx/${hash}" target="_blank">Voir sur l'explorateur →</a>`;
+}
+
+/* ─────────── Sécurité ─────────── */
+$('btn-export').onclick = async () => {
+  const pw = $('ks-pass').value;
+  if (pw.length < 8) return notify('Mot de passe trop court (8 caractères min.)','err');
+  const btn = $('btn-export');
+  btn.disabled = true; btn.textContent = 'Chiffrement…';
+  try {
+    const json = await wallet.encrypt(pw);
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(new Blob([json], {type:'application/json'}));
+    a.download = `ravenne-${wallet.address.slice(0,10)}.json`;
+    a.click(); URL.revokeObjectURL(a.href);
+    notify('Keystore téléchargé ✓ garde-le avec son mot de passe','ok');
+  } catch (e) { notify(shortErr(e),'err'); }
+  finally { btn.disabled = false; btn.textContent = 'Télécharger le keystore'; }
+};
+
+$('btn-show-keys').onclick = () => {
+  if (confirm("Tu es sûr·e d'être seul·e et à l'abri des regards ?")) $('keys').style.display = 'block';
+};
+
+$('btn-lock').onclick = () => {
+  if (!confirm('Verrouiller le wallet ? (pense à exporter ton keystore avant si besoin)')) return;
+  wallet = null;
+  ['in-phrase','in-privkey','in-ks-pass','to','amount','ks-pass'].forEach(id => $(id).value = '');
+  $('in-ks-file').value = ''; ksJson = null;
+  show('setup');
+  notify('Wallet verrouillé 🔒','ok');
+};
+
+/* Copier l'adresse */
+document.querySelector('[data-copy="addr"]').onclick = () => copyText(wallet.address);
+
+/* Vérif du chargement de la librairie */
+if (typeof ethers === 'undefined') $('lib-error').style.display = 'block';
+</script>
+</body>
+</html>

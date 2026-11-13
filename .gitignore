@@ -1,0 +1,15 @@
+node_modules/
+vault.ravenne.json
+access.ravenne.json
+ravenne-keystore-*.json
+tools/monero/wallets/
+tools/monero/*.zip
+ui.config.json
+.whitelist-cache.json
+authorized.flag
+src-tauri/target/
+machines.json
+*.zip
+dist/
+build/
+.video_agent/

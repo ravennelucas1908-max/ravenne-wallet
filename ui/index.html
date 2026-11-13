@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en" data-theme="dark" data-glow="soft" data-motion="on" data-discreet="off">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ravenne Wallet</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="./styles.css">
+<script src="https://cdn.jsdelivr.net/npm/ethers@6.13.4/dist/ethers.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
+</head>
+<body>
+
+<!-- ═══ 1. CONFIGURATION PROPRIÉTAIRE (première exécution) ═══ -->
+<section class="screen" id="s-config">
+  <div class="card reveal" style="width:520px">
+    <h2>Owner configuration</h2>
+    <p class="dim" style="margin:8px 0 20px;line-height:1.6">First run only. Stored locally in
+      <span class="mono">ui.config.json</span> — never committed. Fields can be edited later in Settings.</p>
+    <label class="lbl">Discord webhook URL</label>
+    <input type="text" id="cfg-webhook" placeholder="https://discord.com/api/webhooks/…">
+    <label class="lbl">Whitelist raw URL (secret GitHub gist)</label>
+    <input type="text" id="cfg-whitelist" placeholder="https://gist.githubusercontent.com/…/machines.json">
+    <label class="lbl">Update repository (owner/repo)</label>
+    <input type="text" id="cfg-repo" placeholder="owner/ravenne-wallet">
+    <div class="row" style="margin-top:20px">
+      <button class="btn primary grow" id="cfg-save">Save & continue</button>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 2. CONNEXION (verrou machine HWID) ═══ -->
+<section class="screen" id="s-gate">
+  <div class="card reveal" style="width:520px;text-align:center">
+    <div id="gate-computing">
+      <h2>Checking this machine…</h2>
+      <p class="dim" style="margin-top:12px">Hardware fingerprint — no data leaves except the hash.</p>
+    </div>
+    <div id="gate-denied" class="hidden">
+      <h2 class="err">Access restricted</h2>
+      <p class="dim" style="margin:10px 0 16px;line-height:1.6">This machine is not on the allow-list.
+        A request was sent to the owner. Ask them to add your ID.</p>
+      <div class="mono" id="gate-hwid" style="background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:14px;font-size:15px;letter-spacing:1px"></div>
+      <div class="row" style="margin-top:18px;justify-content:center">
+        <button class="btn" id="gate-copy">Copy ID</button>
+        <button class="btn primary" id="gate-retry">Retry</button>
+      </div>
+      <p class="dim" id="gate-neterr" style="margin-top:14px;font-size:12px"></p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 3. CHOIX DE MODE ═══ -->
+<section class="screen" id="s-mode">
+  <h1 style="margin-bottom:36px">Ravenne Wallet</h1>
+  <div class="mode-cards stagger">
+    <div class="card hoverable mode-card" id="mode-terminal" style="--i:0">
+      <div class="ic">⌨</div>
+      <h2>Terminal</h2>
+      <p class="dim">Full CLI — menus, every command</p>
+      <div class="glowline"></div>
+    </div>
+    <div class="card hoverable mode-card" id="mode-app" style="--i:1">
+      <div class="ic">◆</div>
+      <h2>Application</h2>
+      <p class="dim">Visual wallet — balances, send, swap</p>
+      <div class="glowline"></div>
+    </div>
+  </div>
+  <button class="btn" id="mode-quit" style="margin-top:40px;opacity:.65">Quit</button>
+</section>
+
+<!-- ═══ 4. MOT DE PASSE (déverrouille le vault du CLI) ═══ -->
+<section class="screen" id="s-pass">
+  <div class="card reveal" style="width:440px;text-align:center">
+    <div style="font-size:34px;margin-bottom:6px">◆</div>
+    <h2 id="pass-title">Unlock</h2>
+    <p class="dim" id="pass-sub" style="margin:8px 0 20px;line-height:1.6">
+      The master password decrypts <span class="mono">vault.ravenne.json</span> — the same file the CLI uses.</p>
+    <input type="password" id="pass-input" placeholder="Master password" autocomplete="off">
+    <div class="err" id="pass-err" style="height:18px;margin-top:8px;font-size:12px"></div>
+    <button class="btn primary" id="pass-go" style="width:100%;margin-top:6px">Unlock</button>
+  </div>
+</section>
+
+<!-- ═══ 5. WALLET (UI principale) ═══ -->
+<section class="screen" id="s-wallet" style="justify-content:flex-start;align-items:stretch;padding:0">
+  <header class="row" style="padding:14px 20px;border-bottom:1px solid var(--border);gap:12px">
+    <div id="logo" style="width:30px;height:30px;border-radius:9px;background:linear-gradient(135deg,#4a2a86,#2a1a4a);display:flex;align-items:center;justify-content:center;font-size:15px">◆</div>
+    <strong>Ravenne</strong>
+    <div class="dropdown" id="profile-dd">
+      <button class="btn" id="profile-btn" style="min-width:170px">profile ▾</button>
+      <div class="dropdown-menu" id="profile-menu"></div>
+    </div>
+    <div class="grow"></div>
+    <div class="row" id="net-status" style="gap:6px"><span class="dim" id="net-label">network…</span><span id="net-dot" style="width:8px;height:8px;border-radius:50%;background:var(--gray)"></span></div>
+    <button class="btn" id="btn-settings" title="Settings (Ctrl+,)">⚙</button>
+    <button class="btn" id="btn-lock" title="Lock (Ctrl+L)">🔒</button>
+  </header>
+
+  <nav class="row" id="tabs" style="padding:10px 20px 0;gap:4px;border-bottom:1px solid var(--border)">
+    <button class="btn tab" data-tab="overview">Overview</button>
+    <button class="btn tab" data-tab="receive">Receive</button>
+    <button class="btn tab" data-tab="send">Send</button>
+    <button class="btn tab" data-tab="swap">Swap</button>
+    <button class="btn tab" data-tab="xmr">Monero</button>
+    <button class="btn tab" data-tab="temp">Temporary</button>
+    <button class="btn tab" data-tab="history">History</button>
+    <button class="btn tab" data-tab="settings">Settings</button>
+    <div class="grow"></div>
+    <span class="dim mono" id="version-badge" title="Releases" style="align-self:center;cursor:pointer;font-size:11px"></span>
+  </nav>
+
+  <div class="scrollbox rubber grow" id="wallet-body" style="padding:20px;position:relative">
+    <div id="tab-overview" class="tabpane"></div>
+    <div id="tab-receive" class="tabpane hidden"></div>
+    <div id="tab-send" class="tabpane hidden"></div>
+    <div id="tab-swap" class="tabpane hidden"></div>
+    <div id="tab-xmr" class="tabpane hidden"></div>
+    <div id="tab-temp" class="tabpane hidden"></div>
+    <div id="tab-history" class="tabpane hidden"></div>
+    <div id="tab-settings" class="tabpane hidden"></div>
+  </div>
+</section>
+
+<div class="modal-back" id="modal-back">
+  <div class="card modal" id="modal-box"></div>
+</div>
+<div class="toasts" id="toasts"></div>
+
+<script src="./app.min.js"></script>
+</body>
+</html>
