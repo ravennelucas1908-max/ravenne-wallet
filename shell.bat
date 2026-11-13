@@ -1,6 +1,5 @@
 @echo off
 chcp 65001 >nul
-title Ravenne Shell - compiling then GUI
+title Ravenne Wallet
 cd /d "%~dp0"
-echo Starting Ravenne Shell (first build takes a few minutes)...
-call npx tauri dev
+if exist dist\ravenne.exe (dist\ravenne.exe) else (node ravenne.js)

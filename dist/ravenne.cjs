@@ -72,9 +72,9 @@ var require_kleur = __commonJS({
       bgWhite: init2(47, 49)
     };
     function run(arr, str) {
-      let i = 0, tmp, beg = "", end = "";
-      for (; i < arr.length; i++) {
-        tmp = arr[i];
+      let i2 = 0, tmp, beg = "", end = "";
+      for (; i2 < arr.length; i2++) {
+        tmp = arr[i2];
         beg += tmp.open;
         end += tmp.close;
         if (str.includes(tmp.close)) {
@@ -184,55 +184,55 @@ var require_strip = __commonJS({
 var require_src = __commonJS({
   "node_modules/sisteransi/src/index.js"(exports2, module2) {
     "use strict";
-    var ESC = "\x1B";
-    var CSI = `${ESC}[`;
+    var ESC4 = "\x1B";
+    var CSI4 = `${ESC4}[`;
     var beep = "\x07";
-    var cursor = {
+    var cursor3 = {
       to(x, y) {
-        if (!y) return `${CSI}${x + 1}G`;
-        return `${CSI}${y + 1};${x + 1}H`;
+        if (!y) return `${CSI4}${x + 1}G`;
+        return `${CSI4}${y + 1};${x + 1}H`;
       },
       move(x, y) {
         let ret = "";
-        if (x < 0) ret += `${CSI}${-x}D`;
-        else if (x > 0) ret += `${CSI}${x}C`;
-        if (y < 0) ret += `${CSI}${-y}A`;
-        else if (y > 0) ret += `${CSI}${y}B`;
+        if (x < 0) ret += `${CSI4}${-x}D`;
+        else if (x > 0) ret += `${CSI4}${x}C`;
+        if (y < 0) ret += `${CSI4}${-y}A`;
+        else if (y > 0) ret += `${CSI4}${y}B`;
         return ret;
       },
-      up: (count = 1) => `${CSI}${count}A`,
-      down: (count = 1) => `${CSI}${count}B`,
-      forward: (count = 1) => `${CSI}${count}C`,
-      backward: (count = 1) => `${CSI}${count}D`,
-      nextLine: (count = 1) => `${CSI}E`.repeat(count),
-      prevLine: (count = 1) => `${CSI}F`.repeat(count),
-      left: `${CSI}G`,
-      hide: `${CSI}?25l`,
-      show: `${CSI}?25h`,
-      save: `${ESC}7`,
-      restore: `${ESC}8`
+      up: (count = 1) => `${CSI4}${count}A`,
+      down: (count = 1) => `${CSI4}${count}B`,
+      forward: (count = 1) => `${CSI4}${count}C`,
+      backward: (count = 1) => `${CSI4}${count}D`,
+      nextLine: (count = 1) => `${CSI4}E`.repeat(count),
+      prevLine: (count = 1) => `${CSI4}F`.repeat(count),
+      left: `${CSI4}G`,
+      hide: `${CSI4}?25l`,
+      show: `${CSI4}?25h`,
+      save: `${ESC4}7`,
+      restore: `${ESC4}8`
     };
     var scroll = {
-      up: (count = 1) => `${CSI}S`.repeat(count),
-      down: (count = 1) => `${CSI}T`.repeat(count)
+      up: (count = 1) => `${CSI4}S`.repeat(count),
+      down: (count = 1) => `${CSI4}T`.repeat(count)
     };
-    var erase = {
-      screen: `${CSI}2J`,
-      up: (count = 1) => `${CSI}1J`.repeat(count),
-      down: (count = 1) => `${CSI}J`.repeat(count),
-      line: `${CSI}2K`,
-      lineEnd: `${CSI}K`,
-      lineStart: `${CSI}1K`,
+    var erase3 = {
+      screen: `${CSI4}2J`,
+      up: (count = 1) => `${CSI4}1J`.repeat(count),
+      down: (count = 1) => `${CSI4}J`.repeat(count),
+      line: `${CSI4}2K`,
+      lineEnd: `${CSI4}K`,
+      lineStart: `${CSI4}1K`,
       lines(count) {
-        let clear = "";
-        for (let i = 0; i < count; i++)
-          clear += this.line + (i < count - 1 ? cursor.up() : "");
+        let clear3 = "";
+        for (let i2 = 0; i2 < count; i2++)
+          clear3 += this.line + (i2 < count - 1 ? cursor3.up() : "");
         if (count)
-          clear += cursor.left;
-        return clear;
+          clear3 += cursor3.left;
+        return clear3;
       }
     };
-    module2.exports = { cursor, scroll, erase, beep };
+    module2.exports = { cursor: cursor3, scroll, erase: erase3, beep };
   }
 });
 
@@ -245,12 +245,12 @@ var require_clear = __commonJS({
       if (!it) {
         if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") {
           if (it) o = it;
-          var i = 0;
+          var i2 = 0;
           var F = function F2() {
           };
-          return { s: F, n: function n2() {
-            if (i >= o.length) return { done: true };
-            return { done: false, value: o[i++] };
+          return { s: F, n: function n4() {
+            if (i2 >= o.length) return { done: true };
+            return { done: false, value: o[i2++] };
           }, e: function e(_e) {
             throw _e;
           }, f: F };
@@ -260,7 +260,7 @@ var require_clear = __commonJS({
       var normalCompletion = true, didErr = false, err;
       return { s: function s() {
         it = it.call(o);
-      }, n: function n2() {
+      }, n: function n4() {
         var step = it.next();
         normalCompletion = step.done;
         return step;
@@ -278,23 +278,23 @@ var require_clear = __commonJS({
     function _unsupportedIterableToArray(o, minLen) {
       if (!o) return;
       if (typeof o === "string") return _arrayLikeToArray(o, minLen);
-      var n2 = Object.prototype.toString.call(o).slice(8, -1);
-      if (n2 === "Object" && o.constructor) n2 = o.constructor.name;
-      if (n2 === "Map" || n2 === "Set") return Array.from(o);
-      if (n2 === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n2)) return _arrayLikeToArray(o, minLen);
+      var n4 = Object.prototype.toString.call(o).slice(8, -1);
+      if (n4 === "Object" && o.constructor) n4 = o.constructor.name;
+      if (n4 === "Map" || n4 === "Set") return Array.from(o);
+      if (n4 === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n4)) return _arrayLikeToArray(o, minLen);
     }
     function _arrayLikeToArray(arr, len) {
       if (len == null || len > arr.length) len = arr.length;
-      for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i];
+      for (var i2 = 0, arr2 = new Array(len); i2 < len; i2++) arr2[i2] = arr[i2];
       return arr2;
     }
     var strip = require_strip();
     var _require = require_src();
-    var erase = _require.erase;
-    var cursor = _require.cursor;
+    var erase3 = _require.erase;
+    var cursor3 = _require.cursor;
     var width = (str) => [...strip(str)].length;
     module2.exports = function(prompt, perLine) {
-      if (!perLine) return erase.line + cursor.to(0);
+      if (!perLine) return erase3.line + cursor3.to(0);
       let rows = 0;
       const lines = prompt.split(/\r?\n/);
       var _iterator = _createForOfIteratorHelper(lines), _step;
@@ -308,7 +308,7 @@ var require_clear = __commonJS({
       } finally {
         _iterator.f();
       }
-      return erase.lines(rows);
+      return erase3.lines(rows);
     };
   }
 });
@@ -354,7 +354,7 @@ var require_figures = __commonJS({
 var require_style = __commonJS({
   "node_modules/prompts/dist/util/style.js"(exports2, module2) {
     "use strict";
-    var c2 = require_kleur();
+    var c4 = require_kleur();
     var figures = require_figures();
     var styles = Object.freeze({
       password: {
@@ -376,19 +376,19 @@ var require_style = __commonJS({
     });
     var render = (type) => styles[type] || styles.default;
     var symbols = Object.freeze({
-      aborted: c2.red(figures.cross),
-      done: c2.green(figures.tick),
-      exited: c2.yellow(figures.cross),
-      default: c2.cyan("?")
+      aborted: c4.red(figures.cross),
+      done: c4.green(figures.tick),
+      exited: c4.yellow(figures.cross),
+      default: c4.cyan("?")
     });
-    var symbol = (done, aborted, exited) => aborted ? symbols.aborted : exited ? symbols.exited : done ? symbols.done : symbols.default;
-    var delimiter = (completing) => c2.gray(completing ? figures.ellipsis : figures.pointerSmall);
-    var item = (expandable, expanded) => c2.gray(expandable ? expanded ? figures.pointerSmall : "+" : figures.line);
+    var symbol2 = (done, aborted, exited) => aborted ? symbols.aborted : exited ? symbols.exited : done ? symbols.done : symbols.default;
+    var delimiter = (completing) => c4.gray(completing ? figures.ellipsis : figures.pointerSmall);
+    var item = (expandable, expanded) => c4.gray(expandable ? expanded ? figures.pointerSmall : "+" : figures.line);
     module2.exports = {
       styles,
       render,
       symbols,
-      symbol,
+      symbol: symbol2,
       delimiter,
       item
     };
@@ -403,7 +403,7 @@ var require_lines = __commonJS({
     module2.exports = function(msg, perLine) {
       let lines = String(strip(msg) || "").split(/\r?\n/);
       if (!perLine) return lines.length;
-      return lines.map((l) => Math.ceil(l.length / perLine)).reduce((a, b2) => a + b2);
+      return lines.map((l) => Math.ceil(l.length / perLine)).reduce((a2, b2) => a2 + b2);
     };
   }
 });
@@ -428,9 +428,9 @@ var require_wrap = __commonJS({
 var require_entriesToDisplay = __commonJS({
   "node_modules/prompts/dist/util/entriesToDisplay.js"(exports2, module2) {
     "use strict";
-    module2.exports = (cursor, total, maxVisible) => {
+    module2.exports = (cursor3, total, maxVisible) => {
       maxVisible = maxVisible || total;
-      let startIndex = Math.min(total - maxVisible, cursor - Math.floor(maxVisible / 2));
+      let startIndex = Math.min(total - maxVisible, cursor3 - Math.floor(maxVisible / 2));
       if (startIndex < 0) startIndex = 0;
       let endIndex = Math.min(startIndex + maxVisible, total);
       return {
@@ -468,7 +468,7 @@ var require_prompt = __commonJS({
     var EventEmitter = require("events");
     var _require2 = require_src();
     var beep = _require2.beep;
-    var cursor = _require2.cursor;
+    var cursor3 = _require2.cursor;
     var color = require_kleur();
     var Prompt = class extends EventEmitter {
       constructor(opts = {}) {
@@ -485,17 +485,17 @@ var require_prompt = __commonJS({
         if (this.in.isTTY) this.in.setRawMode(true);
         const isSelect = ["SelectPrompt", "MultiselectPrompt"].indexOf(this.constructor.name) > -1;
         const keypress = (str, key) => {
-          let a = action(key, isSelect);
-          if (a === false) {
+          let a2 = action(key, isSelect);
+          if (a2 === false) {
             this._ && this._(str, key);
-          } else if (typeof this[a] === "function") {
-            this[a](key);
+          } else if (typeof this[a2] === "function") {
+            this[a2](key);
           } else {
             this.bell();
           }
         };
         this.close = () => {
-          this.out.write(cursor.show);
+          this.out.write(cursor3.show);
           this.in.removeListener("keypress", keypress);
           if (this.in.isTTY) this.in.setRawMode(false);
           rl.close();
@@ -559,11 +559,11 @@ var require_text = __commonJS({
     var color = require_kleur();
     var Prompt = require_prompt();
     var _require = require_src();
-    var erase = _require.erase;
-    var cursor = _require.cursor;
+    var erase3 = _require.erase;
+    var cursor3 = _require.cursor;
     var _require2 = require_util();
     var style = _require2.style;
-    var clear = _require2.clear;
+    var clear3 = _require2.clear;
     var lines = _require2.lines;
     var figures = _require2.figures;
     var TextPrompt = class extends Prompt {
@@ -578,7 +578,7 @@ var require_text = __commonJS({
         this.errorMsg = opts.error || `Please Enter A Valid Value`;
         this.cursor = Number(!!this.initial);
         this.cursorOffset = 0;
-        this.clear = clear(``, this.out.columns);
+        this.clear = clear3(``, this.out.columns);
         this.render();
       }
       set value(v) {
@@ -654,15 +654,15 @@ var require_text = __commonJS({
         this.fire();
         this.render();
       }
-      moveCursor(n2) {
+      moveCursor(n4) {
         if (this.placeholder) return;
-        this.cursor = this.cursor + n2;
-        this.cursorOffset += n2;
+        this.cursor = this.cursor + n4;
+        this.cursorOffset += n4;
       }
-      _(c2, key) {
+      _(c4, key) {
         let s1 = this.value.slice(0, this.cursor);
         let s2 = this.value.slice(this.cursor);
-        this.value = `${s1}${c2}${s2}`;
+        this.value = `${s1}${c4}${s2}`;
         this.red = false;
         this.cursor = this.placeholder ? 0 : s1.length + 1;
         this.render();
@@ -721,18 +721,18 @@ var require_text = __commonJS({
       render() {
         if (this.closed) return;
         if (!this.firstRender) {
-          if (this.outputError) this.out.write(cursor.down(lines(this.outputError, this.out.columns) - 1) + clear(this.outputError, this.out.columns));
-          this.out.write(clear(this.outputText, this.out.columns));
+          if (this.outputError) this.out.write(cursor3.down(lines(this.outputError, this.out.columns) - 1) + clear3(this.outputError, this.out.columns));
+          this.out.write(clear3(this.outputText, this.out.columns));
         }
         super.render();
         this.outputError = "";
         this.outputText = [style.symbol(this.done, this.aborted), color.bold(this.msg), style.delimiter(this.done), this.red ? color.red(this.rendered) : this.rendered].join(` `);
         if (this.error) {
           this.outputError += this.errorMsg.split(`
-`).reduce((a, l, i) => a + `
-${i ? " " : figures.pointerSmall} ${color.red().italic(l)}`, ``);
+`).reduce((a2, l, i2) => a2 + `
+${i2 ? " " : figures.pointerSmall} ${color.red().italic(l)}`, ``);
         }
-        this.out.write(erase.line + cursor.to(0) + this.outputText + cursor.save + this.outputError + cursor.restore + cursor.move(this.cursorOffset, 0));
+        this.out.write(erase3.line + cursor3.to(0) + this.outputText + cursor3.save + this.outputError + cursor3.restore + cursor3.move(this.cursorOffset, 0));
       }
     };
     module2.exports = TextPrompt;
@@ -747,12 +747,12 @@ var require_select = __commonJS({
     var Prompt = require_prompt();
     var _require = require_util();
     var style = _require.style;
-    var clear = _require.clear;
+    var clear3 = _require.clear;
     var figures = _require.figures;
     var wrap = _require.wrap;
     var entriesToDisplay = _require.entriesToDisplay;
     var _require2 = require_src();
-    var cursor = _require2.cursor;
+    var cursor3 = _require2.cursor;
     var SelectPrompt = class extends Prompt {
       constructor(opts = {}) {
         super(opts);
@@ -775,12 +775,12 @@ var require_select = __commonJS({
         });
         this.optionsPerPage = opts.optionsPerPage || 10;
         this.value = (this.choices[this.cursor] || {}).value;
-        this.clear = clear("", this.out.columns);
+        this.clear = clear3("", this.out.columns);
         this.render();
       }
-      moveCursor(n2) {
-        this.cursor = n2;
-        this.value = this.choices[n2].value;
+      moveCursor(n4) {
+        this.cursor = n4;
+        this.value = this.choices[n4].value;
         this.fire();
       }
       reset() {
@@ -836,37 +836,37 @@ var require_select = __commonJS({
         this.moveCursor((this.cursor + 1) % this.choices.length);
         this.render();
       }
-      _(c2, key) {
-        if (c2 === " ") return this.submit();
+      _(c4, key) {
+        if (c4 === " ") return this.submit();
       }
       get selection() {
         return this.choices[this.cursor];
       }
       render() {
         if (this.closed) return;
-        if (this.firstRender) this.out.write(cursor.hide);
-        else this.out.write(clear(this.outputText, this.out.columns));
+        if (this.firstRender) this.out.write(cursor3.hide);
+        else this.out.write(clear3(this.outputText, this.out.columns));
         super.render();
         let _entriesToDisplay = entriesToDisplay(this.cursor, this.choices.length, this.optionsPerPage), startIndex = _entriesToDisplay.startIndex, endIndex = _entriesToDisplay.endIndex;
         this.outputText = [style.symbol(this.done, this.aborted), color.bold(this.msg), style.delimiter(false), this.done ? this.selection.title : this.selection.disabled ? color.yellow(this.warn) : color.gray(this.hint)].join(" ");
         if (!this.done) {
           this.outputText += "\n";
-          for (let i = startIndex; i < endIndex; i++) {
-            let title, prefix, desc = "", v = this.choices[i];
-            if (i === startIndex && startIndex > 0) {
+          for (let i2 = startIndex; i2 < endIndex; i2++) {
+            let title, prefix, desc = "", v = this.choices[i2];
+            if (i2 === startIndex && startIndex > 0) {
               prefix = figures.arrowUp;
-            } else if (i === endIndex - 1 && endIndex < this.choices.length) {
+            } else if (i2 === endIndex - 1 && endIndex < this.choices.length) {
               prefix = figures.arrowDown;
             } else {
               prefix = " ";
             }
             if (v.disabled) {
-              title = this.cursor === i ? color.gray().underline(v.title) : color.strikethrough().gray(v.title);
-              prefix = (this.cursor === i ? color.bold().gray(figures.pointer) + " " : "  ") + prefix;
+              title = this.cursor === i2 ? color.gray().underline(v.title) : color.strikethrough().gray(v.title);
+              prefix = (this.cursor === i2 ? color.bold().gray(figures.pointer) + " " : "  ") + prefix;
             } else {
-              title = this.cursor === i ? color.cyan().underline(v.title) : v.title;
-              prefix = (this.cursor === i ? color.cyan(figures.pointer) + " " : "  ") + prefix;
-              if (v.description && this.cursor === i) {
+              title = this.cursor === i2 ? color.cyan().underline(v.title) : v.title;
+              prefix = (this.cursor === i2 ? color.cyan(figures.pointer) + " " : "  ") + prefix;
+              if (v.description && this.cursor === i2) {
                 desc = ` - ${v.description}`;
                 if (prefix.length + title.length + desc.length >= this.out.columns || v.description.split(/\r?\n/).length > 1) {
                   desc = "\n" + wrap(v.description, {
@@ -895,10 +895,10 @@ var require_toggle = __commonJS({
     var Prompt = require_prompt();
     var _require = require_util();
     var style = _require.style;
-    var clear = _require.clear;
+    var clear3 = _require.clear;
     var _require2 = require_src();
-    var cursor = _require2.cursor;
-    var erase = _require2.erase;
+    var cursor3 = _require2.cursor;
+    var erase3 = _require2.erase;
     var TogglePrompt = class extends Prompt {
       constructor(opts = {}) {
         super(opts);
@@ -962,23 +962,23 @@ var require_toggle = __commonJS({
         this.fire();
         this.render();
       }
-      _(c2, key) {
-        if (c2 === " ") {
+      _(c4, key) {
+        if (c4 === " ") {
           this.value = !this.value;
-        } else if (c2 === "1") {
+        } else if (c4 === "1") {
           this.value = true;
-        } else if (c2 === "0") {
+        } else if (c4 === "0") {
           this.value = false;
         } else return this.bell();
         this.render();
       }
       render() {
         if (this.closed) return;
-        if (this.firstRender) this.out.write(cursor.hide);
-        else this.out.write(clear(this.outputText, this.out.columns));
+        if (this.firstRender) this.out.write(cursor3.hide);
+        else this.out.write(clear3(this.outputText, this.out.columns));
         super.render();
         this.outputText = [style.symbol(this.done, this.aborted), color.bold(this.msg), style.delimiter(this.done), this.value ? this.inactive : color.cyan().underline(this.inactive), color.gray("/"), this.value ? color.cyan().underline(this.active) : this.active].join(" ");
-        this.out.write(erase.line + cursor.to(0) + this.outputText);
+        this.out.write(erase3.line + cursor3.to(0) + this.outputText);
       }
     };
     module2.exports = TogglePrompt;
@@ -1053,9 +1053,9 @@ var require_day = __commonJS({
   "node_modules/prompts/dist/dateparts/day.js"(exports2, module2) {
     "use strict";
     var DatePart = require_datepart();
-    var pos = (n2) => {
-      n2 = n2 % 10;
-      return n2 === 1 ? "st" : n2 === 2 ? "nd" : n2 === 3 ? "rd" : "th";
+    var pos = (n4) => {
+      n4 = n4 % 10;
+      return n4 === 1 ? "st" : n4 === 2 ? "nd" : n4 === 3 ? "rd" : "th";
     };
     var Day = class extends DatePart {
       constructor(opts = {}) {
@@ -1299,11 +1299,11 @@ var require_date = __commonJS({
     var Prompt = require_prompt();
     var _require = require_util();
     var style = _require.style;
-    var clear = _require.clear;
+    var clear3 = _require.clear;
     var figures = _require.figures;
     var _require2 = require_src();
-    var erase = _require2.erase;
-    var cursor = _require2.cursor;
+    var erase3 = _require2.erase;
+    var cursor3 = _require2.cursor;
     var _require3 = require_dateparts();
     var DatePart = _require3.DatePart;
     var Meridiem = _require3.Meridiem;
@@ -1353,7 +1353,7 @@ var require_date = __commonJS({
         this.errorMsg = opts.error || "Please Enter A Valid Value";
         this.validator = opts.validate || (() => true);
         this.mask = opts.mask || "YYYY-MM-DD HH:mm:ss";
-        this.clear = clear("", this.out.columns);
+        this.clear = clear3("", this.out.columns);
         this.render();
       }
       get value() {
@@ -1378,18 +1378,18 @@ var require_date = __commonJS({
             locales: this.locales
           }) : result[idx] || match);
         }
-        let parts = this.parts.reduce((arr, i) => {
-          if (typeof i === "string" && typeof arr[arr.length - 1] === "string") arr[arr.length - 1] += i;
-          else arr.push(i);
+        let parts = this.parts.reduce((arr, i2) => {
+          if (typeof i2 === "string" && typeof arr[arr.length - 1] === "string") arr[arr.length - 1] += i2;
+          else arr.push(i2);
           return arr;
         }, []);
         this.parts.splice(0);
         this.parts.push(...parts);
         this.reset();
       }
-      moveCursor(n2) {
+      moveCursor(n4) {
         this.typed = "";
-        this.cursor = n2;
+        this.cursor = n4;
         this.fire();
       }
       reset() {
@@ -1464,24 +1464,24 @@ var require_date = __commonJS({
         this.moveCursor(next ? this.parts.indexOf(next) : this.parts.findIndex((part) => part instanceof DatePart));
         this.render();
       }
-      _(c2) {
-        if (/\d/.test(c2)) {
-          this.typed += c2;
+      _(c4) {
+        if (/\d/.test(c4)) {
+          this.typed += c4;
           this.parts[this.cursor].setTo(this.typed);
           this.render();
         }
       }
       render() {
         if (this.closed) return;
-        if (this.firstRender) this.out.write(cursor.hide);
-        else this.out.write(clear(this.outputText, this.out.columns));
+        if (this.firstRender) this.out.write(cursor3.hide);
+        else this.out.write(clear3(this.outputText, this.out.columns));
         super.render();
         this.outputText = [style.symbol(this.done, this.aborted), color.bold(this.msg), style.delimiter(false), this.parts.reduce((arr, p, idx) => arr.concat(idx === this.cursor && !this.done ? color.cyan().underline(p.toString()) : p), []).join("")].join(" ");
         if (this.error) {
-          this.outputText += this.errorMsg.split("\n").reduce((a, l, i) => a + `
-${i ? ` ` : figures.pointerSmall} ${color.red().italic(l)}`, ``);
+          this.outputText += this.errorMsg.split("\n").reduce((a2, l, i2) => a2 + `
+${i2 ? ` ` : figures.pointerSmall} ${color.red().italic(l)}`, ``);
         }
-        this.out.write(erase.line + cursor.to(0) + this.outputText);
+        this.out.write(erase3.line + cursor3.to(0) + this.outputText);
       }
     };
     module2.exports = DatePrompt;
@@ -1524,12 +1524,12 @@ var require_number = __commonJS({
     var color = require_kleur();
     var Prompt = require_prompt();
     var _require = require_src();
-    var cursor = _require.cursor;
-    var erase = _require.erase;
+    var cursor3 = _require.cursor;
+    var erase3 = _require.erase;
     var _require2 = require_util();
     var style = _require2.style;
     var figures = _require2.figures;
-    var clear = _require2.clear;
+    var clear3 = _require2.clear;
     var lines = _require2.lines;
     var isNumber = /[0-9]/;
     var isDef = (any2) => any2 !== void 0;
@@ -1574,8 +1574,8 @@ var require_number = __commonJS({
       parse(x) {
         return this.float ? parseFloat(x) : parseInt(x);
       }
-      valid(c2) {
-        return c2 === `-` || c2 === `.` && this.float || isNumber.test(c2);
+      valid(c4) {
+        return c4 === `-` || c4 === `.` && this.float || isNumber.test(c4);
       }
       reset() {
         this.typed = ``;
@@ -1668,14 +1668,14 @@ var require_number = __commonJS({
         this.fire();
         this.render();
       }
-      _(c2, key) {
-        if (!this.valid(c2)) return this.bell();
+      _(c4, key) {
+        if (!this.valid(c4)) return this.bell();
         const now = Date.now();
         if (now - this.lastHit > 1e3) this.typed = ``;
-        this.typed += c2;
+        this.typed += c4;
         this.lastHit = now;
         this.color = `cyan`;
-        if (c2 === `.`) return this.fire();
+        if (c4 === `.`) return this.fire();
         this.value = Math.min(this.parse(this.typed), this.max);
         if (this.value > this.max) this.value = this.max;
         if (this.value < this.min) this.value = this.min;
@@ -1685,18 +1685,18 @@ var require_number = __commonJS({
       render() {
         if (this.closed) return;
         if (!this.firstRender) {
-          if (this.outputError) this.out.write(cursor.down(lines(this.outputError, this.out.columns) - 1) + clear(this.outputError, this.out.columns));
-          this.out.write(clear(this.outputText, this.out.columns));
+          if (this.outputError) this.out.write(cursor3.down(lines(this.outputError, this.out.columns) - 1) + clear3(this.outputError, this.out.columns));
+          this.out.write(clear3(this.outputText, this.out.columns));
         }
         super.render();
         this.outputError = "";
         this.outputText = [style.symbol(this.done, this.aborted), color.bold(this.msg), style.delimiter(this.done), !this.done || !this.done && !this.placeholder ? color[this.color]().underline(this.rendered) : this.rendered].join(` `);
         if (this.error) {
           this.outputError += this.errorMsg.split(`
-`).reduce((a, l, i) => a + `
-${i ? ` ` : figures.pointerSmall} ${color.red().italic(l)}`, ``);
+`).reduce((a2, l, i2) => a2 + `
+${i2 ? ` ` : figures.pointerSmall} ${color.red().italic(l)}`, ``);
         }
-        this.out.write(erase.line + cursor.to(0) + this.outputText + cursor.save + this.outputError + cursor.restore);
+        this.out.write(erase3.line + cursor3.to(0) + this.outputText + cursor3.save + this.outputError + cursor3.restore);
       }
     };
     module2.exports = NumberPrompt;
@@ -1709,10 +1709,10 @@ var require_multiselect = __commonJS({
     "use strict";
     var color = require_kleur();
     var _require = require_src();
-    var cursor = _require.cursor;
+    var cursor3 = _require.cursor;
     var Prompt = require_prompt();
     var _require2 = require_util();
-    var clear = _require2.clear;
+    var clear3 = _require2.clear;
     var figures = _require2.figures;
     var style = _require2.style;
     var wrap = _require2.wrap;
@@ -1743,7 +1743,7 @@ var require_multiselect = __commonJS({
             disabled: ch && ch.disabled
           };
         });
-        this.clear = clear("", this.out.columns);
+        this.clear = clear3("", this.out.columns);
         if (!opts.overrideRender) {
           this.render();
         }
@@ -1838,10 +1838,10 @@ var require_multiselect = __commonJS({
         this.value.filter((v) => !v.disabled).forEach((v) => v.selected = newSelected);
         this.render();
       }
-      _(c2, key) {
-        if (c2 === " ") {
+      _(c4, key) {
+        if (c4 === " ") {
           this.handleSpaceToggle();
-        } else if (c2 === "a") {
+        } else if (c4 === "a") {
           this.toggleAll();
         } else {
           return this.bell();
@@ -1861,14 +1861,14 @@ Instructions:
         }
         return "";
       }
-      renderOption(cursor2, v, i, arrowIndicator) {
+      renderOption(cursor4, v, i2, arrowIndicator) {
         const prefix = (v.selected ? color.green(figures.radioOn) : figures.radioOff) + " " + arrowIndicator + " ";
         let title, desc;
         if (v.disabled) {
-          title = cursor2 === i ? color.gray().underline(v.title) : color.strikethrough().gray(v.title);
+          title = cursor4 === i2 ? color.gray().underline(v.title) : color.strikethrough().gray(v.title);
         } else {
-          title = cursor2 === i ? color.cyan().underline(v.title) : v.title;
-          if (cursor2 === i && v.description) {
+          title = cursor4 === i2 ? color.cyan().underline(v.title) : v.title;
+          if (cursor4 === i2 && v.description) {
             desc = ` - ${v.description}`;
             if (prefix.length + title.length + desc.length >= this.out.columns || v.description.split(/\r?\n/).length > 1) {
               desc = "\n" + wrap(v.description, {
@@ -1887,15 +1887,15 @@ Instructions:
         }
         let _entriesToDisplay = entriesToDisplay(this.cursor, options.length, this.optionsPerPage), startIndex = _entriesToDisplay.startIndex, endIndex = _entriesToDisplay.endIndex;
         let prefix, styledOptions = [];
-        for (let i = startIndex; i < endIndex; i++) {
-          if (i === startIndex && startIndex > 0) {
+        for (let i2 = startIndex; i2 < endIndex; i2++) {
+          if (i2 === startIndex && startIndex > 0) {
             prefix = figures.arrowUp;
-          } else if (i === endIndex - 1 && endIndex < options.length) {
+          } else if (i2 === endIndex - 1 && endIndex < options.length) {
             prefix = figures.arrowDown;
           } else {
             prefix = " ";
           }
-          styledOptions.push(this.renderOption(this.cursor, options[i], i, prefix));
+          styledOptions.push(this.renderOption(this.cursor, options[i2], i2, prefix));
         }
         return "\n" + styledOptions.join("\n");
       }
@@ -1918,7 +1918,7 @@ Instructions:
       }
       render() {
         if (this.closed) return;
-        if (this.firstRender) this.out.write(cursor.hide);
+        if (this.firstRender) this.out.write(cursor3.hide);
         super.render();
         let prompt = [style.symbol(this.done, this.aborted), color.bold(this.msg), style.delimiter(false), this.renderDoneOrInstructions()].join(" ");
         if (this.showMinError) {
@@ -1927,7 +1927,7 @@ Instructions:
         }
         prompt += this.renderOptions(this.value);
         this.out.write(this.clear + prompt);
-        this.clear = clear(prompt, this.out.columns);
+        this.clear = clear3(prompt, this.out.columns);
       }
     };
     module2.exports = MultiselectPrompt;
@@ -1970,16 +1970,16 @@ var require_autocomplete = __commonJS({
     var color = require_kleur();
     var Prompt = require_prompt();
     var _require = require_src();
-    var erase = _require.erase;
-    var cursor = _require.cursor;
+    var erase3 = _require.erase;
+    var cursor3 = _require.cursor;
     var _require2 = require_util();
     var style = _require2.style;
-    var clear = _require2.clear;
+    var clear3 = _require2.clear;
     var figures = _require2.figures;
     var wrap = _require2.wrap;
     var entriesToDisplay = _require2.entriesToDisplay;
-    var getVal = (arr, i) => arr[i] && (arr[i].value || arr[i].title || arr[i]);
-    var getTitle = (arr, i) => arr[i] && (arr[i].title || arr[i].value || arr[i]);
+    var getVal = (arr, i2) => arr[i2] && (arr[i2].value || arr[i2].title || arr[i2]);
+    var getTitle = (arr, i2) => arr[i2] && (arr[i2].title || arr[i2].value || arr[i2]);
     var getIndex = (arr, valOrTitle) => {
       const index = arr.findIndex((el) => el.value === valOrTitle || el.title === valOrTitle);
       return index > -1 ? index : void 0;
@@ -2005,7 +2005,7 @@ var require_autocomplete = __commonJS({
         this.scale = this.transform.scale;
         this.render = this.render.bind(this);
         this.complete = this.complete.bind(this);
-        this.clear = clear("", this.out.columns);
+        this.clear = clear3("", this.out.columns);
         this.complete(this.render);
         this.render();
       }
@@ -2022,9 +2022,9 @@ var require_autocomplete = __commonJS({
           title: this.i18n.noMatches
         };
       }
-      moveSelect(i) {
-        this.select = i;
-        if (this.suggestions.length > 0) this.value = getVal(this.suggestions, i);
+      moveSelect(i2) {
+        this.select = i2;
+        if (this.suggestions.length > 0) this.value = getVal(this.suggestions, i2);
         else this.value = this.fallback.value;
         this.fire();
       }
@@ -2034,9 +2034,9 @@ var require_autocomplete = __commonJS({
           const p = _this.completing = _this.suggest(_this.input, _this.choices);
           const suggestions = yield p;
           if (_this.completing !== p) return;
-          _this.suggestions = suggestions.map((s, i, arr) => ({
-            title: getTitle(arr, i),
-            value: getVal(arr, i),
+          _this.suggestions = suggestions.map((s, i2, arr) => ({
+            title: getTitle(arr, i2),
+            value: getVal(arr, i2),
             description: s.description
           }));
           _this.completing = false;
@@ -2081,10 +2081,10 @@ var require_autocomplete = __commonJS({
         this.out.write("\n");
         this.close();
       }
-      _(c2, key) {
+      _(c4, key) {
         let s1 = this.input.slice(0, this.cursor);
         let s2 = this.input.slice(this.cursor);
-        this.input = `${s1}${c2}${s2}`;
+        this.input = `${s1}${c4}${s2}`;
         this.cursor = s1.length + 1;
         this.complete(this.render);
         this.render();
@@ -2172,17 +2172,17 @@ var require_autocomplete = __commonJS({
       }
       render() {
         if (this.closed) return;
-        if (this.firstRender) this.out.write(cursor.hide);
-        else this.out.write(clear(this.outputText, this.out.columns));
+        if (this.firstRender) this.out.write(cursor3.hide);
+        else this.out.write(clear3(this.outputText, this.out.columns));
         super.render();
         let _entriesToDisplay = entriesToDisplay(this.select, this.choices.length, this.limit), startIndex = _entriesToDisplay.startIndex, endIndex = _entriesToDisplay.endIndex;
         this.outputText = [style.symbol(this.done, this.aborted, this.exited), color.bold(this.msg), style.delimiter(this.completing), this.done && this.suggestions[this.select] ? this.suggestions[this.select].title : this.rendered = this.transform.render(this.input)].join(" ");
         if (!this.done) {
-          const suggestions = this.suggestions.slice(startIndex, endIndex).map((item, i) => this.renderOption(item, this.select === i + startIndex, i === 0 && startIndex > 0, i + startIndex === endIndex - 1 && endIndex < this.choices.length)).join("\n");
+          const suggestions = this.suggestions.slice(startIndex, endIndex).map((item, i2) => this.renderOption(item, this.select === i2 + startIndex, i2 === 0 && startIndex > 0, i2 + startIndex === endIndex - 1 && endIndex < this.choices.length)).join("\n");
           this.outputText += `
 ` + (suggestions || color.gray(this.fallback.title));
         }
-        this.out.write(erase.line + cursor.to(0) + this.outputText);
+        this.out.write(erase3.line + cursor3.to(0) + this.outputText);
       }
     };
     module2.exports = AutocompletePrompt;
@@ -2195,10 +2195,10 @@ var require_autocompleteMultiselect = __commonJS({
     "use strict";
     var color = require_kleur();
     var _require = require_src();
-    var cursor = _require.cursor;
+    var cursor3 = _require.cursor;
     var MultiselectPrompt = require_multiselect();
     var _require2 = require_util();
-    var clear = _require2.clear;
+    var clear3 = _require2.clear;
     var style = _require2.style;
     var figures = _require2.figures;
     var AutocompleteMultiselectPrompt = class extends MultiselectPrompt {
@@ -2206,7 +2206,7 @@ var require_autocompleteMultiselect = __commonJS({
         opts.overrideRender = true;
         super(opts);
         this.inputValue = "";
-        this.clear = clear("", this.out.columns);
+        this.clear = clear3("", this.out.columns);
         this.filteredOptions = this.value;
         this.render();
       }
@@ -2283,15 +2283,15 @@ var require_autocompleteMultiselect = __commonJS({
           this.render();
         }
       }
-      handleInputChange(c2) {
-        this.inputValue = this.inputValue + c2;
+      handleInputChange(c4) {
+        this.inputValue = this.inputValue + c4;
         this.updateFilteredOptions();
       }
-      _(c2, key) {
-        if (c2 === " ") {
+      _(c4, key) {
+        if (c4 === " ") {
           this.handleSpaceToggle();
         } else {
-          this.handleInputChange(c2);
+          this.handleInputChange(c4);
         }
       }
       renderInstructions() {
@@ -2314,10 +2314,10 @@ Instructions:
 Filtered results for: ${this.inputValue ? this.inputValue : color.gray("Enter something to filter")}
 `;
       }
-      renderOption(cursor2, v, i) {
+      renderOption(cursor4, v, i2) {
         let title;
-        if (v.disabled) title = cursor2 === i ? color.gray().underline(v.title) : color.strikethrough().gray(v.title);
-        else title = cursor2 === i ? color.cyan().underline(v.title) : v.title;
+        if (v.disabled) title = cursor4 === i2 ? color.gray().underline(v.title) : color.strikethrough().gray(v.title);
+        else title = cursor4 === i2 ? color.cyan().underline(v.title) : v.title;
         return (v.selected ? color.green(figures.radioOn) : figures.radioOff) + "  " + title;
       }
       renderDoneOrInstructions() {
@@ -2332,7 +2332,7 @@ Filtered results for: ${this.inputValue ? this.inputValue : color.gray("Enter so
       }
       render() {
         if (this.closed) return;
-        if (this.firstRender) this.out.write(cursor.hide);
+        if (this.firstRender) this.out.write(cursor3.hide);
         super.render();
         let prompt = [style.symbol(this.done, this.aborted), color.bold(this.msg), style.delimiter(false), this.renderDoneOrInstructions()].join(" ");
         if (this.showMinError) {
@@ -2341,7 +2341,7 @@ Filtered results for: ${this.inputValue ? this.inputValue : color.gray("Enter so
         }
         prompt += this.renderOptions(this.filteredOptions);
         this.out.write(this.clear + prompt);
-        this.clear = clear(prompt, this.out.columns);
+        this.clear = clear3(prompt, this.out.columns);
       }
     };
     module2.exports = AutocompleteMultiselectPrompt;
@@ -2356,10 +2356,10 @@ var require_confirm = __commonJS({
     var Prompt = require_prompt();
     var _require = require_util();
     var style = _require.style;
-    var clear = _require.clear;
+    var clear3 = _require.clear;
     var _require2 = require_src();
-    var erase = _require2.erase;
-    var cursor = _require2.cursor;
+    var erase3 = _require2.erase;
+    var cursor3 = _require2.cursor;
     var ConfirmPrompt = class extends Prompt {
       constructor(opts = {}) {
         super(opts);
@@ -2396,12 +2396,12 @@ var require_confirm = __commonJS({
         this.out.write("\n");
         this.close();
       }
-      _(c2, key) {
-        if (c2.toLowerCase() === "y") {
+      _(c4, key) {
+        if (c4.toLowerCase() === "y") {
           this.value = true;
           return this.submit();
         }
-        if (c2.toLowerCase() === "n") {
+        if (c4.toLowerCase() === "n") {
           this.value = false;
           return this.submit();
         }
@@ -2409,11 +2409,11 @@ var require_confirm = __commonJS({
       }
       render() {
         if (this.closed) return;
-        if (this.firstRender) this.out.write(cursor.hide);
-        else this.out.write(clear(this.outputText, this.out.columns));
+        if (this.firstRender) this.out.write(cursor3.hide);
+        else this.out.write(clear3(this.outputText, this.out.columns));
         super.render();
         this.outputText = [style.symbol(this.done, this.aborted), color.bold(this.msg), style.delimiter(this.done), this.done ? this.value ? this.yesMsg : this.noMsg : color.gray(this.initialValue ? this.yesOption : this.noOption)].join(" ");
-        this.out.write(erase.line + cursor.to(0) + this.outputText);
+        this.out.write(erase3.line + cursor3.to(0) + this.outputText);
       }
     };
     module2.exports = ConfirmPrompt;
@@ -2520,9 +2520,9 @@ var require_dist = __commonJS({
       return keys;
     }
     function _objectSpread(target) {
-      for (var i = 1; i < arguments.length; i++) {
-        var source = arguments[i] != null ? arguments[i] : {};
-        if (i % 2) {
+      for (var i2 = 1; i2 < arguments.length; i2++) {
+        var source = arguments[i2] != null ? arguments[i2] : {};
+        if (i2 % 2) {
           ownKeys(Object(source), true).forEach(function(key) {
             _defineProperty(target, key, source[key]);
           });
@@ -2549,12 +2549,12 @@ var require_dist = __commonJS({
       if (!it) {
         if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") {
           if (it) o = it;
-          var i = 0;
+          var i2 = 0;
           var F = function F2() {
           };
-          return { s: F, n: function n2() {
-            if (i >= o.length) return { done: true };
-            return { done: false, value: o[i++] };
+          return { s: F, n: function n4() {
+            if (i2 >= o.length) return { done: true };
+            return { done: false, value: o[i2++] };
           }, e: function e(_e) {
             throw _e;
           }, f: F };
@@ -2564,7 +2564,7 @@ var require_dist = __commonJS({
       var normalCompletion = true, didErr = false, err;
       return { s: function s() {
         it = it.call(o);
-      }, n: function n2() {
+      }, n: function n4() {
         var step = it.next();
         normalCompletion = step.done;
         return step;
@@ -2582,14 +2582,14 @@ var require_dist = __commonJS({
     function _unsupportedIterableToArray(o, minLen) {
       if (!o) return;
       if (typeof o === "string") return _arrayLikeToArray(o, minLen);
-      var n2 = Object.prototype.toString.call(o).slice(8, -1);
-      if (n2 === "Object" && o.constructor) n2 = o.constructor.name;
-      if (n2 === "Map" || n2 === "Set") return Array.from(o);
-      if (n2 === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n2)) return _arrayLikeToArray(o, minLen);
+      var n4 = Object.prototype.toString.call(o).slice(8, -1);
+      if (n4 === "Object" && o.constructor) n4 = o.constructor.name;
+      if (n4 === "Map" || n4 === "Set") return Array.from(o);
+      if (n4 === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n4)) return _arrayLikeToArray(o, minLen);
     }
     function _arrayLikeToArray(arr, len) {
       if (len == null || len > arr.length) len = arr.length;
-      for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i];
+      for (var i2 = 0, arr2 = new Array(len); i2 < len; i2++) arr2[i2] = arr[i2];
       return arr2;
     }
     function asyncGeneratorStep(gen2, resolve, reject, _next, _throw, key, arg) {
@@ -2779,16 +2779,16 @@ var require_clear2 = __commonJS({
   "node_modules/prompts/lib/util/clear.js"(exports2, module2) {
     "use strict";
     var strip = require_strip2();
-    var { erase, cursor } = require_src();
+    var { erase: erase3, cursor: cursor3 } = require_src();
     var width = (str) => [...strip(str)].length;
     module2.exports = function(prompt, perLine) {
-      if (!perLine) return erase.line + cursor.to(0);
+      if (!perLine) return erase3.line + cursor3.to(0);
       let rows = 0;
       const lines = prompt.split(/\r?\n/);
       for (let line of lines) {
         rows += 1 + Math.floor(Math.max(width(line) - 1, 0) / perLine);
       }
-      return erase.lines(rows);
+      return erase3.lines(rows);
     };
   }
 });
@@ -2834,7 +2834,7 @@ var require_figures2 = __commonJS({
 var require_style2 = __commonJS({
   "node_modules/prompts/lib/util/style.js"(exports2, module2) {
     "use strict";
-    var c2 = require_kleur();
+    var c4 = require_kleur();
     var figures = require_figures2();
     var styles = Object.freeze({
       password: { scale: 1, render: (input) => "*".repeat(input.length) },
@@ -2844,19 +2844,19 @@ var require_style2 = __commonJS({
     });
     var render = (type) => styles[type] || styles.default;
     var symbols = Object.freeze({
-      aborted: c2.red(figures.cross),
-      done: c2.green(figures.tick),
-      exited: c2.yellow(figures.cross),
-      default: c2.cyan("?")
+      aborted: c4.red(figures.cross),
+      done: c4.green(figures.tick),
+      exited: c4.yellow(figures.cross),
+      default: c4.cyan("?")
     });
-    var symbol = (done, aborted, exited) => aborted ? symbols.aborted : exited ? symbols.exited : done ? symbols.done : symbols.default;
-    var delimiter = (completing) => c2.gray(completing ? figures.ellipsis : figures.pointerSmall);
-    var item = (expandable, expanded) => c2.gray(expandable ? expanded ? figures.pointerSmall : "+" : figures.line);
+    var symbol2 = (done, aborted, exited) => aborted ? symbols.aborted : exited ? symbols.exited : done ? symbols.done : symbols.default;
+    var delimiter = (completing) => c4.gray(completing ? figures.ellipsis : figures.pointerSmall);
+    var item = (expandable, expanded) => c4.gray(expandable ? expanded ? figures.pointerSmall : "+" : figures.line);
     module2.exports = {
       styles,
       render,
       symbols,
-      symbol,
+      symbol: symbol2,
       delimiter,
       item
     };
@@ -2871,7 +2871,7 @@ var require_lines2 = __commonJS({
     module2.exports = function(msg, perLine) {
       let lines = String(strip(msg) || "").split(/\r?\n/);
       if (!perLine) return lines.length;
-      return lines.map((l) => Math.ceil(l.length / perLine)).reduce((a, b2) => a + b2);
+      return lines.map((l) => Math.ceil(l.length / perLine)).reduce((a2, b2) => a2 + b2);
     };
   }
 });
@@ -2897,9 +2897,9 @@ var require_wrap2 = __commonJS({
 var require_entriesToDisplay2 = __commonJS({
   "node_modules/prompts/lib/util/entriesToDisplay.js"(exports2, module2) {
     "use strict";
-    module2.exports = (cursor, total, maxVisible) => {
+    module2.exports = (cursor3, total, maxVisible) => {
       maxVisible = maxVisible || total;
-      let startIndex = Math.min(total - maxVisible, cursor - Math.floor(maxVisible / 2));
+      let startIndex = Math.min(total - maxVisible, cursor3 - Math.floor(maxVisible / 2));
       if (startIndex < 0) startIndex = 0;
       let endIndex = Math.min(startIndex + maxVisible, total);
       return { startIndex, endIndex };
@@ -2931,7 +2931,7 @@ var require_prompt2 = __commonJS({
     var readline = require("readline");
     var { action } = require_util2();
     var EventEmitter = require("events");
-    var { beep, cursor } = require_src();
+    var { beep, cursor: cursor3 } = require_src();
     var color = require_kleur();
     var Prompt = class extends EventEmitter {
       constructor(opts = {}) {
@@ -2945,17 +2945,17 @@ var require_prompt2 = __commonJS({
         if (this.in.isTTY) this.in.setRawMode(true);
         const isSelect = ["SelectPrompt", "MultiselectPrompt"].indexOf(this.constructor.name) > -1;
         const keypress = (str, key) => {
-          let a = action(key, isSelect);
-          if (a === false) {
+          let a2 = action(key, isSelect);
+          if (a2 === false) {
             this._ && this._(str, key);
-          } else if (typeof this[a] === "function") {
-            this[a](key);
+          } else if (typeof this[a2] === "function") {
+            this[a2](key);
           } else {
             this.bell();
           }
         };
         this.close = () => {
-          this.out.write(cursor.show);
+          this.out.write(cursor3.show);
           this.in.removeListener("keypress", keypress);
           if (this.in.isTTY) this.in.setRawMode(false);
           rl.close();
@@ -2988,8 +2988,8 @@ var require_text2 = __commonJS({
   "node_modules/prompts/lib/elements/text.js"(exports2, module2) {
     var color = require_kleur();
     var Prompt = require_prompt2();
-    var { erase, cursor } = require_src();
-    var { style, clear, lines, figures } = require_util2();
+    var { erase: erase3, cursor: cursor3 } = require_src();
+    var { style, clear: clear3, lines, figures } = require_util2();
     var TextPrompt = class extends Prompt {
       constructor(opts = {}) {
         super(opts);
@@ -3002,7 +3002,7 @@ var require_text2 = __commonJS({
         this.errorMsg = opts.error || `Please Enter A Valid Value`;
         this.cursor = Number(!!this.initial);
         this.cursorOffset = 0;
-        this.clear = clear(``, this.out.columns);
+        this.clear = clear3(``, this.out.columns);
         this.render();
       }
       set value(v) {
@@ -3072,15 +3072,15 @@ var require_text2 = __commonJS({
         this.fire();
         this.render();
       }
-      moveCursor(n2) {
+      moveCursor(n4) {
         if (this.placeholder) return;
-        this.cursor = this.cursor + n2;
-        this.cursorOffset += n2;
+        this.cursor = this.cursor + n4;
+        this.cursorOffset += n4;
       }
-      _(c2, key) {
+      _(c4, key) {
         let s1 = this.value.slice(0, this.cursor);
         let s2 = this.value.slice(this.cursor);
-        this.value = `${s1}${c2}${s2}`;
+        this.value = `${s1}${c4}${s2}`;
         this.red = false;
         this.cursor = this.placeholder ? 0 : s1.length + 1;
         this.render();
@@ -3140,8 +3140,8 @@ var require_text2 = __commonJS({
         if (this.closed) return;
         if (!this.firstRender) {
           if (this.outputError)
-            this.out.write(cursor.down(lines(this.outputError, this.out.columns) - 1) + clear(this.outputError, this.out.columns));
-          this.out.write(clear(this.outputText, this.out.columns));
+            this.out.write(cursor3.down(lines(this.outputError, this.out.columns) - 1) + clear3(this.outputError, this.out.columns));
+          this.out.write(clear3(this.outputText, this.out.columns));
         }
         super.render();
         this.outputError = "";
@@ -3153,10 +3153,10 @@ var require_text2 = __commonJS({
         ].join(` `);
         if (this.error) {
           this.outputError += this.errorMsg.split(`
-`).reduce((a, l, i) => a + `
-${i ? " " : figures.pointerSmall} ${color.red().italic(l)}`, ``);
+`).reduce((a2, l, i2) => a2 + `
+${i2 ? " " : figures.pointerSmall} ${color.red().italic(l)}`, ``);
         }
-        this.out.write(erase.line + cursor.to(0) + this.outputText + cursor.save + this.outputError + cursor.restore + cursor.move(this.cursorOffset, 0));
+        this.out.write(erase3.line + cursor3.to(0) + this.outputText + cursor3.save + this.outputError + cursor3.restore + cursor3.move(this.cursorOffset, 0));
       }
     };
     module2.exports = TextPrompt;
@@ -3169,8 +3169,8 @@ var require_select2 = __commonJS({
     "use strict";
     var color = require_kleur();
     var Prompt = require_prompt2();
-    var { style, clear, figures, wrap, entriesToDisplay } = require_util2();
-    var { cursor } = require_src();
+    var { style, clear: clear3, figures, wrap, entriesToDisplay } = require_util2();
+    var { cursor: cursor3 } = require_src();
     var SelectPrompt = class extends Prompt {
       constructor(opts = {}) {
         super(opts);
@@ -3191,12 +3191,12 @@ var require_select2 = __commonJS({
         });
         this.optionsPerPage = opts.optionsPerPage || 10;
         this.value = (this.choices[this.cursor] || {}).value;
-        this.clear = clear("", this.out.columns);
+        this.clear = clear3("", this.out.columns);
         this.render();
       }
-      moveCursor(n2) {
-        this.cursor = n2;
-        this.value = this.choices[n2].value;
+      moveCursor(n4) {
+        this.cursor = n4;
+        this.value = this.choices[n4].value;
         this.fire();
       }
       reset() {
@@ -3253,16 +3253,16 @@ var require_select2 = __commonJS({
         this.moveCursor((this.cursor + 1) % this.choices.length);
         this.render();
       }
-      _(c2, key) {
-        if (c2 === " ") return this.submit();
+      _(c4, key) {
+        if (c4 === " ") return this.submit();
       }
       get selection() {
         return this.choices[this.cursor];
       }
       render() {
         if (this.closed) return;
-        if (this.firstRender) this.out.write(cursor.hide);
-        else this.out.write(clear(this.outputText, this.out.columns));
+        if (this.firstRender) this.out.write(cursor3.hide);
+        else this.out.write(clear3(this.outputText, this.out.columns));
         super.render();
         let { startIndex, endIndex } = entriesToDisplay(this.cursor, this.choices.length, this.optionsPerPage);
         this.outputText = [
@@ -3273,22 +3273,22 @@ var require_select2 = __commonJS({
         ].join(" ");
         if (!this.done) {
           this.outputText += "\n";
-          for (let i = startIndex; i < endIndex; i++) {
-            let title, prefix, desc = "", v = this.choices[i];
-            if (i === startIndex && startIndex > 0) {
+          for (let i2 = startIndex; i2 < endIndex; i2++) {
+            let title, prefix, desc = "", v = this.choices[i2];
+            if (i2 === startIndex && startIndex > 0) {
               prefix = figures.arrowUp;
-            } else if (i === endIndex - 1 && endIndex < this.choices.length) {
+            } else if (i2 === endIndex - 1 && endIndex < this.choices.length) {
               prefix = figures.arrowDown;
             } else {
               prefix = " ";
             }
             if (v.disabled) {
-              title = this.cursor === i ? color.gray().underline(v.title) : color.strikethrough().gray(v.title);
-              prefix = (this.cursor === i ? color.bold().gray(figures.pointer) + " " : "  ") + prefix;
+              title = this.cursor === i2 ? color.gray().underline(v.title) : color.strikethrough().gray(v.title);
+              prefix = (this.cursor === i2 ? color.bold().gray(figures.pointer) + " " : "  ") + prefix;
             } else {
-              title = this.cursor === i ? color.cyan().underline(v.title) : v.title;
-              prefix = (this.cursor === i ? color.cyan(figures.pointer) + " " : "  ") + prefix;
-              if (v.description && this.cursor === i) {
+              title = this.cursor === i2 ? color.cyan().underline(v.title) : v.title;
+              prefix = (this.cursor === i2 ? color.cyan(figures.pointer) + " " : "  ") + prefix;
+              if (v.description && this.cursor === i2) {
                 desc = ` - ${v.description}`;
                 if (prefix.length + title.length + desc.length >= this.out.columns || v.description.split(/\r?\n/).length > 1) {
                   desc = "\n" + wrap(v.description, { margin: 3, width: this.out.columns });
@@ -3311,8 +3311,8 @@ var require_toggle2 = __commonJS({
   "node_modules/prompts/lib/elements/toggle.js"(exports2, module2) {
     var color = require_kleur();
     var Prompt = require_prompt2();
-    var { style, clear } = require_util2();
-    var { cursor, erase } = require_src();
+    var { style, clear: clear3 } = require_util2();
+    var { cursor: cursor3, erase: erase3 } = require_src();
     var TogglePrompt = class extends Prompt {
       constructor(opts = {}) {
         super(opts);
@@ -3376,20 +3376,20 @@ var require_toggle2 = __commonJS({
         this.fire();
         this.render();
       }
-      _(c2, key) {
-        if (c2 === " ") {
+      _(c4, key) {
+        if (c4 === " ") {
           this.value = !this.value;
-        } else if (c2 === "1") {
+        } else if (c4 === "1") {
           this.value = true;
-        } else if (c2 === "0") {
+        } else if (c4 === "0") {
           this.value = false;
         } else return this.bell();
         this.render();
       }
       render() {
         if (this.closed) return;
-        if (this.firstRender) this.out.write(cursor.hide);
-        else this.out.write(clear(this.outputText, this.out.columns));
+        if (this.firstRender) this.out.write(cursor3.hide);
+        else this.out.write(clear3(this.outputText, this.out.columns));
         super.render();
         this.outputText = [
           style.symbol(this.done, this.aborted),
@@ -3399,7 +3399,7 @@ var require_toggle2 = __commonJS({
           color.gray("/"),
           this.value ? color.cyan().underline(this.active) : this.active
         ].join(" ");
-        this.out.write(erase.line + cursor.to(0) + this.outputText);
+        this.out.write(erase3.line + cursor3.to(0) + this.outputText);
       }
     };
     module2.exports = TogglePrompt;
@@ -3469,9 +3469,9 @@ var require_day2 = __commonJS({
   "node_modules/prompts/lib/dateparts/day.js"(exports2, module2) {
     "use strict";
     var DatePart = require_datepart2();
-    var pos = (n2) => {
-      n2 = n2 % 10;
-      return n2 === 1 ? "st" : n2 === 2 ? "nd" : n2 === 3 ? "rd" : "th";
+    var pos = (n4) => {
+      n4 = n4 % 10;
+      return n4 === 1 ? "st" : n4 === 2 ? "nd" : n4 === 3 ? "rd" : "th";
     };
     var Day = class extends DatePart {
       constructor(opts = {}) {
@@ -3685,8 +3685,8 @@ var require_date2 = __commonJS({
     "use strict";
     var color = require_kleur();
     var Prompt = require_prompt2();
-    var { style, clear, figures } = require_util2();
-    var { erase, cursor } = require_src();
+    var { style, clear: clear3, figures } = require_util2();
+    var { erase: erase3, cursor: cursor3 } = require_src();
     var { DatePart, Meridiem, Day, Hours, Milliseconds, Minutes, Month, Seconds, Year } = require_dateparts2();
     var regex2 = /\\(.)|"((?:\\["\\]|[^"])+)"|(D[Do]?|d{3,4}|d)|(M{1,4})|(YY(?:YY)?)|([aA])|([Hh]{1,2})|(m{1,2})|(s{1,2})|(S{1,4})|./g;
     var regexGroups = {
@@ -3725,7 +3725,7 @@ var require_date2 = __commonJS({
         this.errorMsg = opts.error || "Please Enter A Valid Value";
         this.validator = opts.validate || (() => true);
         this.mask = opts.mask || "YYYY-MM-DD HH:mm:ss";
-        this.clear = clear("", this.out.columns);
+        this.clear = clear3("", this.out.columns);
         this.render();
       }
       get value() {
@@ -3745,19 +3745,19 @@ var require_date2 = __commonJS({
           let idx = result.findIndex((gr) => gr != null);
           this.parts.push(idx in regexGroups ? regexGroups[idx]({ token: result[idx] || match, date: this.date, parts: this.parts, locales: this.locales }) : result[idx] || match);
         }
-        let parts = this.parts.reduce((arr, i) => {
-          if (typeof i === "string" && typeof arr[arr.length - 1] === "string")
-            arr[arr.length - 1] += i;
-          else arr.push(i);
+        let parts = this.parts.reduce((arr, i2) => {
+          if (typeof i2 === "string" && typeof arr[arr.length - 1] === "string")
+            arr[arr.length - 1] += i2;
+          else arr.push(i2);
           return arr;
         }, []);
         this.parts.splice(0);
         this.parts.push(...parts);
         this.reset();
       }
-      moveCursor(n2) {
+      moveCursor(n4) {
         this.typed = "";
-        this.cursor = n2;
+        this.cursor = n4;
         this.fire();
       }
       reset() {
@@ -3826,17 +3826,17 @@ var require_date2 = __commonJS({
         this.moveCursor(next ? this.parts.indexOf(next) : this.parts.findIndex((part) => part instanceof DatePart));
         this.render();
       }
-      _(c2) {
-        if (/\d/.test(c2)) {
-          this.typed += c2;
+      _(c4) {
+        if (/\d/.test(c4)) {
+          this.typed += c4;
           this.parts[this.cursor].setTo(this.typed);
           this.render();
         }
       }
       render() {
         if (this.closed) return;
-        if (this.firstRender) this.out.write(cursor.hide);
-        else this.out.write(clear(this.outputText, this.out.columns));
+        if (this.firstRender) this.out.write(cursor3.hide);
+        else this.out.write(clear3(this.outputText, this.out.columns));
         super.render();
         this.outputText = [
           style.symbol(this.done, this.aborted),
@@ -3846,12 +3846,12 @@ var require_date2 = __commonJS({
         ].join(" ");
         if (this.error) {
           this.outputText += this.errorMsg.split("\n").reduce(
-            (a, l, i) => a + `
-${i ? ` ` : figures.pointerSmall} ${color.red().italic(l)}`,
+            (a2, l, i2) => a2 + `
+${i2 ? ` ` : figures.pointerSmall} ${color.red().italic(l)}`,
             ``
           );
         }
-        this.out.write(erase.line + cursor.to(0) + this.outputText);
+        this.out.write(erase3.line + cursor3.to(0) + this.outputText);
       }
     };
     module2.exports = DatePrompt;
@@ -3863,8 +3863,8 @@ var require_number2 = __commonJS({
   "node_modules/prompts/lib/elements/number.js"(exports2, module2) {
     var color = require_kleur();
     var Prompt = require_prompt2();
-    var { cursor, erase } = require_src();
-    var { style, figures, clear, lines } = require_util2();
+    var { cursor: cursor3, erase: erase3 } = require_src();
+    var { style, figures, clear: clear3, lines } = require_util2();
     var isNumber = /[0-9]/;
     var isDef = (any2) => any2 !== void 0;
     var round = (number3, precision) => {
@@ -3908,8 +3908,8 @@ var require_number2 = __commonJS({
       parse(x) {
         return this.float ? parseFloat(x) : parseInt(x);
       }
-      valid(c2) {
-        return c2 === `-` || c2 === `.` && this.float || isNumber.test(c2);
+      valid(c4) {
+        return c4 === `-` || c4 === `.` && this.float || isNumber.test(c4);
       }
       reset() {
         this.typed = ``;
@@ -3996,14 +3996,14 @@ var require_number2 = __commonJS({
         this.fire();
         this.render();
       }
-      _(c2, key) {
-        if (!this.valid(c2)) return this.bell();
+      _(c4, key) {
+        if (!this.valid(c4)) return this.bell();
         const now = Date.now();
         if (now - this.lastHit > 1e3) this.typed = ``;
-        this.typed += c2;
+        this.typed += c4;
         this.lastHit = now;
         this.color = `cyan`;
-        if (c2 === `.`) return this.fire();
+        if (c4 === `.`) return this.fire();
         this.value = Math.min(this.parse(this.typed), this.max);
         if (this.value > this.max) this.value = this.max;
         if (this.value < this.min) this.value = this.min;
@@ -4014,8 +4014,8 @@ var require_number2 = __commonJS({
         if (this.closed) return;
         if (!this.firstRender) {
           if (this.outputError)
-            this.out.write(cursor.down(lines(this.outputError, this.out.columns) - 1) + clear(this.outputError, this.out.columns));
-          this.out.write(clear(this.outputText, this.out.columns));
+            this.out.write(cursor3.down(lines(this.outputError, this.out.columns) - 1) + clear3(this.outputError, this.out.columns));
+          this.out.write(clear3(this.outputText, this.out.columns));
         }
         super.render();
         this.outputError = "";
@@ -4027,10 +4027,10 @@ var require_number2 = __commonJS({
         ].join(` `);
         if (this.error) {
           this.outputError += this.errorMsg.split(`
-`).reduce((a, l, i) => a + `
-${i ? ` ` : figures.pointerSmall} ${color.red().italic(l)}`, ``);
+`).reduce((a2, l, i2) => a2 + `
+${i2 ? ` ` : figures.pointerSmall} ${color.red().italic(l)}`, ``);
         }
-        this.out.write(erase.line + cursor.to(0) + this.outputText + cursor.save + this.outputError + cursor.restore);
+        this.out.write(erase3.line + cursor3.to(0) + this.outputText + cursor3.save + this.outputError + cursor3.restore);
       }
     };
     module2.exports = NumberPrompt;
@@ -4042,9 +4042,9 @@ var require_multiselect2 = __commonJS({
   "node_modules/prompts/lib/elements/multiselect.js"(exports2, module2) {
     "use strict";
     var color = require_kleur();
-    var { cursor } = require_src();
+    var { cursor: cursor3 } = require_src();
     var Prompt = require_prompt2();
-    var { clear, figures, style, wrap, entriesToDisplay } = require_util2();
+    var { clear: clear3, figures, style, wrap, entriesToDisplay } = require_util2();
     var MultiselectPrompt = class extends Prompt {
       constructor(opts = {}) {
         super(opts);
@@ -4069,7 +4069,7 @@ var require_multiselect2 = __commonJS({
             disabled: ch && ch.disabled
           };
         });
-        this.clear = clear("", this.out.columns);
+        this.clear = clear3("", this.out.columns);
         if (!opts.overrideRender) {
           this.render();
         }
@@ -4164,10 +4164,10 @@ var require_multiselect2 = __commonJS({
         this.value.filter((v) => !v.disabled).forEach((v) => v.selected = newSelected);
         this.render();
       }
-      _(c2, key) {
-        if (c2 === " ") {
+      _(c4, key) {
+        if (c4 === " ") {
           this.handleSpaceToggle();
-        } else if (c2 === "a") {
+        } else if (c4 === "a") {
           this.toggleAll();
         } else {
           return this.bell();
@@ -4187,14 +4187,14 @@ Instructions:
         }
         return "";
       }
-      renderOption(cursor2, v, i, arrowIndicator) {
+      renderOption(cursor4, v, i2, arrowIndicator) {
         const prefix = (v.selected ? color.green(figures.radioOn) : figures.radioOff) + " " + arrowIndicator + " ";
         let title, desc;
         if (v.disabled) {
-          title = cursor2 === i ? color.gray().underline(v.title) : color.strikethrough().gray(v.title);
+          title = cursor4 === i2 ? color.gray().underline(v.title) : color.strikethrough().gray(v.title);
         } else {
-          title = cursor2 === i ? color.cyan().underline(v.title) : v.title;
-          if (cursor2 === i && v.description) {
+          title = cursor4 === i2 ? color.cyan().underline(v.title) : v.title;
+          if (cursor4 === i2 && v.description) {
             desc = ` - ${v.description}`;
             if (prefix.length + title.length + desc.length >= this.out.columns || v.description.split(/\r?\n/).length > 1) {
               desc = "\n" + wrap(v.description, { margin: prefix.length, width: this.out.columns });
@@ -4210,15 +4210,15 @@ Instructions:
         }
         let { startIndex, endIndex } = entriesToDisplay(this.cursor, options.length, this.optionsPerPage);
         let prefix, styledOptions = [];
-        for (let i = startIndex; i < endIndex; i++) {
-          if (i === startIndex && startIndex > 0) {
+        for (let i2 = startIndex; i2 < endIndex; i2++) {
+          if (i2 === startIndex && startIndex > 0) {
             prefix = figures.arrowUp;
-          } else if (i === endIndex - 1 && endIndex < options.length) {
+          } else if (i2 === endIndex - 1 && endIndex < options.length) {
             prefix = figures.arrowDown;
           } else {
             prefix = " ";
           }
-          styledOptions.push(this.renderOption(this.cursor, options[i], i, prefix));
+          styledOptions.push(this.renderOption(this.cursor, options[i2], i2, prefix));
         }
         return "\n" + styledOptions.join("\n");
       }
@@ -4241,7 +4241,7 @@ Instructions:
       }
       render() {
         if (this.closed) return;
-        if (this.firstRender) this.out.write(cursor.hide);
+        if (this.firstRender) this.out.write(cursor3.hide);
         super.render();
         let prompt = [
           style.symbol(this.done, this.aborted),
@@ -4255,7 +4255,7 @@ Instructions:
         }
         prompt += this.renderOptions(this.value);
         this.out.write(this.clear + prompt);
-        this.clear = clear(prompt, this.out.columns);
+        this.clear = clear3(prompt, this.out.columns);
       }
     };
     module2.exports = MultiselectPrompt;
@@ -4268,10 +4268,10 @@ var require_autocomplete2 = __commonJS({
     "use strict";
     var color = require_kleur();
     var Prompt = require_prompt2();
-    var { erase, cursor } = require_src();
-    var { style, clear, figures, wrap, entriesToDisplay } = require_util2();
-    var getVal = (arr, i) => arr[i] && (arr[i].value || arr[i].title || arr[i]);
-    var getTitle = (arr, i) => arr[i] && (arr[i].title || arr[i].value || arr[i]);
+    var { erase: erase3, cursor: cursor3 } = require_src();
+    var { style, clear: clear3, figures, wrap, entriesToDisplay } = require_util2();
+    var getVal = (arr, i2) => arr[i2] && (arr[i2].value || arr[i2].title || arr[i2]);
+    var getTitle = (arr, i2) => arr[i2] && (arr[i2].title || arr[i2].value || arr[i2]);
     var getIndex = (arr, valOrTitle) => {
       const index = arr.findIndex((el) => el.value === valOrTitle || el.title === valOrTitle);
       return index > -1 ? index : void 0;
@@ -4295,7 +4295,7 @@ var require_autocomplete2 = __commonJS({
         this.scale = this.transform.scale;
         this.render = this.render.bind(this);
         this.complete = this.complete.bind(this);
-        this.clear = clear("", this.out.columns);
+        this.clear = clear3("", this.out.columns);
         this.complete(this.render);
         this.render();
       }
@@ -4310,10 +4310,10 @@ var require_autocomplete2 = __commonJS({
           choice = { title: this._fb };
         return choice || this._fb || { title: this.i18n.noMatches };
       }
-      moveSelect(i) {
-        this.select = i;
+      moveSelect(i2) {
+        this.select = i2;
         if (this.suggestions.length > 0)
-          this.value = getVal(this.suggestions, i);
+          this.value = getVal(this.suggestions, i2);
         else this.value = this.fallback.value;
         this.fire();
       }
@@ -4321,7 +4321,7 @@ var require_autocomplete2 = __commonJS({
         const p = this.completing = this.suggest(this.input, this.choices);
         const suggestions = await p;
         if (this.completing !== p) return;
-        this.suggestions = suggestions.map((s, i, arr) => ({ title: getTitle(arr, i), value: getVal(arr, i), description: s.description }));
+        this.suggestions = suggestions.map((s, i2, arr) => ({ title: getTitle(arr, i2), value: getVal(arr, i2), description: s.description }));
         this.completing = false;
         const l = Math.max(suggestions.length - 1, 0);
         this.moveSelect(Math.min(l, this.select));
@@ -4363,10 +4363,10 @@ var require_autocomplete2 = __commonJS({
         this.out.write("\n");
         this.close();
       }
-      _(c2, key) {
+      _(c4, key) {
         let s1 = this.input.slice(0, this.cursor);
         let s2 = this.input.slice(this.cursor);
-        this.input = `${s1}${c2}${s2}`;
+        this.input = `${s1}${c4}${s2}`;
         this.cursor = s1.length + 1;
         this.complete(this.render);
         this.render();
@@ -4451,8 +4451,8 @@ var require_autocomplete2 = __commonJS({
       }
       render() {
         if (this.closed) return;
-        if (this.firstRender) this.out.write(cursor.hide);
-        else this.out.write(clear(this.outputText, this.out.columns));
+        if (this.firstRender) this.out.write(cursor3.hide);
+        else this.out.write(clear3(this.outputText, this.out.columns));
         super.render();
         let { startIndex, endIndex } = entriesToDisplay(this.select, this.choices.length, this.limit);
         this.outputText = [
@@ -4462,16 +4462,16 @@ var require_autocomplete2 = __commonJS({
           this.done && this.suggestions[this.select] ? this.suggestions[this.select].title : this.rendered = this.transform.render(this.input)
         ].join(" ");
         if (!this.done) {
-          const suggestions = this.suggestions.slice(startIndex, endIndex).map((item, i) => this.renderOption(
+          const suggestions = this.suggestions.slice(startIndex, endIndex).map((item, i2) => this.renderOption(
             item,
-            this.select === i + startIndex,
-            i === 0 && startIndex > 0,
-            i + startIndex === endIndex - 1 && endIndex < this.choices.length
+            this.select === i2 + startIndex,
+            i2 === 0 && startIndex > 0,
+            i2 + startIndex === endIndex - 1 && endIndex < this.choices.length
           )).join("\n");
           this.outputText += `
 ` + (suggestions || color.gray(this.fallback.title));
         }
-        this.out.write(erase.line + cursor.to(0) + this.outputText);
+        this.out.write(erase3.line + cursor3.to(0) + this.outputText);
       }
     };
     module2.exports = AutocompletePrompt;
@@ -4483,15 +4483,15 @@ var require_autocompleteMultiselect2 = __commonJS({
   "node_modules/prompts/lib/elements/autocompleteMultiselect.js"(exports2, module2) {
     "use strict";
     var color = require_kleur();
-    var { cursor } = require_src();
+    var { cursor: cursor3 } = require_src();
     var MultiselectPrompt = require_multiselect2();
-    var { clear, style, figures } = require_util2();
+    var { clear: clear3, style, figures } = require_util2();
     var AutocompleteMultiselectPrompt = class extends MultiselectPrompt {
       constructor(opts = {}) {
         opts.overrideRender = true;
         super(opts);
         this.inputValue = "";
-        this.clear = clear("", this.out.columns);
+        this.clear = clear3("", this.out.columns);
         this.filteredOptions = this.value;
         this.render();
       }
@@ -4568,15 +4568,15 @@ var require_autocompleteMultiselect2 = __commonJS({
           this.render();
         }
       }
-      handleInputChange(c2) {
-        this.inputValue = this.inputValue + c2;
+      handleInputChange(c4) {
+        this.inputValue = this.inputValue + c4;
         this.updateFilteredOptions();
       }
-      _(c2, key) {
-        if (c2 === " ") {
+      _(c4, key) {
+        if (c4 === " ") {
           this.handleSpaceToggle();
         } else {
-          this.handleInputChange(c2);
+          this.handleInputChange(c4);
         }
       }
       renderInstructions() {
@@ -4599,10 +4599,10 @@ Instructions:
 Filtered results for: ${this.inputValue ? this.inputValue : color.gray("Enter something to filter")}
 `;
       }
-      renderOption(cursor2, v, i) {
+      renderOption(cursor4, v, i2) {
         let title;
-        if (v.disabled) title = cursor2 === i ? color.gray().underline(v.title) : color.strikethrough().gray(v.title);
-        else title = cursor2 === i ? color.cyan().underline(v.title) : v.title;
+        if (v.disabled) title = cursor4 === i2 ? color.gray().underline(v.title) : color.strikethrough().gray(v.title);
+        else title = cursor4 === i2 ? color.cyan().underline(v.title) : v.title;
         return (v.selected ? color.green(figures.radioOn) : figures.radioOff) + "  " + title;
       }
       renderDoneOrInstructions() {
@@ -4617,7 +4617,7 @@ Filtered results for: ${this.inputValue ? this.inputValue : color.gray("Enter so
       }
       render() {
         if (this.closed) return;
-        if (this.firstRender) this.out.write(cursor.hide);
+        if (this.firstRender) this.out.write(cursor3.hide);
         super.render();
         let prompt = [
           style.symbol(this.done, this.aborted),
@@ -4631,7 +4631,7 @@ Filtered results for: ${this.inputValue ? this.inputValue : color.gray("Enter so
         }
         prompt += this.renderOptions(this.filteredOptions);
         this.out.write(this.clear + prompt);
-        this.clear = clear(prompt, this.out.columns);
+        this.clear = clear3(prompt, this.out.columns);
       }
     };
     module2.exports = AutocompleteMultiselectPrompt;
@@ -4643,8 +4643,8 @@ var require_confirm2 = __commonJS({
   "node_modules/prompts/lib/elements/confirm.js"(exports2, module2) {
     var color = require_kleur();
     var Prompt = require_prompt2();
-    var { style, clear } = require_util2();
-    var { erase, cursor } = require_src();
+    var { style, clear: clear3 } = require_util2();
+    var { erase: erase3, cursor: cursor3 } = require_src();
     var ConfirmPrompt = class extends Prompt {
       constructor(opts = {}) {
         super(opts);
@@ -4681,12 +4681,12 @@ var require_confirm2 = __commonJS({
         this.out.write("\n");
         this.close();
       }
-      _(c2, key) {
-        if (c2.toLowerCase() === "y") {
+      _(c4, key) {
+        if (c4.toLowerCase() === "y") {
           this.value = true;
           return this.submit();
         }
-        if (c2.toLowerCase() === "n") {
+        if (c4.toLowerCase() === "n") {
           this.value = false;
           return this.submit();
         }
@@ -4694,8 +4694,8 @@ var require_confirm2 = __commonJS({
       }
       render() {
         if (this.closed) return;
-        if (this.firstRender) this.out.write(cursor.hide);
-        else this.out.write(clear(this.outputText, this.out.columns));
+        if (this.firstRender) this.out.write(cursor3.hide);
+        else this.out.write(clear3(this.outputText, this.out.columns));
         super.render();
         this.outputText = [
           style.symbol(this.done, this.aborted),
@@ -4703,7 +4703,7 @@ var require_confirm2 = __commonJS({
           style.delimiter(this.done),
           this.done ? this.value ? this.yesMsg : this.noMsg : color.gray(this.initialValue ? this.yesOption : this.noOption)
         ].join(" ");
-        this.out.write(erase.line + cursor.to(0) + this.outputText);
+        this.out.write(erase3.line + cursor3.to(0) + this.outputText);
       }
     };
     module2.exports = ConfirmPrompt;
@@ -4873,10 +4873,10 @@ var require_prompts3 = __commonJS({
   "node_modules/prompts/index.js"(exports2, module2) {
     function isNodeLT(tar) {
       tar = (Array.isArray(tar) ? tar : tar.split(".")).map(Number);
-      let i = 0, src = process.versions.node.split(".").map(Number);
-      for (; i < tar.length; i++) {
-        if (src[i] > tar[i]) return false;
-        if (tar[i] > src[i]) return true;
+      let i2 = 0, src = process.versions.node.split(".").map(Number);
+      for (; i2 < tar.length; i2++) {
+        if (src[i2] > tar[i2]) return false;
+        if (tar[i2] > src[i2]) return true;
       }
       return false;
     }
@@ -4909,8 +4909,8 @@ var require_QR8bitByte = __commonJS({
         return this.data.length;
       },
       write: function(buffer) {
-        for (var i = 0; i < this.data.length; i++) {
-          buffer.put(this.data.charCodeAt(i), 8);
+        for (var i2 = 0; i2 < this.data.length; i2++) {
+          buffer.put(this.data.charCodeAt(i2), 8);
         }
       }
     };
@@ -4922,36 +4922,36 @@ var require_QR8bitByte = __commonJS({
 var require_QRMath = __commonJS({
   "node_modules/qrcode-terminal/vendor/QRCode/QRMath.js"(exports2, module2) {
     var QRMath = {
-      glog: function(n2) {
-        if (n2 < 1) {
-          throw new Error("glog(" + n2 + ")");
+      glog: function(n4) {
+        if (n4 < 1) {
+          throw new Error("glog(" + n4 + ")");
         }
-        return QRMath.LOG_TABLE[n2];
+        return QRMath.LOG_TABLE[n4];
       },
-      gexp: function(n2) {
-        while (n2 < 0) {
-          n2 += 255;
+      gexp: function(n4) {
+        while (n4 < 0) {
+          n4 += 255;
         }
-        while (n2 >= 256) {
-          n2 -= 255;
+        while (n4 >= 256) {
+          n4 -= 255;
         }
-        return QRMath.EXP_TABLE[n2];
+        return QRMath.EXP_TABLE[n4];
       },
       EXP_TABLE: new Array(256),
       LOG_TABLE: new Array(256)
     };
-    for (i = 0; i < 8; i++) {
-      QRMath.EXP_TABLE[i] = 1 << i;
+    for (i2 = 0; i2 < 8; i2++) {
+      QRMath.EXP_TABLE[i2] = 1 << i2;
     }
-    var i;
-    for (i = 8; i < 256; i++) {
-      QRMath.EXP_TABLE[i] = QRMath.EXP_TABLE[i - 4] ^ QRMath.EXP_TABLE[i - 5] ^ QRMath.EXP_TABLE[i - 6] ^ QRMath.EXP_TABLE[i - 8];
+    var i2;
+    for (i2 = 8; i2 < 256; i2++) {
+      QRMath.EXP_TABLE[i2] = QRMath.EXP_TABLE[i2 - 4] ^ QRMath.EXP_TABLE[i2 - 5] ^ QRMath.EXP_TABLE[i2 - 6] ^ QRMath.EXP_TABLE[i2 - 8];
     }
-    var i;
-    for (i = 0; i < 255; i++) {
-      QRMath.LOG_TABLE[QRMath.EXP_TABLE[i]] = i;
+    var i2;
+    for (i2 = 0; i2 < 255; i2++) {
+      QRMath.LOG_TABLE[QRMath.EXP_TABLE[i2]] = i2;
     }
-    var i;
+    var i2;
     module2.exports = QRMath;
   }
 });
@@ -4969,8 +4969,8 @@ var require_QRPolynomial = __commonJS({
         offset++;
       }
       this.num = new Array(num.length - offset + shift);
-      for (var i = 0; i < num.length - offset; i++) {
-        this.num[i] = num[i + offset];
+      for (var i2 = 0; i2 < num.length - offset; i2++) {
+        this.num[i2] = num[i2 + offset];
       }
     }
     QRPolynomial.prototype = {
@@ -4982,9 +4982,9 @@ var require_QRPolynomial = __commonJS({
       },
       multiply: function(e) {
         var num = new Array(this.getLength() + e.getLength() - 1);
-        for (var i = 0; i < this.getLength(); i++) {
+        for (var i2 = 0; i2 < this.getLength(); i2++) {
           for (var j = 0; j < e.getLength(); j++) {
-            num[i + j] ^= QRMath.gexp(QRMath.glog(this.get(i)) + QRMath.glog(e.get(j)));
+            num[i2 + j] ^= QRMath.gexp(QRMath.glog(this.get(i2)) + QRMath.glog(e.get(j)));
           }
         }
         return new QRPolynomial(num, 0);
@@ -4995,8 +4995,8 @@ var require_QRPolynomial = __commonJS({
         }
         var ratio = QRMath.glog(this.get(0)) - QRMath.glog(e.get(0));
         var num = new Array(this.getLength());
-        for (var i = 0; i < this.getLength(); i++) {
-          num[i] = this.get(i);
+        for (var i2 = 0; i2 < this.getLength(); i2++) {
+          num[i2] = this.get(i2);
         }
         for (var x = 0; x < e.getLength(); x++) {
           num[x] ^= QRMath.gexp(QRMath.glog(e.get(x)) + ratio);
@@ -5102,34 +5102,34 @@ var require_QRUtil = __commonJS({
       getPatternPosition: function(typeNumber) {
         return QRUtil.PATTERN_POSITION_TABLE[typeNumber - 1];
       },
-      getMask: function(maskPattern, i, j) {
+      getMask: function(maskPattern, i2, j) {
         switch (maskPattern) {
           case QRMaskPattern.PATTERN000:
-            return (i + j) % 2 === 0;
+            return (i2 + j) % 2 === 0;
           case QRMaskPattern.PATTERN001:
-            return i % 2 === 0;
+            return i2 % 2 === 0;
           case QRMaskPattern.PATTERN010:
             return j % 3 === 0;
           case QRMaskPattern.PATTERN011:
-            return (i + j) % 3 === 0;
+            return (i2 + j) % 3 === 0;
           case QRMaskPattern.PATTERN100:
-            return (Math.floor(i / 2) + Math.floor(j / 3)) % 2 === 0;
+            return (Math.floor(i2 / 2) + Math.floor(j / 3)) % 2 === 0;
           case QRMaskPattern.PATTERN101:
-            return i * j % 2 + i * j % 3 === 0;
+            return i2 * j % 2 + i2 * j % 3 === 0;
           case QRMaskPattern.PATTERN110:
-            return (i * j % 2 + i * j % 3) % 2 === 0;
+            return (i2 * j % 2 + i2 * j % 3) % 2 === 0;
           case QRMaskPattern.PATTERN111:
-            return (i * j % 3 + (i + j) % 2) % 2 === 0;
+            return (i2 * j % 3 + (i2 + j) % 2) % 2 === 0;
           default:
             throw new Error("bad maskPattern:" + maskPattern);
         }
       },
       getErrorCorrectPolynomial: function(errorCorrectLength) {
-        var a = new QRPolynomial([1], 0);
-        for (var i = 0; i < errorCorrectLength; i++) {
-          a = a.multiply(new QRPolynomial([1, QRMath.gexp(i)], 0));
+        var a2 = new QRPolynomial([1], 0);
+        for (var i2 = 0; i2 < errorCorrectLength; i2++) {
+          a2 = a2.multiply(new QRPolynomial([1, QRMath.gexp(i2)], 0));
         }
-        return a;
+        return a2;
       },
       getLengthInBits: function(mode, type) {
         if (1 <= type && type < 10) {
@@ -5184,18 +5184,18 @@ var require_QRUtil = __commonJS({
           for (col = 0; col < moduleCount; col++) {
             var sameCount = 0;
             var dark = qrCode.isDark(row, col);
-            for (var r = -1; r <= 1; r++) {
-              if (row + r < 0 || moduleCount <= row + r) {
+            for (var r2 = -1; r2 <= 1; r2++) {
+              if (row + r2 < 0 || moduleCount <= row + r2) {
                 continue;
               }
-              for (var c2 = -1; c2 <= 1; c2++) {
-                if (col + c2 < 0 || moduleCount <= col + c2) {
+              for (var c4 = -1; c4 <= 1; c4++) {
+                if (col + c4 < 0 || moduleCount <= col + c4) {
                   continue;
                 }
-                if (r === 0 && c2 === 0) {
+                if (r2 === 0 && c4 === 0) {
                   continue;
                 }
-                if (dark === qrCode.isDark(row + r, col + c2)) {
+                if (dark === qrCode.isDark(row + r2, col + c4)) {
                   sameCount++;
                 }
               }
@@ -5481,10 +5481,10 @@ var require_QRRSBlock = __commonJS({
       }
       var length2 = rsBlock.length / 3;
       var list = [];
-      for (var i = 0; i < length2; i++) {
-        var count = rsBlock[i * 3 + 0];
-        var totalCount = rsBlock[i * 3 + 1];
-        var dataCount = rsBlock[i * 3 + 2];
+      for (var i2 = 0; i2 < length2; i2++) {
+        var count = rsBlock[i2 * 3 + 0];
+        var totalCount = rsBlock[i2 * 3 + 1];
+        var dataCount = rsBlock[i2 * 3 + 2];
         for (var j = 0; j < count; j++) {
           list.push(new QRRSBlock(totalCount, dataCount));
         }
@@ -5522,8 +5522,8 @@ var require_QRBitBuffer = __commonJS({
         return (this.buffer[bufIndex] >>> 7 - index % 8 & 1) == 1;
       },
       put: function(num, length2) {
-        for (var i = 0; i < length2; i++) {
-          this.putBit((num >>> length2 - i - 1 & 1) == 1);
+        for (var i2 = 0; i2 < length2; i2++) {
+          this.putBit((num >>> length2 - i2 - 1 & 1) == 1);
         }
       },
       getLengthInBits: function() {
@@ -5582,8 +5582,8 @@ var require_QRCode = __commonJS({
             var rsBlocks = QRRSBlock.getRSBlocks(typeNumber, this.errorCorrectLevel);
             var buffer = new QRBitBuffer();
             var totalDataCount = 0;
-            for (var i = 0; i < rsBlocks.length; i++) {
-              totalDataCount += rsBlocks[i].dataCount;
+            for (var i2 = 0; i2 < rsBlocks.length; i2++) {
+              totalDataCount += rsBlocks[i2].dataCount;
             }
             for (var x = 0; x < this.dataList.length; x++) {
               var data = this.dataList[x];
@@ -5622,14 +5622,14 @@ var require_QRCode = __commonJS({
         this.mapData(this.dataCache, maskPattern);
       },
       setupPositionProbePattern: function(row, col) {
-        for (var r = -1; r <= 7; r++) {
-          if (row + r <= -1 || this.moduleCount <= row + r) continue;
-          for (var c2 = -1; c2 <= 7; c2++) {
-            if (col + c2 <= -1 || this.moduleCount <= col + c2) continue;
-            if (0 <= r && r <= 6 && (c2 === 0 || c2 === 6) || 0 <= c2 && c2 <= 6 && (r === 0 || r === 6) || 2 <= r && r <= 4 && 2 <= c2 && c2 <= 4) {
-              this.modules[row + r][col + c2] = true;
+        for (var r2 = -1; r2 <= 7; r2++) {
+          if (row + r2 <= -1 || this.moduleCount <= row + r2) continue;
+          for (var c4 = -1; c4 <= 7; c4++) {
+            if (col + c4 <= -1 || this.moduleCount <= col + c4) continue;
+            if (0 <= r2 && r2 <= 6 && (c4 === 0 || c4 === 6) || 0 <= c4 && c4 <= 6 && (r2 === 0 || r2 === 6) || 2 <= r2 && r2 <= 4 && 2 <= c4 && c4 <= 4) {
+              this.modules[row + r2][col + c4] = true;
             } else {
-              this.modules[row + r][col + c2] = false;
+              this.modules[row + r2][col + c4] = false;
             }
           }
         }
@@ -5637,12 +5637,12 @@ var require_QRCode = __commonJS({
       getBestMaskPattern: function() {
         var minLostPoint = 0;
         var pattern = 0;
-        for (var i = 0; i < 8; i++) {
-          this.makeImpl(true, i);
+        for (var i2 = 0; i2 < 8; i2++) {
+          this.makeImpl(true, i2);
           var lostPoint = QRUtil.getLostPoint(this);
-          if (i === 0 || minLostPoint > lostPoint) {
+          if (i2 === 0 || minLostPoint > lostPoint) {
             minLostPoint = lostPoint;
-            pattern = i;
+            pattern = i2;
           }
         }
         return pattern;
@@ -5669,34 +5669,34 @@ var require_QRCode = __commonJS({
         return qr_mc;
       },
       setupTimingPattern: function() {
-        for (var r = 8; r < this.moduleCount - 8; r++) {
-          if (this.modules[r][6] !== null) {
+        for (var r2 = 8; r2 < this.moduleCount - 8; r2++) {
+          if (this.modules[r2][6] !== null) {
             continue;
           }
-          this.modules[r][6] = r % 2 === 0;
+          this.modules[r2][6] = r2 % 2 === 0;
         }
-        for (var c2 = 8; c2 < this.moduleCount - 8; c2++) {
-          if (this.modules[6][c2] !== null) {
+        for (var c4 = 8; c4 < this.moduleCount - 8; c4++) {
+          if (this.modules[6][c4] !== null) {
             continue;
           }
-          this.modules[6][c2] = c2 % 2 === 0;
+          this.modules[6][c4] = c4 % 2 === 0;
         }
       },
       setupPositionAdjustPattern: function() {
         var pos = QRUtil.getPatternPosition(this.typeNumber);
-        for (var i = 0; i < pos.length; i++) {
+        for (var i2 = 0; i2 < pos.length; i2++) {
           for (var j = 0; j < pos.length; j++) {
-            var row = pos[i];
+            var row = pos[i2];
             var col = pos[j];
             if (this.modules[row][col] !== null) {
               continue;
             }
-            for (var r = -2; r <= 2; r++) {
-              for (var c2 = -2; c2 <= 2; c2++) {
-                if (Math.abs(r) === 2 || Math.abs(c2) === 2 || r === 0 && c2 === 0) {
-                  this.modules[row + r][col + c2] = true;
+            for (var r2 = -2; r2 <= 2; r2++) {
+              for (var c4 = -2; c4 <= 2; c4++) {
+                if (Math.abs(r2) === 2 || Math.abs(c4) === 2 || r2 === 0 && c4 === 0) {
+                  this.modules[row + r2][col + c4] = true;
                 } else {
-                  this.modules[row + r][col + c2] = false;
+                  this.modules[row + r2][col + c4] = false;
                 }
               }
             }
@@ -5706,9 +5706,9 @@ var require_QRCode = __commonJS({
       setupTypeNumber: function(test) {
         var bits = QRUtil.getBCHTypeNumber(this.typeNumber);
         var mod3;
-        for (var i = 0; i < 18; i++) {
-          mod3 = !test && (bits >> i & 1) === 1;
-          this.modules[Math.floor(i / 3)][i % 3 + this.moduleCount - 8 - 3] = mod3;
+        for (var i2 = 0; i2 < 18; i2++) {
+          mod3 = !test && (bits >> i2 & 1) === 1;
+          this.modules[Math.floor(i2 / 3)][i2 % 3 + this.moduleCount - 8 - 3] = mod3;
         }
         for (var x = 0; x < 18; x++) {
           mod3 = !test && (bits >> x & 1) === 1;
@@ -5729,14 +5729,14 @@ var require_QRCode = __commonJS({
             this.modules[this.moduleCount - 15 + v][8] = mod3;
           }
         }
-        for (var h = 0; h < 15; h++) {
-          mod3 = !test && (bits >> h & 1) === 1;
-          if (h < 8) {
-            this.modules[8][this.moduleCount - h - 1] = mod3;
-          } else if (h < 9) {
-            this.modules[8][15 - h - 1 + 1] = mod3;
+        for (var h2 = 0; h2 < 15; h2++) {
+          mod3 = !test && (bits >> h2 & 1) === 1;
+          if (h2 < 8) {
+            this.modules[8][this.moduleCount - h2 - 1] = mod3;
+          } else if (h2 < 9) {
+            this.modules[8][15 - h2 - 1 + 1] = mod3;
           } else {
-            this.modules[8][15 - h - 1] = mod3;
+            this.modules[8][15 - h2 - 1] = mod3;
           }
         }
         this.modules[this.moduleCount - 8][8] = !test;
@@ -5749,17 +5749,17 @@ var require_QRCode = __commonJS({
         for (var col = this.moduleCount - 1; col > 0; col -= 2) {
           if (col === 6) col--;
           while (true) {
-            for (var c2 = 0; c2 < 2; c2++) {
-              if (this.modules[row][col - c2] === null) {
+            for (var c4 = 0; c4 < 2; c4++) {
+              if (this.modules[row][col - c4] === null) {
                 var dark = false;
                 if (byteIndex < data.length) {
                   dark = (data[byteIndex] >>> bitIndex & 1) === 1;
                 }
-                var mask2 = QRUtil.getMask(maskPattern, row, col - c2);
+                var mask2 = QRUtil.getMask(maskPattern, row, col - c4);
                 if (mask2) {
                   dark = !dark;
                 }
-                this.modules[row][col - c2] = dark;
+                this.modules[row][col - c4] = dark;
                 bitIndex--;
                 if (bitIndex === -1) {
                   byteIndex++;
@@ -5782,8 +5782,8 @@ var require_QRCode = __commonJS({
     QRCode.createData = function(typeNumber, errorCorrectLevel, dataList) {
       var rsBlocks = QRRSBlock.getRSBlocks(typeNumber, errorCorrectLevel);
       var buffer = new QRBitBuffer();
-      for (var i = 0; i < dataList.length; i++) {
-        var data = dataList[i];
+      for (var i2 = 0; i2 < dataList.length; i2++) {
+        var data = dataList[i2];
         buffer.put(data.mode, 4);
         buffer.put(data.getLength(), QRUtil.getLengthInBits(data.mode, typeNumber));
         data.write(buffer);
@@ -5819,23 +5819,23 @@ var require_QRCode = __commonJS({
       var maxEcCount = 0;
       var dcdata = new Array(rsBlocks.length);
       var ecdata = new Array(rsBlocks.length);
-      for (var r = 0; r < rsBlocks.length; r++) {
-        var dcCount = rsBlocks[r].dataCount;
-        var ecCount = rsBlocks[r].totalCount - dcCount;
+      for (var r2 = 0; r2 < rsBlocks.length; r2++) {
+        var dcCount = rsBlocks[r2].dataCount;
+        var ecCount = rsBlocks[r2].totalCount - dcCount;
         maxDcCount = Math.max(maxDcCount, dcCount);
         maxEcCount = Math.max(maxEcCount, ecCount);
-        dcdata[r] = new Array(dcCount);
-        for (var i = 0; i < dcdata[r].length; i++) {
-          dcdata[r][i] = 255 & buffer.buffer[i + offset];
+        dcdata[r2] = new Array(dcCount);
+        for (var i2 = 0; i2 < dcdata[r2].length; i2++) {
+          dcdata[r2][i2] = 255 & buffer.buffer[i2 + offset];
         }
         offset += dcCount;
         var rsPoly = QRUtil.getErrorCorrectPolynomial(ecCount);
-        var rawPoly = new QRPolynomial(dcdata[r], rsPoly.getLength() - 1);
+        var rawPoly = new QRPolynomial(dcdata[r2], rsPoly.getLength() - 1);
         var modPoly = rawPoly.mod(rsPoly);
-        ecdata[r] = new Array(rsPoly.getLength() - 1);
-        for (var x = 0; x < ecdata[r].length; x++) {
-          var modIndex = x + modPoly.getLength() - ecdata[r].length;
-          ecdata[r][x] = modIndex >= 0 ? modPoly.get(modIndex) : 0;
+        ecdata[r2] = new Array(rsPoly.getLength() - 1);
+        for (var x = 0; x < ecdata[r2].length; x++) {
+          var modIndex = x + modPoly.getLength() - ecdata[r2].length;
+          ecdata[r2][x] = modIndex >= 0 ? modPoly.get(modIndex) : 0;
         }
       }
       var totalCodeCount = 0;
@@ -5852,9 +5852,9 @@ var require_QRCode = __commonJS({
         }
       }
       for (var xx = 0; xx < maxEcCount; xx++) {
-        for (var t = 0; t < rsBlocks.length; t++) {
-          if (xx < ecdata[t].length) {
-            data[index++] = ecdata[t][xx];
+        for (var t2 = 0; t2 < rsBlocks.length; t2++) {
+          if (xx < ecdata[t2].length) {
+            data[index++] = ecdata[t2][xx];
           }
         }
       }
@@ -5883,8 +5883,8 @@ var require_main = __commonJS({
     };
     var fill = function(length2, value2) {
       var arr = new Array(length2);
-      for (var i = 0; i < length2; i++) {
-        arr[i] = value2;
+      for (var i2 = 0; i2 < length2; i2++) {
+        arr[i2] = value2;
       }
       return arr;
     };
@@ -5972,15 +5972,15 @@ var require_dist2 = __commonJS({
     }
     function prefixChk(prefix) {
       let chk = 1;
-      for (let i = 0; i < prefix.length; ++i) {
-        const c2 = prefix.charCodeAt(i);
-        if (c2 < 33 || c2 > 126)
+      for (let i2 = 0; i2 < prefix.length; ++i2) {
+        const c4 = prefix.charCodeAt(i2);
+        if (c4 < 33 || c4 > 126)
           return "Invalid prefix (" + prefix + ")";
-        chk = polymodStep(chk) ^ c2 >> 5;
+        chk = polymodStep(chk) ^ c4 >> 5;
       }
       chk = polymodStep(chk);
-      for (let i = 0; i < prefix.length; ++i) {
-        const v = prefix.charCodeAt(i);
+      for (let i2 = 0; i2 < prefix.length; ++i2) {
+        const v = prefix.charCodeAt(i2);
         chk = polymodStep(chk) ^ v & 31;
       }
       return chk;
@@ -5990,8 +5990,8 @@ var require_dist2 = __commonJS({
       let bits = 0;
       const maxV = (1 << outBits) - 1;
       const result = [];
-      for (let i = 0; i < data.length; ++i) {
-        value2 = value2 << inBits | data[i];
+      for (let i2 = 0; i2 < data.length; ++i2) {
+        value2 = value2 << inBits | data[i2];
         bits += inBits;
         while (bits >= outBits) {
           bits -= outBits;
@@ -6040,19 +6040,19 @@ var require_dist2 = __commonJS({
         if (typeof chk === "string")
           throw new Error(chk);
         let result = prefix + "1";
-        for (let i = 0; i < words2.length; ++i) {
-          const x = words2[i];
+        for (let i2 = 0; i2 < words2.length; ++i2) {
+          const x = words2[i2];
           if (x >> 5 !== 0)
             throw new Error("Non 5-bit word");
           chk = polymodStep(chk) ^ x;
           result += ALPHABET2.charAt(x);
         }
-        for (let i = 0; i < 6; ++i) {
+        for (let i2 = 0; i2 < 6; ++i2) {
           chk = polymodStep(chk);
         }
         chk ^= ENCODING_CONST;
-        for (let i = 0; i < 6; ++i) {
-          const v = chk >> (5 - i) * 5 & 31;
+        for (let i2 = 0; i2 < 6; ++i2) {
+          const v = chk >> (5 - i2) * 5 & 31;
           result += ALPHABET2.charAt(v);
         }
         return result;
@@ -6081,13 +6081,13 @@ var require_dist2 = __commonJS({
         if (typeof chk === "string")
           return chk;
         const words2 = [];
-        for (let i = 0; i < wordChars.length; ++i) {
-          const c2 = wordChars.charAt(i);
-          const v = ALPHABET_MAP[c2];
+        for (let i2 = 0; i2 < wordChars.length; ++i2) {
+          const c4 = wordChars.charAt(i2);
+          const v = ALPHABET_MAP[c4];
           if (v === void 0)
-            return "Unknown character " + c2;
+            return "Unknown character " + c4;
           chk = polymodStep(chk) ^ v;
-          if (i + 6 >= wordChars.length)
+          if (i2 + 6 >= wordChars.length)
             continue;
           words2.push(v);
         }
@@ -6998,8 +6998,8 @@ var require_constants = __commonJS({
     );
     var headerNameLowerCasedRecord = {};
     Object.setPrototypeOf(headerNameLowerCasedRecord, null);
-    for (let i = 0; i < wellknownHeaderNames.length; ++i) {
-      const key = wellknownHeaderNames[i];
+    for (let i2 = 0; i2 < wellknownHeaderNames.length; ++i2) {
+      const key = wellknownHeaderNames[i2];
       const lowerCasedKey = key.toLowerCase();
       headerNameLowerCasedRecord[key] = headerNameLowerCasedRecord[lowerCasedKey] = lowerCasedKey;
     }
@@ -7145,8 +7145,8 @@ var require_tree = __commonJS({
       }
     };
     var tree = new TernarySearchTree();
-    for (let i = 0; i < wellknownHeaderNames.length; ++i) {
-      const key = headerNameLowerCasedRecord[wellknownHeaderNames[i]];
+    for (let i2 = 0; i2 < wellknownHeaderNames.length; ++i2) {
+      const key = headerNameLowerCasedRecord[wellknownHeaderNames[i2]];
       tree.insert(key, key);
     }
     module2.exports = {
@@ -7384,12 +7384,12 @@ var require_util3 = __commonJS({
     }
     function parseHeaders(headers, obj) {
       if (obj === void 0) obj = {};
-      for (let i = 0; i < headers.length; i += 2) {
-        const key = headerNameToString(headers[i]);
+      for (let i2 = 0; i2 < headers.length; i2 += 2) {
+        const key = headerNameToString(headers[i2]);
         let val = obj[key];
         if (val !== void 0) {
           if (!Object.hasOwn(obj, key)) {
-            const headersValue = typeof headers[i + 1] === "string" ? headers[i + 1] : Array.isArray(headers[i + 1]) ? headers[i + 1].map((x) => x.toString("latin1")) : headers[i + 1].toString("latin1");
+            const headersValue = typeof headers[i2 + 1] === "string" ? headers[i2 + 1] : Array.isArray(headers[i2 + 1]) ? headers[i2 + 1].map((x) => x.toString("latin1")) : headers[i2 + 1].toString("latin1");
             if (key === "__proto__") {
               Object.defineProperty(obj, key, {
                 value: headersValue,
@@ -7405,10 +7405,10 @@ var require_util3 = __commonJS({
               val = [val];
               obj[key] = val;
             }
-            val.push(headers[i + 1].toString("latin1"));
+            val.push(headers[i2 + 1].toString("latin1"));
           }
         } else {
-          const headersValue = typeof headers[i + 1] === "string" ? headers[i + 1] : Array.isArray(headers[i + 1]) ? headers[i + 1].map((x) => x.toString("latin1")) : headers[i + 1].toString("latin1");
+          const headersValue = typeof headers[i2 + 1] === "string" ? headers[i2 + 1] : Array.isArray(headers[i2 + 1]) ? headers[i2 + 1].map((x) => x.toString("latin1")) : headers[i2 + 1].toString("latin1");
           obj[key] = headersValue;
         }
       }
@@ -7435,13 +7435,13 @@ var require_util3 = __commonJS({
       const ret = new Array(headersLength);
       let key;
       let val;
-      for (let n2 = 0; n2 < headersLength; n2 += 2) {
-        key = headers[n2];
-        val = headers[n2 + 1];
+      for (let n4 = 0; n4 < headersLength; n4 += 2) {
+        key = headers[n4];
+        val = headers[n4 + 1];
         typeof key !== "string" && (key = key.toString());
         typeof val !== "string" && (val = val.toString("latin1"));
-        ret[n2] = key;
-        ret[n2 + 1] = val;
+        ret[n4] = key;
+        ret[n4 + 1] = val;
       }
       return ret;
     }
@@ -7802,15 +7802,15 @@ var require_util3 = __commonJS({
       0
       // 240-255
     ]);
-    function isTokenCharCode(c2) {
-      return validTokenChars[c2] === 1;
+    function isTokenCharCode(c4) {
+      return validTokenChars[c4] === 1;
     }
     var tokenRegExp = /^[\^_`a-zA-Z\-0-9!#$%&'*+.|~]+$/;
     function isValidHTTPToken(characters) {
       if (characters.length >= 12) return tokenRegExp.test(characters);
       if (characters.length === 0) return false;
-      for (let i = 0; i < characters.length; i++) {
-        if (validTokenChars[characters.charCodeAt(i)] !== 1) {
+      for (let i2 = 0; i2 < characters.length; i2++) {
+        if (validTokenChars[characters.charCodeAt(i2)] !== 1) {
           return false;
         }
       }
@@ -8588,13 +8588,13 @@ var require_infra = __commonJS({
         return String.fromCharCode.apply(null, input);
       }
       let result = "";
-      let i = 0;
+      let i2 = 0;
       let addition = (2 << 15) - 1;
-      while (i < length2) {
-        if (i + addition > length2) {
-          addition = length2 - i;
+      while (i2 < length2) {
+        if (i2 + addition > length2) {
+          addition = length2 - i2;
         }
-        result += String.fromCharCode.apply(null, input.subarray(i, i += addition));
+        result += String.fromCharCode.apply(null, input.subarray(i2, i2 += addition));
       }
       return result;
     }
@@ -8724,18 +8724,18 @@ var require_data_url = __commonJS({
       const length2 = input.length;
       const output2 = new Uint8Array(length2);
       let j = 0;
-      let i = 0;
-      while (i < length2) {
-        const byte = input[i];
+      let i2 = 0;
+      while (i2 < length2) {
+        const byte = input[i2];
         if (byte !== 37) {
           output2[j++] = byte;
-        } else if (byte === 37 && !(isHexCharByte(input[i + 1]) && isHexCharByte(input[i + 2]))) {
+        } else if (byte === 37 && !(isHexCharByte(input[i2 + 1]) && isHexCharByte(input[i2 + 2]))) {
           output2[j++] = 37;
         } else {
-          output2[j++] = hexByteToNumber(input[i + 1]) << 4 | hexByteToNumber(input[i + 2]);
-          i += 2;
+          output2[j++] = hexByteToNumber(input[i2 + 1]) << 4 | hexByteToNumber(input[i2 + 2]);
+          i2 += 2;
         }
-        ++i;
+        ++i2;
       }
       return length2 === j ? output2 : output2.subarray(0, j);
     }
@@ -9100,12 +9100,12 @@ var require_webidl = __commonJS({
       }
       return x;
     };
-    webidl.util.IntegerPart = function(n2) {
-      const r = Math.floor(Math.abs(n2));
-      if (n2 < 0) {
-        return -1 * r;
+    webidl.util.IntegerPart = function(n4) {
+      const r2 = Math.floor(Math.abs(n4));
+      if (n4 < 0) {
+        return -1 * r2;
       }
-      return r;
+      return r2;
     };
     webidl.util.Stringify = function(V3) {
       const type = webidl.util.Type(V3);
@@ -9207,7 +9207,7 @@ var require_webidl = __commonJS({
       };
     };
     webidl.dictionaryConverter = function(converters) {
-      converters.sort((a, b2) => (a.key > b2.key) - (a.key < b2.key));
+      converters.sort((a2, b2) => (a2.key > b2.key) - (a2.key < b2.key));
       return (dictionary, prefix, argument) => {
         const dict = {};
         if (dictionary != null && webidl.util.Type(dictionary) !== OBJECT) {
@@ -9555,8 +9555,8 @@ var require_util4 = __commonJS({
       return location;
     }
     function isValidEncodedURL(url) {
-      for (let i = 0; i < url.length; ++i) {
-        const code = url.charCodeAt(i);
+      for (let i2 = 0; i2 < url.length; ++i2) {
+        const code = url.charCodeAt(i2);
         if (code > 126 || // Non-US-ASCII + DEL
         code < 32) {
           return false;
@@ -9581,11 +9581,11 @@ var require_util4 = __commonJS({
       return object3 instanceof Error || (object3?.constructor?.name === "Error" || object3?.constructor?.name === "DOMException");
     }
     function isValidReasonPhrase(statusText) {
-      for (let i = 0; i < statusText.length; ++i) {
-        const c2 = statusText.charCodeAt(i);
-        if (!(c2 === 9 || // HTAB
-        c2 >= 32 && c2 <= 126 || // SP / VCHAR
-        c2 >= 128 && c2 <= 255)) {
+      for (let i2 = 0; i2 < statusText.length; ++i2) {
+        const c4 = statusText.charCodeAt(i2);
+        if (!(c4 === 9 || // HTAB
+        c4 >= 32 && c4 <= 126 || // SP / VCHAR
+        c4 >= 128 && c4 <= 255)) {
           return false;
         }
       }
@@ -9599,8 +9599,8 @@ var require_util4 = __commonJS({
       const policyHeader = (actualResponse.headersList.get("referrer-policy", true) ?? "").split(",");
       let policy = "";
       if (policyHeader.length) {
-        for (let i = policyHeader.length; i !== 0; i--) {
-          const token = policyHeader[i - 1].trim();
+        for (let i2 = policyHeader.length; i2 !== 0; i2--) {
+          const token = policyHeader[i2 - 1].trim();
           if (referrerPolicyTokens.has(token)) {
             policy = token;
             break;
@@ -10462,17 +10462,17 @@ var require_formdata = __commonJS({
         }
       }
       [nodeUtil.inspect.custom](depth, options) {
-        const state2 = this.#state.reduce((a, b2) => {
-          if (a[b2.name]) {
-            if (Array.isArray(a[b2.name])) {
-              a[b2.name].push(b2.value);
+        const state2 = this.#state.reduce((a2, b2) => {
+          if (a2[b2.name]) {
+            if (Array.isArray(a2[b2.name])) {
+              a2[b2.name].push(b2.value);
             } else {
-              a[b2.name] = [a[b2.name], b2.value];
+              a2[b2.name] = [a2[b2.name], b2.value];
             }
           } else {
-            a[b2.name] = b2.value;
+            a2[b2.name] = b2.value;
           }
-          return a;
+          return a2;
         }, { __proto__: null });
         options.depth ??= depth;
         options.colors ??= true;
@@ -10558,8 +10558,8 @@ var require_request = __commonJS({
       if (typeof val !== "string" || val.length === 0) {
         return false;
       }
-      for (let i = 0; i < val.length; i++) {
-        const charCode = val.charCodeAt(i);
+      for (let i2 = 0; i2 < val.length; i2++) {
+        const charCode = val.charCodeAt(i2);
         if (charCode < 48 || charCode > 57) {
           return false;
         }
@@ -10724,8 +10724,8 @@ var require_request = __commonJS({
           if (headers.length % 2 !== 0) {
             throw new InvalidArgumentError("headers array must be even");
           }
-          for (let i = 0; i < headers.length; i += 2) {
-            processHeader(this, headers[i], headers[i + 1]);
+          for (let i2 = 0; i2 < headers.length; i2 += 2) {
+            processHeader(this, headers[i2], headers[i2 + 1]);
           }
         } else if (headers && typeof headers === "object") {
           if (hasSafeIterator(headers)) {
@@ -10737,8 +10737,8 @@ var require_request = __commonJS({
             }
           } else {
             const keys = Object.keys(headers);
-            for (let i = 0; i < keys.length; ++i) {
-              processHeader(this, keys[i], headers[keys[i]]);
+            for (let i2 = 0; i2 < keys.length; ++i2) {
+              processHeader(this, keys[i2], headers[keys[i2]]);
             }
           }
         } else if (headers != null) {
@@ -10912,18 +10912,18 @@ var require_request = __commonJS({
       }
       if (Array.isArray(val)) {
         const arr = [];
-        for (let i = 0; i < val.length; i++) {
-          if (typeof val[i] === "string") {
-            if (!isValidHeaderValue(val[i])) {
+        for (let i2 = 0; i2 < val.length; i2++) {
+          if (typeof val[i2] === "string") {
+            if (!isValidHeaderValue(val[i2])) {
               throw new InvalidArgumentError(`invalid ${key} header`);
             }
-            arr.push(val[i]);
-          } else if (val[i] === null) {
+            arr.push(val[i2]);
+          } else if (val[i2] === null) {
             arr.push("");
-          } else if (typeof val[i] === "object") {
+          } else if (typeof val[i2] === "object") {
             throw new InvalidArgumentError(`invalid ${key} header`);
           } else {
-            const str = `${val[i]}`;
+            const str = `${val[i2]}`;
             if (!isValidHeaderValue(str)) {
               throw new InvalidArgumentError(`invalid ${key} header`);
             }
@@ -11134,8 +11134,8 @@ var require_dispatcher_base = __commonJS({
         const onClosed = () => {
           const callbacks = this[kOnClosed];
           this[kOnClosed] = null;
-          for (let i = 0; i < callbacks.length; i++) {
-            callbacks[i](null, null);
+          for (let i2 = 0; i2 < callbacks.length; i2++) {
+            callbacks[i2](null, null);
           }
         };
         this[kClose]().then(() => this.destroy()).then(() => queueMicrotask(onClosed));
@@ -11172,8 +11172,8 @@ var require_dispatcher_base = __commonJS({
         const onDestroyed = () => {
           const callbacks = this[kOnDestroyed];
           this[kOnDestroyed] = null;
-          for (let i = 0; i < callbacks.length; i++) {
-            callbacks[i](null, null);
+          for (let i2 = 0; i2 < callbacks.length; i2++) {
+            callbacks[i2](null, null);
           }
         };
         this[kDestroy](err).then(() => queueMicrotask(onDestroyed));
@@ -11835,9 +11835,9 @@ var require_constants3 = __commonJS({
       exports2.STATUSES.NETWORK_CONNECT_TIMEOUT
     ];
     exports2.ALPHA = [];
-    for (let i = "A".charCodeAt(0); i <= "Z".charCodeAt(0); i++) {
-      exports2.ALPHA.push(String.fromCharCode(i));
-      exports2.ALPHA.push(String.fromCharCode(i + 32));
+    for (let i2 = "A".charCodeAt(0); i2 <= "Z".charCodeAt(0); i2++) {
+      exports2.ALPHA.push(String.fromCharCode(i2));
+      exports2.ALPHA.push(String.fromCharCode(i2 + 32));
     }
     exports2.NUM_MAP = {
       0: 0,
@@ -11941,24 +11941,24 @@ var require_constants3 = __commonJS({
       "~"
     ].concat(exports2.ALPHANUM);
     exports2.HEADER_CHARS = ["	"];
-    for (let i = 32; i <= 255; i++) {
-      if (i !== 127) {
-        exports2.HEADER_CHARS.push(i);
+    for (let i2 = 32; i2 <= 255; i2++) {
+      if (i2 !== 127) {
+        exports2.HEADER_CHARS.push(i2);
       }
     }
-    exports2.CONNECTION_TOKEN_CHARS = exports2.HEADER_CHARS.filter((c2) => c2 !== 44);
+    exports2.CONNECTION_TOKEN_CHARS = exports2.HEADER_CHARS.filter((c4) => c4 !== 44);
     exports2.QUOTED_STRING = ["	", " "];
-    for (let i = 33; i <= 255; i++) {
-      if (i !== 34 && i !== 92) {
-        exports2.QUOTED_STRING.push(i);
+    for (let i2 = 33; i2 <= 255; i2++) {
+      if (i2 !== 34 && i2 !== 92) {
+        exports2.QUOTED_STRING.push(i2);
       }
     }
     exports2.HTAB_SP_VCHAR_OBS_TEXT = ["	", " "];
-    for (let i = 33; i <= 126; i++) {
-      exports2.HTAB_SP_VCHAR_OBS_TEXT.push(i);
+    for (let i2 = 33; i2 <= 126; i2++) {
+      exports2.HTAB_SP_VCHAR_OBS_TEXT.push(i2);
     }
-    for (let i = 128; i <= 255; i++) {
-      exports2.HTAB_SP_VCHAR_OBS_TEXT.push(i);
+    for (let i2 = 128; i2 <= 255; i2++) {
+      exports2.HTAB_SP_VCHAR_OBS_TEXT.push(i2);
     }
     exports2.MAJOR = exports2.NUM_MAP;
     exports2.MINOR = exports2.MAJOR;
@@ -14331,7 +14331,7 @@ var require_parser_h1 = __commonJS({
       }
       drainEvents() {
         const { socket, client, milo } = this;
-        let cursor = 0;
+        let cursor3 = 0;
         const firstEvent = this.parserEvents[0];
         if (firstEvent !== milo.EVENT_END && firstEvent !== milo.EVENT_ERROR && !this.responseStarted) {
           this.responseStarted = true;
@@ -14345,7 +14345,7 @@ var require_parser_h1 = __commonJS({
           request.onResponseStarted();
         }
         for (; ; ) {
-          const event = this.parserEvents[cursor];
+          const event = this.parserEvents[cursor3];
           let eventLen = EVENT_RANGE_SIZE;
           switch (event) {
             case milo.EVENT_END:
@@ -14415,8 +14415,8 @@ var require_parser_h1 = __commonJS({
               break;
             }
             case milo.EVENT_REASON: {
-              const at = this.parserEvents.readUInt32LE(cursor + 1);
-              const len = this.parserEvents.readUInt32LE(cursor + 5);
+              const at = this.parserEvents.readUInt32LE(cursor3 + 1);
+              const len = this.parserEvents.readUInt32LE(cursor3 + 5);
               this.statusText = new FastBuffer(
                 currentBufferRef.buffer,
                 currentBufferRef.byteOffset + at,
@@ -14425,8 +14425,8 @@ var require_parser_h1 = __commonJS({
               break;
             }
             case milo.EVENT_HEADER_NAME: {
-              const at = this.parserEvents.readUInt32LE(cursor + 1);
-              const len = this.parserEvents.readUInt32LE(cursor + 5);
+              const at = this.parserEvents.readUInt32LE(cursor3 + 1);
+              const len = this.parserEvents.readUInt32LE(cursor3 + 5);
               const data = len > 0 ? new FastBuffer(
                 currentBufferRef.buffer,
                 currentBufferRef.byteOffset + at,
@@ -14441,8 +14441,8 @@ var require_parser_h1 = __commonJS({
               break;
             }
             case milo.EVENT_HEADER_VALUE: {
-              const at = this.parserEvents.readUInt32LE(cursor + 1);
-              const len = this.parserEvents.readUInt32LE(cursor + 5);
+              const at = this.parserEvents.readUInt32LE(cursor3 + 1);
+              const len = this.parserEvents.readUInt32LE(cursor3 + 5);
               const data = len > 0 ? new FastBuffer(
                 currentBufferRef.buffer,
                 currentBufferRef.byteOffset + at,
@@ -14467,12 +14467,12 @@ var require_parser_h1 = __commonJS({
             }
             case milo.EVENT_HEADERS: {
               eventLen = EVENT_HEADERS_SIZE;
-              const statusCode = this.parserEvents.readUInt16LE(cursor + 5);
-              const shouldKeepAlive = this.parserEvents[cursor + 7] !== 0;
-              const shouldUpgrade = this.parserEvents[cursor + 8] !== 0;
-              const hasTrailers = this.parserEvents[cursor + 9] !== 0;
-              const bodyKind = this.parserEvents[cursor + 10];
-              const contentLength = this.parserEvents.readUInt32LE(cursor + 11) + this.parserEvents.readUInt32LE(cursor + 15) * 4294967296;
+              const statusCode = this.parserEvents.readUInt16LE(cursor3 + 5);
+              const shouldKeepAlive = this.parserEvents[cursor3 + 7] !== 0;
+              const shouldUpgrade = this.parserEvents[cursor3 + 8] !== 0;
+              const hasTrailers = this.parserEvents[cursor3 + 9] !== 0;
+              const bodyKind = this.parserEvents[cursor3 + 10];
+              const contentLength = this.parserEvents.readUInt32LE(cursor3 + 11) + this.parserEvents.readUInt32LE(cursor3 + 15) * 4294967296;
               const { socket: socket2, client: client2, headers, statusText } = this;
               if (socket2.destroyed) {
                 return this.fail(milo.ERROR_CALLBACK_ERROR, "Other side closed");
@@ -14568,8 +14568,8 @@ var require_parser_h1 = __commonJS({
               break;
             }
             case milo.EVENT_DATA: {
-              const at = this.parserEvents.readUInt32LE(cursor + 1);
-              const len = this.parserEvents.readUInt32LE(cursor + 5);
+              const at = this.parserEvents.readUInt32LE(cursor3 + 1);
+              const len = this.parserEvents.readUInt32LE(cursor3 + 5);
               const { client: client2, socket: socket2, statusCode, maxResponseSize } = this;
               if (socket2.destroyed) {
                 return this.fail(milo.ERROR_CALLBACK_ERROR, "Other side closed");
@@ -14599,8 +14599,8 @@ var require_parser_h1 = __commonJS({
               break;
             }
             case milo.EVENT_TRAILER_NAME: {
-              const at = this.parserEvents.readUInt32LE(cursor + 1);
-              const len = this.parserEvents.readUInt32LE(cursor + 5);
+              const at = this.parserEvents.readUInt32LE(cursor3 + 1);
+              const len = this.parserEvents.readUInt32LE(cursor3 + 5);
               const data = len > 0 ? new FastBuffer(
                 currentBufferRef.buffer,
                 currentBufferRef.byteOffset + at,
@@ -14615,8 +14615,8 @@ var require_parser_h1 = __commonJS({
               break;
             }
             case milo.EVENT_TRAILER_VALUE: {
-              const at = this.parserEvents.readUInt32LE(cursor + 1);
-              const len = this.parserEvents.readUInt32LE(cursor + 5);
+              const at = this.parserEvents.readUInt32LE(cursor3 + 1);
+              const len = this.parserEvents.readUInt32LE(cursor3 + 5);
               const data = len > 0 ? new FastBuffer(
                 currentBufferRef.buffer,
                 currentBufferRef.byteOffset + at,
@@ -14633,7 +14633,7 @@ var require_parser_h1 = __commonJS({
             default:
               return;
           }
-          cursor += eventLen;
+          cursor3 += eventLen;
         }
       }
       fail(code, message) {
@@ -14731,8 +14731,8 @@ var require_formdata_parser = __commonJS({
     var decoder = new TextDecoder();
     var decoderIgnoreBOM = new TextDecoder("utf-8", { ignoreBOM: true });
     function isAsciiString(chars) {
-      for (let i = 0; i < chars.length; ++i) {
-        if ((chars.charCodeAt(i) & ~127) !== 0) {
+      for (let i2 = 0; i2 < chars.length; ++i2) {
+        if ((chars.charCodeAt(i2) & ~127) !== 0) {
           return false;
         }
       }
@@ -14743,8 +14743,8 @@ var require_formdata_parser = __commonJS({
       if (length2 < 27 || length2 > 70) {
         return false;
       }
-      for (let i = 0; i < length2; ++i) {
-        const cp = boundary.charCodeAt(i);
+      for (let i2 = 0; i2 < length2; ++i2) {
+        const cp = boundary.charCodeAt(i2);
         if (!(cp >= 48 && cp <= 57 || cp >= 65 && cp <= 90 || cp >= 97 && cp <= 122 || cp === 39 || cp === 45 || cp === 95)) {
           return false;
         }
@@ -15010,8 +15010,8 @@ var require_formdata_parser = __commonJS({
       if (buffer.length < start.length) {
         return false;
       }
-      for (let i = 0; i < start.length; i++) {
-        if (start[i] !== buffer[position.position + i]) {
+      for (let i2 = 0; i2 < start.length; i2++) {
+        if (start[i2] !== buffer[position.position + i2]) {
           return false;
         }
       }
@@ -15313,8 +15313,8 @@ Content-Type: ${value2.type || "application/octet-stream"}\r
           if (this_.body == null) {
             let controller;
             const emptyStream = new ReadableStream({
-              start: (c2) => {
-                controller = c2;
+              start: (c4) => {
+                controller = c4;
               },
               pull: () => Promise.resolve(),
               cancel: () => Promise.resolve()
@@ -15460,7 +15460,7 @@ var require_client_h1 = __commonJS({
       if (process.arch === "riscv64") {
         useWasmSIMD = false;
       } else if (process.arch === "ppc64") {
-        const [major, minor] = process.versions.node.split(".").map((n2) => parseInt(n2, 10));
+        const [major, minor] = process.versions.node.split(".").map((n4) => parseInt(n4, 10));
         if (major < 24 || major === 24 && minor < 12) {
           useWasmSIMD = false;
         }
@@ -15821,8 +15821,8 @@ var require_client_h1 = __commonJS({
           if (this.contentLength === -1) {
             this.contentLength = 0;
           }
-          for (let i = 0; i < buf.length; i++) {
-            this.contentLength = this.contentLength * 10 + (buf[i] - 48);
+          for (let i2 = 0; i2 < buf.length; i2++) {
+            this.contentLength = this.contentLength * 10 + (buf[i2] - 48);
           }
         } else if (key.length === 17 && util.bufferToLowerCasedHeaderName(key) === "transfer-encoding") {
           this.hasTransferEncoding = true;
@@ -16185,8 +16185,8 @@ var require_client_h1 = __commonJS({
       if (client.destroyed) {
         assert2(client[kPending] === 0);
         const requests = client[kQueue].splice(client[kRunningIdx]);
-        for (let i = 0; i < requests.length; i++) {
-          const request = requests[i];
+        for (let i2 = 0; i2 < requests.length; i2++) {
+          const request = requests[i2];
           util.errorRequest(client, request, err);
         }
       } else if (client[kRunning] > 0 && err.code !== "UND_ERR_INFO") {
@@ -16383,12 +16383,12 @@ upgrade: ${upgrade}\r
         header2 += "connection: close\r\n";
       }
       if (Array.isArray(headers)) {
-        for (let n2 = 0; n2 < headers.length; n2 += 2) {
-          const key = headers[n2 + 0];
-          const val = headers[n2 + 1];
+        for (let n4 = 0; n4 < headers.length; n4 += 2) {
+          const key = headers[n4 + 0];
+          const val = headers[n4 + 1];
           if (Array.isArray(val)) {
-            for (let i = 0; i < val.length; i++) {
-              header2 += `${key}: ${val[i]}\r
+            for (let i2 = 0; i2 < val.length; i2++) {
+              header2 += `${key}: ${val[i2]}\r
 `;
             }
           } else {
@@ -16834,14 +16834,14 @@ var require_client_h2 = __commonJS({
     }
     function getGoAwayPendingIdx(client, lastStreamID) {
       const maxAcceptedStreamID = Number.isInteger(lastStreamID) ? lastStreamID : Number.MAX_SAFE_INTEGER;
-      for (let i = client[kRunningIdx]; i < client[kPendingIdx]; i++) {
-        const request = client[kQueue][i];
+      for (let i2 = client[kRunningIdx]; i2 < client[kPendingIdx]; i2++) {
+        const request = client[kQueue][i2];
         if (request == null) {
           continue;
         }
         const streamId = request[kRequestStream]?.id;
         if (typeof streamId !== "number" || streamId > maxAcceptedStreamID) {
-          return i;
+          return i2;
         }
       }
       return client[kPendingIdx];
@@ -17100,9 +17100,9 @@ var require_client_h2 = __commonJS({
         `HTTP/2: server did not accept a new stream within ${client[kHeadersTimeout]}`
       );
       const requests = client[kQueue].splice(client[kPendingIdx]);
-      for (let i = 0; i < requests.length; i++) {
-        if (requests[i] != null) {
-          util.errorRequest(client, requests[i], err);
+      for (let i2 = 0; i2 < requests.length; i2++) {
+        if (requests[i2] != null) {
+          util.errorRequest(client, requests[i2], err);
         }
       }
       session[kError] = err;
@@ -17184,18 +17184,18 @@ var require_client_h2 = __commonJS({
       } catch {
       }
     }
-    function onHttp2RemoteSettings(settings2) {
+    function onHttp2RemoteSettings(settings3) {
       const client = this[kClient];
       const localMaxConcurrentStreams = client[kHTTP2Options].maxConcurrentStreams;
-      const remoteMaxConcurrentStreams = settings2.maxConcurrentStreams ?? client[kMaxConcurrentStreams] ?? localMaxConcurrentStreams;
+      const remoteMaxConcurrentStreams = settings3.maxConcurrentStreams ?? client[kMaxConcurrentStreams] ?? localMaxConcurrentStreams;
       client[kMaxConcurrentStreams] = Math.min(remoteMaxConcurrentStreams, localMaxConcurrentStreams);
-      if (this[kRemoteSettings] === true && this[kEnableConnectProtocol] === true && settings2.enableConnectProtocol === false) {
+      if (this[kRemoteSettings] === true && this[kEnableConnectProtocol] === true && settings3.enableConnectProtocol === false) {
         const err = new InformationalError("HTTP/2: Server disabled extended CONNECT protocol against RFC-8441");
         this[kSocket][kError] = err;
         this[kClient][kOnError](err);
         return;
       }
-      this[kEnableConnectProtocol] = settings2.enableConnectProtocol ?? this[kEnableConnectProtocol];
+      this[kEnableConnectProtocol] = settings3.enableConnectProtocol ?? this[kEnableConnectProtocol];
       this[kRemoteSettings] = true;
       this[kClient][kResume]();
     }
@@ -17247,8 +17247,8 @@ var require_client_h2 = __commonJS({
       const pendingIdx = getGoAwayPendingIdx(client, lastStreamID);
       const retriableRequests = [];
       const streamsToClose = [];
-      for (let i = pendingIdx; i < previousPendingIdx; i++) {
-        const request = client[kQueue][i];
+      for (let i2 = pendingIdx; i2 < previousPendingIdx; i2++) {
+        const request = client[kQueue][i2];
         if (request != null) {
           const responseStarted = hasResponseStarted(request);
           streamsToClose.push(detachRequestStreamForClose(request));
@@ -17276,8 +17276,8 @@ var require_client_h2 = __commonJS({
       clearHttp2IdleTimeout(this);
       clearNoStreamsTimeout(this);
       clearHttp2ProbeTimeout(this);
-      for (let i = 0; i < streamsToClose.length; i++) {
-        closeStream(streamsToClose[i]);
+      for (let i2 = 0; i2 < streamsToClose.length; i2++) {
+        closeStream(streamsToClose[i2]);
       }
       if (!this.closed && !this.destroyed) {
         this.close();
@@ -17303,8 +17303,8 @@ var require_client_h2 = __commonJS({
       if (client.destroyed) {
         assert2(client[kPending] === 0);
         const requests = client[kQueue].splice(client[kRunningIdx]);
-        for (let i = 0; i < requests.length; i++) {
-          const request = requests[i];
+        for (let i2 = 0; i2 < requests.length; i2++) {
+          const request = requests[i2];
           if (request != null) {
             util.errorRequest(client, request, err);
           }
@@ -17386,9 +17386,9 @@ var require_client_h2 = __commonJS({
     }
     function buildRequestHeaders(reqHeaders) {
       const headers = {};
-      for (let n2 = 0; n2 < reqHeaders.length; n2 += 2) {
-        const key = reqHeaders[n2 + 0];
-        const val = reqHeaders[n2 + 1];
+      for (let n4 = 0; n4 < reqHeaders.length; n4 += 2) {
+        const key = reqHeaders[n4 + 0];
+        const val = reqHeaders[n4 + 1];
         const current = Object.hasOwn(headers, key) ? headers[key] : void 0;
         if (key === "cookie") {
           if (current != null) {
@@ -17402,8 +17402,8 @@ var require_client_h2 = __commonJS({
           util.setHeader(headers, key, current ? `${current}, ${val}` : val);
           continue;
         }
-        for (let i = 0; i < val.length; i++) {
-          util.setHeader(headers, key, Object.hasOwn(headers, key) ? `${headers[key]}, ${val[i]}` : val[i]);
+        for (let i2 = 0; i2 < val.length; i2++) {
+          util.setHeader(headers, key, Object.hasOwn(headers, key) ? `${headers[key]}, ${val[i2]}` : val[i2]);
         }
       }
       return headers;
@@ -18454,8 +18454,8 @@ var require_client = __commonJS({
       [kDestroy](err) {
         return new Promise((resolve) => {
           const requests = this[kQueue].splice(this[kPendingIdx]);
-          for (let i = 0; i < requests.length; i++) {
-            const request = requests[i];
+          for (let i2 = 0; i2 < requests.length; i2++) {
+            const request = requests[i2];
             if (request != null) {
               util.errorRequest(this, request, err);
             }
@@ -18481,8 +18481,8 @@ var require_client = __commonJS({
       if (client[kRunning] === 0 && err.code !== "UND_ERR_INFO" && err.code !== "UND_ERR_SOCKET") {
         assert2(client[kPendingIdx] === client[kRunningIdx]);
         const requests = client[kQueue].splice(client[kRunningIdx]);
-        for (let i = 0; i < requests.length; i++) {
-          const request = requests[i];
+        for (let i2 = 0; i2 < requests.length; i2++) {
+          const request = requests[i2];
           if (request != null) {
             util.errorRequest(client, request, err);
           }
@@ -18595,8 +18595,8 @@ var require_client = __commonJS({
       if (err.code === "ERR_TLS_CERT_ALTNAME_INVALID") {
         const running = client[kQueue].splice(client[kRunningIdx], client[kRunning]);
         client[kPendingIdx] = client[kRunningIdx];
-        for (let i = 0; i < running.length; i++) {
-          util.errorRequest(client, running[i], err);
+        for (let i2 = 0; i2 < running.length; i2++) {
+          util.errorRequest(client, running[i2], err);
         }
         while (client[kPending] > 0 && client[kQueue][client[kPendingIdx]].servername === client[kServerName]) {
           const request = client[kQueue].splice(client[kPendingIdx], 1)[0];
@@ -18807,8 +18807,8 @@ var require_pool_base = __commonJS({
     };
     function closeClients(pool) {
       const closeAll = [];
-      for (let i = 0; i < pool[kClients].length; i++) {
-        const client = pool[kClients][i];
+      for (let i2 = 0; i2 < pool[kClients].length; i2++) {
+        const client = pool[kClients][i2];
         if (!client.destroyed) {
           closeAll.push(client.close());
         }
@@ -18956,8 +18956,8 @@ var require_pool_base = __commonJS({
           item.handler.onResponseError(null, err);
         }
         const destroyAll = new Array(this[kClients].length);
-        for (let i = 0; i < this[kClients].length; i++) {
-          destroyAll[i] = this[kClients][i].destroy(err);
+        for (let i2 = 0; i2 < this[kClients].length; i2++) {
+          destroyAll[i2] = this[kClients][i2].destroy(err);
         }
         for (const client of this[kRetiring].keys()) {
           destroyAll.push(client.destroy(err));
@@ -18978,8 +18978,8 @@ var require_pool_base = __commonJS({
         return !this[kNeedDrain];
       }
       [kHasDispatcher]() {
-        for (let i = 0; i < this[kClients].length; i++) {
-          const dispatcher = this[kClients][i];
+        for (let i2 = 0; i2 < this[kClients].length; i2++) {
+          const dispatcher = this[kClients][i2];
           if (!dispatcher[kNeedDrain] && dispatcher.closed !== true && dispatcher.destroyed !== true) {
             return true;
           }
@@ -19183,11 +19183,11 @@ var require_pool = __commonJS({
       }
       [kGetDispatcher]() {
         const clientTtlOption = this[kOptions].clientTtl;
-        for (let i = 0; i < this[kClients].length; i++) {
-          const client = this[kClients][i];
+        for (let i2 = 0; i2 < this[kClients].length; i2++) {
+          const client = this[kClients][i2];
           if (clientTtlOption != null && clientTtlOption > 0 && client.ttl && Date.now() - client.ttl > clientTtlOption) {
             this[kRemoveClient](client);
-            i--;
+            i2--;
           } else if (!client[kNeedDrain]) {
             return client;
           }
@@ -19201,11 +19201,11 @@ var require_pool = __commonJS({
       }
       [kHasDispatcher]() {
         const clientTtlOption = this[kOptions].clientTtl;
-        for (let i = 0; i < this[kClients].length; i++) {
-          const client = this[kClients][i];
+        for (let i2 = 0; i2 < this[kClients].length; i2++) {
+          const client = this[kClients][i2];
           if (clientTtlOption != null && clientTtlOption > 0 && client.ttl && Date.now() - client.ttl > clientTtlOption) {
             this[kRemoveClient](client);
-            i--;
+            i2--;
           } else if (!client[kNeedDrain]) {
             return true;
           }
@@ -19251,14 +19251,14 @@ var require_balanced_pool = __commonJS({
     var kWeight = /* @__PURE__ */ Symbol("kWeight");
     var kMaxWeightPerServer = /* @__PURE__ */ Symbol("kMaxWeightPerServer");
     var kErrorPenalty = /* @__PURE__ */ Symbol("kErrorPenalty");
-    function getGreatestCommonDivisor(a, b2) {
-      if (a === 0) return b2;
+    function getGreatestCommonDivisor(a2, b2) {
+      if (a2 === 0) return b2;
       while (b2 !== 0) {
-        const t = b2;
-        b2 = a % b2;
-        a = t;
+        const t2 = b2;
+        b2 = a2 % b2;
+        a2 = t2;
       }
-      return a;
+      return a2;
     }
     function defaultFactory(origin, opts) {
       return new Pool(origin, opts);
@@ -19315,8 +19315,8 @@ var require_balanced_pool = __commonJS({
       }
       _updateBalancedPoolStats() {
         let result = 0;
-        for (let i = 0; i < this[kClients].length; i++) {
-          result = getGreatestCommonDivisor(this[kClients][i][kWeight], result);
+        for (let i2 = 0; i2 < this[kClients].length; i2++) {
+          result = getGreatestCommonDivisor(this[kClients][i2][kWeight], result);
         }
         this[kGreatestCommonDivisor] = result;
       }
@@ -19489,14 +19489,14 @@ var require_round_robin_pool = __commonJS({
       }
       [kHasDispatcher]() {
         const clientTtlOption = this[kOptions].clientTtl;
-        for (let i = 0; i < this[kClients].length; i++) {
-          const client = this[kClients][i];
+        for (let i2 = 0; i2 < this[kClients].length; i2++) {
+          const client = this[kClients][i2];
           if (clientTtlOption != null && clientTtlOption > 0 && client.ttl && Date.now() - client.ttl > clientTtlOption) {
             this[kRemoveClient](client);
-            if (i <= this[kIndex]) {
+            if (i2 <= this[kIndex]) {
               this[kIndex]--;
             }
-            i--;
+            i2--;
           } else if (!client[kNeedDrain]) {
             return true;
           }
@@ -19815,8 +19815,8 @@ var require_socks5_utils = __commonJS({
         }
       } else {
         const parts = normalizedAddress.split(":");
-        for (let i = 0; i < parts.length; i++) {
-          buffer.writeUInt16BE(parseInt(parts[i], 16), i * 2);
+        for (let i2 = 0; i2 < parts.length; i2++) {
+          buffer.writeUInt16BE(parseInt(parts[i2], 16), i2 * 2);
         }
       }
       return buffer;
@@ -19864,8 +19864,8 @@ var require_socks5_utils = __commonJS({
             throw new InvalidArgumentError("Buffer too small for IPv6 address");
           }
           const parts = [];
-          for (let i = 0; i < 8; i++) {
-            const value2 = buffer.readUInt16BE(currentOffset + i * 2);
+          for (let i2 = 0; i2 < 8; i2++) {
+            const value2 = buffer.readUInt16BE(currentOffset + i2 * 2);
             parts.push(value2.toString(16));
           }
           address = parts.join(":");
@@ -20046,8 +20046,8 @@ var require_socks5_client = __commonJS({
         const request = Buffer2.alloc(2 + this.authMethods.length);
         request[0] = SOCKS_VERSION;
         request[1] = this.authMethods.length;
-        this.authMethods.forEach((method, i) => {
-          request[2 + i] = method;
+        this.authMethods.forEach((method, i2) => {
+          request[2 + i2] = method;
         });
         this.socket.write(request);
       }
@@ -20081,13 +20081,13 @@ var require_socks5_client = __commonJS({
        * Send username/password authentication request
        */
       sendAuthRequest() {
-        const { username, password } = this.options;
-        if (!username || !password) {
+        const { username, password: password2 } = this.options;
+        if (!username || !password2) {
           throw new InvalidArgumentError("Username and password required for authentication");
         }
         debug("sending username/password auth");
         const usernameBuffer = Buffer2.from(username);
-        const passwordBuffer = Buffer2.from(password);
+        const passwordBuffer = Buffer2.from(password2);
         if (usernameBuffer.length > 255 || passwordBuffer.length > 255) {
           throw new InvalidArgumentError("Username or password too long");
         }
@@ -20194,8 +20194,8 @@ var require_socks5_client = __commonJS({
           offset += domainLength;
         } else if (addressType === ADDRESS_TYPES.IPV6) {
           const parts = [];
-          for (let i = 0; i < 8; i++) {
-            const value2 = this.buffer.readUInt16BE(offset + i * 2);
+          for (let i2 = 0; i2 < 8; i2++) {
+            const value2 = this.buffer.readUInt16BE(offset + i2 * 2);
             parts.push(value2.toString(16));
           }
           boundAddress = parts.join(":");
@@ -20617,7 +20617,7 @@ var require_proxy_agent = __commonJS({
         const { proxyTunnel, connectTimeout } = opts;
         super(opts);
         const url = this.#getUrl(opts);
-        const { href, origin, port, protocol, username, password, hostname: proxyHostname } = url;
+        const { href, origin, port, protocol, username, password: password2, hostname: proxyHostname } = url;
         this[kProxy] = { uri: href, protocol };
         this[kRequestTls] = opts.requestTls;
         this[kProxyTls] = opts.proxyTls;
@@ -20629,8 +20629,8 @@ var require_proxy_agent = __commonJS({
           this[kProxyHeaders]["proxy-authorization"] = `Basic ${opts.auth}`;
         } else if (opts.token) {
           this[kProxyHeaders]["proxy-authorization"] = opts.token;
-        } else if (username && password) {
-          this[kProxyHeaders]["proxy-authorization"] = `Basic ${Buffer.from(`${decodeURIComponent(username)}:${decodeURIComponent(password)}`).toString("base64")}`;
+        } else if (username && password2) {
+          this[kProxyHeaders]["proxy-authorization"] = `Basic ${Buffer.from(`${decodeURIComponent(username)}:${decodeURIComponent(password2)}`).toString("base64")}`;
         } else if (username) {
           this[kProxyHeaders]["proxy-authorization"] = `Basic ${Buffer.from(`${decodeURIComponent(username)}:`).toString("base64")}`;
         }
@@ -20647,7 +20647,7 @@ var require_proxy_agent = __commonJS({
               connect,
               factory: agentFactory,
               username: opts.username || username,
-              password: opts.password || password,
+              password: opts.password || password2,
               connectTimeout,
               proxyTls: opts.proxyTls,
               requestTls: opts.requestTls
@@ -20784,11 +20784,11 @@ var require_proxy_agent = __commonJS({
     function buildHeaders(headers) {
       if (Array.isArray(headers)) {
         const headersPair = {};
-        for (let i = 0; i < headers.length; i += 2) {
-          if (isProxyAuthorizationHeader(headers[i])) {
+        for (let i2 = 0; i2 < headers.length; i2 += 2) {
+          if (isProxyAuthorizationHeader(headers[i2])) {
             throwProxyAuthError();
           }
-          headersPair[headers[i]] = headers[i + 1];
+          headersPair[headers[i2]] = headers[i2 + 1];
         }
         return headersPair;
       }
@@ -20914,8 +20914,8 @@ var require_env_http_proxy_agent = __commonJS({
         if (this.#noProxyEntries.length === 0) {
           return true;
         }
-        for (let i = 0; i < this.#noProxyEntries.length; i++) {
-          const entry = this.#noProxyEntries[i];
+        for (let i2 = 0; i2 < this.#noProxyEntries.length; i2++) {
+          const entry = this.#noProxyEntries[i2];
           if (entry.hostname === "*") {
             if (entry.port && entry.port !== port) {
               continue;
@@ -20938,8 +20938,8 @@ var require_env_http_proxy_agent = __commonJS({
         const noProxyValue = this.#opts.noProxy ?? this.#noProxyEnv;
         const noProxySplit = noProxyValue.split(/[,\s]/);
         const noProxyEntries = [];
-        for (let i = 0; i < noProxySplit.length; i++) {
-          const entry = noProxySplit[i];
+        for (let i2 = 0; i2 < noProxySplit.length; i2++) {
+          const entry = noProxySplit[i2];
           if (!entry) {
             continue;
           }
@@ -21473,9 +21473,9 @@ var require_retry_handler = __commonJS({
       if (Array.isArray(headers) || headers && typeof headers === "object" && hasSafeIterator(headers)) {
         const ret2 = [];
         if (Array.isArray(headers)) {
-          for (let i = 0; i < headers.length; i += 2) {
-            if (!isReplacedHeader(headers[i], etag)) {
-              ret2.push(headers[i], headers[i + 1]);
+          for (let i2 = 0; i2 < headers.length; i2 += 2) {
+            if (!isReplacedHeader(headers[i2], etag)) {
+              ret2.push(headers[i2], headers[i2 + 1]);
             }
           }
         } else {
@@ -21904,8 +21904,8 @@ var require_readable = __commonJS({
       if (state2.bufferIndex) {
         const start = state2.bufferIndex;
         const end = state2.buffer.length;
-        for (let n2 = start; n2 < end; n2++) {
-          consumePush(consume2, state2.buffer[n2]);
+        for (let n4 = start; n4 < end; n4++) {
+          consumePush(consume2, state2.buffer[n4]);
         }
       } else {
         for (const chunk of state2.buffer) {
@@ -21949,8 +21949,8 @@ var require_readable = __commonJS({
       }
       const buffer = new Uint8Array(Buffer.allocUnsafeSlow(length2).buffer);
       let offset = 0;
-      for (let i = 0; i < chunks.length; ++i) {
-        const chunk = chunks[i];
+      for (let i2 = 0; i2 < chunks.length; ++i2) {
+        const chunk = chunks[i2];
         buffer.set(chunk, offset);
         offset += chunk.length;
       }
@@ -22988,9 +22988,9 @@ var require_mock_utils = __commonJS({
     }
     function getHeaderByName(headers, key) {
       if (Array.isArray(headers)) {
-        for (let i = 0; i < headers.length; i += 2) {
-          if (headers[i].toLocaleLowerCase() === key.toLocaleLowerCase()) {
-            return headers[i + 1];
+        for (let i2 = 0; i2 < headers.length; i2 += 2) {
+          if (headers[i2].toLocaleLowerCase() === key.toLocaleLowerCase()) {
+            return headers[i2 + 1];
           }
         }
         return void 0;
@@ -23163,8 +23163,8 @@ var require_mock_utils = __commonJS({
     function generateKeyValues(data) {
       const keys = Object.keys(data);
       const result = [];
-      for (let i = 0; i < keys.length; ++i) {
-        const key = keys[i];
+      for (let i2 = 0; i2 < keys.length; ++i2) {
+        const key = keys[i2];
         const value2 = data[key];
         const name = Buffer.from(`${key}`);
         if (Array.isArray(value2)) {
@@ -24290,9 +24290,9 @@ var require_snapshot_utils = __commonJS({
       const normalizedHeaders = {};
       if (!headers) return normalizedHeaders;
       if (isUndiciHeaders(headers)) {
-        for (let i = 0; i < headers.length; i += 2) {
-          const key = headers[i];
-          const value2 = headers[i + 1];
+        for (let i2 = 0; i2 < headers.length; i2 += 2) {
+          const key = headers[i2];
+          const value2 = headers[i2 + 1];
           if (key && value2 !== void 0) {
             const keyStr = Buffer.isBuffer(key) ? key.toString() : key;
             const valueStr = Buffer.isBuffer(value2) ? value2.toString() : value2;
@@ -25322,9 +25322,9 @@ var require_redirect_handler = __commonJS({
             }
           }
         } else {
-          for (let i = 0; i < headers.length; i += 2) {
-            if (!shouldRemoveHeader(headers[i], removeContent, unknownOrigin, stripHeaders, stripHeadersOnCrossOrigin)) {
-              ret.push(headers[i], headers[i + 1]);
+          for (let i2 = 0; i2 < headers.length; i2 += 2) {
+            if (!shouldRemoveHeader(headers[i2], removeContent, unknownOrigin, stripHeaders, stripHeadersOnCrossOrigin)) {
+              ret.push(headers[i2], headers[i2 + 1]);
             }
           }
         }
@@ -25641,8 +25641,8 @@ var require_dns = __commonJS({
         if (headers.length === 0) {
           return false;
         }
-        for (let i = 0; i < headers.length; i += 2) {
-          if (isHostHeader(headers[i])) {
+        for (let i2 = 0; i2 < headers.length; i2 += 2) {
+          if (isHostHeader(headers[i2])) {
             return true;
           }
         }
@@ -26055,8 +26055,8 @@ var require_cache = __commonJS({
       return value2.replace(/^[\t ]+|[\t ]+$/g, "");
     }
     function arrayIncludes(array2, value2) {
-      for (let i = 0; i < array2.length; i++) {
-        if (array2[i] === value2) {
+      for (let i2 = 0; i2 < array2.length; i2++) {
+        if (array2[i2] === value2) {
           return true;
         }
       }
@@ -26070,13 +26070,13 @@ var require_cache = __commonJS({
     }
     function findUnescapedQuote(value2, start) {
       let escaped = false;
-      for (let i = start; i < value2.length; i++) {
+      for (let i2 = start; i2 < value2.length; i2++) {
         if (escaped) {
           escaped = false;
-        } else if (value2[i] === "\\") {
+        } else if (value2[i2] === "\\") {
           escaped = true;
-        } else if (value2[i] === '"') {
-          return i;
+        } else if (value2[i2] === '"') {
+          return i2;
         }
       }
       return -1;
@@ -26087,22 +26087,22 @@ var require_cache = __commonJS({
       let quoteStart = -1;
       let inQuote = false;
       let escaped = false;
-      for (let i = 0; i < value2.length; i++) {
+      for (let i2 = 0; i2 < value2.length; i2++) {
         if (inQuote) {
           if (escaped) {
             escaped = false;
-          } else if (value2[i] === "\\") {
+          } else if (value2[i2] === "\\") {
             escaped = true;
-          } else if (value2[i] === '"') {
+          } else if (value2[i2] === '"') {
             inQuote = false;
             quoteStart = -1;
           }
-        } else if (value2[i] === '"') {
+        } else if (value2[i2] === '"') {
           inQuote = true;
-          quoteStart = i;
-        } else if (value2[i] === ",") {
-          directives.push({ value: value2.substring(start, i), fromMalformedQuote: false });
-          start = i + 1;
+          quoteStart = i2;
+        } else if (value2[i2] === ",") {
+          directives.push({ value: value2.substring(start, i2), fromMalformedQuote: false });
+          start = i2 + 1;
         }
       }
       if (!inQuote) {
@@ -26112,13 +26112,13 @@ var require_cache = __commonJS({
       const tail = value2.substring(start);
       const quoteOffset = quoteStart - start;
       let tailStart = 0;
-      for (let i = 0; i < tail.length; i++) {
-        if (tail[i] === ",") {
+      for (let i2 = 0; i2 < tail.length; i2++) {
+        if (tail[i2] === ",") {
           directives.push({
-            value: tail.substring(tailStart, i),
+            value: tail.substring(tailStart, i2),
             fromMalformedQuote: tailStart > quoteOffset
           });
-          tailStart = i + 1;
+          tailStart = i2 + 1;
         }
       }
       directives.push({
@@ -26148,9 +26148,9 @@ var require_cache = __commonJS({
       }
       let tokenOnlyKey = "";
       let hasInvalidTokenChar = false;
-      for (let i = 0; i < key.length; i++) {
-        if (isValidHTTPToken(key[i])) {
-          tokenOnlyKey += key[i];
+      for (let i2 = 0; i2 < key.length; i2++) {
+        if (isValidHTTPToken(key[i2])) {
+          tokenOnlyKey += key[i2];
         } else {
           hasInvalidTokenChar = true;
         }
@@ -26234,9 +26234,9 @@ var require_cache = __commonJS({
               if (len % 2 !== 0) {
                 throw new Error("opts.headers is not a valid header map");
               }
-              for (let i = 0; i < len; i += 2) {
-                const key = opts.headers[i];
-                const val = opts.headers[i + 1];
+              for (let i2 = 0; i2 < len; i2 += 2) {
+                const key = opts.headers[i2];
+                const val = opts.headers[i2 + 1];
                 if (typeof key !== "string" || typeof val !== "string" && !Array.isArray(val)) {
                   throw new Error("opts.headers is not a valid header map");
                 }
@@ -26314,8 +26314,8 @@ var require_cache = __commonJS({
       const invalidNumericDirectives = /* @__PURE__ */ new Set();
       const invalidNoArgumentDirectives = /* @__PURE__ */ new Set();
       const directives = splitCacheControlHeaderValue(Array.isArray(header2) ? header2.join(",") : header2);
-      for (let i = 0; i < directives.length; i++) {
-        const directiveRecord = directives[i];
+      for (let i2 = 0; i2 < directives.length; i2++) {
+        const directiveRecord = directives[i2];
         const directive = directiveRecord.value.toLowerCase();
         const fromMalformedQuote = directiveRecord.fromMalformedQuote;
         const keyValueDelimiter = directive.indexOf("=");
@@ -26387,7 +26387,7 @@ var require_cache = __commonJS({
               if (value2[0] === '"') {
                 value2 = trimOWSEnd(value2);
                 let fieldList = "";
-                let lastQuotedPart = i;
+                let lastQuotedPart = i2;
                 let foundEndingQuote = false;
                 const closingQuote = findUnescapedQuote(value2, 1);
                 if (closingQuote !== -1) {
@@ -26395,7 +26395,7 @@ var require_cache = __commonJS({
                   foundEndingQuote = true;
                 } else {
                   const fieldListParts = [value2.substring(1)];
-                  for (let j = i + 1; j < directives.length; j++) {
+                  for (let j = i2 + 1; j < directives.length; j++) {
                     const nextPart = trimOWS(directives[j].value);
                     const closingQuote2 = findUnescapedQuote(nextPart, 0);
                     lastQuotedPart = j;
@@ -26412,7 +26412,7 @@ var require_cache = __commonJS({
                   output2[key] = true;
                   break;
                 }
-                i = lastQuotedPart;
+                i2 = lastQuotedPart;
                 const headers = fieldList.split(",");
                 let validFieldNames = true;
                 for (let j = 0; j < headers.length; j++) {
@@ -26475,8 +26475,8 @@ var require_cache = __commonJS({
     function splitVaryHeader(varyHeader) {
       const values = Array.isArray(varyHeader) ? varyHeader : [varyHeader];
       const output2 = [];
-      for (let i = 0; i < values.length; i++) {
-        const parts = values[i].split(",");
+      for (let i2 = 0; i2 < values.length; i2++) {
+        const parts = values[i2].split(",");
         for (let j = 0; j < parts.length; j++) {
           output2.push(parts[j]);
         }
@@ -26485,8 +26485,8 @@ var require_cache = __commonJS({
     }
     function hasVaryStar(varyHeader) {
       const values = splitVaryHeader(varyHeader);
-      for (let i = 0; i < values.length; i++) {
-        if (trimOWS(values[i]).indexOf("*") !== -1) {
+      for (let i2 = 0; i2 < values.length; i2++) {
+        if (trimOWS(values[i2]).indexOf("*") !== -1) {
           return true;
         }
       }
@@ -27152,11 +27152,11 @@ var require_cache_handler = __commonJS({
         this.target.rawTrailers = value2;
       }
     };
-    function sameOrigin(a, b2) {
+    function sameOrigin(a2, b2) {
       try {
-        return new URL(String(a)).origin === new URL(String(b2)).origin;
+        return new URL(String(a2)).origin === new URL(String(b2)).origin;
       } catch {
-        return String(a) === String(b2);
+        return String(a2) === String(b2);
       }
     }
     var HEURISTICALLY_CACHEABLE_STATUS_CODES = [
@@ -27182,8 +27182,8 @@ var require_cache_handler = __commonJS({
       return value2.replace(/^[\t ]+|[\t ]+$/g, "");
     }
     function arrayIncludes(array2, value2) {
-      for (let i = 0; i < array2.length; i++) {
-        if (array2[i] === value2) {
+      for (let i2 = 0; i2 < array2.length; i2++) {
+        if (array2[i2] === value2) {
           return true;
         }
       }
@@ -27191,8 +27191,8 @@ var require_cache_handler = __commonJS({
     }
     function appendVaryValues(target, varyValue) {
       if (Array.isArray(varyValue)) {
-        for (let i = 0; i < varyValue.length; i++) {
-          target.push(varyValue[i]);
+        for (let i2 = 0; i2 < varyValue.length; i2++) {
+          target.push(varyValue[i2]);
         }
       } else if (varyValue != null) {
         target.push(varyValue);
@@ -27200,8 +27200,8 @@ var require_cache_handler = __commonJS({
     }
     function appendConnectionHeaderTokens(headersToRemove, connectionHeader) {
       const values = Array.isArray(connectionHeader) ? connectionHeader : [connectionHeader];
-      for (let i = 0; i < values.length; i++) {
-        const tokens = values[i].split(",");
+      for (let i2 = 0; i2 < values.length; i2++) {
+        const tokens = values[i2].split(",");
         for (let j = 0; j < tokens.length; j++) {
           headersToRemove.push(trimOWS(tokens[j]).toLowerCase());
         }
@@ -27231,8 +27231,8 @@ var require_cache_handler = __commonJS({
         ...cacheKey,
         path: path2
       });
-      for (let i = 0; i < util.safeHTTPMethods.length; i++) {
-        const method = util.safeHTTPMethods[i];
+      for (let i2 = 0; i2 < util.safeHTTPMethods.length; i2++) {
+        const method = util.safeHTTPMethods[i2];
         if (method !== cacheKey.method) {
           deleteCachedValue(store, {
             ...cacheKey,
@@ -27247,8 +27247,8 @@ var require_cache_handler = __commonJS({
         return;
       }
       const values = Array.isArray(headerValue) ? headerValue : [headerValue];
-      for (let i = 0; i < values.length; i++) {
-        const path2 = getSameOriginPath(cacheKey, values[i]);
+      for (let i2 = 0; i2 < values.length; i2++) {
+        const path2 = getSameOriginPath(cacheKey, values[i2]);
         if (path2 !== void 0) {
           deleteCachedUri(store, cacheKey, path2);
         }
@@ -28021,13 +28021,13 @@ var require_memory_cache_store = __commonJS({
         const targetSize = this.#maxSize / 2;
         const targetCount = this.#maxCount / 2;
         for (const [key, entries] of this.#entries) {
-          for (let i = 0; i < entries.length && (this.#size > targetSize || this.#count > targetCount); ) {
-            const entry = entries[i];
+          for (let i2 = 0; i2 < entries.length && (this.#size > targetSize || this.#count > targetCount); ) {
+            const entry = entries[i2];
             if (entry === keep) {
-              i++;
+              i2++;
               continue;
             }
-            entries.splice(i, 1);
+            entries.splice(i2, 1);
             this.#size -= entry.size;
             this.#count -= 1;
           }
@@ -28065,8 +28065,8 @@ var require_memory_cache_store = __commonJS({
       }
     };
     function findEntry(key, entries, now) {
-      for (let i = 0; i < entries.length; i++) {
-        const entry = entries[i];
+      for (let i2 = 0; i2 < entries.length; i2++) {
+        const entry = entries[i2];
         if (entry.deleteAt > now && entry.method === key.method && varyMatches(key, entry)) {
           return entry;
         }
@@ -28094,8 +28094,8 @@ var require_memory_cache_store = __commonJS({
         if (lhs.length !== rhs.length) {
           return false;
         }
-        for (let i = 0; i < lhs.length; i++) {
-          if (lhs[i] !== rhs[i]) {
+        for (let i2 = 0; i2 < lhs.length; i2++) {
+          if (lhs[i2] !== rhs[i2]) {
             return false;
           }
         }
@@ -28228,10 +28228,10 @@ var require_cache2 = __commonJS({
       if (!Array.isArray(origins)) {
         throw new TypeError(`expected ${name} to be an array or undefined, got ${typeof origins}`);
       }
-      for (let i = 0; i < origins.length; i++) {
-        const origin = origins[i];
+      for (let i2 = 0; i2 < origins.length; i2++) {
+        const origin = origins[i2];
         if (typeof origin !== "string" && !(origin instanceof RegExp)) {
-          throw new TypeError(`expected ${name}[${i}] to be a string or RegExp, got ${typeof origin}`);
+          throw new TypeError(`expected ${name}[${i2}] to be a string or RegExp, got ${typeof origin}`);
         }
       }
     }
@@ -28241,8 +28241,8 @@ var require_cache2 = __commonJS({
       return value2.replace(/^[\t ]+|[\t ]+$/g, "");
     }
     function arrayIncludes(array2, value2) {
-      for (let i = 0; i < array2.length; i++) {
-        if (array2[i] === value2) {
+      for (let i2 = 0; i2 < array2.length; i2++) {
+        if (array2[i2] === value2) {
           return true;
         }
       }
@@ -28254,8 +28254,8 @@ var require_cache2 = __commonJS({
         return false;
       }
       const values = Array.isArray(pragma) ? pragma : [pragma];
-      for (let i = 0; i < values.length; i++) {
-        const value2 = values[i];
+      for (let i2 = 0; i2 < values.length; i2++) {
+        const value2 = values[i2];
         if (typeof value2 !== "string") {
           continue;
         }
@@ -28633,8 +28633,8 @@ var require_cache2 = __commonJS({
         type
       };
       const safeMethodsToNotCache = [];
-      for (let i = 0; i < util.safeHTTPMethods.length; i++) {
-        const method = util.safeHTTPMethods[i];
+      for (let i2 = 0; i2 < util.safeHTTPMethods.length; i2++) {
+        const method = util.safeHTTPMethods[i2];
         if (!arrayIncludes(methods, method)) {
           safeMethodsToNotCache.push(method);
         }
@@ -28648,8 +28648,8 @@ var require_cache2 = __commonJS({
           if (origins !== void 0) {
             const normalizedRequestOrigin = requestOrigin.toString().toLowerCase();
             let isAllowed = false;
-            for (let i = 0; i < origins.length; i++) {
-              const allowed = origins[i];
+            for (let i2 = 0; i2 < origins.length; i2++) {
+              const allowed = origins[i2];
               if (typeof allowed === "string") {
                 if (allowed.toLowerCase() === normalizedRequestOrigin) {
                   isAllowed = true;
@@ -28987,8 +28987,8 @@ var require_decompress = __commonJS({
           throw new Error(`too many content-encodings in response: ${parts.length}, maximum allowed is ${maxContentEncodings}`);
         }
         const decompressors = [];
-        for (let i = parts.length - 1; i >= 0; i--) {
-          const encoding = parts[i].trim();
+        for (let i2 = parts.length - 1; i2 >= 0; i2--) {
+          const encoding = parts[i2].trim();
           if (!encoding) continue;
           if (!supportedEncodings[encoding]) {
             decompressors.length = 0;
@@ -29000,9 +29000,9 @@ var require_decompress = __commonJS({
           return decompressors;
         }
         const streams = [];
-        for (let i = 0; i < decompressors.length; i++) {
-          streams.push(decompressors[i]);
-          if (i < decompressors.length - 1 && this.#maxSize > 0) {
+        for (let i2 = 0; i2 < decompressors.length; i2++) {
+          streams.push(decompressors[i2]);
+          if (i2 < decompressors.length - 1 && this.#maxSize > 0) {
             streams.push(createMaxSizeLimiter(this.#maxSize));
           }
         }
@@ -29112,14 +29112,14 @@ var require_decompress = __commonJS({
           const rawHeaders = this.#controller.rawHeaders;
           if (Array.isArray(rawHeaders)) {
             const filteredHeaders = [];
-            for (let i = 0; i < rawHeaders.length; i += 2) {
-              const headerName = rawHeaders[i];
+            for (let i2 = 0; i2 < rawHeaders.length; i2 += 2) {
+              const headerName = rawHeaders[i2];
               const name = Buffer.isBuffer(headerName) ? headerName.toString("latin1") : `${headerName}`;
               const lowerName = name.toLowerCase();
               if (lowerName === "content-encoding" || lowerName === "content-length") {
                 continue;
               }
-              filteredHeaders.push(rawHeaders[i], rawHeaders[i + 1]);
+              filteredHeaders.push(rawHeaders[i2], rawHeaders[i2 + 1]);
             }
             rawHeaders.splice(0, rawHeaders.length, ...filteredHeaders);
           } else if (typeof rawHeaders === "object") {
@@ -30120,8 +30120,8 @@ var require_sqlite_cache_store = __commonJS({
         if (lhs.length !== rhs.length) {
           return false;
         }
-        for (let i = 0; i < lhs.length; i++) {
-          if (lhs[i] !== rhs[i]) {
+        for (let i2 = 0; i2 < lhs.length; i2++) {
+          if (lhs[i2] !== rhs[i2]) {
             return false;
           }
         }
@@ -30169,16 +30169,16 @@ var require_headers = __commonJS({
       return code === 10 || code === 13 || code === 9 || code === 32;
     }
     function headerValueNormalize(potentialValue) {
-      let i = 0;
+      let i2 = 0;
       let j = potentialValue.length;
-      while (j > i && isHTTPWhiteSpaceCharCode(potentialValue.charCodeAt(j - 1))) --j;
-      while (j > i && isHTTPWhiteSpaceCharCode(potentialValue.charCodeAt(i))) ++i;
-      return i === 0 && j === potentialValue.length ? potentialValue : potentialValue.substring(i, j);
+      while (j > i2 && isHTTPWhiteSpaceCharCode(potentialValue.charCodeAt(j - 1))) --j;
+      while (j > i2 && isHTTPWhiteSpaceCharCode(potentialValue.charCodeAt(i2))) ++i2;
+      return i2 === 0 && j === potentialValue.length ? potentialValue : potentialValue.substring(i2, j);
     }
     function fill(headers, object3) {
       if (Array.isArray(object3)) {
-        for (let i = 0; i < object3.length; ++i) {
-          const header2 = object3[i];
+        for (let i2 = 0; i2 < object3.length; ++i2) {
+          const header2 = object3[i2];
           if (header2.length !== 2) {
             throw webidl.errors.exception({
               header: "Headers constructor",
@@ -30189,8 +30189,8 @@ var require_headers = __commonJS({
         }
       } else if (typeof object3 === "object" && object3 !== null) {
         const keys = Object.keys(object3);
-        for (let i = 0; i < keys.length; ++i) {
-          appendHeader(headers, keys[i], object3[keys[i]]);
+        for (let i2 = 0; i2 < keys.length; ++i2) {
+          appendHeader(headers, keys[i2], object3[keys[i2]]);
         }
       } else {
         throw webidl.errors.conversionFailed({
@@ -30234,8 +30234,8 @@ var require_headers = __commonJS({
       if (cookies === null || cookies.length === 1) {
         return headersList.sortedMap = names2;
       }
-      for (let i = 0; i < names2.length; ++i) {
-        const { 0: name, 1: value2 } = names2[i];
+      for (let i2 = 0; i2 < names2.length; ++i2) {
+        const { 0: name, 1: value2 } = names2[i2];
         if (name === "set-cookie") {
           for (let j = 0; j < cookies.length; ++j) {
             headers.push([name, cookies[j]]);
@@ -30246,8 +30246,8 @@ var require_headers = __commonJS({
       }
       return headersList.sortedMap = headers;
     }
-    function compareHeaderName(a, b2) {
-      return a[0] < b2[0] ? -1 : 1;
+    function compareHeaderName(a2, b2) {
+      return a2[0] < b2[0] ? -1 : 1;
     }
     var HeadersList = class _HeadersList {
       /** @type {[string, string][]|null} */
@@ -30380,12 +30380,12 @@ var require_headers = __commonJS({
           const firstValue = iterator.next().value;
           array2[0] = [firstValue[0], firstValue[1].value];
           assert2(firstValue[1].value !== null);
-          for (let i = 1, j = 0, right = 0, left = 0, pivot = 0, x, value2; i < size; ++i) {
+          for (let i2 = 1, j = 0, right = 0, left = 0, pivot = 0, x, value2; i2 < size; ++i2) {
             value2 = iterator.next().value;
-            x = array2[i] = [value2[0], value2[1].value];
+            x = array2[i2] = [value2[0], value2[1].value];
             assert2(x[1] !== null);
             left = 0;
-            right = i;
+            right = i2;
             while (left < right) {
               pivot = left + (right - left >> 1);
               if (array2[pivot][0] <= x[0]) {
@@ -30394,8 +30394,8 @@ var require_headers = __commonJS({
                 right = pivot;
               }
             }
-            if (i !== pivot) {
-              j = i;
+            if (i2 !== pivot) {
+              j = i2;
               while (j > left) {
                 array2[j] = array2[--j];
               }
@@ -30407,9 +30407,9 @@ var require_headers = __commonJS({
           }
           return array2;
         } else {
-          let i = 0;
+          let i2 = 0;
           for (const { 0: name, 1: { value: value2 } } of this.headersMap) {
-            array2[i++] = [name, value2];
+            array2[i2++] = [name, value2];
             assert2(value2 !== null);
           }
           return array2.sort(compareHeaderName);
@@ -31872,8 +31872,8 @@ var require_subresource_integrity = __commonJS({
       if (actualValueLength !== expectedValueLength) {
         return false;
       }
-      for (let i = 0; i < actualValueLength; ++i) {
-        if (actualValue[i] === expectedValue[i] || actualValue[i] === "+" && expectedValue[i] === "-" || actualValue[i] === "/" && expectedValue[i] === "_") {
+      for (let i2 = 0; i2 < actualValueLength; ++i2) {
+        if (actualValue[i2] === expectedValue[i2] || actualValue[i2] === "+" && expectedValue[i2] === "-" || actualValue[i2] === "/" && expectedValue[i2] === "_") {
           continue;
         }
         return false;
@@ -31964,9 +31964,9 @@ var require_fetch = __commonJS({
     var resolveObjectURL;
     function appendHeadersListFromResponseHeaders(headersList, headers, rawHeaders) {
       if (Array.isArray(rawHeaders)) {
-        for (let i = 0; i < rawHeaders.length; i += 2) {
-          const nameStr = bufferToLowerCasedHeaderName(rawHeaders[i]);
-          const value2 = rawHeaders[i + 1];
+        for (let i2 = 0; i2 < rawHeaders.length; i2 += 2) {
+          const nameStr = bufferToLowerCasedHeaderName(rawHeaders[i2]);
+          const value2 = rawHeaders[i2 + 1];
           if (Array.isArray(value2) && !Buffer.isBuffer(value2)) {
             for (const val of value2) {
               headersList.append(nameStr, val.toString("latin1"), true);
@@ -32641,8 +32641,8 @@ var require_fetch = __commonJS({
           let authorizationValue = null;
           if (hasAuthenticationEntry(httpRequest) && (httpRequest.useURLCredentials === void 0 || !includesCredentials(requestCurrentURL(httpRequest)))) {
           } else if (includesCredentials(requestCurrentURL(httpRequest)) && isAuthenticationFetch) {
-            const { username, password } = requestCurrentURL(httpRequest);
-            authorizationValue = `Basic ${Buffer.from(`${username}:${password}`).toString("base64")}`;
+            const { username, password: password2 } = requestCurrentURL(httpRequest);
+            authorizationValue = `Basic ${Buffer.from(`${username}:${password2}`).toString("base64")}`;
           }
           if (authorizationValue !== null) {
             httpRequest.headersList.append("Authorization", authorizationValue, false);
@@ -32937,8 +32937,8 @@ var require_fetch = __commonJS({
                     controller.abort(new Error(`too many content-encodings in response: ${codings.length}, maximum allowed is ${maxContentEncodings}`));
                     return;
                   }
-                  for (let i = codings.length - 1; i >= 0; --i) {
-                    const coding = codings[i].trim();
+                  for (let i2 = codings.length - 1; i2 >= 0; --i2) {
+                    const coding = codings[i2].trim();
                     if (coding === "x-gzip" || coding === "gzip") {
                       decoders.push(zlib.createGunzip({
                         // Be less strict when decoding compressed responses, since sometimes
@@ -33151,8 +33151,8 @@ var require_cache3 = __commonJS({
           if (typeof request === "string") {
             continue;
           }
-          const r = getRequestState(request);
-          if (!urlIsHttpHttpsScheme(r.url) || r.method !== "GET") {
+          const r2 = getRequestState(request);
+          if (!urlIsHttpHttpsScheme(r2.url) || r2.method !== "GET") {
             throw webidl.errors.exception({
               header: prefix,
               message: "Expected http/s scheme when method is not GET."
@@ -33161,19 +33161,19 @@ var require_cache3 = __commonJS({
         }
         const fetchControllers = [];
         for (const request of requests) {
-          const r = getRequestState(new Request(request));
-          if (!urlIsHttpHttpsScheme(r.url)) {
+          const r2 = getRequestState(new Request(request));
+          if (!urlIsHttpHttpsScheme(r2.url)) {
             throw webidl.errors.exception({
               header: prefix,
               message: "Expected http/s scheme."
             });
           }
-          r.initiator = "fetch";
-          r.destination = "subresource";
-          requestList.push(r);
+          r2.initiator = "fetch";
+          r2.destination = "subresource";
+          requestList.push(r2);
           const responsePromise = Promise.withResolvers();
           fetchControllers.push(fetching({
-            request: r,
+            request: r2,
             processResponse(response) {
               if (response.type === "error" || response.status === 206 || response.status < 200 || response.status > 299) {
                 responsePromise.reject(webidl.errors.exception({
@@ -33328,20 +33328,20 @@ var require_cache3 = __commonJS({
         webidl.argumentLengthCheck(arguments, 1, prefix);
         request = webidl.converters.RequestInfo(request);
         options = webidl.converters.CacheQueryOptions(options, prefix, "options");
-        let r = null;
+        let r2 = null;
         if (webidl.is.Request(request)) {
-          r = getRequestState(request);
-          if (r.method !== "GET" && !options.ignoreMethod) {
+          r2 = getRequestState(request);
+          if (r2.method !== "GET" && !options.ignoreMethod) {
             return false;
           }
         } else {
           assert2(typeof request === "string");
-          r = getRequestState(new Request(request));
+          r2 = getRequestState(new Request(request));
         }
         const operations = [];
         const operation = {
           type: "delete",
-          request: r,
+          request: r2,
           options
         };
         operations.push(operation);
@@ -33373,15 +33373,15 @@ var require_cache3 = __commonJS({
         const prefix = "Cache.keys";
         if (request !== void 0) request = webidl.converters.RequestInfo(request);
         options = webidl.converters.CacheQueryOptions(options, prefix, "options");
-        let r = null;
+        let r2 = null;
         if (request !== void 0) {
           if (webidl.is.Request(request)) {
-            r = getRequestState(request);
-            if (r.method !== "GET" && !options.ignoreMethod) {
+            r2 = getRequestState(request);
+            if (r2.method !== "GET" && !options.ignoreMethod) {
               return [];
             }
           } else if (typeof request === "string") {
-            r = getRequestState(new Request(request));
+            r2 = getRequestState(new Request(request));
           }
         }
         const promise = Promise.withResolvers();
@@ -33391,7 +33391,7 @@ var require_cache3 = __commonJS({
             requests.push(requestResponse[0]);
           }
         } else {
-          const requestResponses = this.#queryCache(r, options);
+          const requestResponses = this.#queryCache(r2, options);
           for (const requestResponse of requestResponses) {
             requests.push(requestResponse[0]);
           }
@@ -33456,14 +33456,14 @@ var require_cache3 = __commonJS({
                   message: "put operation should have an associated response"
                 });
               }
-              const r = operation.request;
-              if (!urlIsHttpHttpsScheme(r.url)) {
+              const r2 = operation.request;
+              if (!urlIsHttpHttpsScheme(r2.url)) {
                 throw webidl.errors.exception({
                   header: "Cache.#batchCacheOperations",
                   message: "expected http or https scheme"
                 });
               }
-              if (r.method !== "GET") {
+              if (r2.method !== "GET") {
                 throw webidl.errors.exception({
                   header: "Cache.#batchCacheOperations",
                   message: "not get method"
@@ -33546,15 +33546,15 @@ var require_cache3 = __commonJS({
         return true;
       }
       #internalMatchAll(request, options, maxResponses = Infinity) {
-        let r = null;
+        let r2 = null;
         if (request !== void 0) {
           if (webidl.is.Request(request)) {
-            r = getRequestState(request);
-            if (r.method !== "GET" && !options.ignoreMethod) {
+            r2 = getRequestState(request);
+            if (r2.method !== "GET" && !options.ignoreMethod) {
               return [];
             }
           } else if (typeof request === "string") {
-            r = getRequestState(new Request(request));
+            r2 = getRequestState(new Request(request));
           }
         }
         const responses = [];
@@ -33563,7 +33563,7 @@ var require_cache3 = __commonJS({
             responses.push(requestResponse[1]);
           }
         } else {
-          const requestResponses = this.#queryCache(r, options);
+          const requestResponses = this.#queryCache(r2, options);
           for (const requestResponse of requestResponses) {
             responses.push(requestResponse[1]);
           }
@@ -33768,8 +33768,8 @@ var require_util6 = __commonJS({
   "node_modules/undici/lib/web/cookies/util.js"(exports2, module2) {
     "use strict";
     function isCTLExcludingHtab(value2) {
-      for (let i = 0; i < value2.length; ++i) {
-        const code = value2.charCodeAt(i);
+      for (let i2 = 0; i2 < value2.length; ++i2) {
+        const code = value2.charCodeAt(i2);
         if (code >= 0 && code <= 8 || code >= 10 && code <= 31 || code === 127) {
           return true;
         }
@@ -33777,8 +33777,8 @@ var require_util6 = __commonJS({
       return false;
     }
     function validateCookieName(name) {
-      for (let i = 0; i < name.length; ++i) {
-        const code = name.charCodeAt(i);
+      for (let i2 = 0; i2 < name.length; ++i2) {
+        const code = name.charCodeAt(i2);
         if (code < 33 || // exclude CTLs (0-31), SP and HT
         code > 126 || // exclude non-ascii and DEL
         code === 34 || // "
@@ -33804,16 +33804,16 @@ var require_util6 = __commonJS({
     }
     function validateCookieValue(value2) {
       let len = value2.length;
-      let i = 0;
+      let i2 = 0;
       if (value2[0] === '"') {
         if (len === 1 || value2[len - 1] !== '"') {
           throw new Error("Invalid cookie value");
         }
         --len;
-        ++i;
+        ++i2;
       }
-      while (i < len) {
-        const code = value2.charCodeAt(i++);
+      while (i2 < len) {
+        const code = value2.charCodeAt(i2++);
         if (code < 33 || // exclude CTLs (0-31)
         code > 126 || // non-ascii and DEL (127)
         code === 34 || // "
@@ -33825,8 +33825,8 @@ var require_util6 = __commonJS({
       }
     }
     function validateCookiePath(path2) {
-      for (let i = 0; i < path2.length; ++i) {
-        const code = path2.charCodeAt(i);
+      for (let i2 = 0; i2 < path2.length; ++i2) {
+        const code = path2.charCodeAt(i2);
         if (code < 32 || // exclude CTLs (0-31)
         code > 126 || // exclude non-ascii and DEL
         code === 59) {
@@ -33847,13 +33847,13 @@ var require_util6 = __commonJS({
         throw new Error("Invalid cookie domain");
       }
       let labelLength = 0;
-      for (let i = 0; i < domain.length; ++i) {
-        const code = domain.charCodeAt(i);
+      for (let i2 = 0; i2 < domain.length; ++i2) {
+        const code = domain.charCodeAt(i2);
         if (code === 46) {
           if (labelLength === 0) {
             throw new Error("Invalid cookie domain");
           }
-          if (domain.charCodeAt(i - 1) === 45) {
+          if (domain.charCodeAt(i2 - 1) === 45) {
             throw new Error("Invalid cookie domain");
           }
           labelLength = 0;
@@ -33896,7 +33896,7 @@ var require_util6 = __commonJS({
       "Nov",
       "Dec"
     ];
-    var IMFPaddedNumbers = Array(61).fill(0).map((_, i) => i.toString().padStart(2, "0"));
+    var IMFPaddedNumbers = Array(61).fill(0).map((_, i2) => i2.toString().padStart(2, "0"));
     function toIMFDate(date) {
       if (typeof date === "number") {
         date = new Date(date);
@@ -34634,8 +34634,8 @@ var require_util7 = __commonJS({
       if (protocol.length === 0) {
         return false;
       }
-      for (let i = 0; i < protocol.length; ++i) {
-        const code = protocol.charCodeAt(i);
+      for (let i2 = 0; i2 < protocol.length; ++i2) {
+        const code = protocol.charCodeAt(i2);
         if (code < 33 || // CTL, contains SP (0x20) and HT (0x09)
         code > 126 || code === 34 || // "
         code === 40 || // (
@@ -34697,8 +34697,8 @@ var require_util7 = __commonJS({
       if (value2.length === 0) {
         return false;
       }
-      for (let i = 0; i < value2.length; i++) {
-        const byte = value2.charCodeAt(i);
+      for (let i2 = 0; i2 < value2.length; i2++) {
+        const byte = value2.charCodeAt(i2);
         if (byte < 48 || byte > 57) {
           return false;
         }
@@ -34827,8 +34827,8 @@ var require_frame = __commonJS({
           buffer2.writeUIntBE(bodyLength, 4, 6);
         }
         buffer2[1] |= 128;
-        for (let i = 0; i < bodyLength; ++i) {
-          buffer2[offset + i] = frameData[i] ^ maskKey[i & 3];
+        for (let i2 = 0; i2 < bodyLength; ++i2) {
+          buffer2[offset + i2] = frameData[i2] ^ maskKey[i2 & 3];
         }
         return buffer2;
       }
@@ -34838,8 +34838,8 @@ var require_frame = __commonJS({
       static createFastTextFrame(buffer2) {
         const maskKey = generateMask();
         const bodyLength = buffer2.length;
-        for (let i = 0; i < bodyLength; ++i) {
-          buffer2[i] ^= maskKey[i & 3];
+        for (let i2 = 0; i2 < bodyLength; ++i2) {
+          buffer2[i2] ^= maskKey[i2 & 3];
         }
         let payloadLength = bodyLength;
         let offset = 6;
@@ -35364,31 +35364,31 @@ var require_receiver = __commonJS({
        * @param {number} n
        * @returns {Buffer}
        */
-      consume(n2) {
-        if (n2 > this.#byteOffset) {
+      consume(n4) {
+        if (n4 > this.#byteOffset) {
           throw new Error("Called consume() before buffers satiated.");
-        } else if (n2 === 0) {
+        } else if (n4 === 0) {
           return emptyBuffer;
         }
-        this.#byteOffset -= n2;
+        this.#byteOffset -= n4;
         const first = this.#buffers[0];
-        if (first.length > n2) {
-          this.#buffers[0] = first.subarray(n2, first.length);
-          return first.subarray(0, n2);
-        } else if (first.length === n2) {
+        if (first.length > n4) {
+          this.#buffers[0] = first.subarray(n4, first.length);
+          return first.subarray(0, n4);
+        } else if (first.length === n4) {
           return this.#buffers.shift();
         } else {
           let offset = 0;
-          const buffer = Buffer.allocUnsafeSlow(n2);
-          while (offset !== n2) {
+          const buffer = Buffer.allocUnsafeSlow(n4);
+          while (offset !== n4) {
             const next = this.#buffers[0];
             const length2 = next.length;
-            if (length2 + offset === n2) {
+            if (length2 + offset === n4) {
               buffer.set(this.#buffers.shift(), offset);
               break;
-            } else if (length2 + offset > n2) {
-              buffer.set(next.subarray(0, n2 - offset), offset);
-              this.#buffers[0] = next.subarray(n2 - offset);
+            } else if (length2 + offset > n4) {
+              buffer.set(next.subarray(0, n4 - offset), offset);
+              this.#buffers[0] = next.subarray(n4 - offset);
               break;
             } else {
               buffer.set(this.#buffers.shift(), offset);
@@ -35416,8 +35416,8 @@ var require_receiver = __commonJS({
         }
         let offset = 0;
         const output2 = Buffer.allocUnsafeSlow(this.#fragmentsBytes);
-        for (let i = 0; i < fragments.length; ++i) {
-          const buffer = fragments[i];
+        for (let i2 = 0; i2 < fragments.length; ++i2) {
+          const buffer = fragments[i2];
           output2.set(buffer, offset);
           offset += buffer.length;
         }
@@ -36499,8 +36499,8 @@ var require_util8 = __commonJS({
     }
     function isASCIINumber(value2) {
       if (value2.length === 0) return false;
-      for (let i = 0; i < value2.length; i++) {
-        if (value2.charCodeAt(i) < 48 || value2.charCodeAt(i) > 57) return false;
+      for (let i2 = 0; i2 < value2.length; i2++) {
+        if (value2.charCodeAt(i2) < 48 || value2.charCodeAt(i2) > 57) return false;
       }
       return true;
     }
@@ -36553,16 +36553,16 @@ var require_eventsource_stream = __commonJS({
       if (start >= buffer2.length) {
         return false;
       }
-      for (let i = start; i < buffer2.length; i++) {
-        if (buffer2[i] < 48 || buffer2[i] > 57) {
+      for (let i2 = start; i2 < buffer2.length; i2++) {
+        if (buffer2[i2] < 48 || buffer2[i2] > 57) {
           return false;
         }
       }
       return true;
     }
     function isValidLastEventIdBytes(buffer2, start) {
-      for (let i = start; i < buffer2.length; i++) {
-        if (buffer2[i] === 0) {
+      for (let i2 = start; i2 < buffer2.length; i2++) {
+        if (buffer2[i2] === 0) {
           return false;
         }
       }
@@ -36572,8 +36572,8 @@ var require_eventsource_stream = __commonJS({
       if (length2 !== field.length) {
         return false;
       }
-      for (let i = 0; i < length2; i++) {
-        if (line[i] !== field[i]) {
+      for (let i2 = 0; i2 < length2; i2++) {
+        if (line[i2] !== field[i2]) {
           return false;
         }
       }
@@ -36863,10 +36863,10 @@ ${value2}`;
         }
         const chunks = [];
         let length2 = 0;
-        for (let i = this.lineChunkIndex; i <= this.chunkIndex; i++) {
-          const chunk = this.chunks[i];
-          const start = i === this.lineChunkIndex ? this.linePos : 0;
-          const end = i === this.chunkIndex ? this.pos : chunk.length;
+        for (let i2 = this.lineChunkIndex; i2 <= this.chunkIndex; i2++) {
+          const chunk = this.chunks[i2];
+          const start = i2 === this.lineChunkIndex ? this.linePos : 0;
+          const end = i2 === this.chunkIndex ? this.pos : chunk.length;
           const slice = chunk.subarray(start, end);
           length2 += slice.length;
           chunks.push(slice);
@@ -37004,10 +37004,10 @@ var require_eventsource = __commonJS({
           lastEventId: "",
           reconnectionTime: eventSourceInitDict.node.reconnectionTime
         };
-        const settings2 = environmentSettingsObject;
+        const settings3 = environmentSettingsObject;
         let urlRecord;
         try {
-          urlRecord = new URL(url, settings2.settingsObject.baseUrl);
+          urlRecord = new URL(url, settings3.settingsObject.baseUrl);
           this.#state.origin = urlRecord.origin;
         } catch (e) {
           throw new DOMException(e, "SyntaxError");
@@ -37485,8 +37485,8 @@ var version = "6.17.0";
 
 // node_modules/ethers/lib.esm/utils/properties.js
 function checkType(value2, type, name) {
-  const types = type.split("|").map((t) => t.trim());
-  for (let i = 0; i < types.length; i++) {
+  const types = type.split("|").map((t2) => t2.trim());
+  for (let i2 = 0; i2 < types.length; i2++) {
     switch (type) {
       case "any":
         return;
@@ -37544,9 +37544,9 @@ function stringify(value2, seen) {
   if (value2 instanceof Uint8Array) {
     const HEX = "0123456789abcdef";
     let result = "0x";
-    for (let i = 0; i < value2.length; i++) {
-      result += HEX[value2[i] >> 4];
-      result += HEX[value2[i] & 15];
+    for (let i2 = 0; i2 < value2.length; i2++) {
+      result += HEX[value2[i2] >> 4];
+      result += HEX[value2[i2] & 15];
     }
     return result;
   }
@@ -37694,8 +37694,8 @@ function _getBytes(value2, name, copy4) {
   if (typeof value2 === "string" && value2.length % 2 === 0 && value2.match(/^0x[0-9a-f]*$/i)) {
     const result = new Uint8Array((value2.length - 2) / 2);
     let offset = 2;
-    for (let i = 0; i < result.length; i++) {
-      result[i] = parseInt(value2.substring(offset, offset + 2), 16);
+    for (let i2 = 0; i2 < result.length; i2++) {
+      result[i2] = parseInt(value2.substring(offset, offset + 2), 16);
       offset += 2;
     }
     return result;
@@ -37727,8 +37727,8 @@ var HexCharacters = "0123456789abcdef";
 function hexlify(data) {
   const bytes2 = getBytes(data);
   let result = "0x";
-  for (let i = 0; i < bytes2.length; i++) {
-    const v = bytes2[i];
+  for (let i2 = 0; i2 < bytes2.length; i2++) {
+    const v = bytes2[i2];
     result += HexCharacters[(v & 240) >> 4] + HexCharacters[v & 15];
   }
   return result;
@@ -37934,9 +37934,9 @@ function toBeArray(_value, _width) {
     });
   }
   const result = new Uint8Array(hex.length / 2);
-  for (let i = 0; i < result.length; i++) {
-    const offset = i * 2;
-    result[i] = parseInt(hex.substring(offset, offset + 2), 16);
+  for (let i2 = 0; i2 < result.length; i2++) {
+    const offset = i2 * 2;
+    result[i2] = parseInt(hex.substring(offset, offset + 2), 16);
   }
   return result;
 }
@@ -37957,8 +37957,8 @@ var Lookup = null;
 function getAlpha(letter) {
   if (Lookup == null) {
     Lookup = {};
-    for (let i = 0; i < Alphabet.length; i++) {
-      Lookup[Alphabet[i]] = BigInt(i);
+    for (let i2 = 0; i2 < Alphabet.length; i2++) {
+      Lookup[Alphabet[i2]] = BigInt(i2);
     }
   }
   const result = Lookup[letter];
@@ -37975,8 +37975,8 @@ function encodeBase58(_value) {
     result = Alphabet[Number(value2 % BN_58)] + result;
     value2 /= BN_58;
   }
-  for (let i = 0; i < bytes2.length; i++) {
-    if (bytes2[i]) {
+  for (let i2 = 0; i2 < bytes2.length; i2++) {
+    if (bytes2[i2]) {
       break;
     }
     result = Alphabet[0] + result;
@@ -37985,9 +37985,9 @@ function encodeBase58(_value) {
 }
 function decodeBase58(value2) {
   let result = BN_02;
-  for (let i = 0; i < value2.length; i++) {
+  for (let i2 = 0; i2 < value2.length; i2++) {
     result *= BN_58;
-    result += getAlpha(value2[i]);
+    result += getAlpha(value2[i2]);
   }
   return result;
 }
@@ -38036,14 +38036,14 @@ function errorFunc(reason, offset, bytes2, output2, badCodepoint) {
 }
 function ignoreFunc(reason, offset, bytes2, output2, badCodepoint) {
   if (reason === "BAD_PREFIX" || reason === "UNEXPECTED_CONTINUE") {
-    let i = 0;
+    let i2 = 0;
     for (let o = offset + 1; o < bytes2.length; o++) {
       if (bytes2[o] >> 6 !== 2) {
         break;
       }
-      i++;
+      i2++;
     }
-    return i;
+    return i2;
   }
   if (reason === "OVERRUN") {
     return bytes2.length - offset - 1;
@@ -38070,61 +38070,61 @@ function getUtf8CodePoints(_bytes, onError) {
   }
   const bytes2 = getBytes(_bytes, "bytes");
   const result = [];
-  let i = 0;
-  while (i < bytes2.length) {
-    const c2 = bytes2[i++];
-    if (c2 >> 7 === 0) {
-      result.push(c2);
+  let i2 = 0;
+  while (i2 < bytes2.length) {
+    const c4 = bytes2[i2++];
+    if (c4 >> 7 === 0) {
+      result.push(c4);
       continue;
     }
     let extraLength = null;
     let overlongMask = null;
-    if ((c2 & 224) === 192) {
+    if ((c4 & 224) === 192) {
       extraLength = 1;
       overlongMask = 127;
-    } else if ((c2 & 240) === 224) {
+    } else if ((c4 & 240) === 224) {
       extraLength = 2;
       overlongMask = 2047;
-    } else if ((c2 & 248) === 240) {
+    } else if ((c4 & 248) === 240) {
       extraLength = 3;
       overlongMask = 65535;
     } else {
-      if ((c2 & 192) === 128) {
-        i += onError("UNEXPECTED_CONTINUE", i - 1, bytes2, result);
+      if ((c4 & 192) === 128) {
+        i2 += onError("UNEXPECTED_CONTINUE", i2 - 1, bytes2, result);
       } else {
-        i += onError("BAD_PREFIX", i - 1, bytes2, result);
+        i2 += onError("BAD_PREFIX", i2 - 1, bytes2, result);
       }
       continue;
     }
-    if (i - 1 + extraLength >= bytes2.length) {
-      i += onError("OVERRUN", i - 1, bytes2, result);
+    if (i2 - 1 + extraLength >= bytes2.length) {
+      i2 += onError("OVERRUN", i2 - 1, bytes2, result);
       continue;
     }
-    let res = c2 & (1 << 8 - extraLength - 1) - 1;
+    let res = c4 & (1 << 8 - extraLength - 1) - 1;
     for (let j = 0; j < extraLength; j++) {
-      let nextChar = bytes2[i];
+      let nextChar = bytes2[i2];
       if ((nextChar & 192) != 128) {
-        i += onError("MISSING_CONTINUE", i, bytes2, result);
+        i2 += onError("MISSING_CONTINUE", i2, bytes2, result);
         res = null;
         break;
       }
       ;
       res = res << 6 | nextChar & 63;
-      i++;
+      i2++;
     }
     if (res === null) {
       continue;
     }
     if (res > 1114111) {
-      i += onError("OUT_OF_RANGE", i - 1 - extraLength, bytes2, result, res);
+      i2 += onError("OUT_OF_RANGE", i2 - 1 - extraLength, bytes2, result, res);
       continue;
     }
     if (res >= 55296 && res <= 57343) {
-      i += onError("UTF16_SURROGATE", i - 1 - extraLength, bytes2, result, res);
+      i2 += onError("UTF16_SURROGATE", i2 - 1 - extraLength, bytes2, result, res);
       continue;
     }
     if (res <= overlongMask) {
-      i += onError("OVERLONG", i - 1 - extraLength, bytes2, result, res);
+      i2 += onError("OVERLONG", i2 - 1 - extraLength, bytes2, result, res);
       continue;
     }
     result.push(res);
@@ -38138,26 +38138,26 @@ function toUtf8Bytes(str, form) {
     str = str.normalize(form);
   }
   let result = [];
-  for (let i = 0; i < str.length; i++) {
-    const c2 = str.charCodeAt(i);
-    if (c2 < 128) {
-      result.push(c2);
-    } else if (c2 < 2048) {
-      result.push(c2 >> 6 | 192);
-      result.push(c2 & 63 | 128);
-    } else if ((c2 & 64512) == 55296) {
-      i++;
-      const c22 = str.charCodeAt(i);
-      assertArgument(i < str.length && (c22 & 64512) === 56320, "invalid surrogate pair", "str", str);
-      const pair = 65536 + ((c2 & 1023) << 10) + (c22 & 1023);
+  for (let i2 = 0; i2 < str.length; i2++) {
+    const c4 = str.charCodeAt(i2);
+    if (c4 < 128) {
+      result.push(c4);
+    } else if (c4 < 2048) {
+      result.push(c4 >> 6 | 192);
+      result.push(c4 & 63 | 128);
+    } else if ((c4 & 64512) == 55296) {
+      i2++;
+      const c22 = str.charCodeAt(i2);
+      assertArgument(i2 < str.length && (c22 & 64512) === 56320, "invalid surrogate pair", "str", str);
+      const pair = 65536 + ((c4 & 1023) << 10) + (c22 & 1023);
       result.push(pair >> 18 | 240);
       result.push(pair >> 12 & 63 | 128);
       result.push(pair >> 6 & 63 | 128);
       result.push(pair & 63 | 128);
     } else {
-      result.push(c2 >> 12 | 224);
-      result.push(c2 >> 6 & 63 | 128);
-      result.push(c2 & 63 | 128);
+      result.push(c4 >> 12 | 224);
+      result.push(c4 >> 6 & 63 | 128);
+      result.push(c4 & 63 | 128);
     }
   }
   return new Uint8Array(result);
@@ -38525,9 +38525,9 @@ var FetchRequest = class _FetchRequest {
   /**
    *  Sets an ``Authorization`` for %%username%% with %%password%%.
    */
-  setCredentials(username, password) {
+  setCredentials(username, password2) {
     assertArgument(!username.match(/:/), "invalid basic authentication username", "username", "[REDACTED]");
-    this.#creds = `${username}:${password}`;
+    this.#creds = `${username}:${password2}`;
   }
   /**
    *  Enable and request gzip-encoded responses. The response will
@@ -39359,17 +39359,17 @@ var FixedNumber = class _FixedNumber {
    *  both are equal.
    */
   cmp(other) {
-    let a = this.value, b2 = other.value;
+    let a2 = this.value, b2 = other.value;
     const delta = this.decimals - other.decimals;
     if (delta > 0) {
       b2 *= getTens(delta);
     } else if (delta < 0) {
-      a *= getTens(-delta);
+      a2 *= getTens(-delta);
     }
-    if (a < b2) {
+    if (a2 < b2) {
       return -1;
     }
-    if (a > b2) {
+    if (a2 > b2) {
       return 1;
     }
     return 0;
@@ -39567,8 +39567,8 @@ function hexlifyByte(value2) {
 }
 function unarrayifyInteger(data, offset, length2) {
   let result = 0;
-  for (let i = 0; i < length2; i++) {
-    result = result * 256 + data[offset + i];
+  for (let i2 = 0; i2 < length2; i2++) {
+    result = result * 256 + data[offset + i2];
   }
   return result;
 }
@@ -39906,9 +39906,9 @@ var Result = class _Result extends Array {
     }
     const _names = getNames(this);
     const result = [], names2 = [];
-    for (let i = start; i < end; i++) {
-      result.push(this[i]);
-      names2.push(_names[i]);
+    for (let i2 = start; i2 < end; i2++) {
+      result.push(this[i2]);
+      names2.push(_names[i2]);
     }
     return new _Result(_guard2, result, names2);
   }
@@ -39918,14 +39918,14 @@ var Result = class _Result extends Array {
   filter(callback, thisArg) {
     const _names = getNames(this);
     const result = [], names2 = [];
-    for (let i = 0; i < this.length; i++) {
-      const item = this[i];
+    for (let i2 = 0; i2 < this.length; i2++) {
+      const item = this[i2];
       if (item instanceof Error) {
-        throwError(`index ${i}`, item);
+        throwError(`index ${i2}`, item);
       }
-      if (callback.call(thisArg, item, i, this)) {
+      if (callback.call(thisArg, item, i2, this)) {
         result.push(item);
-        names2.push(_names[i]);
+        names2.push(_names[i2]);
       }
     }
     return new _Result(_guard2, result, names2);
@@ -39935,12 +39935,12 @@ var Result = class _Result extends Array {
    */
   map(callback, thisArg) {
     const result = [];
-    for (let i = 0; i < this.length; i++) {
-      const item = this[i];
+    for (let i2 = 0; i2 < this.length; i2++) {
+      const item = this[i2];
       if (item instanceof Error) {
-        throwError(`index ${i}`, item);
+        throwError(`index ${i2}`, item);
       }
-      result.push(callback.call(thisArg, item, i, this));
+      result.push(callback.call(thisArg, item, i2, this));
     }
     return result;
   }
@@ -40161,9 +40161,9 @@ computeHmac.register = function(func) {
 Object.freeze(computeHmac);
 
 // node_modules/@noble/hashes/esm/_assert.js
-function number(n2) {
-  if (!Number.isSafeInteger(n2) || n2 < 0)
-    throw new Error(`Wrong positive integer: ${n2}`);
+function number(n4) {
+  if (!Number.isSafeInteger(n4) || n4 < 0)
+    throw new Error(`Wrong positive integer: ${n4}`);
 }
 function bytes(b2, ...lengths) {
   if (!(b2 instanceof Uint8Array))
@@ -40194,31 +40194,31 @@ function output(out, instance2) {
 // node_modules/@noble/hashes/esm/_u64.js
 var U32_MASK64 = /* @__PURE__ */ BigInt(2 ** 32 - 1);
 var _32n = /* @__PURE__ */ BigInt(32);
-function fromBig(n2, le = false) {
+function fromBig(n4, le = false) {
   if (le)
-    return { h: Number(n2 & U32_MASK64), l: Number(n2 >> _32n & U32_MASK64) };
-  return { h: Number(n2 >> _32n & U32_MASK64) | 0, l: Number(n2 & U32_MASK64) | 0 };
+    return { h: Number(n4 & U32_MASK64), l: Number(n4 >> _32n & U32_MASK64) };
+  return { h: Number(n4 >> _32n & U32_MASK64) | 0, l: Number(n4 & U32_MASK64) | 0 };
 }
 function split(lst, le = false) {
   let Ah = new Uint32Array(lst.length);
   let Al = new Uint32Array(lst.length);
-  for (let i = 0; i < lst.length; i++) {
-    const { h, l } = fromBig(lst[i], le);
-    [Ah[i], Al[i]] = [h, l];
+  for (let i2 = 0; i2 < lst.length; i2++) {
+    const { h: h2, l } = fromBig(lst[i2], le);
+    [Ah[i2], Al[i2]] = [h2, l];
   }
   return [Ah, Al];
 }
-var rotlSH = (h, l, s) => h << s | l >>> 32 - s;
-var rotlSL = (h, l, s) => l << s | h >>> 32 - s;
-var rotlBH = (h, l, s) => l << s - 32 | h >>> 64 - s;
-var rotlBL = (h, l, s) => h << s - 32 | l >>> 64 - s;
+var rotlSH = (h2, l, s) => h2 << s | l >>> 32 - s;
+var rotlSL = (h2, l, s) => l << s | h2 >>> 32 - s;
+var rotlBH = (h2, l, s) => l << s - 32 | h2 >>> 64 - s;
+var rotlBL = (h2, l, s) => h2 << s - 32 | l >>> 64 - s;
 
 // node_modules/@noble/hashes/esm/cryptoNode.js
 var nc = __toESM(require("node:crypto"), 1);
 var crypto = nc && typeof nc === "object" && "webcrypto" in nc ? nc.webcrypto : void 0;
 
 // node_modules/@noble/hashes/esm/utils.js
-var u8a = (a) => a instanceof Uint8Array;
+var u8a = (a2) => a2 instanceof Uint8Array;
 var u32 = (arr) => new Uint32Array(arr.buffer, arr.byteOffset, Math.floor(arr.byteLength / 4));
 var createView = (arr) => new DataView(arr.buffer, arr.byteOffset, arr.byteLength);
 var rotr = (word, shift) => word << 32 - shift | word >>> shift;
@@ -40229,8 +40229,8 @@ var nextTick = async () => {
 };
 async function asyncLoop(iters, tick, cb) {
   let ts = Date.now();
-  for (let i = 0; i < iters; i++) {
-    cb(i);
+  for (let i2 = 0; i2 < iters; i2++) {
+    cb(i2);
     const diff = Date.now() - ts;
     if (diff >= 0 && diff < tick)
       continue;
@@ -40251,15 +40251,15 @@ function toBytes(data) {
   return data;
 }
 function concatBytes(...arrays) {
-  const r = new Uint8Array(arrays.reduce((sum, a) => sum + a.length, 0));
+  const r2 = new Uint8Array(arrays.reduce((sum, a2) => sum + a2.length, 0));
   let pad = 0;
-  arrays.forEach((a) => {
-    if (!u8a(a))
+  arrays.forEach((a2) => {
+    if (!u8a(a2))
       throw new Error("Uint8Array expected");
-    r.set(a, pad);
-    pad += a.length;
+    r2.set(a2, pad);
+    pad += a2.length;
   });
-  return r;
+  return r2;
 }
 var Hash = class {
   // Safe version that clones internal state
@@ -40305,21 +40305,21 @@ var _2n = /* @__PURE__ */ BigInt(2);
 var _7n = /* @__PURE__ */ BigInt(7);
 var _256n = /* @__PURE__ */ BigInt(256);
 var _0x71n = /* @__PURE__ */ BigInt(113);
-for (let round = 0, R = _1n, x = 1, y = 0; round < 24; round++) {
+for (let round = 0, R2 = _1n, x = 1, y = 0; round < 24; round++) {
   [x, y] = [y, (2 * x + 3 * y) % 5];
   SHA3_PI.push(2 * (5 * y + x));
   SHA3_ROTL.push((round + 1) * (round + 2) / 2 % 64);
-  let t = _0n;
+  let t2 = _0n;
   for (let j = 0; j < 7; j++) {
-    R = (R << _1n ^ (R >> _7n) * _0x71n) % _256n;
-    if (R & _2n)
-      t ^= _1n << (_1n << /* @__PURE__ */ BigInt(j)) - _1n;
+    R2 = (R2 << _1n ^ (R2 >> _7n) * _0x71n) % _256n;
+    if (R2 & _2n)
+      t2 ^= _1n << (_1n << /* @__PURE__ */ BigInt(j)) - _1n;
   }
-  _SHA3_IOTA.push(t);
+  _SHA3_IOTA.push(t2);
 }
 var [SHA3_IOTA_H, SHA3_IOTA_L] = /* @__PURE__ */ split(_SHA3_IOTA, true);
-var rotlH = (h, l, s) => s > 32 ? rotlBH(h, l, s) : rotlSH(h, l, s);
-var rotlL = (h, l, s) => s > 32 ? rotlBL(h, l, s) : rotlSL(h, l, s);
+var rotlH = (h2, l, s) => s > 32 ? rotlBH(h2, l, s) : rotlSH(h2, l, s);
+var rotlL = (h2, l, s) => s > 32 ? rotlBL(h2, l, s) : rotlSL(h2, l, s);
 function keccakP(s, rounds = 24) {
   const B = new Uint32Array(5 * 2);
   for (let round = 24 - rounds; round < 24; round++) {
@@ -40339,11 +40339,11 @@ function keccakP(s, rounds = 24) {
     }
     let curH = s[2];
     let curL = s[3];
-    for (let t = 0; t < 24; t++) {
-      const shift = SHA3_ROTL[t];
+    for (let t2 = 0; t2 < 24; t2++) {
+      const shift = SHA3_ROTL[t2];
       const Th = rotlH(curH, curL, shift);
       const Tl = rotlL(curH, curL, shift);
-      const PI = SHA3_PI[t];
+      const PI = SHA3_PI[t2];
       curH = s[PI];
       curL = s[PI + 1];
       s[PI] = Th;
@@ -40391,7 +40391,7 @@ var Keccak = class _Keccak extends Hash {
     const len = data.length;
     for (let pos = 0; pos < len; ) {
       const take = Math.min(blockLen - this.pos, len - pos);
-      for (let i = 0; i < take; i++)
+      for (let i2 = 0; i2 < take; i2++)
         state2[this.pos++] ^= data[pos++];
       if (this.pos === blockLen)
         this.keccak();
@@ -40507,9 +40507,9 @@ function setBigUint64(view, byteOffset, value2, isLE2) {
   const _u32_max = BigInt(4294967295);
   const wh = Number(value2 >> _32n4 & _u32_max);
   const wl = Number(value2 & _u32_max);
-  const h = isLE2 ? 4 : 0;
+  const h2 = isLE2 ? 4 : 0;
   const l = isLE2 ? 0 : 4;
-  view.setUint32(byteOffset + h, wh, isLE2);
+  view.setUint32(byteOffset + h2, wh, isLE2);
   view.setUint32(byteOffset + l, wl, isLE2);
 }
 var SHA2 = class extends Hash {
@@ -40563,8 +40563,8 @@ var SHA2 = class extends Hash {
       this.process(view, 0);
       pos = 0;
     }
-    for (let i = pos; i < blockLen; i++)
-      buffer[i] = 0;
+    for (let i2 = pos; i2 < blockLen; i2++)
+      buffer[i2] = 0;
     setBigUint64(view, blockLen - 8, BigInt(this.length * 8), isLE2);
     this.process(view, 0);
     const oview = createView(out);
@@ -40575,8 +40575,8 @@ var SHA2 = class extends Hash {
     const state2 = this.get();
     if (outLen > state2.length)
       throw new Error("_sha2: outputLen bigger than state");
-    for (let i = 0; i < outLen; i++)
-      oview.setUint32(4 * i, state2[i], isLE2);
+    for (let i2 = 0; i2 < outLen; i2++)
+      oview.setUint32(4 * i2, state2[i2], isLE2);
   }
   digest() {
     const { buffer, outputLen } = this;
@@ -40601,22 +40601,22 @@ var SHA2 = class extends Hash {
 
 // node_modules/@noble/hashes/esm/ripemd160.js
 var Rho = /* @__PURE__ */ new Uint8Array([7, 4, 13, 1, 10, 6, 15, 3, 12, 0, 9, 5, 2, 14, 11, 8]);
-var Id = /* @__PURE__ */ Uint8Array.from({ length: 16 }, (_, i) => i);
-var Pi = /* @__PURE__ */ Id.map((i) => (9 * i + 5) % 16);
+var Id = /* @__PURE__ */ Uint8Array.from({ length: 16 }, (_, i2) => i2);
+var Pi = /* @__PURE__ */ Id.map((i2) => (9 * i2 + 5) % 16);
 var idxL = [Id];
 var idxR = [Pi];
-for (let i = 0; i < 4; i++)
+for (let i2 = 0; i2 < 4; i2++)
   for (let j of [idxL, idxR])
-    j.push(j[i].map((k) => Rho[k]));
+    j.push(j[i2].map((k) => Rho[k]));
 var shifts = /* @__PURE__ */ [
   [11, 14, 15, 12, 5, 8, 7, 9, 11, 13, 14, 15, 6, 7, 9, 8],
   [12, 13, 11, 15, 6, 9, 9, 7, 12, 15, 11, 13, 7, 8, 7, 7],
   [13, 15, 14, 11, 7, 7, 6, 8, 13, 14, 13, 12, 5, 5, 6, 9],
   [14, 11, 12, 14, 8, 6, 5, 5, 15, 12, 15, 14, 9, 9, 8, 6],
   [15, 12, 13, 13, 9, 5, 8, 6, 14, 11, 12, 11, 8, 6, 5, 5]
-].map((i) => new Uint8Array(i));
-var shiftsL = /* @__PURE__ */ idxL.map((idx, i) => idx.map((j) => shifts[i][j]));
-var shiftsR = /* @__PURE__ */ idxR.map((idx, i) => idx.map((j) => shifts[i][j]));
+].map((i2) => new Uint8Array(i2));
+var shiftsL = /* @__PURE__ */ idxL.map((idx, i2) => idx.map((j) => shifts[i2][j]));
+var shiftsR = /* @__PURE__ */ idxR.map((idx, i2) => idx.map((j) => shifts[i2][j]));
 var Kl = /* @__PURE__ */ new Uint32Array([
   0,
   1518500249,
@@ -40666,20 +40666,20 @@ var RIPEMD160 = class extends SHA2 {
     this.h4 = h4 | 0;
   }
   process(view, offset) {
-    for (let i = 0; i < 16; i++, offset += 4)
-      BUF[i] = view.getUint32(offset, true);
+    for (let i2 = 0; i2 < 16; i2++, offset += 4)
+      BUF[i2] = view.getUint32(offset, true);
     let al = this.h0 | 0, ar = al, bl = this.h1 | 0, br = bl, cl = this.h2 | 0, cr = cl, dl = this.h3 | 0, dr = dl, el = this.h4 | 0, er = el;
     for (let group = 0; group < 5; group++) {
       const rGroup = 4 - group;
       const hbl = Kl[group], hbr = Kr[group];
       const rl = idxL[group], rr = idxR[group];
       const sl = shiftsL[group], sr = shiftsR[group];
-      for (let i = 0; i < 16; i++) {
-        const tl = rotl(al + f(group, bl, cl, dl) + BUF[rl[i]] + hbl, sl[i]) + el | 0;
+      for (let i2 = 0; i2 < 16; i2++) {
+        const tl = rotl(al + f(group, bl, cl, dl) + BUF[rl[i2]] + hbl, sl[i2]) + el | 0;
         al = el, el = dl, dl = rotl(cl, 10) | 0, cl = bl, bl = tl;
       }
-      for (let i = 0; i < 16; i++) {
-        const tr = rotl(ar + f(rGroup, br, cr, dr) + BUF[rr[i]] + hbr, sr[i]) + er | 0;
+      for (let i2 = 0; i2 < 16; i2++) {
+        const tr = rotl(ar + f(rGroup, br, cr, dr) + BUF[rr[i2]] + hbr, sr[i2]) + er | 0;
         ar = er, er = dr, dr = rotl(cr, 10) | 0, cr = br, br = tr;
       }
     }
@@ -40720,14 +40720,14 @@ Object.freeze(ripemd1602);
 
 // node_modules/ethers/lib.esm/crypto/pbkdf2.js
 var locked5 = false;
-var _pbkdf2 = function(password, salt, iterations, keylen, algo) {
-  return (0, import_crypto.pbkdf2Sync)(password, salt, iterations, keylen, algo);
+var _pbkdf2 = function(password2, salt, iterations, keylen, algo) {
+  return (0, import_crypto.pbkdf2Sync)(password2, salt, iterations, keylen, algo);
 };
 var __pbkdf2 = _pbkdf2;
 function pbkdf2(_password, _salt, iterations, keylen, algo) {
-  const password = getBytes(_password, "password");
+  const password2 = getBytes(_password, "password");
   const salt = getBytes(_salt, "salt");
-  return hexlify(__pbkdf2(password, salt, iterations, keylen, algo));
+  return hexlify(__pbkdf2(password2, salt, iterations, keylen, algo));
 }
 pbkdf2._ = _pbkdf2;
 pbkdf2.lock = function() {
@@ -40763,8 +40763,8 @@ randomBytes3.register = function(func) {
 Object.freeze(randomBytes3);
 
 // node_modules/@noble/hashes/esm/sha256.js
-var Chi = (a, b2, c2) => a & b2 ^ ~a & c2;
-var Maj = (a, b2, c2) => a & b2 ^ a & c2 ^ b2 & c2;
+var Chi = (a2, b2, c4) => a2 & b2 ^ ~a2 & c4;
+var Maj = (a2, b2, c4) => a2 & b2 ^ a2 & c4 ^ b2 & c4;
 var SHA256_K = /* @__PURE__ */ new Uint32Array([
   1116352408,
   1899447441,
@@ -40855,14 +40855,14 @@ var SHA256 = class extends SHA2 {
     this.H = IV[7] | 0;
   }
   get() {
-    const { A, B, C, D, E, F, G, H } = this;
-    return [A, B, C, D, E, F, G, H];
+    const { A, B, C: C2, D, E, F, G, H } = this;
+    return [A, B, C2, D, E, F, G, H];
   }
   // prettier-ignore
-  set(A, B, C, D, E, F, G, H) {
+  set(A, B, C2, D, E, F, G, H) {
     this.A = A | 0;
     this.B = B | 0;
-    this.C = C | 0;
+    this.C = C2 | 0;
     this.D = D | 0;
     this.E = E | 0;
     this.F = F | 0;
@@ -40870,39 +40870,39 @@ var SHA256 = class extends SHA2 {
     this.H = H | 0;
   }
   process(view, offset) {
-    for (let i = 0; i < 16; i++, offset += 4)
-      SHA256_W[i] = view.getUint32(offset, false);
-    for (let i = 16; i < 64; i++) {
-      const W15 = SHA256_W[i - 15];
-      const W2 = SHA256_W[i - 2];
+    for (let i2 = 0; i2 < 16; i2++, offset += 4)
+      SHA256_W[i2] = view.getUint32(offset, false);
+    for (let i2 = 16; i2 < 64; i2++) {
+      const W15 = SHA256_W[i2 - 15];
+      const W2 = SHA256_W[i2 - 2];
       const s0 = rotr(W15, 7) ^ rotr(W15, 18) ^ W15 >>> 3;
       const s1 = rotr(W2, 17) ^ rotr(W2, 19) ^ W2 >>> 10;
-      SHA256_W[i] = s1 + SHA256_W[i - 7] + s0 + SHA256_W[i - 16] | 0;
+      SHA256_W[i2] = s1 + SHA256_W[i2 - 7] + s0 + SHA256_W[i2 - 16] | 0;
     }
-    let { A, B, C, D, E, F, G, H } = this;
-    for (let i = 0; i < 64; i++) {
+    let { A, B, C: C2, D, E, F, G, H } = this;
+    for (let i2 = 0; i2 < 64; i2++) {
       const sigma1 = rotr(E, 6) ^ rotr(E, 11) ^ rotr(E, 25);
-      const T13 = H + sigma1 + Chi(E, F, G) + SHA256_K[i] + SHA256_W[i] | 0;
+      const T13 = H + sigma1 + Chi(E, F, G) + SHA256_K[i2] + SHA256_W[i2] | 0;
       const sigma0 = rotr(A, 2) ^ rotr(A, 13) ^ rotr(A, 22);
-      const T22 = sigma0 + Maj(A, B, C) | 0;
+      const T22 = sigma0 + Maj(A, B, C2) | 0;
       H = G;
       G = F;
       F = E;
       E = D + T13 | 0;
-      D = C;
-      C = B;
+      D = C2;
+      C2 = B;
       B = A;
       A = T13 + T22 | 0;
     }
     A = A + this.A | 0;
     B = B + this.B | 0;
-    C = C + this.C | 0;
+    C2 = C2 + this.C | 0;
     D = D + this.D | 0;
     E = E + this.E | 0;
     F = F + this.F | 0;
     G = G + this.G | 0;
     H = H + this.H | 0;
-    this.set(A, B, C, D, E, F, G, H);
+    this.set(A, B, C2, D, E, F, G, H);
   }
   roundClean() {
     SHA256_W.fill(0);
@@ -40930,12 +40930,12 @@ var HMAC = class extends Hash {
     const blockLen = this.blockLen;
     const pad = new Uint8Array(blockLen);
     pad.set(key.length > blockLen ? hash2.create().update(key).digest() : key);
-    for (let i = 0; i < pad.length; i++)
-      pad[i] ^= 54;
+    for (let i2 = 0; i2 < pad.length; i2++)
+      pad[i2] ^= 54;
     this.iHash.update(pad);
     this.oHash = hash2.create();
-    for (let i = 0; i < pad.length; i++)
-      pad[i] ^= 54 ^ 92;
+    for (let i2 = 0; i2 < pad.length; i2++)
+      pad[i2] ^= 54 ^ 92;
     this.oHash.update(pad);
     pad.fill(0);
   }
@@ -40983,49 +40983,49 @@ hmac.create = (hash2, key) => new HMAC(hash2, key);
 function pbkdf2Init(hash2, _password, _salt, _opts) {
   hash(hash2);
   const opts = checkOpts({ dkLen: 32, asyncTick: 10 }, _opts);
-  const { c: c2, dkLen, asyncTick } = opts;
-  number(c2);
+  const { c: c4, dkLen, asyncTick } = opts;
+  number(c4);
   number(dkLen);
   number(asyncTick);
-  if (c2 < 1)
+  if (c4 < 1)
     throw new Error("PBKDF2: iterations (c) should be >= 1");
-  const password = toBytes(_password);
+  const password2 = toBytes(_password);
   const salt = toBytes(_salt);
   const DK = new Uint8Array(dkLen);
-  const PRF = hmac.create(hash2, password);
+  const PRF = hmac.create(hash2, password2);
   const PRFSalt = PRF._cloneInto().update(salt);
-  return { c: c2, dkLen, asyncTick, DK, PRF, PRFSalt };
+  return { c: c4, dkLen, asyncTick, DK, PRF, PRFSalt };
 }
-function pbkdf2Output(PRF, PRFSalt, DK, prfW, u) {
+function pbkdf2Output(PRF, PRFSalt, DK, prfW, u3) {
   PRF.destroy();
   PRFSalt.destroy();
   if (prfW)
     prfW.destroy();
-  u.fill(0);
+  u3.fill(0);
   return DK;
 }
-function pbkdf22(hash2, password, salt, opts) {
-  const { c: c2, dkLen, DK, PRF, PRFSalt } = pbkdf2Init(hash2, password, salt, opts);
+function pbkdf22(hash2, password2, salt, opts) {
+  const { c: c4, dkLen, DK, PRF, PRFSalt } = pbkdf2Init(hash2, password2, salt, opts);
   let prfW;
   const arr = new Uint8Array(4);
   const view = createView(arr);
-  const u = new Uint8Array(PRF.outputLen);
+  const u3 = new Uint8Array(PRF.outputLen);
   for (let ti = 1, pos = 0; pos < dkLen; ti++, pos += PRF.outputLen) {
     const Ti = DK.subarray(pos, pos + PRF.outputLen);
     view.setInt32(0, ti, false);
-    (prfW = PRFSalt._cloneInto(prfW)).update(arr).digestInto(u);
-    Ti.set(u.subarray(0, Ti.length));
-    for (let ui = 1; ui < c2; ui++) {
-      PRF._cloneInto(prfW).update(u).digestInto(u);
-      for (let i = 0; i < Ti.length; i++)
-        Ti[i] ^= u[i];
+    (prfW = PRFSalt._cloneInto(prfW)).update(arr).digestInto(u3);
+    Ti.set(u3.subarray(0, Ti.length));
+    for (let ui = 1; ui < c4; ui++) {
+      PRF._cloneInto(prfW).update(u3).digestInto(u3);
+      for (let i2 = 0; i2 < Ti.length; i2++)
+        Ti[i2] ^= u3[i2];
     }
   }
-  return pbkdf2Output(PRF, PRFSalt, DK, prfW, u);
+  return pbkdf2Output(PRF, PRFSalt, DK, prfW, u3);
 }
 
 // node_modules/@noble/hashes/esm/scrypt.js
-var rotl2 = (a, b2) => a << b2 | a >>> 32 - b2;
+var rotl2 = (a2, b2) => a2 << b2 | a2 >>> 32 - b2;
 function XorAndSalsa(prev, pi, input, ii, out, oi) {
   let y00 = prev[pi++] ^ input[ii++], y01 = prev[pi++] ^ input[ii++];
   let y02 = prev[pi++] ^ input[ii++], y03 = prev[pi++] ^ input[ii++];
@@ -41036,7 +41036,7 @@ function XorAndSalsa(prev, pi, input, ii, out, oi) {
   let y12 = prev[pi++] ^ input[ii++], y13 = prev[pi++] ^ input[ii++];
   let y14 = prev[pi++] ^ input[ii++], y15 = prev[pi++] ^ input[ii++];
   let x00 = y00, x01 = y01, x02 = y02, x03 = y03, x04 = y04, x05 = y05, x06 = y06, x07 = y07, x08 = y08, x09 = y09, x10 = y10, x11 = y11, x12 = y12, x13 = y13, x14 = y14, x15 = y15;
-  for (let i = 0; i < 8; i += 2) {
+  for (let i2 = 0; i2 < 8; i2 += 2) {
     x04 ^= rotl2(x00 + x12 | 0, 7);
     x08 ^= rotl2(x04 + x00 | 0, 9);
     x12 ^= rotl2(x08 + x04 | 0, 13);
@@ -41087,34 +41087,34 @@ function XorAndSalsa(prev, pi, input, ii, out, oi) {
   out[oi++] = y14 + x14 | 0;
   out[oi++] = y15 + x15 | 0;
 }
-function BlockMix(input, ii, out, oi, r) {
+function BlockMix(input, ii, out, oi, r2) {
   let head = oi + 0;
-  let tail = oi + 16 * r;
-  for (let i = 0; i < 16; i++)
-    out[tail + i] = input[ii + (2 * r - 1) * 16 + i];
-  for (let i = 0; i < r; i++, head += 16, ii += 16) {
+  let tail = oi + 16 * r2;
+  for (let i2 = 0; i2 < 16; i2++)
+    out[tail + i2] = input[ii + (2 * r2 - 1) * 16 + i2];
+  for (let i2 = 0; i2 < r2; i2++, head += 16, ii += 16) {
     XorAndSalsa(out, tail, input, ii, out, head);
-    if (i > 0)
+    if (i2 > 0)
       tail += 16;
     XorAndSalsa(out, head, input, ii += 16, out, tail);
   }
 }
-function scryptInit(password, salt, _opts) {
+function scryptInit(password2, salt, _opts) {
   const opts = checkOpts({
     dkLen: 32,
     asyncTick: 10,
     maxmem: 1024 ** 3 + 1024
   }, _opts);
-  const { N: N3, r, p, dkLen, asyncTick, maxmem, onProgress } = opts;
+  const { N: N3, r: r2, p, dkLen, asyncTick, maxmem, onProgress } = opts;
   number(N3);
-  number(r);
+  number(r2);
   number(p);
   number(dkLen);
   number(asyncTick);
   number(maxmem);
   if (onProgress !== void 0 && typeof onProgress !== "function")
     throw new Error("progressCb should be function");
-  const blockSize = 128 * r;
+  const blockSize = 128 * r2;
   const blockSize32 = blockSize / 4;
   if (N3 <= 1 || (N3 & N3 - 1) !== 0 || N3 >= 2 ** (blockSize / 8) || N3 > 2 ** 32) {
     throw new Error("Scrypt: N must be larger than 1, a power of 2, less than 2^(128 * r / 8) and less than 2^32");
@@ -41129,7 +41129,7 @@ function scryptInit(password, salt, _opts) {
   if (memUsed > maxmem) {
     throw new Error(`Scrypt: parameters too large, ${memUsed} (128 * r * (N + p)) > ${maxmem} (maxmem)`);
   }
-  const B = pbkdf22(sha256, password, salt, { c: 1, dkLen: blockSize * p });
+  const B = pbkdf22(sha256, password2, salt, { c: 1, dkLen: blockSize * p });
   const B32 = u32(B);
   const V3 = u32(new Uint8Array(blockSize * N3));
   const tmp = u32(new Uint8Array(blockSize));
@@ -41145,76 +41145,76 @@ function scryptInit(password, salt, _opts) {
         onProgress(blockMixCnt / totalBlockMix);
     };
   }
-  return { N: N3, r, p, dkLen, blockSize32, V: V3, B32, B, tmp, blockMixCb, asyncTick };
+  return { N: N3, r: r2, p, dkLen, blockSize32, V: V3, B32, B, tmp, blockMixCb, asyncTick };
 }
-function scryptOutput(password, dkLen, B, V3, tmp) {
-  const res = pbkdf22(sha256, password, B, { c: 1, dkLen });
+function scryptOutput(password2, dkLen, B, V3, tmp) {
+  const res = pbkdf22(sha256, password2, B, { c: 1, dkLen });
   B.fill(0);
   V3.fill(0);
   tmp.fill(0);
   return res;
 }
-function scrypt(password, salt, opts) {
-  const { N: N3, r, p, dkLen, blockSize32, V: V3, B32, B, tmp, blockMixCb } = scryptInit(password, salt, opts);
+function scrypt(password2, salt, opts) {
+  const { N: N3, r: r2, p, dkLen, blockSize32, V: V3, B32, B, tmp, blockMixCb } = scryptInit(password2, salt, opts);
   for (let pi = 0; pi < p; pi++) {
     const Pi2 = blockSize32 * pi;
-    for (let i = 0; i < blockSize32; i++)
-      V3[i] = B32[Pi2 + i];
-    for (let i = 0, pos = 0; i < N3 - 1; i++) {
-      BlockMix(V3, pos, V3, pos += blockSize32, r);
+    for (let i2 = 0; i2 < blockSize32; i2++)
+      V3[i2] = B32[Pi2 + i2];
+    for (let i2 = 0, pos = 0; i2 < N3 - 1; i2++) {
+      BlockMix(V3, pos, V3, pos += blockSize32, r2);
       blockMixCb();
     }
-    BlockMix(V3, (N3 - 1) * blockSize32, B32, Pi2, r);
+    BlockMix(V3, (N3 - 1) * blockSize32, B32, Pi2, r2);
     blockMixCb();
-    for (let i = 0; i < N3; i++) {
+    for (let i2 = 0; i2 < N3; i2++) {
       const j = B32[Pi2 + blockSize32 - 16] % N3;
       for (let k = 0; k < blockSize32; k++)
         tmp[k] = B32[Pi2 + k] ^ V3[j * blockSize32 + k];
-      BlockMix(tmp, 0, B32, Pi2, r);
+      BlockMix(tmp, 0, B32, Pi2, r2);
       blockMixCb();
     }
   }
-  return scryptOutput(password, dkLen, B, V3, tmp);
+  return scryptOutput(password2, dkLen, B, V3, tmp);
 }
-async function scryptAsync(password, salt, opts) {
-  const { N: N3, r, p, dkLen, blockSize32, V: V3, B32, B, tmp, blockMixCb, asyncTick } = scryptInit(password, salt, opts);
+async function scryptAsync(password2, salt, opts) {
+  const { N: N3, r: r2, p, dkLen, blockSize32, V: V3, B32, B, tmp, blockMixCb, asyncTick } = scryptInit(password2, salt, opts);
   for (let pi = 0; pi < p; pi++) {
     const Pi2 = blockSize32 * pi;
-    for (let i = 0; i < blockSize32; i++)
-      V3[i] = B32[Pi2 + i];
+    for (let i2 = 0; i2 < blockSize32; i2++)
+      V3[i2] = B32[Pi2 + i2];
     let pos = 0;
     await asyncLoop(N3 - 1, asyncTick, () => {
-      BlockMix(V3, pos, V3, pos += blockSize32, r);
+      BlockMix(V3, pos, V3, pos += blockSize32, r2);
       blockMixCb();
     });
-    BlockMix(V3, (N3 - 1) * blockSize32, B32, Pi2, r);
+    BlockMix(V3, (N3 - 1) * blockSize32, B32, Pi2, r2);
     blockMixCb();
     await asyncLoop(N3, asyncTick, () => {
       const j = B32[Pi2 + blockSize32 - 16] % N3;
       for (let k = 0; k < blockSize32; k++)
         tmp[k] = B32[Pi2 + k] ^ V3[j * blockSize32 + k];
-      BlockMix(tmp, 0, B32, Pi2, r);
+      BlockMix(tmp, 0, B32, Pi2, r2);
       blockMixCb();
     });
   }
-  return scryptOutput(password, dkLen, B, V3, tmp);
+  return scryptOutput(password2, dkLen, B, V3, tmp);
 }
 
 // node_modules/ethers/lib.esm/crypto/scrypt.js
 var lockedSync = false;
 var lockedAsync = false;
-var _scryptAsync = async function(passwd, salt, N3, r, p, dkLen, onProgress) {
-  return await scryptAsync(passwd, salt, { N: N3, r, p, dkLen, onProgress });
+var _scryptAsync = async function(passwd, salt, N3, r2, p, dkLen, onProgress) {
+  return await scryptAsync(passwd, salt, { N: N3, r: r2, p, dkLen, onProgress });
 };
-var _scryptSync = function(passwd, salt, N3, r, p, dkLen) {
-  return scrypt(passwd, salt, { N: N3, r, p, dkLen });
+var _scryptSync = function(passwd, salt, N3, r2, p, dkLen) {
+  return scrypt(passwd, salt, { N: N3, r: r2, p, dkLen });
 };
 var __scryptAsync = _scryptAsync;
 var __scryptSync = _scryptSync;
-async function scrypt2(_passwd, _salt, N3, r, p, dkLen, progress) {
+async function scrypt2(_passwd, _salt, N3, r2, p, dkLen, progress) {
   const passwd = getBytes(_passwd, "passwd");
   const salt = getBytes(_salt, "salt");
-  return hexlify(await __scryptAsync(passwd, salt, N3, r, p, dkLen, progress));
+  return hexlify(await __scryptAsync(passwd, salt, N3, r2, p, dkLen, progress));
 }
 scrypt2._ = _scryptAsync;
 scrypt2.lock = function() {
@@ -41227,10 +41227,10 @@ scrypt2.register = function(func) {
   __scryptAsync = func;
 };
 Object.freeze(scrypt2);
-function scryptSync(_passwd, _salt, N3, r, p, dkLen) {
+function scryptSync(_passwd, _salt, N3, r2, p, dkLen) {
   const passwd = getBytes(_passwd, "passwd");
   const salt = getBytes(_salt, "salt");
-  return hexlify(__scryptSync(passwd, salt, N3, r, p, dkLen));
+  return hexlify(__scryptSync(passwd, salt, N3, r2, p, dkLen));
 }
 scryptSync._ = _scryptSync;
 scryptSync.lock = function() {
@@ -41312,14 +41312,14 @@ __export(utils_exports, {
 var _0n2 = BigInt(0);
 var _1n2 = BigInt(1);
 var _2n2 = BigInt(2);
-var u8a2 = (a) => a instanceof Uint8Array;
-var hexes = /* @__PURE__ */ Array.from({ length: 256 }, (_, i) => i.toString(16).padStart(2, "0"));
+var u8a2 = (a2) => a2 instanceof Uint8Array;
+var hexes = /* @__PURE__ */ Array.from({ length: 256 }, (_, i2) => i2.toString(16).padStart(2, "0"));
 function bytesToHex(bytes2) {
   if (!u8a2(bytes2))
     throw new Error("Uint8Array expected");
   let hex = "";
-  for (let i = 0; i < bytes2.length; i++) {
-    hex += hexes[bytes2[i]];
+  for (let i2 = 0; i2 < bytes2.length; i2++) {
+    hex += hexes[bytes2[i2]];
   }
   return hex;
 }
@@ -41339,13 +41339,13 @@ function hexToBytes(hex) {
   if (len % 2)
     throw new Error("padded hex string expected, got unpadded hex of length " + len);
   const array2 = new Uint8Array(len / 2);
-  for (let i = 0; i < array2.length; i++) {
-    const j = i * 2;
+  for (let i2 = 0; i2 < array2.length; i2++) {
+    const j = i2 * 2;
     const hexByte = hex.slice(j, j + 2);
     const byte = Number.parseInt(hexByte, 16);
     if (Number.isNaN(byte) || byte < 0)
       throw new Error("Invalid byte sequence");
-    array2[i] = byte;
+    array2[i2] = byte;
   }
   return array2;
 }
@@ -41357,14 +41357,14 @@ function bytesToNumberLE(bytes2) {
     throw new Error("Uint8Array expected");
   return hexToNumber(bytesToHex(Uint8Array.from(bytes2).reverse()));
 }
-function numberToBytesBE(n2, len) {
-  return hexToBytes(n2.toString(16).padStart(len * 2, "0"));
+function numberToBytesBE(n4, len) {
+  return hexToBytes(n4.toString(16).padStart(len * 2, "0"));
 }
-function numberToBytesLE(n2, len) {
-  return numberToBytesBE(n2, len).reverse();
+function numberToBytesLE(n4, len) {
+  return numberToBytesBE(n4, len).reverse();
 }
-function numberToVarBytesBE(n2) {
-  return hexToBytes(numberToHexUnpadded(n2));
+function numberToVarBytesBE(n4) {
+  return hexToBytes(numberToHexUnpadded(n4));
 }
 function ensureBytes(title, hex, expectedLength) {
   let res;
@@ -41385,21 +41385,21 @@ function ensureBytes(title, hex, expectedLength) {
   return res;
 }
 function concatBytes2(...arrays) {
-  const r = new Uint8Array(arrays.reduce((sum, a) => sum + a.length, 0));
+  const r2 = new Uint8Array(arrays.reduce((sum, a2) => sum + a2.length, 0));
   let pad = 0;
-  arrays.forEach((a) => {
-    if (!u8a2(a))
+  arrays.forEach((a2) => {
+    if (!u8a2(a2))
       throw new Error("Uint8Array expected");
-    r.set(a, pad);
-    pad += a.length;
+    r2.set(a2, pad);
+    pad += a2.length;
   });
-  return r;
+  return r2;
 }
 function equalBytes(b1, b2) {
   if (b1.length !== b2.length)
     return false;
-  for (let i = 0; i < b1.length; i++)
-    if (b1[i] !== b2[i])
+  for (let i2 = 0; i2 < b1.length; i2++)
+    if (b1[i2] !== b2[i2])
       return false;
   return true;
 }
@@ -41408,19 +41408,19 @@ function utf8ToBytes2(str) {
     throw new Error(`utf8ToBytes expected string, got ${typeof str}`);
   return new Uint8Array(new TextEncoder().encode(str));
 }
-function bitLen(n2) {
+function bitLen(n4) {
   let len;
-  for (len = 0; n2 > _0n2; n2 >>= _1n2, len += 1)
+  for (len = 0; n4 > _0n2; n4 >>= _1n2, len += 1)
     ;
   return len;
 }
-function bitGet(n2, pos) {
-  return n2 >> BigInt(pos) & _1n2;
+function bitGet(n4, pos) {
+  return n4 >> BigInt(pos) & _1n2;
 }
-var bitSet = (n2, pos, value2) => {
-  return n2 | (value2 ? _1n2 : _0n2) << BigInt(pos);
+var bitSet = (n4, pos, value2) => {
+  return n4 | (value2 ? _1n2 : _0n2) << BigInt(pos);
 };
-var bitMask = (n2) => (_2n2 << BigInt(n2 - 1)) - _1n2;
+var bitMask = (n4) => (_2n2 << BigInt(n4 - 1)) - _1n2;
 var u8n = (data) => new Uint8Array(data);
 var u8fr = (arr) => Uint8Array.from(arr);
 function createHmacDrbg(hashLen, qByteLen, hmacFn) {
@@ -41432,28 +41432,28 @@ function createHmacDrbg(hashLen, qByteLen, hmacFn) {
     throw new Error("hmacFn must be a function");
   let v = u8n(hashLen);
   let k = u8n(hashLen);
-  let i = 0;
+  let i2 = 0;
   const reset = () => {
     v.fill(1);
     k.fill(0);
-    i = 0;
+    i2 = 0;
   };
-  const h = (...b2) => hmacFn(k, v, ...b2);
+  const h2 = (...b2) => hmacFn(k, v, ...b2);
   const reseed = (seed = u8n()) => {
-    k = h(u8fr([0]), seed);
-    v = h();
+    k = h2(u8fr([0]), seed);
+    v = h2();
     if (seed.length === 0)
       return;
-    k = h(u8fr([1]), seed);
-    v = h();
+    k = h2(u8fr([1]), seed);
+    v = h2();
   };
   const gen2 = () => {
-    if (i++ >= 1e3)
+    if (i2++ >= 1e3)
       throw new Error("drbg: tried 1000 values");
     let len = 0;
     const out = [];
     while (len < qByteLen) {
-      v = h();
+      v = h2();
       const sl = v.slice();
       out.push(sl);
       len += v.length;
@@ -41511,8 +41511,8 @@ var _5n = BigInt(5);
 var _8n = BigInt(8);
 var _9n = BigInt(9);
 var _16n = BigInt(16);
-function mod(a, b2) {
-  const result = a % b2;
+function mod(a2, b2) {
+  const result = a2 % b2;
   return result >= _0n3 ? result : b2 + result;
 }
 function pow(num, power, modulo) {
@@ -41541,15 +41541,15 @@ function invert(number3, modulo) {
   if (number3 === _0n3 || modulo <= _0n3) {
     throw new Error(`invert: expected positive integers, got n=${number3} mod=${modulo}`);
   }
-  let a = mod(number3, modulo);
+  let a2 = mod(number3, modulo);
   let b2 = modulo;
-  let x = _0n3, y = _1n3, u = _1n3, v = _0n3;
-  while (a !== _0n3) {
-    const q = b2 / a;
-    const r = b2 % a;
-    const m = x - u * q;
-    const n2 = y - v * q;
-    b2 = a, a = r, x = u, y = v, u = m, v = n2;
+  let x = _0n3, y = _1n3, u3 = _1n3, v = _0n3;
+  while (a2 !== _0n3) {
+    const q = b2 / a2;
+    const r2 = b2 % a2;
+    const m = x - u3 * q;
+    const n4 = y - v * q;
+    b2 = a2, a2 = r2, x = u3, y = v, u3 = m, v = n4;
   }
   const gcd = b2;
   if (gcd !== _1n3)
@@ -41558,42 +41558,42 @@ function invert(number3, modulo) {
 }
 function tonelliShanks(P2) {
   const legendreC = (P2 - _1n3) / _2n3;
-  let Q, S2, Z;
+  let Q, S2, Z2;
   for (Q = P2 - _1n3, S2 = 0; Q % _2n3 === _0n3; Q /= _2n3, S2++)
     ;
-  for (Z = _2n3; Z < P2 && pow(Z, legendreC, P2) !== P2 - _1n3; Z++)
+  for (Z2 = _2n3; Z2 < P2 && pow(Z2, legendreC, P2) !== P2 - _1n3; Z2++)
     ;
   if (S2 === 1) {
     const p1div4 = (P2 + _1n3) / _4n;
-    return function tonelliFast(Fp2, n2) {
-      const root = Fp2.pow(n2, p1div4);
-      if (!Fp2.eql(Fp2.sqr(root), n2))
+    return function tonelliFast(Fp2, n4) {
+      const root = Fp2.pow(n4, p1div4);
+      if (!Fp2.eql(Fp2.sqr(root), n4))
         throw new Error("Cannot find square root");
       return root;
     };
   }
   const Q1div2 = (Q + _1n3) / _2n3;
-  return function tonelliSlow(Fp2, n2) {
-    if (Fp2.pow(n2, legendreC) === Fp2.neg(Fp2.ONE))
+  return function tonelliSlow(Fp2, n4) {
+    if (Fp2.pow(n4, legendreC) === Fp2.neg(Fp2.ONE))
       throw new Error("Cannot find square root");
-    let r = S2;
-    let g = Fp2.pow(Fp2.mul(Fp2.ONE, Z), Q);
-    let x = Fp2.pow(n2, Q1div2);
-    let b2 = Fp2.pow(n2, Q);
+    let r2 = S2;
+    let g = Fp2.pow(Fp2.mul(Fp2.ONE, Z2), Q);
+    let x = Fp2.pow(n4, Q1div2);
+    let b2 = Fp2.pow(n4, Q);
     while (!Fp2.eql(b2, Fp2.ONE)) {
       if (Fp2.eql(b2, Fp2.ZERO))
         return Fp2.ZERO;
       let m = 1;
-      for (let t2 = Fp2.sqr(b2); m < r; m++) {
+      for (let t2 = Fp2.sqr(b2); m < r2; m++) {
         if (Fp2.eql(t2, Fp2.ONE))
           break;
         t2 = Fp2.sqr(t2);
       }
-      const ge = Fp2.pow(g, _1n3 << BigInt(r - m - 1));
+      const ge = Fp2.pow(g, _1n3 << BigInt(r2 - m - 1));
       g = Fp2.sqr(ge);
       x = Fp2.mul(x, ge);
       b2 = Fp2.mul(b2, g);
-      r = m;
+      r2 = m;
     }
     return x;
   };
@@ -41601,22 +41601,22 @@ function tonelliShanks(P2) {
 function FpSqrt(P2) {
   if (P2 % _4n === _3n) {
     const p1div4 = (P2 + _1n3) / _4n;
-    return function sqrt3mod42(Fp2, n2) {
-      const root = Fp2.pow(n2, p1div4);
-      if (!Fp2.eql(Fp2.sqr(root), n2))
+    return function sqrt3mod42(Fp2, n4) {
+      const root = Fp2.pow(n4, p1div4);
+      if (!Fp2.eql(Fp2.sqr(root), n4))
         throw new Error("Cannot find square root");
       return root;
     };
   }
   if (P2 % _8n === _5n) {
     const c1 = (P2 - _5n) / _8n;
-    return function sqrt5mod82(Fp2, n2) {
-      const n22 = Fp2.mul(n2, _2n3);
+    return function sqrt5mod82(Fp2, n4) {
+      const n22 = Fp2.mul(n4, _2n3);
       const v = Fp2.pow(n22, c1);
-      const nv = Fp2.mul(n2, v);
-      const i = Fp2.mul(Fp2.mul(nv, _2n3), v);
-      const root = Fp2.mul(nv, Fp2.sub(i, Fp2.ONE));
-      if (!Fp2.eql(Fp2.sqr(root), n2))
+      const nv = Fp2.mul(n4, v);
+      const i2 = Fp2.mul(Fp2.mul(nv, _2n3), v);
+      const root = Fp2.mul(nv, Fp2.sub(i2, Fp2.ONE));
+      if (!Fp2.eql(Fp2.sqr(root), n4))
         throw new Error("Cannot find square root");
       return root;
     };
@@ -41676,23 +41676,23 @@ function FpPow(f2, num, power) {
 }
 function FpInvertBatch(f2, nums) {
   const tmp = new Array(nums.length);
-  const lastMultiplied = nums.reduce((acc, num, i) => {
+  const lastMultiplied = nums.reduce((acc, num, i2) => {
     if (f2.is0(num))
       return acc;
-    tmp[i] = acc;
+    tmp[i2] = acc;
     return f2.mul(acc, num);
   }, f2.ONE);
   const inverted = f2.inv(lastMultiplied);
-  nums.reduceRight((acc, num, i) => {
+  nums.reduceRight((acc, num, i2) => {
     if (f2.is0(num))
       return acc;
-    tmp[i] = f2.mul(acc, tmp[i]);
+    tmp[i2] = f2.mul(acc, tmp[i2]);
     return f2.mul(acc, num);
   }, inverted);
   return tmp;
 }
-function nLength(n2, nBitLength) {
-  const _nBitLength = nBitLength !== void 0 ? nBitLength : n2.toString(2).length;
+function nLength(n4, nBitLength) {
+  const _nBitLength = nBitLength !== void 0 ? nBitLength : n4.toString(2).length;
   const nByteLength = Math.ceil(_nBitLength / 8);
   return { nBitLength: _nBitLength, nByteLength };
 }
@@ -41732,11 +41732,11 @@ function Field(ORDER, bitLen3, isLE2 = false, redef = {}) {
     subN: (lhs, rhs) => lhs - rhs,
     mulN: (lhs, rhs) => lhs * rhs,
     inv: (num) => invert(num, ORDER),
-    sqrt: redef.sqrt || ((n2) => sqrtP(f2, n2)),
+    sqrt: redef.sqrt || ((n4) => sqrtP(f2, n4)),
     invertBatch: (lst) => FpInvertBatch(f2, lst),
     // TODO: do we really need constant cmov?
     // We don't have const-time bigints anyway, so probably will be not very useful
-    cmov: (a, b2, c2) => c2 ? b2 : a,
+    cmov: (a2, b2, c4) => c4 ? b2 : a2,
     toBytes: (num) => isLE2 ? numberToBytesLE(num, BYTES) : numberToBytesBE(num, BYTES),
     fromBytes: (bytes2) => {
       if (bytes2.length !== BYTES)
@@ -41770,7 +41770,7 @@ function mapHashToField(key, fieldOrder, isLE2 = false) {
 // node_modules/@noble/curves/esm/abstract/curve.js
 var _0n4 = BigInt(0);
 var _1n4 = BigInt(1);
-function wNAF(c2, bits) {
+function wNAF(c4, bits) {
   const constTimeNegate = (condition, item) => {
     const neg = item.negate();
     return condition ? neg : item;
@@ -41783,14 +41783,14 @@ function wNAF(c2, bits) {
   return {
     constTimeNegate,
     // non-const time multiplication ladder
-    unsafeLadder(elm, n2) {
-      let p = c2.ZERO;
+    unsafeLadder(elm, n4) {
+      let p = c4.ZERO;
       let d = elm;
-      while (n2 > _0n4) {
-        if (n2 & _1n4)
+      while (n4 > _0n4) {
+        if (n4 & _1n4)
           p = p.add(d);
         d = d.double();
-        n2 >>= _1n4;
+        n4 >>= _1n4;
       }
       return p;
     },
@@ -41812,7 +41812,7 @@ function wNAF(c2, bits) {
       for (let window = 0; window < windows; window++) {
         base2 = p;
         points.push(base2);
-        for (let i = 1; i < windowSize; i++) {
+        for (let i2 = 1; i2 < windowSize; i2++) {
           base2 = base2.add(p);
           points.push(base2);
         }
@@ -41827,20 +41827,20 @@ function wNAF(c2, bits) {
      * @param n scalar (we don't check here, but should be less than curve order)
      * @returns real and fake (for const-time) points
      */
-    wNAF(W2, precomputes, n2) {
+    wNAF(W2, precomputes, n4) {
       const { windows, windowSize } = opts(W2);
-      let p = c2.ZERO;
-      let f2 = c2.BASE;
+      let p = c4.ZERO;
+      let f2 = c4.BASE;
       const mask2 = BigInt(2 ** W2 - 1);
       const maxNumber = 2 ** W2;
       const shiftBy = BigInt(W2);
       for (let window = 0; window < windows; window++) {
         const offset = window * windowSize;
-        let wbits = Number(n2 & mask2);
-        n2 >>= shiftBy;
+        let wbits = Number(n4 & mask2);
+        n4 >>= shiftBy;
         if (wbits > windowSize) {
           wbits -= maxNumber;
-          n2 += _1n4;
+          n4 += _1n4;
         }
         const offset1 = offset;
         const offset2 = offset + Math.abs(wbits) - 1;
@@ -41854,7 +41854,7 @@ function wNAF(c2, bits) {
       }
       return { p, f: f2 };
     },
-    wNAFCached(P2, precomputesMap, n2, transform) {
+    wNAFCached(P2, precomputesMap, n4, transform) {
       const W2 = P2._WINDOW_SIZE || 1;
       let comp = precomputesMap.get(P2);
       if (!comp) {
@@ -41863,7 +41863,7 @@ function wNAF(c2, bits) {
           precomputesMap.set(P2, transform(comp));
         }
       }
-      return this.wNAF(W2, comp, n2);
+      return this.wNAF(W2, comp, n4);
     }
   };
 }
@@ -41900,9 +41900,9 @@ function validatePointOpts(curve) {
     fromBytes: "function",
     toBytes: "function"
   });
-  const { endo, Fp: Fp2, a } = opts;
+  const { endo, Fp: Fp2, a: a2 } = opts;
   if (endo) {
-    if (!Fp2.eql(a, Fp2.ZERO)) {
+    if (!Fp2.eql(a2, Fp2.ZERO)) {
       throw new Error("Endomorphism can only be defined for Koblitz curves that have a=0");
     }
     if (typeof endo !== "object" || typeof endo.beta !== "bigint" || typeof endo.splitScalar !== "function") {
@@ -41943,25 +41943,25 @@ var DER = {
       throw new E("Invalid signature tag");
     if (data[1] !== l - 2)
       throw new E("Invalid signature: incorrect length");
-    const { d: r, l: sBytes } = DER._parseInt(data.subarray(2));
+    const { d: r2, l: sBytes } = DER._parseInt(data.subarray(2));
     const { d: s, l: rBytesLeft } = DER._parseInt(sBytes);
     if (rBytesLeft.length)
       throw new E("Invalid signature: left bytes after parsing");
-    return { r, s };
+    return { r: r2, s };
   },
   hexFromSig(sig) {
     const slice = (s2) => Number.parseInt(s2[0], 16) & 8 ? "00" + s2 : s2;
-    const h = (num) => {
+    const h2 = (num) => {
       const hex = num.toString(16);
       return hex.length & 1 ? `0${hex}` : hex;
     };
-    const s = slice(h(sig.s));
-    const r = slice(h(sig.r));
+    const s = slice(h2(sig.s));
+    const r2 = slice(h2(sig.r));
     const shl = s.length / 2;
-    const rhl = r.length / 2;
-    const sl = h(shl);
-    const rl = h(rhl);
-    return `30${h(rhl + shl + 4)}02${rl}${r}02${sl}${s}`;
+    const rhl = r2.length / 2;
+    const sl = h2(shl);
+    const rl = h2(rhl);
+    return `30${h2(rhl + shl + 4)}02${rl}${r2}02${sl}${s}`;
   }
 };
 var _0n5 = BigInt(0);
@@ -41973,8 +41973,8 @@ function weierstrassPoints(opts) {
   const CURVE = validatePointOpts(opts);
   const { Fp: Fp2 } = CURVE;
   const toBytes2 = CURVE.toBytes || ((_c, point, _isCompressed) => {
-    const a = point.toAffine();
-    return concatBytes2(Uint8Array.from([4]), Fp2.toBytes(a.x), Fp2.toBytes(a.y));
+    const a2 = point.toAffine();
+    return concatBytes2(Uint8Array.from([4]), Fp2.toBytes(a2.x), Fp2.toBytes(a2.y));
   });
   const fromBytes = CURVE.fromBytes || ((bytes2) => {
     const tail = bytes2.subarray(1);
@@ -41983,10 +41983,10 @@ function weierstrassPoints(opts) {
     return { x, y };
   });
   function weierstrassEquation(x) {
-    const { a, b: b2 } = CURVE;
+    const { a: a2, b: b2 } = CURVE;
     const x2 = Fp2.sqr(x);
     const x3 = Fp2.mul(x2, x);
-    return Fp2.add(Fp2.add(x3, Fp2.mul(x, a)), b2);
+    return Fp2.add(Fp2.add(x3, Fp2.mul(x, a2)), b2);
   }
   if (!Fp2.eql(Fp2.sqr(CURVE.Gy), weierstrassEquation(CURVE.Gx)))
     throw new Error("bad generator point: equation left != right");
@@ -41998,7 +41998,7 @@ function weierstrassPoints(opts) {
       throw new Error("Expected valid bigint: 0 < bigint < curve.n");
   }
   function normPrivateKeyToScalar(key) {
-    const { allowedPrivateKeyLengths: lengths, nByteLength, wrapPrivateKey, n: n2 } = CURVE;
+    const { allowedPrivateKeyLengths: lengths, nByteLength, wrapPrivateKey, n: n4 } = CURVE;
     if (lengths && typeof key !== "bigint") {
       if (key instanceof Uint8Array)
         key = bytesToHex(key);
@@ -42013,7 +42013,7 @@ function weierstrassPoints(opts) {
       throw new Error(`private key must be ${nByteLength} bytes, hex or bigint, not ${typeof key}`);
     }
     if (wrapPrivateKey)
-      num = mod(num, n2);
+      num = mod(num, n4);
     assertGE(num);
     return num;
   }
@@ -42042,7 +42042,7 @@ function weierstrassPoints(opts) {
         throw new Error("invalid affine point");
       if (p instanceof Point3)
         throw new Error("projective point not allowed");
-      const is0 = (i) => Fp2.eql(i, Fp2.ZERO);
+      const is0 = (i2) => Fp2.eql(i2, Fp2.ZERO);
       if (is0(x) && is0(y))
         return Point3.ZERO;
       return new Point3(x, y, Fp2.ONE);
@@ -42061,7 +42061,7 @@ function weierstrassPoints(opts) {
      */
     static normalizeZ(points) {
       const toInv = Fp2.invertBatch(points.map((p) => p.pz));
-      return points.map((p, i) => p.toAffine(toInv[i])).map(Point3.fromAffine);
+      return points.map((p, i2) => p.toAffine(toInv[i2])).map(Point3.fromAffine);
     }
     /**
      * Converts hash string or Uint8Array to Point.
@@ -42126,7 +42126,7 @@ function weierstrassPoints(opts) {
     // https://eprint.iacr.org/2015/1060, algorithm 3
     // Cost: 8M + 3S + 3*a + 2*b3 + 15add.
     double() {
-      const { a, b: b2 } = CURVE;
+      const { a: a2, b: b2 } = CURVE;
       const b3 = Fp2.mul(b2, _3n2);
       const { px: X1, py: Y1, pz: Z1 } = this;
       let X3 = Fp2.ZERO, Y3 = Fp2.ZERO, Z3 = Fp2.ZERO;
@@ -42137,7 +42137,7 @@ function weierstrassPoints(opts) {
       t3 = Fp2.add(t3, t3);
       Z3 = Fp2.mul(X1, Z1);
       Z3 = Fp2.add(Z3, Z3);
-      X3 = Fp2.mul(a, Z3);
+      X3 = Fp2.mul(a2, Z3);
       Y3 = Fp2.mul(b3, t2);
       Y3 = Fp2.add(X3, Y3);
       X3 = Fp2.sub(t1, Y3);
@@ -42145,9 +42145,9 @@ function weierstrassPoints(opts) {
       Y3 = Fp2.mul(X3, Y3);
       X3 = Fp2.mul(t3, X3);
       Z3 = Fp2.mul(b3, Z3);
-      t2 = Fp2.mul(a, t2);
+      t2 = Fp2.mul(a2, t2);
       t3 = Fp2.sub(t0, t2);
-      t3 = Fp2.mul(a, t3);
+      t3 = Fp2.mul(a2, t3);
       t3 = Fp2.add(t3, Z3);
       Z3 = Fp2.add(t0, t0);
       t0 = Fp2.add(Z3, t0);
@@ -42172,7 +42172,7 @@ function weierstrassPoints(opts) {
       const { px: X1, py: Y1, pz: Z1 } = this;
       const { px: X2, py: Y2, pz: Z2 } = other;
       let X3 = Fp2.ZERO, Y3 = Fp2.ZERO, Z3 = Fp2.ZERO;
-      const a = CURVE.a;
+      const a2 = CURVE.a;
       const b3 = Fp2.mul(CURVE.b, _3n2);
       let t0 = Fp2.mul(X1, X2);
       let t1 = Fp2.mul(Y1, Y2);
@@ -42192,7 +42192,7 @@ function weierstrassPoints(opts) {
       t5 = Fp2.mul(t5, X3);
       X3 = Fp2.add(t1, t2);
       t5 = Fp2.sub(t5, X3);
-      Z3 = Fp2.mul(a, t4);
+      Z3 = Fp2.mul(a2, t4);
       X3 = Fp2.mul(b3, t2);
       Z3 = Fp2.add(X3, Z3);
       X3 = Fp2.sub(t1, Z3);
@@ -42200,11 +42200,11 @@ function weierstrassPoints(opts) {
       Y3 = Fp2.mul(X3, Z3);
       t1 = Fp2.add(t0, t0);
       t1 = Fp2.add(t1, t0);
-      t2 = Fp2.mul(a, t2);
+      t2 = Fp2.mul(a2, t2);
       t4 = Fp2.mul(b3, t4);
       t1 = Fp2.add(t1, t2);
       t2 = Fp2.sub(t0, t2);
-      t2 = Fp2.mul(a, t2);
+      t2 = Fp2.mul(a2, t2);
       t4 = Fp2.add(t4, t2);
       t0 = Fp2.mul(t1, t4);
       Y3 = Fp2.add(Y3, t0);
@@ -42222,10 +42222,10 @@ function weierstrassPoints(opts) {
     is0() {
       return this.equals(Point3.ZERO);
     }
-    wNAF(n2) {
-      return wnaf.wNAFCached(this, pointPrecomputes, n2, (comp) => {
+    wNAF(n4) {
+      return wnaf.wNAFCached(this, pointPrecomputes, n4, (comp) => {
         const toInv = Fp2.invertBatch(comp.map((p) => p.pz));
-        return comp.map((p, i) => p.toAffine(toInv[i])).map(Point3.fromAffine);
+        return comp.map((p, i2) => p.toAffine(toInv[i2])).map(Point3.fromAffine);
       });
     }
     /**
@@ -42233,17 +42233,17 @@ function weierstrassPoints(opts) {
      * It's faster, but should only be used when you don't care about
      * an exposed private key e.g. sig verification, which works over *public* keys.
      */
-    multiplyUnsafe(n2) {
+    multiplyUnsafe(n4) {
       const I = Point3.ZERO;
-      if (n2 === _0n5)
+      if (n4 === _0n5)
         return I;
-      assertGE(n2);
-      if (n2 === _1n5)
+      assertGE(n4);
+      if (n4 === _1n5)
         return this;
       const { endo } = CURVE;
       if (!endo)
-        return wnaf.unsafeLadder(this, n2);
-      let { k1neg, k1, k2neg, k2 } = endo.splitScalar(n2);
+        return wnaf.unsafeLadder(this, n4);
+      let { k1neg, k1, k2neg, k2 } = endo.splitScalar(n4);
       let k1p = I;
       let k2p = I;
       let d = this;
@@ -42274,11 +42274,11 @@ function weierstrassPoints(opts) {
      */
     multiply(scalar) {
       assertGE(scalar);
-      let n2 = scalar;
+      let n4 = scalar;
       let point, fake;
       const { endo } = CURVE;
       if (endo) {
-        const { k1neg, k1, k2neg, k2 } = endo.splitScalar(n2);
+        const { k1neg, k1, k2neg, k2 } = endo.splitScalar(n4);
         let { p: k1p, f: f1p } = this.wNAF(k1);
         let { p: k2p, f: f2p } = this.wNAF(k2);
         k1p = wnaf.constTimeNegate(k1neg, k1p);
@@ -42287,7 +42287,7 @@ function weierstrassPoints(opts) {
         point = k1p.add(k2p);
         fake = f1p.add(f2p);
       } else {
-        const { p, f: f2 } = this.wNAF(n2);
+        const { p, f: f2 } = this.wNAF(n4);
         point = p;
         fake = f2;
       }
@@ -42299,10 +42299,10 @@ function weierstrassPoints(opts) {
      * The trick could be useful if both P and Q are not G (not in our case).
      * @returns non-zero affine point
      */
-    multiplyAndAddUnsafe(Q, a, b2) {
+    multiplyAndAddUnsafe(Q, a2, b2) {
       const G = Point3.BASE;
-      const mul = (P2, a2) => a2 === _0n5 || a2 === _1n5 || !P2.equals(G) ? P2.multiplyUnsafe(a2) : P2.multiply(a2);
-      const sum = mul(this, a).add(mul(Q, b2));
+      const mul = (P2, a3) => a3 === _0n5 || a3 === _1n5 || !P2.equals(G) ? P2.multiplyUnsafe(a3) : P2.multiply(a3);
+      const sum = mul(this, a2).add(mul(Q, b2));
       return sum.is0() ? void 0 : sum;
     }
     // Converts Projective point to affine (x, y) coordinates.
@@ -42379,22 +42379,22 @@ function weierstrass(curveDef) {
   function isValidFieldElement(num) {
     return _0n5 < num && num < Fp2.ORDER;
   }
-  function modN(a) {
-    return mod(a, CURVE_ORDER);
+  function modN(a2) {
+    return mod(a2, CURVE_ORDER);
   }
-  function invN(a) {
-    return invert(a, CURVE_ORDER);
+  function invN(a2) {
+    return invert(a2, CURVE_ORDER);
   }
   const { ProjectivePoint: Point3, normPrivateKeyToScalar, weierstrassEquation, isWithinCurveOrder } = weierstrassPoints({
     ...CURVE,
     toBytes(_c, point, isCompressed) {
-      const a = point.toAffine();
-      const x = Fp2.toBytes(a.x);
+      const a2 = point.toAffine();
+      const x = Fp2.toBytes(a2.x);
       const cat = concatBytes2;
       if (isCompressed) {
         return cat(Uint8Array.from([point.hasEvenY() ? 2 : 3]), x);
       } else {
-        return cat(Uint8Array.from([4]), x, Fp2.toBytes(a.y));
+        return cat(Uint8Array.from([4]), x, Fp2.toBytes(a2.y));
       }
     },
     fromBytes(bytes2) {
@@ -42431,8 +42431,8 @@ function weierstrass(curveDef) {
   }
   const slcNum = (b2, from, to) => bytesToNumberBE(b2.slice(from, to));
   class Signature2 {
-    constructor(r, s, recovery) {
-      this.r = r;
+    constructor(r2, s, recovery) {
+      this.r = r2;
       this.s = s;
       this.recovery = recovery;
       this.assertValidity();
@@ -42446,8 +42446,8 @@ function weierstrass(curveDef) {
     // DER encoded ECDSA signature
     // https://bitcoin.stackexchange.com/questions/57644/what-are-the-parts-of-a-bitcoin-transaction-input-script
     static fromDER(hex) {
-      const { r, s } = DER.toSig(ensureBytes("DER", hex));
-      return new Signature2(r, s);
+      const { r: r2, s } = DER.toSig(ensureBytes("DER", hex));
+      return new Signature2(r2, s);
     }
     assertValidity() {
       if (!isWithinCurveOrder(this.r))
@@ -42459,19 +42459,19 @@ function weierstrass(curveDef) {
       return new Signature2(this.r, this.s, recovery);
     }
     recoverPublicKey(msgHash) {
-      const { r, s, recovery: rec } = this;
-      const h = bits2int_modN(ensureBytes("msgHash", msgHash));
+      const { r: r2, s, recovery: rec } = this;
+      const h2 = bits2int_modN(ensureBytes("msgHash", msgHash));
       if (rec == null || ![0, 1, 2, 3].includes(rec))
         throw new Error("recovery id invalid");
-      const radj = rec === 2 || rec === 3 ? r + CURVE.n : r;
+      const radj = rec === 2 || rec === 3 ? r2 + CURVE.n : r2;
       if (radj >= Fp2.ORDER)
         throw new Error("recovery id 2 or 3 invalid");
       const prefix = (rec & 1) === 0 ? "02" : "03";
-      const R = Point3.fromHex(prefix + numToNByteStr(radj));
+      const R2 = Point3.fromHex(prefix + numToNByteStr(radj));
       const ir = invN(radj);
-      const u1 = modN(-h * ir);
-      const u2 = modN(s * ir);
-      const Q = Point3.BASE.multiplyAndAddUnsafe(R, u1, u2);
+      const u1 = modN(-h2 * ir);
+      const u22 = modN(s * ir);
+      const Q = Point3.BASE.multiplyAndAddUnsafe(R2, u1, u22);
       if (!Q)
         throw new Error("point at infinify");
       Q.assertValidity();
@@ -42595,19 +42595,19 @@ function weierstrass(curveDef) {
         return;
       const ik = invN(k);
       const q = Point3.BASE.multiply(k).toAffine();
-      const r = modN(q.x);
-      if (r === _0n5)
+      const r2 = modN(q.x);
+      if (r2 === _0n5)
         return;
-      const s = modN(ik * modN(m + r * d));
+      const s = modN(ik * modN(m + r2 * d));
       if (s === _0n5)
         return;
-      let recovery = (q.x === r ? 0 : 2) | Number(q.y & _1n5);
+      let recovery = (q.x === r2 ? 0 : 2) | Number(q.y & _1n5);
       let normS = s;
       if (lowS && isBiggerThanHalfOrder(s)) {
         normS = normalizeS(s);
         recovery ^= 1;
       }
-      return new Signature2(r, normS, recovery);
+      return new Signature2(r2, normS, recovery);
     }
     return { seed, k2sig };
   }
@@ -42615,8 +42615,8 @@ function weierstrass(curveDef) {
   const defaultVerOpts = { lowS: CURVE.lowS, prehash: false };
   function sign(msgHash, privKey, opts = defaultSigOpts) {
     const { seed, k2sig } = prepSig(msgHash, privKey, opts);
-    const C = CURVE;
-    const drbg = createHmacDrbg(C.hash.outputLen, C.nByteLength, C.hmac);
+    const C2 = CURVE;
+    const drbg = createHmacDrbg(C2.hash.outputLen, C2.nByteLength, C2.hmac);
     return drbg(seed, k2sig);
   }
   Point3.BASE._setWindowSize(8);
@@ -42639,8 +42639,8 @@ function weierstrass(curveDef) {
           _sig = Signature2.fromCompact(sg);
         }
       } else if (typeof sg === "object" && typeof sg.r === "bigint" && typeof sg.s === "bigint") {
-        const { r: r2, s: s2 } = sg;
-        _sig = new Signature2(r2, s2);
+        const { r: r3, s: s2 } = sg;
+        _sig = new Signature2(r3, s2);
       } else {
         throw new Error("PARSE");
       }
@@ -42654,16 +42654,16 @@ function weierstrass(curveDef) {
       return false;
     if (prehash)
       msgHash = CURVE.hash(msgHash);
-    const { r, s } = _sig;
-    const h = bits2int_modN(msgHash);
+    const { r: r2, s } = _sig;
+    const h2 = bits2int_modN(msgHash);
     const is2 = invN(s);
-    const u1 = modN(h * is2);
-    const u2 = modN(r * is2);
-    const R = Point3.BASE.multiplyAndAddUnsafe(P2, u1, u2)?.toAffine();
-    if (!R)
+    const u1 = modN(h2 * is2);
+    const u22 = modN(r2 * is2);
+    const R2 = Point3.BASE.multiplyAndAddUnsafe(P2, u1, u22)?.toAffine();
+    if (!R2)
       return false;
-    const v = modN(R.x);
-    return v === r;
+    const v = modN(R2.x);
+    return v === r2;
   }
   return {
     CURVE,
@@ -42695,7 +42695,7 @@ var secp256k1P = BigInt("0xfffffffffffffffffffffffffffffffffffffffffffffffffffff
 var secp256k1N = BigInt("0xfffffffffffffffffffffffffffffffebaaedce6af48a03bbfd25e8cd0364141");
 var _1n6 = BigInt(1);
 var _2n5 = BigInt(2);
-var divNearest = (a, b2) => (a + b2 / _2n5) / b2;
+var divNearest = (a2, b2) => (a2 + b2 / _2n5) / b2;
 function sqrtMod(y) {
   const P2 = secp256k1P;
   const _3n5 = BigInt(3), _6n = BigInt(6), _11n = BigInt(11), _22n = BigInt(22);
@@ -42738,22 +42738,22 @@ var secp256k1 = createCurve({
   endo: {
     beta: BigInt("0x7ae96a2b657c07106e64479eac3434e99cf0497512f58995c1396c28719501ee"),
     splitScalar: (k) => {
-      const n2 = secp256k1N;
+      const n4 = secp256k1N;
       const a1 = BigInt("0x3086d221a7d46bcde86c90e49284eb15");
       const b1 = -_1n6 * BigInt("0xe4437ed6010e88286f547fa90abfe4c3");
       const a2 = BigInt("0x114ca50f7a8e2f3f657c1108d9d44cfd8");
       const b2 = a1;
       const POW_2_128 = BigInt("0x100000000000000000000000000000000");
-      const c1 = divNearest(b2 * k, n2);
-      const c2 = divNearest(-b1 * k, n2);
-      let k1 = mod(k - c1 * a1 - c2 * a2, n2);
-      let k2 = mod(-c1 * b1 - c2 * b2, n2);
+      const c1 = divNearest(b2 * k, n4);
+      const c22 = divNearest(-b1 * k, n4);
+      let k1 = mod(k - c1 * a1 - c22 * a2, n4);
+      let k2 = mod(-c1 * b1 - c22 * b2, n4);
       const k1neg = k1 > POW_2_128;
       const k2neg = k2 > POW_2_128;
       if (k1neg)
-        k1 = n2 - k1;
+        k1 = n4 - k1;
       if (k2neg)
-        k2 = n2 - k2;
+        k2 = n4 - k2;
       if (k1 > POW_2_128 || k2 > POW_2_128) {
         throw new Error("splitScalar: Endomorphism failed, k=" + k);
       }
@@ -42904,9 +42904,9 @@ var Signature = class _Signature {
   /**
    *  @private
    */
-  constructor(guard, r, s, v) {
+  constructor(guard, r2, s, v) {
     assertPrivate(guard, _guard3, "Signature");
-    this.#r = r;
+    this.#r = r2;
     this.#s = s;
     this.#v = v;
     this.#networkV = null;
@@ -43048,17 +43048,17 @@ var Signature = class _Signature {
     if (typeof sig === "string") {
       const bytes2 = getBytes(sig, "signature");
       if (bytes2.length === 64) {
-        const r2 = hexlify(bytes2.slice(0, 32));
+        const r3 = hexlify(bytes2.slice(0, 32));
         const s2 = bytes2.slice(32, 64);
         const v2 = s2[0] & 128 ? 28 : 27;
         s2[0] &= 127;
-        return new _Signature(_guard3, r2, hexlify(s2), v2);
+        return new _Signature(_guard3, r3, hexlify(s2), v2);
       }
       if (bytes2.length === 65) {
-        const r2 = hexlify(bytes2.slice(0, 32));
+        const r3 = hexlify(bytes2.slice(0, 32));
         const s2 = hexlify(bytes2.slice(32, 64));
         const v2 = _Signature.getNormalizedV(bytes2[64]);
-        return new _Signature(_guard3, r2, s2, v2);
+        return new _Signature(_guard3, r3, s2, v2);
       }
       assertError(false, "invalid raw signature length");
     }
@@ -43067,7 +43067,7 @@ var Signature = class _Signature {
     }
     const _r = sig.r;
     assertError(_r != null, "missing r");
-    const r = toUint256(_r);
+    const r2 = toUint256(_r);
     const s = (function(s2, yParityAndS) {
       if (s2 != null) {
         return toUint256(s2);
@@ -43103,7 +43103,7 @@ var Signature = class _Signature {
       }
       assertError(false, "missing v");
     })(sig.v, sig.yParityAndS, sig.yParity);
-    const result = new _Signature(_guard3, r, s, v);
+    const result = new _Signature(_guard3, r2, s, v);
     if (networkV) {
       result.#networkV = networkV;
     }
@@ -43279,37 +43279,37 @@ function getChecksumAddress(address) {
   address = address.toLowerCase();
   const chars = address.substring(2).split("");
   const expanded = new Uint8Array(40);
-  for (let i = 0; i < 40; i++) {
-    expanded[i] = chars[i].charCodeAt(0);
+  for (let i2 = 0; i2 < 40; i2++) {
+    expanded[i2] = chars[i2].charCodeAt(0);
   }
   const hashed = getBytes(keccak256(expanded));
-  for (let i = 0; i < 40; i += 2) {
-    if (hashed[i >> 1] >> 4 >= 8) {
-      chars[i] = chars[i].toUpperCase();
+  for (let i2 = 0; i2 < 40; i2 += 2) {
+    if (hashed[i2 >> 1] >> 4 >= 8) {
+      chars[i2] = chars[i2].toUpperCase();
     }
-    if ((hashed[i >> 1] & 15) >= 8) {
-      chars[i + 1] = chars[i + 1].toUpperCase();
+    if ((hashed[i2 >> 1] & 15) >= 8) {
+      chars[i2 + 1] = chars[i2 + 1].toUpperCase();
     }
   }
   return "0x" + chars.join("");
 }
 var ibanLookup = {};
-for (let i = 0; i < 10; i++) {
-  ibanLookup[String(i)] = String(i);
+for (let i2 = 0; i2 < 10; i2++) {
+  ibanLookup[String(i2)] = String(i2);
 }
-for (let i = 0; i < 26; i++) {
-  ibanLookup[String.fromCharCode(65 + i)] = String(10 + i);
+for (let i2 = 0; i2 < 26; i2++) {
+  ibanLookup[String.fromCharCode(65 + i2)] = String(10 + i2);
 }
 var safeDigits = 15;
 function ibanChecksum(address) {
   address = address.toUpperCase();
   address = address.substring(4) + address.substring(0, 2) + "00";
-  let expanded = address.split("").map((c2) => {
-    return ibanLookup[c2];
+  let expanded = address.split("").map((c4) => {
+    return ibanLookup[c4];
   }).join("");
   while (expanded.length >= safeDigits) {
-    let block = expanded.substring(0, safeDigits);
-    expanded = parseInt(block, 10) % 97 + expanded.substring(block.length);
+    let block2 = expanded.substring(0, safeDigits);
+    expanded = parseInt(block2, 10) % 97 + expanded.substring(block2.length);
   }
   let checksum3 = String(98 - parseInt(expanded, 10) % 97);
   while (checksum3.length < 2) {
@@ -43320,17 +43320,17 @@ function ibanChecksum(address) {
 var Base36 = (function() {
   ;
   const result = {};
-  for (let i = 0; i < 36; i++) {
-    const key = "0123456789abcdefghijklmnopqrstuvwxyz"[i];
-    result[key] = BigInt(i);
+  for (let i2 = 0; i2 < 36; i2++) {
+    const key = "0123456789abcdefghijklmnopqrstuvwxyz"[i2];
+    result[key] = BigInt(i2);
   }
   return result;
 })();
 function fromBase36(value2) {
   value2 = value2.toLowerCase();
   let result = BN_05;
-  for (let i = 0; i < value2.length; i++) {
-    result = result * BN_36 + Base36[value2[i]];
+  for (let i2 = 0; i2 < value2.length; i2++) {
+    result = result * BN_36 + Base36[value2[i2]];
   }
   return result;
 }
@@ -44312,7 +44312,7 @@ var ArrayCoder = class extends Coder {
   defaultValue() {
     const defaultChild = this.coder.defaultValue();
     const result = [];
-    for (let i = 0; i < this.length; i++) {
+    for (let i2 = 0; i2 < this.length; i2++) {
       result.push(defaultChild);
     }
     return result;
@@ -44329,7 +44329,7 @@ var ArrayCoder = class extends Coder {
     }
     assertArgumentCount(value2.length, count, "coder array" + (this.localName ? " " + this.localName : ""));
     let coders = [];
-    for (let i = 0; i < value2.length; i++) {
+    for (let i2 = 0; i2 < value2.length; i2++) {
       coders.push(this.coder);
     }
     return pack(writer, coders, value2);
@@ -44341,7 +44341,7 @@ var ArrayCoder = class extends Coder {
       assert(count * WordSize <= reader.dataLength, "insufficient data length", "BUFFER_OVERRUN", { buffer: reader.bytes, offset: count * WordSize, length: reader.dataLength });
     }
     let coders = [];
-    for (let i = 0; i < count; i++) {
+    for (let i2 = 0; i2 < count; i2++) {
       coders.push(new AnonymousCoder(this.coder));
     }
     return unpack(reader, coders);
@@ -44574,7 +44574,7 @@ function accessListify(value2) {
     }, {});
     return accessSetify(addr, Object.keys(storageKeys).sort());
   });
-  result.sort((a, b2) => a.address.localeCompare(b2.address));
+  result.sort((a2, b2) => a2.address.localeCompare(b2.address));
   return result;
 }
 
@@ -44667,16 +44667,16 @@ function handleAuthorizationList(value2, param) {
       throw new Error("authorizationList: invalid array");
     }
     const result = [];
-    for (let i = 0; i < value2.length; i++) {
-      const auth = value2[i];
+    for (let i2 = 0; i2 < value2.length; i2++) {
+      const auth = value2[i2];
       if (!Array.isArray(auth)) {
-        throw new Error(`authorization[${i}]: invalid array`);
+        throw new Error(`authorization[${i2}]: invalid array`);
       }
       if (auth.length !== 6) {
-        throw new Error(`authorization[${i}]: wrong length`);
+        throw new Error(`authorization[${i2}]: wrong length`);
       }
       if (!auth[1]) {
-        throw new Error(`authorization[${i}]: null address`);
+        throw new Error(`authorization[${i2}]: null address`);
       }
       result.push({
         address: handleAddress(auth[1]),
@@ -44718,21 +44718,21 @@ function formatAccessList(value2) {
   return accessListify(value2).map((set) => [set.address, set.storageKeys]);
 }
 function formatAuthorizationList(value2) {
-  return value2.map((a) => {
+  return value2.map((a2) => {
     return [
-      formatNumber(a.chainId, "chainId"),
-      a.address,
-      formatNumber(a.nonce, "nonce"),
-      formatNumber(a.signature.yParity, "yParity"),
-      toBeArray(a.signature.r),
-      toBeArray(a.signature._s)
+      formatNumber(a2.chainId, "chainId"),
+      a2.address,
+      formatNumber(a2.nonce, "nonce"),
+      formatNumber(a2.signature.yParity, "yParity"),
+      toBeArray(a2.signature.r),
+      toBeArray(a2.signature._s)
     ];
   });
 }
 function formatHashes(value2, param) {
   assertArgument(Array.isArray(value2), `invalid ${param}`, "value", value2);
-  for (let i = 0; i < value2.length; i++) {
-    assertArgument(isHexString(value2[i], 32), "invalid ${ param } hash", `value[${i}]`, value2[i]);
+  for (let i2 = 0; i2 < value2.length; i2++) {
+    assertArgument(isHexString(value2[i2], 32), "invalid ${ param } hash", `value[${i2}]`, value2[i2]);
   }
   return value2;
 }
@@ -44753,9 +44753,9 @@ function _parseLegacy(data) {
     return tx;
   }
   const v = handleUint(fields[6], "v");
-  const r = handleUint(fields[7], "r");
+  const r2 = handleUint(fields[7], "r");
   const s = handleUint(fields[8], "s");
-  if (r === BN_07 && s === BN_07) {
+  if (r2 === BN_07 && s === BN_07) {
     tx.chainId = v;
   } else {
     let chainId = (v - BN_352) / BN_22;
@@ -44820,9 +44820,9 @@ function _parseEipSignature(tx, fields) {
   } catch (error) {
     assertArgument(false, "invalid yParity", "yParity", fields[0]);
   }
-  const r = zeroPadValue(fields[1], 32);
+  const r2 = zeroPadValue(fields[1], 32);
   const s = zeroPadValue(fields[2], 32);
-  const signature2 = Signature.from({ r, s, yParity });
+  const signature2 = Signature.from({ r: r2, s, yParity });
   tx.signature = signature2;
 }
 function _parseEip1559(data) {
@@ -44918,11 +44918,11 @@ function _parseEip4844(data) {
     assertArgument(fBlobs.length === fCommits.length, "invalid network format: blobs/commitments length mismatch", "fields", fields);
     assertArgument(fBlobs.length === fProofs.length, "invalid network format: blobs/proofs length mismatch", "fields", fields);
     blobs = [];
-    for (let i = 0; i < fields[1].length; i++) {
+    for (let i2 = 0; i2 < fields[1].length; i2++) {
       blobs.push({
-        data: fBlobs[i],
-        commitment: fCommits[i],
-        proof: fProofs[i]
+        data: fBlobs[i2],
+        commitment: fCommits[i2],
+        proof: fProofs[i2]
       });
     }
     fields = fields[0];
@@ -44937,14 +44937,14 @@ function _parseEip4844(data) {
     assertArgument(fBlobs.length === fCommits.length, "invalid network format: blobs/commitments length mismatch", "fields", fields);
     assertArgument(fBlobs.length * CELL_COUNT === fProofs.length, "invalid network format: blobs/proofs length mismatch", "fields", fields);
     blobs = [];
-    for (let i = 0; i < fBlobs.length; i++) {
+    for (let i2 = 0; i2 < fBlobs.length; i2++) {
       const proof = [];
       for (let j = 0; j < CELL_COUNT; j++) {
-        proof.push(fProofs[i * CELL_COUNT + j]);
+        proof.push(fProofs[i2 * CELL_COUNT + j]);
       }
       blobs.push({
-        data: fBlobs[i],
-        commitment: fCommits[i],
+        data: fBlobs[i2],
+        commitment: fCommits[i2],
         proof: concat(proof)
       });
     }
@@ -44972,8 +44972,8 @@ function _parseEip4844(data) {
   }
   assertArgument(tx.to != null, `invalid address for transaction type: ${typeName}`, "data", data);
   assertArgument(Array.isArray(tx.blobVersionedHashes), "invalid blobVersionedHashes: must be an array", "data", data);
-  for (let i = 0; i < tx.blobVersionedHashes.length; i++) {
-    assertArgument(isHexString(tx.blobVersionedHashes[i], 32), `invalid blobVersionedHash at index ${i}: must be length 32`, "data", data);
+  for (let i2 = 0; i2 < tx.blobVersionedHashes.length; i2++) {
+    assertArgument(isHexString(tx.blobVersionedHashes[i2], 32), `invalid blobVersionedHash at index ${i2}: must be length 32`, "data", data);
   }
   if (fields.length === 11) {
     return tx;
@@ -45006,8 +45006,8 @@ function _serializeEip4844(tx, sig, blobs) {
         for (const { proof } of blobs) {
           const p = getBytes(proof);
           const cellSize = p.length / CELL_COUNT;
-          for (let i = 0; i < p.length; i += cellSize) {
-            cellProofs.push(p.subarray(i, i + cellSize));
+          for (let i2 = 0; i2 < p.length; i2 += cellSize) {
+            cellProofs.push(p.subarray(i2, i2 + cellSize));
           }
         }
         return concat([
@@ -45319,7 +45319,7 @@ var Transaction = class _Transaction {
     return value2;
   }
   set authorizationList(auths) {
-    this.#auths = auths == null ? null : auths.map((a) => authorizationify(a));
+    this.#auths = auths == null ? null : auths.map((a2) => authorizationify(a2));
   }
   /**
    *  The max fee per blob gas for Cancun transactions.
@@ -45348,8 +45348,8 @@ var Transaction = class _Transaction {
     if (value2 != null) {
       assertArgument(Array.isArray(value2), "blobVersionedHashes must be an Array", "value", value2);
       value2 = value2.slice();
-      for (let i = 0; i < value2.length; i++) {
-        assertArgument(isHexString(value2[i], 32), "invalid blobVersionedHash", `value[${i}]`, value2[i]);
+      for (let i2 = 0; i2 < value2.length; i2++) {
+        assertArgument(isHexString(value2[i2], 32), "invalid blobVersionedHash", `value[${i2}]`, value2[i2]);
       }
     }
     this.#blobVersionedHashes = value2;
@@ -45395,14 +45395,14 @@ var Transaction = class _Transaction {
     }
     const blobs = [];
     const versionedHashes = [];
-    for (let i = 0; i < _blobs.length; i++) {
-      const blob = _blobs[i];
+    for (let i2 = 0; i2 < _blobs.length; i2++) {
+      const blob = _blobs[i2];
       if (isBytesLike(blob)) {
         assert(this.#kzg, "adding a raw blob requires a KZG library", "UNSUPPORTED_OPERATION", {
           operation: "set blobs()"
         });
         let data = getBytes(blob);
-        assertArgument(data.length <= BLOB_SIZE, "blob is too large", `blobs[${i}]`, blob);
+        assertArgument(data.length <= BLOB_SIZE, "blob is too large", `blobs[${i2}]`, blob);
         if (data.length !== BLOB_SIZE) {
           const padded = new Uint8Array(BLOB_SIZE);
           padded.set(data);
@@ -45841,7 +45841,7 @@ function decode_arithmetic(bytes2) {
   let symbol_count = u16();
   let total = 1;
   let acc = [0, 1];
-  for (let i = 1; i < symbol_count; i++) {
+  for (let i2 = 1; i2 < symbol_count; i2++) {
     acc.push(total += u16());
   }
   let skip = u16();
@@ -45862,7 +45862,7 @@ function decode_arithmetic(bytes2) {
   const QRTR = HALF >> 1;
   const MASK = FULL - 1;
   let register = 0;
-  for (let i = 0; i < N3; i++) register = register << 1 | read_bit();
+  for (let i2 = 0; i2 < N3; i2++) register = register << 1 | read_bit();
   let symbols = [];
   let low = 0;
   let range5 = FULL;
@@ -45880,20 +45880,20 @@ function decode_arithmetic(bytes2) {
     }
     if (start == 0) break;
     symbols.push(start);
-    let a = low + Math.floor(range5 * acc[start] / total);
+    let a2 = low + Math.floor(range5 * acc[start] / total);
     let b2 = low + Math.floor(range5 * acc[start + 1] / total) - 1;
-    while (((a ^ b2) & HALF) == 0) {
+    while (((a2 ^ b2) & HALF) == 0) {
       register = register << 1 & MASK | read_bit();
-      a = a << 1 & MASK;
+      a2 = a2 << 1 & MASK;
       b2 = b2 << 1 & MASK | 1;
     }
-    while (a & ~b2 & QRTR) {
+    while (a2 & ~b2 & QRTR) {
       register = register & HALF | register << 1 & MASK >>> 1 | read_bit();
-      a = a << 1 ^ HALF;
+      a2 = a2 << 1 ^ HALF;
       b2 = (b2 ^ HALF) << 1 | HALF | 1;
     }
-    low = a;
-    range5 = 1 + b2 - a;
+    low = a2;
+    range5 = 1 + b2 - a2;
   }
   let offset = symbol_count - 4;
   return symbols.map((x) => {
@@ -45918,11 +45918,11 @@ function read_compressed_payload(s) {
 }
 function unsafe_atob(s) {
   let lookup = [];
-  [..."ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"].forEach((c2, i) => lookup[c2.charCodeAt(0)] = i);
-  let n2 = s.length;
-  let ret = new Uint8Array(6 * n2 >> 3);
-  for (let i = 0, pos = 0, width = 0, carry = 0; i < n2; i++) {
-    carry = carry << 6 | lookup[s.charCodeAt(i)];
+  [..."ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"].forEach((c4, i2) => lookup[c4.charCodeAt(0)] = i2);
+  let n4 = s.length;
+  let ret = new Uint8Array(6 * n4 >> 3);
+  for (let i2 = 0, pos = 0, width = 0, carry = 0; i2 < n4; i2++) {
+    carry = carry << 6 | lookup[s.charCodeAt(i2)];
     width += 6;
     if (width >= 8) {
       ret[pos++] = carry >> (width -= 8);
@@ -45930,25 +45930,25 @@ function unsafe_atob(s) {
   }
   return ret;
 }
-function signed(i) {
-  return i & 1 ? ~i >> 1 : i >> 1;
+function signed(i2) {
+  return i2 & 1 ? ~i2 >> 1 : i2 >> 1;
 }
-function read_deltas(n2, next) {
-  let v = Array(n2);
-  for (let i = 0, x = 0; i < n2; i++) v[i] = x += signed(next());
+function read_deltas(n4, next) {
+  let v = Array(n4);
+  for (let i2 = 0, x = 0; i2 < n4; i2++) v[i2] = x += signed(next());
   return v;
 }
 function read_sorted(next, prev = 0) {
   let ret = [];
   while (true) {
     let x = next();
-    let n2 = next();
-    if (!n2) break;
+    let n4 = next();
+    if (!n4) break;
     prev += x;
-    for (let i = 0; i < n2; i++) {
-      ret.push(prev + i);
+    for (let i2 = 0; i2 < n4; i2++) {
+      ret.push(prev + i2);
     }
-    prev += n2 + 1;
+    prev += n4 + 1;
   }
   return ret;
 }
@@ -45981,10 +45981,10 @@ function read_array_while(next) {
   }
   return v;
 }
-function read_transposed(n2, w, next) {
-  let m = Array(n2).fill().map(() => []);
-  for (let i = 0; i < w; i++) {
-    read_deltas(n2, next).forEach((x, j) => m[j].push(x));
+function read_transposed(n4, w, next) {
+  let m = Array(n4).fill().map(() => []);
+  for (let i2 = 0; i2 < w; i2++) {
+    read_deltas(n4, next).forEach((x, j) => m[j].push(x));
   }
   return m;
 }
@@ -45993,17 +45993,17 @@ function read_linear_table(w, next) {
   let dy = next();
   let vN = read_array_while(next);
   let m = read_transposed(vN.length, 1 + w, next);
-  return m.flatMap((v, i) => {
+  return m.flatMap((v, i2) => {
     let [x, ...ys] = v;
-    return Array(vN[i]).fill().map((_, j) => {
+    return Array(vN[i2]).fill().map((_, j) => {
       let j_dy = j * dy;
       return [x + j * dx, ys.map((y) => y + j_dy)];
     });
   });
 }
 function read_replacement_table(w, next) {
-  let n2 = 1 + next();
-  let m = read_transposed(n2, 1 + w, next);
+  let n4 = 1 + next();
+  let m = read_transposed(n4, 1 + w, next);
   return m.map((v) => [v[0], v.slice(1)]);
 }
 function read_trie(next) {
@@ -46014,7 +46014,7 @@ function read_trie(next) {
   function decode20(Q) {
     let S2 = next();
     let B = read_array_while(() => {
-      let cps = read_sorted(next).map((i) => sorted[i]);
+      let cps = read_sorted(next).map((i2) => sorted[i2]);
       if (cps.length) return decode20(cps);
     });
     return { S: S2, B, Q };
@@ -46050,16 +46050,16 @@ function str_from_cps(cps) {
   let len = cps.length;
   if (len < chunk) return String.fromCodePoint(...cps);
   let buf = [];
-  for (let i = 0; i < len; ) {
-    buf.push(String.fromCodePoint(...cps.slice(i, i += chunk)));
+  for (let i2 = 0; i2 < len; ) {
+    buf.push(String.fromCodePoint(...cps.slice(i2, i2 += chunk)));
   }
   return buf.join("");
 }
-function compare_arrays(a, b2) {
-  let n2 = a.length;
-  let c2 = n2 - b2.length;
-  for (let i = 0; c2 == 0 && i < n2; i++) c2 = a[i] - b2[i];
-  return c2;
+function compare_arrays(a2, b2) {
+  let n4 = a2.length;
+  let c4 = n4 - b2.length;
+  for (let i2 = 0; c4 == 0 && i2 < n4; i2++) c4 = a2[i2] - b2[i2];
+  return c4;
 }
 var COMPRESSED = "AEUDWAHSCGYATwDVADIAdgAiADQAFAAtABQAIQAPACcADQASAAsAGQAJABIACQARAAUACwAFAAwABQAQAAMABwAEAAoABQAJAAIACgABAAQAFAALAAIACwABAAIAAQAHAAMAAwAEAAsADAAMAAwACwANAA0AAwAKAAkABAAdAAYAZwDTAecDNACxCmIB8xhZAqfoC190UGcThgBurwf7PT09Pb09AjgJum8OjDllxHYUKXAPxzq6tABAxgK8ysUvWAgMPT09PT09PSs6LT2HcgWXWwFLoSMEEEl5RFVMKvO0XQ8ExDdJMnIgPi89uj00MsvBXxEPAGPCDwBnQKoEbwRwBHEEcgRzBHQEdQR2BHcEeAR6BHsEfAR+BIAEgfndBQoBYgULAWIFDAFiBNcE2ATZBRAFEQUvBdALFAsVDPcNBw13DYcOMA4xDjMB4BllHI0B2grbAMDpHLkQ7QHVAPRNQQFnGRUEg0yEB2uaJEMAJpIBpob5AERSMAKNoAXqaQLRBMCzEiC+AZ4EWRJJFbEu7QDQLARtEbgECxDwAb/RyAk1AV4nD2cEQQKTAzsAGpobPgAahAGPCrysdy0OAKwAfFIcBAQFUmoA/PtZADkBIadVj2UMUgx5Il4ANQC9vLIBDAHUGVsQ8wCzfQIbGVcCHBZHAZ8CBAgXOhG7AqMZ4M7+1M0UAPDNAWsC+mcJDe8AAQA99zkEXLICyQozAo6lAobcP5JvjQLFzwKD9gU/OD8FEQCtEQL6bW+nAKUEvzjDHsuRyUvOFHcacUz5AqIFRSE2kzsBEQCuaQL5DQTlcgO6twSpTiUgCwIFCAUXBHQEqQV6swAVxUlmTmsCwjqsP/wKJQmXb793UgZBEBsnpRD3DDMBtQE7De1L2ATxBjsEyR99GRkPzZWcCKUt3QztJuMuoYBaI/UqgwXtS/Q83QtNUWgPWQtlCeM6Y4FOAyEBDSKLCt0NOQhtEPMKyWsN5RFFBzkD1UmaAKUHAQsRHTUVtSYQYqwLCTl3Bvsa9guPJq8TKXr8BdMaIQZNASka/wDPLueFsFoxXBxPXwYDCyUjxxSoUCANJUC3eEgaGwcVJakCkUNwSodRNh6TIfY8PQ1mLhNRfAf1PAUZTwuBPJ5Gq0UOEdI+jT1IIklMLAQ1fywvJ4sJzw+FDLl8cgFZCSEJsQxxEzERFzfFCDkHGS2XJCcVCCFGlWCaBPefA/MT0QMLBT8JQQcTA7UcLRMuFSkFDYEk1wLzNtUuswKPVoABFwXLDyUf3xBQR+AO6QibAmUDgyXrAC0VIQAXIpsIQ2MAX4/YUwUuywjHamwjdANnFOdhEXMHkQ5XB6ccMxW/HOFwyF4Lhggoo68JWwF1CZkBXwTjCAk1W4ygIEFnU4tYGJsgYUE/XfwCMQxlFZ9EvYd4AosPaxIbATUBcwc5DQECdxHtEWsQlQjrhgQ1tTP4OiUETyGDIBEKJwNPbM4LJyb5DPhpAaMSYgMMND137merYLYkF/0HGTLFQWAh8QuST80MnBrBGEJULhnkB78D8xrzJ+pBVwX/A6MDEzpNM+4EvQtpCIsJPwBJDqMXB9cYagpxjNABMYsBt5kDV5GDAm+PBjcHCwBnC4cFeeUAHQKnCKMABQDPA1cAOQKtB50AGQCFQQE9AycvASHlAo8DkwgxywGVLwHzKQQbwwwVAPc3bkoCw7ECgGpmogXdWAKOAkk1AU0lBAVOR1EDr3HhANsASwYT30cBFatKyxrjQwHfbysAxwD7AAU1BwVBAc0B820AtwFfCzEJorO1AU3pKQCDABVrAdcCiQDdADUAf/EBUwBNBVn5BdMCT0kBETEYK1dhAbsDHwEzAQ0AeQbLjaXJBx8EbQfTAhAbFeEC7y4HtQEDIt8TzULFAr3eVaFgAmSBAmJCW02vWzcgAqH3AmiYAmYJAp+EOBsLAmY7AmYmBG4EfwN/EwN+kjkGOXcXOYI6IyMCbB0CMjY4CgJtxwJtru+KM2dFKwFnAN4A4QBKBQeYDI0A/gvCAA21AncvAnaiPwJ5S0MCeLodXNtFrkbXAnw/AnrIAn0JAnzwBVkFIEgASH1jJAKBbQKAAAKABQJ/rklYSlsVF0rMAtEBAtDMSycDiE8Dh+ZExZEyAvKhXQMDA65LzkwtJQPPTUxNrwKLPwKK2MEbBx1DZwW3Ao43Ao5cQJeBAo7ZAo5ceFG0UzUKUtRUhQKT+wKTDADpABxVHlWvVdAGLBsplYYy4XhmRTs5ApefAu+yWCGoAFklApaPApZ8nACpWaxaCYFNADsClrUClk5cRFzRApnLAplkXMpdBxkCnJs5wjqdApwWAp+bAp64igAdDzEqDwKd8QKekgC1PWE0Ye8CntMCoG4BqQKenx8Cnk6lY8hkJyUrAievAiZ+AqD7AqBMAqLdAqHEAqYvAqXOAqf/AH0Cp/JofGixAANJahxq0QKs4wKsrgKtZwKtAgJXHQJV3AKx4dcDH05slwKyvQ0CsugXbOBtY21IXwMlzQK2XDs/bpADKUUCuF4CuUcVArkqd3A2cOECvRkCu9pwlgMyEQK+iHICAzNxAr4acyJzTwLDywLDBHOCdEs1RXTgAzynAzyaAz2/AsV8AsZHAsYQiQLIaVECyEQCyU8CyS4CZJ0C3dJ4eWF4rnklS9ADGKNnAgJh9BnzlSR7C16SXrsRAs9rAs9sL0tT0vMTnwDGrQLPcwEp6gNOEn5LBQLcJwLbigLSTwNSXANTXwEBA1WMgIk/AMsW7WBFghyC04LOg40C2scC2d6EEIRJpzwDhqUALwNkDoZxWfkAVQLfZQLeuHN3AuIv7RQB8zAnAfSbAfLShwLr8wLpcHkC6vkC6uQA+UcBuQLuiQLrnJaqlwMC7j8DheCYeXDgcaEC8wMAaQOOFpmTAvcTA5FuA5KHAveYAvnZAvhmmhyaq7s3mx4DnYMC/voBGwA5nxyfswMFjQOmagOm2QDRxQMGaqGIogUJAwxJAtQAPwMA4UEXUwER8wNrB5dnBQCTLSu3r73bAYmZFH8RBDkB+ykFIQ6dCZ8Akv0TtRQrxQL3LScApQC3BbmOkRc/xqdtQS4UJo0uAUMBgPwBtSYAdQMOBG0ALAIWDKEAAAoCPQJqA90DfgSRASBFBSF8CgAFAEQAEwA2EgJ3AQAF1QNr7wrFAgD3Cp8nv7G35QGRIUFCAekUfxE0wIkABAAbAFoCRQKEiwAGOlM6lI1tALg6jzrQAI04wTrcAKUA6ADLATqBOjs5/Dn5O3aJOls7nok6bzkYAVYBMwFsBS81XTWeNa01ZjV1NbY1xTWCNZE10jXhNZ41rTXuNf01sjXBNgI2ETXGNdU2FjYnNd417TYuNj02LjUtITY6Nj02PDbJNwgEkDxXNjg23TcgNw82yiA3iTcwCgSwPGc2JDcZN2w6jTchQtRDB0LgQwscDw8JmyhtKFFVBgDpfwDpsAD+mxQ91wLpNSMArQC9BbeOkRdLxptzBL8MDAMMAQgDAAkKCwsLCQoGBAVVBI/DvwDz9b29kaUCb0QtsRTNLt4eGBcSHAMZFhYZEhYEARAEBUEcQRxBHEEcQRxBHEEaQRxBHEFCSTxBPElISUhBNkM2QTYbNklISVmBVIgELgEaJZkC7aMAoQCjBcGOmxdNxrsBvwGJAaQcEZ0ePCklMAAhMvAIMAL54gC7Bm8EescjzQMpARQpKgDUHqSvAj5Gqwr7YrMUACT9AN3rpF27H7fsd/twPt4l+UW1yQYKBt2Cgy7qJpGiLcdE2P1cQSImUbqJ6ICH27H4knQMIRMrFkHu3sx6tC35Y+eLIh4e4CMKJ4DfyV+8mfta499RCAJ0xfeZR8PsoYOApva9pjGn4PhvyZS7/h5JLuhaucfjuU+Z584wwqNO4hWYmaBCcjgQPale1bjoHzMUbut/zTgxHxBnAyrdKpF4IRMASLBtD/jviyLeCgj8twWjAd3HchN/uqaeRYeHJgl7JEY9/cTrvtfybx/r3Y/NtxJ9dp+MTVmiS9bwBH73s8Di56/Ma+mTPMHq4T1yEG1fWcqr0u+hrGnJEvU1JJAm/maQSrKrazIyvSkDFkj8UUlfBq8baniTGPng6YZRL661rDNw4w/1g2figG0IhXnL7wosd/sVNo5dYSmMBTP5c7rYLjRdCwg8quwljOMPf63D8ICAL0r71XRiyFHdgwHbwfgnPOf4Lzjf2v+j+IiDHG2isp5yUnzSDyDRb4i/Vs0qHSHq8PiEQ/JnBP7PxnjN0j6gT4AVAeRx/1o9VnEUlUwvFrzJqHk9jxAw4sYxCnrxaeBdCFFKbnE7z+x54F5W7ZZsU6kx8Qocul6FoAHHy01FGL/nne61mn4+uYXfQ1Uccn+HMLKE+cZzT8BB1E3FRskOgJrRsq25rauLm8+uamXpkS/bTy6y1wDbCrW4eD532kTWrtNUmVVZOIn/C+/JR9KVR5iG9TY8iaT67ubm/whL1xbKZoqtY+a6fNxMJrg211bGYJDUkYMNWA0BMB++9zOm6Eik4roqs9CCEFW0lyAK0PbvlzvoxrZuY/OEhNW/l/63U15Od/RSvmDvXpGLiVmeGi5PDSH2bYz5o2g6wFDQ2FbZgYgTF8rPlvA1ifjZD3NLtFdXdpSIJvgKR7GpjJWG7GZGawPomIH8B5tUmtHH9LpM+/KQKunEPa1GiQkCXv4Cnm9DLORo2joicHdPDZ64obQrPZ5bgqckkj0G6/NEiPYBY4bCkL7W8G5YzsUb6GakFjykSPkT7JGeLeB6uJOGMm+x7N381BCDfbJFx0dtLgV9Q477BfL1fvitX5anV/oYfxeYl+eF5x5bB8+Ep/L2nsmd56aKF4aAD4GbJWsdKyBW22xEmAD3XdbtsMyAFoR5mOla0gEd9U/YVB7zvHGpHbQonay9Sv0bQ8iZ8piaXVrKc5AG1AmqqgaEvzHSP2Wux7aZTWh6quVDVU01JtMIVRdCFwlSbbqqhoFlyzsotQzRexFvZ/MqUSFu3OhRIuNBbufvBpdVgb8XdGJ48/lJPCZ7dsOujTTbKPSEvGXkOnG2Xdi8/nM3EMRqITd5QeU7iOjKqC7URJY6TnLsHij22xAHKnVRD5MDtBYnoGFqZGMDmXCW6Oj+BAWw14hESY/xLF6bLku06AHkiXTHPCFZ0f9YSqqo27eAhhS67OrA2Het4M9JM3jm/yRX6bYxnfmzYl5qQdHxN08FsNuWDrWd4vMUY2QD3hr8vS73SCTkFoXZR3xNzOQt8d/6HfjBmXqvrE6EGkLzK6YK2U2/ksU/iUH+LvVIsJI+ri2AL/klo+ShdDyfs5A83i2prkMs51IKR7ZcqjZJi5X3+bd8GlyWvtddxKEoEqSgEO7A8jIgf2nH0h8FjM7oB6yte3X5mpL0i/E4Rx0CotKnILJj/vJqo4VkPQ93jRtRVfaitQPqldl5xRYPq8387Z0DcnZvOeION0Ht1+P27kFLGQIcLBX4FG3sffccNHh5cPfzp9INoRtqVtdViJfg8RjnXiIz/MNqEN6zvzX3hMzyWC7oSoXIT14ubc0abPX8Rp9GVa5NI/8iv+6ela1oTncbdimRKnrbRffDR/X4nH+bgqAuHWl7hOaeXPWVzIeRl7ga+JzD4Sx3mlj/q6Ra/E2HhDf21eEzTLNGfCZsY+/yxZzQzIAuijG65ii4O/waAJCrEJaWd/DRAKMQ5678Dw5AT7RCKzdadIwd8LsD+DgPBASmWsUlf8R0k1w/2k4lO2Wpb4zMI6EJVJs0xk/wn8/fRUPqrDKhbjHR41SqgFMx5RGMPuduFwlu5lK89tW11sTqiX/5EfGs5nO+y9FKvgXKPOEmgE05EKNL6Sjb3xS40H3BVPhm0ESOZgAjZoymc8be0inDVo4JdJVf+NKd3tN/CaB7GShhH27qf95NoFZVX/6ZkR2lX+CgWrQ2INgkh+bbMz68+uJ3Clsh8HSMPEQtAt+BBE6fXDab7KIlsKxU1lIXW/KWVstpdPanJ0pdXpQinDyUQjtY7ZVcfiecRxRDMAUhHFU2cEaciQ+htiPMPx1kdvtWG9T44w3r037ljHBFJdYR0r55qvMRixtAEFJAqA4T1ES87FAx7UozXasytg8MftZYt0rjYgLe6EJ5aWvy2qscBSBQ7yehoJIA3wIIZ9ukfkyBb6qnue5ko8W50rpV4kXqWjI5nbGRXrNW0tBZHXlY48nSgcUXBHWT4GcgLZJoLlKJnV96kCYpq9eWHh7xJzkCAyrQuQ5AJ0qq/uZ3toJglNterev+Qm0KXxPg/+YbFRJdfhbp1wOnVOEYdVHTya6CtO0afhEaBhx3oHwCb5Kq6RwHDzFMl2vfjL8GwzcCoTj7wZe+UFnYDV2yKpPU9dba29gYBdNqJg/KXozO+CJTlKmlKhnqTf5doeS35DZFV+cYJQVjd+oVY/Gtc/6XPzUxb1gMqf6cEjNNoRC8AObrp+fx0cVtGu4ffC2TgXRC8zPl8moUHCB5HZ25d87mlsiiK0aNwBtcEQjRNBT/QrXbw/8aVXdKMHn9EqYEKEyxSGTpYQOaes1G1Qq8pDgqkZtlO2HRyCXpmeM7TSrRPkAh004BfisVpF6zP44n2Jvxz/gOVocNCyy9V6lkod28QM4pbaMvVJigD/w3BrsjSJrXlqc4ulBYOCceiBN4b/gHajYyupbhEt63a619Ay4wsL6a6w6B+A7TnoyE7BliWHJfzVxxIKM/W3M/J8Bx99Op863Q8eNuIMGRx++VbYfjm+VGYBA3Ap/KEu/wxBNBpJJncwHPG45V8Gh98ZIrGCc20MwijGowZbcS7d1nEgcOW5cddZpHL2XPAIRbColiheZzXTvBxZOY3iMSDSKDrICyJ/iQs1vdplVdH/JrLJsQ2jtTnfCrITIghq3KFX3qAgLWAIp8IffNSdTYptnbGfc8s+qcr3zyzyHp1aJg+jxTF4kD1ry5Wauv5V3xnOGwTFecNzXSLHBW20/pCQjk4uorD0plIhMSTc79+/r4RKPClRYTBYex1Ob5crtfvRQBBv6re/6FhtCqtduag67glqRA77/3ulblh9YRtMdDxkCyJDeNnAuCLPQFmdRRWJtH20Z8DstfJf+5oj5SSB64d0iF5/Ya4KfTWxfivj9Ap2/zbYaTo/1gO3tM6RYsCZharMBFr7Fm61mLSrQnEI4OF1gbVS4k/JE9UotOrnLJZuswoWodCSV8zbybkJSVIP7n8UaE9xCR39rJZmf27HOAPVOGc9pdkQUcRrI0qyVF9Z3j1RHDbxIfwbWzmPVjwIdPJvtmBYwEQIUsIW1S939hcVikK00ozPRI02cqhzVUNzpOxVdrwRPvlh1aIOf0xFEqD3YkGnCnFah/cFN3J2gB7N+bZSGawwkKFu1tpQMrp1W+27YNkyT0TpcFpTqgOqqLabrgcCUPxh97mREOGy4xItzQ9xSl6rq+8BZsHcrQFReS+QeMxJ3P6CnL9EP/eOLDjumLhvrcQrpPiknsofbzBv9gTP0lU+TIVwE6E7CcKfT36q+ZiEOHJ9ayf0dyUJLezAb2M8aNHwd0+OJmsVgTzRWA";
 var S0 = 44032;
@@ -46086,18 +46086,18 @@ var EXCLUSIONS;
 var DECOMP;
 var RECOMP;
 function init$1() {
-  let r = read_compressed_payload(COMPRESSED);
-  SHIFTED_RANK = new Map(read_sorted_arrays(r).flatMap((v, i) => v.map((x) => [x, i + 1 << 24])));
-  EXCLUSIONS = new Set(read_sorted(r));
+  let r2 = read_compressed_payload(COMPRESSED);
+  SHIFTED_RANK = new Map(read_sorted_arrays(r2).flatMap((v, i2) => v.map((x) => [x, i2 + 1 << 24])));
+  EXCLUSIONS = new Set(read_sorted(r2));
   DECOMP = /* @__PURE__ */ new Map();
   RECOMP = /* @__PURE__ */ new Map();
-  for (let [cp, cps] of read_mapped(r)) {
+  for (let [cp, cps] of read_mapped(r2)) {
     if (!EXCLUSIONS.has(cp) && cps.length == 2) {
-      let [a, b2] = cps;
-      let bucket = RECOMP.get(a);
+      let [a2, b2] = cps;
+      let bucket = RECOMP.get(a2);
       if (!bucket) {
         bucket = /* @__PURE__ */ new Map();
-        RECOMP.set(a, bucket);
+        RECOMP.set(a2, bucket);
       }
       bucket.set(b2, cp);
     }
@@ -46107,13 +46107,13 @@ function init$1() {
 function is_hangul(cp) {
   return cp >= S0 && cp < S1;
 }
-function compose_pair(a, b2) {
-  if (a >= L0 && a < L1 && b2 >= V0 && b2 < V1) {
-    return S0 + (a - L0) * N_COUNT + (b2 - V0) * T_COUNT;
-  } else if (is_hangul(a) && b2 > T0 && b2 < T1 && (a - S0) % T_COUNT == 0) {
-    return a + (b2 - T0);
+function compose_pair(a2, b2) {
+  if (a2 >= L0 && a2 < L1 && b2 >= V0 && b2 < V1) {
+    return S0 + (a2 - L0) * N_COUNT + (b2 - V0) * T_COUNT;
+  } else if (is_hangul(a2) && b2 > T0 && b2 < T1 && (a2 - S0) % T_COUNT == 0) {
+    return a2 + (b2 - T0);
   } else {
-    let recomp = RECOMP.get(a);
+    let recomp = RECOMP.get(a2);
     if (recomp) {
       recomp = recomp.get(b2);
       if (recomp) {
@@ -46162,13 +46162,13 @@ function decomposed(cps) {
   }
   if (check_order && ret.length > 1) {
     let prev_cc = unpack_cc(ret[0]);
-    for (let i = 1; i < ret.length; i++) {
-      let cc = unpack_cc(ret[i]);
+    for (let i2 = 1; i2 < ret.length; i2++) {
+      let cc = unpack_cc(ret[i2]);
       if (cc == 0 || prev_cc <= cc) {
         prev_cc = cc;
         continue;
       }
-      let j = i - 1;
+      let j = i2 - 1;
       while (true) {
         let tmp = ret[j + 1];
         ret[j + 1] = ret[j];
@@ -46177,7 +46177,7 @@ function decomposed(cps) {
         prev_cc = unpack_cc(ret[--j]);
         if (prev_cc <= cc) break;
       }
-      prev_cc = unpack_cc(ret[i]);
+      prev_cc = unpack_cc(ret[i2]);
     }
   }
   return ret;
@@ -46257,44 +46257,44 @@ var EMOJI_LIST;
 var EMOJI_ROOT;
 function init() {
   if (MAPPED) return;
-  let r = read_compressed_payload(COMPRESSED$1);
-  const read_sorted_array = () => read_sorted(r);
+  let r2 = read_compressed_payload(COMPRESSED$1);
+  const read_sorted_array = () => read_sorted(r2);
   const read_sorted_set = () => new Set(read_sorted_array());
   const set_add_many = (set, v) => v.forEach((x) => set.add(x));
-  MAPPED = new Map(read_mapped(r));
+  MAPPED = new Map(read_mapped(r2));
   IGNORED = read_sorted_set();
   CM = read_sorted_array();
-  NSM = new Set(read_sorted_array().map((i) => CM[i]));
+  NSM = new Set(read_sorted_array().map((i2) => CM[i2]));
   CM = new Set(CM);
   ESCAPE = read_sorted_set();
   NFC_CHECK = read_sorted_set();
-  let chunks = read_sorted_arrays(r);
-  let unrestricted = r();
+  let chunks = read_sorted_arrays(r2);
+  let unrestricted = r2();
   const read_chunked = () => {
     let set = /* @__PURE__ */ new Set();
-    read_sorted_array().forEach((i) => set_add_many(set, chunks[i]));
+    read_sorted_array().forEach((i2) => set_add_many(set, chunks[i2]));
     set_add_many(set, read_sorted_array());
     return set;
   };
-  GROUPS = read_array_while((i) => {
-    let N3 = read_array_while(r).map((x) => x + 96);
+  GROUPS = read_array_while((i2) => {
+    let N3 = read_array_while(r2).map((x) => x + 96);
     if (N3.length) {
-      let R = i >= unrestricted;
+      let R2 = i2 >= unrestricted;
       N3[0] -= 32;
       N3 = str_from_cps(N3);
-      if (R) N3 = `Restricted[${N3}]`;
+      if (R2) N3 = `Restricted[${N3}]`;
       let P2 = read_chunked();
       let Q = read_chunked();
-      let M = !r();
-      return { N: N3, P: P2, Q, M, R };
+      let M = !r2();
+      return { N: N3, P: P2, Q, M, R: R2 };
     }
   });
   WHOLE_VALID = read_sorted_set();
   WHOLE_MAP = /* @__PURE__ */ new Map();
-  let wholes = read_sorted_array().concat(Array_from(WHOLE_VALID)).sort((a, b2) => a - b2);
-  wholes.forEach((cp, i) => {
-    let d = r();
-    let w = wholes[i] = d ? wholes[i - d] : { V: [], M: /* @__PURE__ */ new Map() };
+  let wholes = read_sorted_array().concat(Array_from(WHOLE_VALID)).sort((a2, b2) => a2 - b2);
+  wholes.forEach((cp, i2) => {
+    let d = r2();
+    let w = wholes[i2] = d ? wholes[i2 - d] : { V: [], M: /* @__PURE__ */ new Map() };
     w.V.push(cp);
     if (!WHOLE_VALID.has(cp)) {
       WHOLE_MAP.set(cp, w);
@@ -46333,7 +46333,7 @@ function init() {
     }
   }
   set_add_many(VALID, nfd(VALID));
-  EMOJI_LIST = read_trie(r).map((v) => Emoji.from(v)).sort(compare_arrays);
+  EMOJI_LIST = read_trie(r2).map((v) => Emoji.from(v)).sort(compare_arrays);
   EMOJI_ROOT = /* @__PURE__ */ new Map();
   for (let cps of EMOJI_LIST) {
     let prev = [EMOJI_ROOT];
@@ -46370,8 +46370,8 @@ function check_label_extension(cps) {
 }
 function check_leading_underscore(cps) {
   const UNDERSCORE = 95;
-  for (let i = cps.lastIndexOf(UNDERSCORE); i > 0; ) {
-    if (cps[--i] !== UNDERSCORE) {
+  for (let i2 = cps.lastIndexOf(UNDERSCORE); i2 > 0; ) {
+    if (cps[--i2] !== UNDERSCORE) {
       throw new Error("underscore allowed only at start");
     }
   }
@@ -46380,18 +46380,18 @@ function check_fenced(cps) {
   let cp = cps[0];
   let prev = FENCED.get(cp);
   if (prev) throw error_placement(`leading ${prev}`);
-  let n2 = cps.length;
+  let n4 = cps.length;
   let last = -1;
-  for (let i = 1; i < n2; i++) {
-    cp = cps[i];
+  for (let i2 = 1; i2 < n4; i2++) {
+    cp = cps[i2];
     let match = FENCED.get(cp);
     if (match) {
-      if (last == i) throw error_placement(`${prev} + ${match}`);
-      last = i + 1;
+      if (last == i2) throw error_placement(`${prev} + ${match}`);
+      last = i2 + 1;
       prev = match;
     }
   }
-  if (last == n2) throw error_placement(`trailing ${prev}`);
+  if (last == n4) throw error_placement(`trailing ${prev}`);
 }
 function safe_str_from_cps(cps, max = Infinity, quoter = quote_cp) {
   let buf = [];
@@ -46401,16 +46401,16 @@ function safe_str_from_cps(cps, max = Infinity, quoter = quote_cp) {
     cps = [...cps.slice(0, max), 8230, ...cps.slice(-max)];
   }
   let prev = 0;
-  let n2 = cps.length;
-  for (let i = 0; i < n2; i++) {
-    let cp = cps[i];
+  let n4 = cps.length;
+  for (let i2 = 0; i2 < n4; i2++) {
+    let cp = cps[i2];
     if (should_escape(cp)) {
-      buf.push(str_from_cps(cps.slice(prev, i)));
+      buf.push(str_from_cps(cps.slice(prev, i2)));
       buf.push(quoter(cp));
-      prev = i + 1;
+      prev = i2 + 1;
     }
   }
-  buf.push(str_from_cps(cps.slice(prev, n2)));
+  buf.push(str_from_cps(cps.slice(prev, n4)));
   return buf.join("");
 }
 function is_combining_mark(cp, only_nsm) {
@@ -46455,10 +46455,10 @@ function split2(name, nf, ef) {
           type = "Emoji";
         } else {
           if (CM.has(norm[0])) throw error_placement("leading combining mark");
-          for (let i = 1; i < token_count; i++) {
-            let cps = tokens[i];
+          for (let i2 = 1; i2 < token_count; i2++) {
+            let cps = tokens[i2];
             if (!cps.is_emoji && CM.has(cps[0])) {
-              throw error_placement(`emoji + combining mark: "${str_from_cps(tokens[i - 1])} + ${safe_str_from_cps([cps[0]])}"`);
+              throw error_placement(`emoji + combining mark: "${str_from_cps(tokens[i2 - 1])} + ${safe_str_from_cps([cps[0]])}"`);
             }
           }
           check_fenced(norm);
@@ -46545,20 +46545,20 @@ function check_group(g, cps) {
   }
   if (g.M) {
     let decomposed2 = nfd(cps);
-    for (let i = 1, e = decomposed2.length; i < e; i++) {
-      if (NSM.has(decomposed2[i])) {
-        let j = i + 1;
+    for (let i2 = 1, e = decomposed2.length; i2 < e; i2++) {
+      if (NSM.has(decomposed2[i2])) {
+        let j = i2 + 1;
         for (let cp; j < e && NSM.has(cp = decomposed2[j]); j++) {
-          for (let k = i; k < j; k++) {
+          for (let k = i2; k < j; k++) {
             if (decomposed2[k] == cp) {
               throw new Error(`duplicate non-spacing marks: ${quoted_cp(cp)}`);
             }
           }
         }
-        if (j - i > NSM_MAX) {
-          throw new Error(`excessive non-spacing marks: ${bidi_qq(safe_str_from_cps(decomposed2.slice(i - 1, j)))} (${j - i}/${NSM_MAX})`);
+        if (j - i2 > NSM_MAX) {
+          throw new Error(`excessive non-spacing marks: ${bidi_qq(safe_str_from_cps(decomposed2.slice(i2 - 1, j)))} (${j - i2}/${NSM_MAX})`);
         }
-        i = j;
+        i2 = j;
       }
     }
   }
@@ -46628,11 +46628,11 @@ function ensNameSplit(name) {
     return comps;
   }
   let last = 0;
-  for (let i = 0; i < bytes2.length; i++) {
-    const d = bytes2[i];
+  for (let i2 = 0; i2 < bytes2.length; i2++) {
+    const d = bytes2[i2];
     if (d === 46) {
-      comps.push(checkComponent(bytes2.slice(last, i)));
-      last = i + 1;
+      comps.push(checkComponent(bytes2.slice(last, i2)));
+      last = i2 + 1;
     }
   }
   assertArgument(last < bytes2.length, "invalid ENS name; empty component", "name", name);
@@ -46882,9 +46882,9 @@ var TypedDataEncoder = class _TypedDataEncoder {
         links.get(name).add(baseType);
       }
     }
-    const primaryTypes = Array.from(parents.keys()).filter((n2) => parents.get(n2).length === 0);
+    const primaryTypes = Array.from(parents.keys()).filter((n4) => parents.get(n4).length === 0);
     assertArgument(primaryTypes.length !== 0, "missing primary type", "types", _types);
-    assertArgument(primaryTypes.length === 1, `ambiguous primary types or unused types: ${primaryTypes.map((t) => JSON.stringify(t)).join(", ")}`, "types", _types);
+    assertArgument(primaryTypes.length === 1, `ambiguous primary types or unused types: ${primaryTypes.map((t2) => JSON.stringify(t2)).join(", ")}`, "types", _types);
     defineProperties(this, { primaryType: primaryTypes[0] });
     function checkCircular(type, found) {
       assertArgument(!found.has(type), `circular type reference to ${JSON.stringify(type)}`, "types", _types);
@@ -46904,7 +46904,7 @@ var TypedDataEncoder = class _TypedDataEncoder {
     for (const [name, set] of subtypes) {
       const st = Array.from(set);
       st.sort();
-      this.#fullTypes.set(name, encodeType(name, types[name]) + st.map((t) => encodeType(t, types[t])).join(""));
+      this.#fullTypes.set(name, encodeType(name, types[name]) + st.map((t2) => encodeType(t2, types[t2])).join(""));
     }
   }
   /**
@@ -47052,8 +47052,8 @@ var TypedDataEncoder = class _TypedDataEncoder {
       assertArgument(type, `invalid typed-data domain key: ${JSON.stringify(name)}`, "domain", domain);
       domainFields.push({ name, type });
     }
-    domainFields.sort((a, b2) => {
-      return domainFieldNames.indexOf(a.name) - domainFieldNames.indexOf(b2.name);
+    domainFields.sort((a2, b2) => {
+      return domainFieldNames.indexOf(a2.name) - domainFieldNames.indexOf(b2.name);
     });
     return _TypedDataEncoder.hashStruct("EIP712Domain", { EIP712Domain: domainFields }, domain);
   }
@@ -47208,11 +47208,11 @@ var TokenString = class _TokenString {
     this.#offset = 0;
   }
   #subTokenString(from = 0, to = 0) {
-    return new _TokenString(this.#tokens.slice(from, to).map((t) => {
-      return Object.freeze(Object.assign({}, t, {
-        match: t.match - from,
-        linkBack: t.linkBack - from,
-        linkNext: t.linkNext - from
+    return new _TokenString(this.#tokens.slice(from, to).map((t2) => {
+      return Object.freeze(Object.assign({}, t2, {
+        match: t2.match - from,
+        linkBack: t2.linkBack - from,
+        linkNext: t2.linkNext - from
       }));
     }));
   }
@@ -47285,28 +47285,28 @@ var TokenString = class _TokenString {
   }
   toString() {
     const tokens = [];
-    for (let i = this.#offset; i < this.#tokens.length; i++) {
-      const token = this.#tokens[i];
+    for (let i2 = this.#offset; i2 < this.#tokens.length; i2++) {
+      const token = this.#tokens[i2];
       tokens.push(`${token.type}:${token.text}`);
     }
     return `<TokenString ${tokens.join(" ")}>`;
   }
 };
-function lex(text) {
+function lex(text2) {
   const tokens = [];
   const throwError2 = (message) => {
-    const token = offset < text.length ? JSON.stringify(text[offset]) : "$EOI";
+    const token = offset < text2.length ? JSON.stringify(text2[offset]) : "$EOI";
     throw new Error(`invalid token ${token} at ${offset}: ${message}`);
   };
   let brackets = [];
   let commas = [];
   let offset = 0;
-  while (offset < text.length) {
-    let cur2 = text.substring(offset);
+  while (offset < text2.length) {
+    let cur2 = text2.substring(offset);
     let match = cur2.match(regexWhitespacePrefix);
     if (match) {
       offset += match[1].length;
-      cur2 = text.substring(offset);
+      cur2 = text2.substring(offset);
     }
     const token = { depth: brackets.length, linkBack: -1, linkNext: -1, match: -1, type: "", text: "", offset, value: -1 };
     tokens.push(token);
@@ -47371,7 +47371,7 @@ function lex(text) {
     }
     throw new Error(`unexpected token ${JSON.stringify(cur2[0])} at position ${offset}`);
   }
-  return new TokenString(tokens.map((t) => Object.freeze(t)));
+  return new TokenString(tokens.map((t2) => Object.freeze(t2)));
 }
 function allowSingle(set, allowed) {
   let included = [];
@@ -47430,7 +47430,7 @@ function consumeMutability(tokens) {
   return "nonpayable";
 }
 function consumeParams(tokens, allowIndexed) {
-  return tokens.popParams().map((t) => ParamType.from(t, allowIndexed));
+  return tokens.popParams().map((t2) => ParamType.from(t2, allowIndexed));
 }
 function consumeGas(tokens) {
   if (tokens.peekType("AT")) {
@@ -47577,7 +47577,7 @@ var ParamType = class _ParamType {
         result2.indexed = this.indexed;
       }
       if (this.isTuple()) {
-        result2.components = this.components.map((c2) => JSON.parse(c2.format(format)));
+        result2.components = this.components.map((c4) => JSON.parse(c4.format(format)));
       }
       return JSON.stringify(result2);
     }
@@ -47652,7 +47652,7 @@ var ParamType = class _ParamType {
         throw new Error("array is wrong length");
       }
       const _this = this;
-      return value2.map((v, i) => _this.components[i].walk(v, process2));
+      return value2.map((v, i2) => _this.components[i2].walk(v, process2));
     }
     return process2(this.type, value2);
   }
@@ -47752,8 +47752,8 @@ var ParamType = class _ParamType {
       let comps = null;
       if (consumeKeywords(obj, setify(["tuple"])).has("tuple") || obj.peekType("OPEN_PAREN")) {
         baseType = "tuple";
-        comps = obj.popParams().map((t) => _ParamType.from(t));
-        type2 = `tuple(${comps.map((c2) => c2.format()).join(",")})`;
+        comps = obj.popParams().map((t2) => _ParamType.from(t2));
+        type2 = `tuple(${comps.map((c4) => c4.format()).join(",")})`;
       } else {
         type2 = verifyBasicType(obj.popType("TYPE"));
         baseType = type2;
@@ -47806,7 +47806,7 @@ var ParamType = class _ParamType {
       "("
       /* fix: ) */
     )) {
-      const comps = obj.components != null ? obj.components.map((c2) => _ParamType.from(c2)) : null;
+      const comps = obj.components != null ? obj.components.map((c4) => _ParamType.from(c4)) : null;
       const tuple2 = new _ParamType(_guard4, name || "", type, "tuple", indexed, comps, null, null);
       return tuple2;
     }
@@ -48028,7 +48028,7 @@ var EventFragment = class _EventFragment extends NamedFragment {
         type: "event",
         anonymous: this.anonymous,
         name: this.name,
-        inputs: this.inputs.map((i) => JSON.parse(i.format(format)))
+        inputs: this.inputs.map((i2) => JSON.parse(i2.format(format)))
       });
     }
     const result = [];
@@ -48107,7 +48107,7 @@ var ConstructorFragment = class _ConstructorFragment extends Fragment {
         stateMutability: this.payable ? "payable" : "undefined",
         payable: this.payable,
         gas: this.gas != null ? this.gas : void 0,
-        inputs: this.inputs.map((i) => JSON.parse(i.format(format)))
+        inputs: this.inputs.map((i2) => JSON.parse(i2.format(format)))
       });
     }
     const result = [`constructor${joinParams(format, this.inputs)}`];
@@ -48198,7 +48198,7 @@ var FallbackFragment = class _FallbackFragment extends Fragment {
       }
       let inputs2 = consumeParams(obj);
       if (inputs2.length) {
-        assertArgument(inputs2.length === 1 && inputs2[0].type === "bytes", "invalid fallback inputs", "obj.inputs", inputs2.map((i) => i.format("minimal")).join(", "));
+        assertArgument(inputs2.length === 1 && inputs2[0].type === "bytes", "invalid fallback inputs", "obj.inputs", inputs2.map((i2) => i2.format("minimal")).join(", "));
       } else {
         inputs2 = [ParamType.from("bytes")];
       }
@@ -48206,7 +48206,7 @@ var FallbackFragment = class _FallbackFragment extends Fragment {
       assertArgument(mutability === "nonpayable" || mutability === "payable", "fallback cannot be constants", "obj.stateMutability", mutability);
       if (consumeKeywords(obj, setify(["returns"])).has("returns")) {
         const outputs2 = consumeParams(obj);
-        assertArgument(outputs2.length === 1 && outputs2[0].type === "bytes", "invalid fallback outputs", "obj.outputs", outputs2.map((i) => i.format("minimal")).join(", "));
+        assertArgument(outputs2.length === 1 && outputs2[0].type === "bytes", "invalid fallback outputs", "obj.outputs", outputs2.map((i2) => i2.format("minimal")).join(", "));
       }
       consumeEoi(obj);
       return new _FallbackFragment(_guard4, inputs2, mutability === "payable");
@@ -48283,7 +48283,7 @@ var FunctionFragment = class _FunctionFragment extends NamedFragment {
         stateMutability: this.stateMutability !== "nonpayable" ? this.stateMutability : void 0,
         payable: this.payable,
         gas: this.gas != null ? this.gas : void 0,
-        inputs: this.inputs.map((i) => JSON.parse(i.format(format))),
+        inputs: this.inputs.map((i2) => JSON.parse(i2.format(format))),
         outputs: this.outputs.map((o) => JSON.parse(o.format(format)))
       });
     }
@@ -48487,7 +48487,7 @@ var AbiCoder = class _AbiCoder {
       return new ArrayCoder(this.#getCoder(param.arrayChildren), param.arrayLength, param.name);
     }
     if (param.isTuple()) {
-      return new TupleCoder(param.components.map((c2) => this.#getCoder(c2)), param.name);
+      return new TupleCoder(param.components.map((c4) => this.#getCoder(c4)), param.name);
     }
     switch (param.baseType) {
       case "address":
@@ -48781,11 +48781,11 @@ var Interface = class _Interface {
     this.#errors = /* @__PURE__ */ new Map();
     this.#events = /* @__PURE__ */ new Map();
     const frags = [];
-    for (const a of abi) {
+    for (const a2 of abi) {
       try {
-        frags.push(Fragment.from(a));
+        frags.push(Fragment.from(a2));
       } catch (error) {
-        console.log(`[Warning] Invalid Fragment ${JSON.stringify(a)}:`, error.message);
+        console.log(`[Warning] Invalid Fragment ${JSON.stringify(a2)}:`, error.message);
       }
     }
     defineProperties(this, {
@@ -48892,14 +48892,14 @@ var Interface = class _Interface {
           allowOptions = false;
           valueLength--;
         }
-        for (let i = matching.length - 1; i >= 0; i--) {
-          const inputs2 = matching[i].inputs.length;
+        for (let i2 = matching.length - 1; i2 >= 0; i2--) {
+          const inputs2 = matching[i2].inputs.length;
           if (inputs2 !== valueLength && (!allowOptions || inputs2 !== valueLength - 1)) {
-            matching.splice(i, 1);
+            matching.splice(i2, 1);
           }
         }
-        for (let i = matching.length - 1; i >= 0; i--) {
-          const inputs2 = matching[i].inputs;
+        for (let i2 = matching.length - 1; i2 >= 0; i2--) {
+          const inputs2 = matching[i2].inputs;
           for (let j = 0; j < values.length; j++) {
             if (!Typed.isTyped(values[j])) {
               continue;
@@ -48908,11 +48908,11 @@ var Interface = class _Interface {
               if (values[j].type === "overrides") {
                 continue;
               }
-              matching.splice(i, 1);
+              matching.splice(i2, 1);
               break;
             }
             if (values[j].type !== inputs2[j].baseType) {
-              matching.splice(i, 1);
+              matching.splice(i2, 1);
               break;
             }
           }
@@ -48976,10 +48976,10 @@ var Interface = class _Interface {
    */
   forEachFunction(callback) {
     const names2 = Array.from(this.#functions.keys());
-    names2.sort((a, b2) => a.localeCompare(b2));
-    for (let i = 0; i < names2.length; i++) {
-      const name = names2[i];
-      callback(this.#functions.get(name), i);
+    names2.sort((a2, b2) => a2.localeCompare(b2));
+    for (let i2 = 0; i2 < names2.length; i2++) {
+      const name = names2[i2];
+      callback(this.#functions.get(name), i2);
     }
   }
   // Find an event definition by any means necessary (unless it is ambiguous)
@@ -49004,19 +49004,19 @@ var Interface = class _Interface {
         }
       }
       if (values) {
-        for (let i = matching.length - 1; i >= 0; i--) {
-          if (matching[i].inputs.length < values.length) {
-            matching.splice(i, 1);
+        for (let i2 = matching.length - 1; i2 >= 0; i2--) {
+          if (matching[i2].inputs.length < values.length) {
+            matching.splice(i2, 1);
           }
         }
-        for (let i = matching.length - 1; i >= 0; i--) {
-          const inputs2 = matching[i].inputs;
+        for (let i2 = matching.length - 1; i2 >= 0; i2--) {
+          const inputs2 = matching[i2].inputs;
           for (let j = 0; j < values.length; j++) {
             if (!Typed.isTyped(values[j])) {
               continue;
             }
             if (values[j].type !== inputs2[j].baseType) {
-              matching.splice(i, 1);
+              matching.splice(i2, 1);
               break;
             }
           }
@@ -49074,10 +49074,10 @@ var Interface = class _Interface {
    */
   forEachEvent(callback) {
     const names2 = Array.from(this.#events.keys());
-    names2.sort((a, b2) => a.localeCompare(b2));
-    for (let i = 0; i < names2.length; i++) {
-      const name = names2[i];
-      callback(this.#events.get(name), i);
+    names2.sort((a2, b2) => a2.localeCompare(b2));
+    for (let i2 = 0; i2 < names2.length; i2++) {
+      const name = names2[i2];
+      callback(this.#events.get(name), i2);
     }
   }
   /**
@@ -49145,10 +49145,10 @@ var Interface = class _Interface {
    */
   forEachError(callback) {
     const names2 = Array.from(this.#errors.keys());
-    names2.sort((a, b2) => a.localeCompare(b2));
-    for (let i = 0; i < names2.length; i++) {
-      const name = names2[i];
-      callback(this.#errors.get(name), i);
+    names2.sort((a2, b2) => a2.localeCompare(b2));
+    for (let i2 = 0; i2 < names2.length; i2++) {
+      const name = names2[i2];
+      callback(this.#errors.get(name), i2);
     }
   }
   // Get the 4-byte selector used by Solidity to identify a function
@@ -49818,8 +49818,8 @@ var Block = class {
    *  This should generally not be necessary as the unless implementing a
    *  low-level library.
    */
-  constructor(block, provider2) {
-    this.#transactions = block.transactions.map((tx) => {
+  constructor(block2, provider2) {
+    this.#transactions = block2.transactions.map((tx) => {
       if (typeof tx !== "string") {
         return new TransactionResponse(tx, provider2);
       }
@@ -49827,24 +49827,24 @@ var Block = class {
     });
     defineProperties(this, {
       provider: provider2,
-      hash: getValue2(block.hash),
-      number: block.number,
-      timestamp: block.timestamp,
-      parentHash: block.parentHash,
-      parentBeaconBlockRoot: block.parentBeaconBlockRoot,
-      nonce: block.nonce,
-      difficulty: block.difficulty,
-      gasLimit: block.gasLimit,
-      gasUsed: block.gasUsed,
-      blobGasUsed: block.blobGasUsed,
-      excessBlobGas: block.excessBlobGas,
-      miner: block.miner,
-      prevRandao: getValue2(block.prevRandao),
-      extraData: block.extraData,
-      baseFeePerGas: getValue2(block.baseFeePerGas),
-      stateRoot: block.stateRoot,
-      receiptsRoot: block.receiptsRoot,
-      transactionsRoot: block.transactionsRoot
+      hash: getValue2(block2.hash),
+      number: block2.number,
+      timestamp: block2.timestamp,
+      parentHash: block2.parentHash,
+      parentBeaconBlockRoot: block2.parentBeaconBlockRoot,
+      nonce: block2.nonce,
+      difficulty: block2.difficulty,
+      gasLimit: block2.gasLimit,
+      gasUsed: block2.gasUsed,
+      blobGasUsed: block2.blobGasUsed,
+      excessBlobGas: block2.excessBlobGas,
+      miner: block2.miner,
+      prevRandao: getValue2(block2.prevRandao),
+      extraData: block2.extraData,
+      baseFeePerGas: getValue2(block2.baseFeePerGas),
+      stateRoot: block2.stateRoot,
+      receiptsRoot: block2.receiptsRoot,
+      transactionsRoot: block2.transactionsRoot
     });
   }
   /**
@@ -50106,9 +50106,9 @@ var Log = class {
    *  Returns the block that this log occurred in.
    */
   async getBlock() {
-    const block = await this.provider.getBlock(this.blockHash);
-    assert(!!block, "failed to find transaction", "UNKNOWN_ERROR", {});
-    return block;
+    const block2 = await this.provider.getBlock(this.blockHash);
+    assert(!!block2, "failed to find transaction", "UNKNOWN_ERROR", {});
+    return block2;
   }
   /**
    *  Returns the transaction that this log occurred in.
@@ -50337,11 +50337,11 @@ var TransactionReceipt = class {
    *  Resolves to the block this transaction occurred in.
    */
   async getBlock() {
-    const block = await this.provider.getBlock(this.blockHash);
-    if (block == null) {
+    const block2 = await this.provider.getBlock(this.blockHash);
+    if (block2 == null) {
       throw new Error("TODO");
     }
-    return block;
+    return block2;
   }
   /**
    *  Resolves to the transaction this transaction occurred in.
@@ -50573,11 +50573,11 @@ var TransactionResponse = class _TransactionResponse {
     if (blockNumber == null) {
       return null;
     }
-    const block = this.provider.getBlock(blockNumber);
-    if (block == null) {
+    const block2 = this.provider.getBlock(blockNumber);
+    if (block2 == null) {
       throw new Error("TODO");
     }
-    return block;
+    return block2;
   }
   /**
    *  Resolves to this transaction being re-requested from the
@@ -50648,17 +50648,17 @@ var TransactionResponse = class _TransactionResponse {
         if (stopScanning) {
           return null;
         }
-        const block = await this.provider.getBlock(nextScan, true);
-        if (block == null) {
+        const block2 = await this.provider.getBlock(nextScan, true);
+        if (block2 == null) {
           return;
         }
-        for (const hash2 of block) {
+        for (const hash2 of block2) {
           if (hash2 === this.hash) {
             return;
           }
         }
-        for (let i = 0; i < block.length; i++) {
-          const tx = await block.getTransaction(i);
+        for (let i2 = 0; i2 < block2.length; i2++) {
+          const tx = await block2.getTransaction(i2);
           if (tx.from === this.from && tx.nonce === this.nonce) {
             if (stopScanning) {
               return null;
@@ -50725,7 +50725,7 @@ var TransactionResponse = class _TransactionResponse {
     const waiter = new Promise((resolve, reject) => {
       const cancellers = [];
       const cancel = () => {
-        cancellers.forEach((c2) => c2());
+        cancellers.forEach((c4) => c4());
       };
       cancellers.push(() => {
         stopScanning = true;
@@ -50860,8 +50860,8 @@ var TransactionResponse = class _TransactionResponse {
     return tx;
   }
 };
-function createOrphanedBlockFilter(block) {
-  return { orphan: "drop-block", hash: block.hash, number: block.number };
+function createOrphanedBlockFilter(block2) {
+  return { orphan: "drop-block", hash: block2.hash, number: block2.number };
 }
 function createReorderedTransactionFilter(tx, other) {
   return { orphan: "reorder-transaction", tx, other };
@@ -51368,28 +51368,28 @@ async function getSubInfo(contract, event) {
   } else {
     assertArgument(false, "unknown event name", "event", event);
   }
-  topics = topics.map((t) => {
-    if (t == null) {
+  topics = topics.map((t2) => {
+    if (t2 == null) {
       return null;
     }
-    if (Array.isArray(t)) {
-      const items = Array.from(new Set(t.map((t2) => t2.toLowerCase())).values());
+    if (Array.isArray(t2)) {
+      const items = Array.from(new Set(t2.map((t3) => t3.toLowerCase())).values());
       if (items.length === 1) {
         return items[0];
       }
       items.sort();
       return items;
     }
-    return t.toLowerCase();
+    return t2.toLowerCase();
   });
-  const tag = topics.map((t) => {
-    if (t == null) {
+  const tag = topics.map((t2) => {
+    if (t2 == null) {
       return "null";
     }
-    if (Array.isArray(t)) {
-      return t.join("|");
+    if (Array.isArray(t2)) {
+      return t2.join("|");
     }
-    return t;
+    return t2;
   }).join("&");
   return { fragment, tag, topics };
 }
@@ -52176,8 +52176,8 @@ var EnsResolver = class _EnsResolver {
         return { url: null, linkage };
       }
       linkage.push({ type: "avatar", value: avatar });
-      for (let i = 0; i < matchers.length; i++) {
-        const match = avatar.match(matchers[i]);
+      for (let i2 = 0; i2 < matchers.length; i2++) {
+        const match = avatar.match(matchers[i2]);
         if (match == null) {
           continue;
         }
@@ -52447,7 +52447,7 @@ function arrayOf(format, allowNull2) {
     if (!Array.isArray(array2)) {
       throw new Error("not an array");
     }
-    return array2.map((i) => format(i));
+    return array2.map((i2) => format(i2));
   });
 }
 function object(format, altNames) {
@@ -52975,8 +52975,8 @@ var Network = class _Network {
       gas += costs.txCreate;
     }
     if (tx.data) {
-      for (let i = 2; i < tx.data.length; i += 2) {
-        if (tx.data.substring(i, i + 2) === "00") {
+      for (let i2 = 2; i2 < tx.data.length; i2 += 2) {
+        if (tx.data.substring(i2, i2 + 2) === "00") {
           gas += costs.txDataZero;
         } else {
           gas += costs.txDataNonzero;
@@ -53019,9 +53019,9 @@ var Network = class _Network {
     if (typeof network === "object") {
       assertArgument(typeof network.name === "string" && typeof network.chainId === "number", "invalid network object name or chainId", "network", network);
       const custom2 = new _Network(network.name, network.chainId);
-      const n2 = network;
-      if (n2.ensAddress || n2.ensNetwork != null || n2.ensUniversalResolver) {
-        custom2.attachPlugin(new EnsPlugin(n2.ensAddress, n2.ensNetwork, n2.ensUniversalResolver));
+      const n4 = network;
+      if (n4.ensAddress || n4.ensNetwork != null || n4.ensUniversalResolver) {
+        custom2.attachPlugin(new EnsPlugin(n4.ensAddress, n4.ensNetwork, n4.ensUniversalResolver));
       }
       return custom2;
     }
@@ -53301,15 +53301,15 @@ var PollingBlockTagSubscriber = class extends OnBlockSubscriber {
     super.pause(dropWhilePaused);
   }
   async _poll(blockNumber, provider2) {
-    const block = await provider2.getBlock(this.#tag);
-    if (block == null) {
+    const block2 = await provider2.getBlock(this.#tag);
+    if (block2 == null) {
       return;
     }
     if (this.#lastBlock === -2) {
-      this.#lastBlock = block.number;
-    } else if (block.number > this.#lastBlock) {
-      provider2.emit(this.#tag, block.number);
-      this.#lastBlock = block.number;
+      this.#lastBlock = block2.number;
+    } else if (block2.number > this.#lastBlock) {
+      provider2.emit(this.#tag, block2.number);
+      this.#lastBlock = block2.number;
     }
   }
 };
@@ -53501,14 +53501,14 @@ async function getSubscription(_event, provider2) {
   if (_event.address || _event.topics) {
     const event = _event;
     const filter = {
-      topics: (event.topics || []).map((t) => {
-        if (t == null) {
+      topics: (event.topics || []).map((t2) => {
+        if (t2 == null) {
           return null;
         }
-        if (Array.isArray(t)) {
-          return concisify(t.map((t2) => t2.toLowerCase()));
+        if (Array.isArray(t2)) {
+          return concisify(t2.map((t3) => t3.toLowerCase()));
         }
-        return t.toLowerCase();
+        return t2.toLowerCase();
       })
     };
     if (event.address) {
@@ -53531,7 +53531,7 @@ async function getSubscription(_event, provider2) {
       if (promises.length) {
         await Promise.all(promises);
       }
-      filter.address = concisify(addresses.map((a) => a.toLowerCase()));
+      filter.address = concisify(addresses.map((a2) => a2.toLowerCase()));
     }
     return { filter, tag: getTag("event", filter), type: "event" };
   }
@@ -53706,14 +53706,14 @@ var AbstractProvider = class {
     const sender = tx.to.toLowerCase();
     const data = calldata.toLowerCase();
     const errorMessages = [];
-    for (let i = 0; i < urls.length; i++) {
-      const url = urls[i];
+    for (let i2 = 0; i2 < urls.length; i2++) {
+      const url = urls[i2];
       const href = url.replace("{sender}", sender).replace("{data}", data);
       const request = new FetchRequest(href);
       if (url.indexOf("{data}") === -1) {
         request.body = { data, sender };
       }
-      this.emit("debug", { action: "sendCcipReadFetchRequest", request, index: i, urls });
+      this.emit("debug", { action: "sendCcipReadFetchRequest", request, index: i2, urls });
       let errorMessage = "unknown error";
       let resp;
       try {
@@ -53858,14 +53858,14 @@ var AbstractProvider = class {
    *  filter.
    */
   _getFilter(filter) {
-    const topics = (filter.topics || []).map((t) => {
-      if (t == null) {
+    const topics = (filter.topics || []).map((t2) => {
+      if (t2 == null) {
         return null;
       }
-      if (Array.isArray(t)) {
-        return concisify(t.map((t2) => t2.toLowerCase()));
+      if (Array.isArray(t2)) {
+        return concisify(t2.map((t3) => t3.toLowerCase()));
       }
-      return t.toLowerCase();
+      return t2.toLowerCase();
     });
     const blockHash = "blockHash" in filter ? filter.blockHash : void 0;
     const resolve = (_address, fromBlock2, toBlock2) => {
@@ -53921,7 +53921,7 @@ var AbstractProvider = class {
     if ("toBlock" in filter) {
       toBlock = this._getBlockTag(filter.toBlock);
     }
-    if (address.filter((a) => typeof a !== "string").length || fromBlock != null && typeof fromBlock !== "string" || toBlock != null && typeof toBlock !== "string") {
+    if (address.filter((a2) => typeof a2 !== "string").length || fromBlock != null && typeof fromBlock !== "string" || toBlock != null && typeof toBlock !== "string") {
       return Promise.all([Promise.all(address), fromBlock, toBlock]).then((result) => {
         return resolve(result[0], result[1], result[2]);
       });
@@ -54028,10 +54028,10 @@ var AbstractProvider = class {
       });
       let maxFeePerGas = null;
       let maxPriorityFeePerGas = null;
-      const block = this._wrapBlock(_block, network);
-      if (block && block.baseFeePerGas) {
+      const block2 = this._wrapBlock(_block, network);
+      if (block2 && block2.baseFeePerGas) {
         maxPriorityFeePerGas = priorityFee != null ? priorityFee : BigInt("1000000000");
-        maxFeePerGas = block.baseFeePerGas * BN_23 + maxPriorityFeePerGas;
+        maxFeePerGas = block2.baseFeePerGas * BN_23 + maxPriorityFeePerGas;
       }
       return new FeeData(gasPrice, maxFeePerGas, maxPriorityFeePerGas);
     };
@@ -54166,15 +54166,15 @@ var AbstractProvider = class {
     }
     return this._wrapTransactionResponse(tx, network).replaceableTransaction(blockNumber);
   }
-  async #getBlock(block, includeTransactions) {
-    if (isHexString(block, 32)) {
+  async #getBlock(block2, includeTransactions) {
+    if (isHexString(block2, 32)) {
       return await this.#perform({
         method: "getBlock",
-        blockHash: block,
+        blockHash: block2,
         includeTransactions
       });
     }
-    let blockTag = this._getBlockTag(block);
+    let blockTag = this._getBlockTag(block2);
     if (typeof blockTag !== "string") {
       blockTag = await blockTag;
     }
@@ -54185,10 +54185,10 @@ var AbstractProvider = class {
     });
   }
   // Queries
-  async getBlock(block, prefetchTxs) {
+  async getBlock(block2, prefetchTxs) {
     const { network, params } = await resolveProperties({
       network: this.getNetwork(),
-      params: this.#getBlock(block, !!prefetchTxs)
+      params: this.#getBlock(block2, !!prefetchTxs)
     });
     if (params == null) {
       return null;
@@ -54684,13 +54684,13 @@ var empty = new Uint8Array([]);
 function encodeBytes(datas) {
   const result = [];
   let byteCount = 0;
-  for (let i = 0; i < datas.length; i++) {
+  for (let i2 = 0; i2 < datas.length; i2++) {
     result.push(empty);
     byteCount += 32;
   }
-  for (let i = 0; i < datas.length; i++) {
-    const data = getBytes(datas[i]);
-    result[i] = numPad(byteCount);
+  for (let i2 = 0; i2 < datas.length; i2++) {
+    const data = getBytes(datas[i2]);
+    result[i2] = numPad(byteCount);
     result.push(numPad(data.length));
     result.push(bytesPad(data));
     byteCount += 32 + Math.ceil(data.length / 32) * 32;
@@ -54720,8 +54720,8 @@ function parseOffchainLookup(data) {
     const urlsOffset = getNumber(dataSlice(data, 32, 64));
     const urlsLength = getNumber(dataSlice(data, urlsOffset, urlsOffset + 32));
     const urlsData = dataSlice(data, urlsOffset + 32);
-    for (let u = 0; u < urlsLength; u++) {
-      const url = _parseString(urlsData, u * 32);
+    for (let u3 = 0; u3 < urlsLength; u3++) {
+      const url = _parseString(urlsData, u3 * 32);
       if (url == null) {
         throw new Error("abort");
       }
@@ -55266,10 +55266,10 @@ var JsonRpcSigner = class extends AbstractSigner {
       JSON.stringify(TypedDataEncoder.getPayload(populated.domain, types, populated.value))
     ]);
   }
-  async unlock(password) {
+  async unlock(password2) {
     return this.provider.send("personal_unlockAccount", [
       this.address.toLowerCase(),
-      password,
+      password2,
       null
     ]);
   }
@@ -55325,7 +55325,7 @@ var JsonRpcApiProvider = class extends AbstractProvider {
                 reject(makeError("provider destroyed; cancelled request", "UNSUPPORTED_OPERATION", { operation: payload2.method }));
                 continue;
               }
-              const resp = result.filter((r) => r.id === payload2.id)[0];
+              const resp = result.filter((r2) => r2.id === payload2.id)[0];
               if (resp == null) {
                 const error = makeError("missing response for request", "BAD_DATA", {
                   value: result,
@@ -55572,18 +55572,18 @@ var JsonRpcApiProvider = class extends AbstractProvider {
       result["accessList"] = accessListify(tx.accessList);
     }
     if (tx.blobVersionedHashes) {
-      result["blobVersionedHashes"] = tx.blobVersionedHashes.map((h) => h.toLowerCase());
+      result["blobVersionedHashes"] = tx.blobVersionedHashes.map((h2) => h2.toLowerCase());
     }
     if (tx.authorizationList) {
       result["authorizationList"] = tx.authorizationList.map((_a) => {
-        const a = authorizationify(_a);
+        const a2 = authorizationify(_a);
         return {
-          address: a.address,
-          nonce: toQuantity(a.nonce),
-          chainId: toQuantity(a.chainId),
-          yParity: toQuantity(a.signature.yParity),
-          r: toQuantity(a.signature.r),
-          s: toQuantity(a.signature.s)
+          address: a2.address,
+          nonce: toQuantity(a2.nonce),
+          chainId: toQuantity(a2.chainId),
+          yParity: toQuantity(a2.signature.yParity),
+          r: toQuantity(a2.signature.r),
+          s: toQuantity(a2.signature.s)
         };
       });
     }
@@ -55825,7 +55825,7 @@ var JsonRpcApiProvider = class extends AbstractProvider {
   }
   async listAccounts() {
     const accounts = await this.send("eth_accounts", []);
-    return accounts.map((a) => new JsonRpcSigner(this, a));
+    return accounts.map((a2) => new JsonRpcSigner(this, a2));
   }
   destroy() {
     if (this.#drainTimer) {
@@ -56083,13 +56083,13 @@ function unfold(words2, sep) {
   }, []);
 }
 function decode(data, subs) {
-  for (let i = subsChrs.length - 1; i >= 0; i--) {
-    data = data.split(subsChrs[i]).join(subs.substring(2 * i, 2 * i + 2));
+  for (let i2 = subsChrs.length - 1; i2 >= 0; i2--) {
+    data = data.split(subsChrs[i2]).join(subs.substring(2 * i2, 2 * i2 + 2));
   }
   const clumps = [];
   const leftover = data.replace(/(:|([0-9])|([A-Z][a-z]*))/g, (all, item, semi, word) => {
     if (semi) {
-      for (let i = parseInt(semi); i >= 0; i--) {
+      for (let i2 = parseInt(semi); i2 >= 0; i2--) {
         clumps.push(";");
       }
     } else {
@@ -56236,9 +56236,9 @@ function mnemonicToEntropy(mnemonic, wordlist3) {
   assertArgument(words2.length % 3 === 0 && words2.length >= 12 && words2.length <= 24, "invalid mnemonic length", "mnemonic", "[ REDACTED ]");
   const entropy = new Uint8Array(Math.ceil(11 * words2.length / 8));
   let offset = 0;
-  for (let i = 0; i < words2.length; i++) {
-    let index = wordlist3.getWordIndex(words2[i].normalize("NFKD"));
-    assertArgument(index >= 0, `invalid mnemonic word at index ${i}`, "mnemonic", "[ REDACTED ]");
+  for (let i2 = 0; i2 < words2.length; i2++) {
+    let index = wordlist3.getWordIndex(words2[i2].normalize("NFKD"));
+    assertArgument(index >= 0, `invalid mnemonic word at index ${i2}`, "mnemonic", "[ REDACTED ]");
     for (let bit = 0; bit < 11; bit++) {
       if (index & 1 << 10 - bit) {
         entropy[offset >> 3] |= 1 << 7 - offset % 8;
@@ -56260,15 +56260,15 @@ function entropyToMnemonic(entropy, wordlist3) {
   }
   const indices = [0];
   let remainingBits = 11;
-  for (let i = 0; i < entropy.length; i++) {
+  for (let i2 = 0; i2 < entropy.length; i2++) {
     if (remainingBits > 8) {
       indices[indices.length - 1] <<= 8;
-      indices[indices.length - 1] |= entropy[i];
+      indices[indices.length - 1] |= entropy[i2];
       remainingBits -= 8;
     } else {
       indices[indices.length - 1] <<= remainingBits;
-      indices[indices.length - 1] |= entropy[i] >> 8 - remainingBits;
-      indices.push(entropy[i] & getLowerMask(8 - remainingBits));
+      indices[indices.length - 1] |= entropy[i2] >> 8 - remainingBits;
+      indices.push(entropy[i2] & getLowerMask(8 - remainingBits));
       remainingBits += 3;
     }
   }
@@ -56302,15 +56302,15 @@ var Mnemonic = class _Mnemonic {
   /**
    *  @private
    */
-  constructor(guard, entropy, phrase, password, wordlist3) {
-    if (password == null) {
-      password = "";
+  constructor(guard, entropy, phrase, password2, wordlist3) {
+    if (password2 == null) {
+      password2 = "";
     }
     if (wordlist3 == null) {
       wordlist3 = LangEn.wordlist();
     }
     assertPrivate(guard, _guard5, "Mnemonic");
-    defineProperties(this, { phrase, password, wordlist: wordlist3, entropy });
+    defineProperties(this, { phrase, password: password2, wordlist: wordlist3, entropy });
   }
   /**
    *  Returns the seed for the mnemonic.
@@ -56325,10 +56325,10 @@ var Mnemonic = class _Mnemonic {
    *  The default %%password%% is the empty string and the default
    *  wordlist is the [English wordlists](LangEn).
    */
-  static fromPhrase(phrase, password, wordlist3) {
+  static fromPhrase(phrase, password2, wordlist3) {
     const entropy = mnemonicToEntropy(phrase, wordlist3);
     phrase = entropyToMnemonic(getBytes(entropy), wordlist3);
-    return new _Mnemonic(_guard5, entropy, phrase, password, wordlist3);
+    return new _Mnemonic(_guard5, entropy, phrase, password2, wordlist3);
   }
   /**
    *  Create a new **Mnemonic** from the %%entropy%%.
@@ -56336,10 +56336,10 @@ var Mnemonic = class _Mnemonic {
    *  The default %%password%% is the empty string and the default
    *  wordlist is the [English wordlists](LangEn).
    */
-  static fromEntropy(_entropy, password, wordlist3) {
+  static fromEntropy(_entropy, password2, wordlist3) {
     const entropy = getBytes(_entropy, "entropy");
     const phrase = entropyToMnemonic(entropy, wordlist3);
-    return new _Mnemonic(_guard5, hexlify(entropy), phrase, password, wordlist3);
+    return new _Mnemonic(_guard5, hexlify(entropy), phrase, password2, wordlist3);
   }
   /**
    *  Returns the phrase for %%mnemonic%%.
@@ -56403,8 +56403,8 @@ var U3 = [0, 218828297, 437656594, 387781147, 875313188, 958871085, 775562294, 5
 var U4 = [0, 151849742, 303699484, 454499602, 607398968, 758720310, 908999204, 1059270954, 1214797936, 1097159550, 1517440620, 1400849762, 1817998408, 1699839814, 2118541908, 2001430874, 2429595872, 2581445614, 2194319100, 2345119218, 3034881240, 3186202582, 2801699524, 2951971274, 3635996816, 3518358430, 3399679628, 3283088770, 4237083816, 4118925222, 4002861748, 3885750714, 1002142683, 850817237, 698445255, 548169417, 529487843, 377642221, 227885567, 77089521, 1943217067, 2061379749, 1640576439, 1757691577, 1474760595, 1592394909, 1174215055, 1290801793, 2875968315, 2724642869, 3111247143, 2960971305, 2405426947, 2253581325, 2638606623, 2487810577, 3808662347, 3926825029, 4044981591, 4162096729, 3342319475, 3459953789, 3576539503, 3693126241, 1986918061, 2137062819, 1685577905, 1836772287, 1381620373, 1532285339, 1078185097, 1229899655, 1040559837, 923313619, 740276417, 621982671, 439452389, 322734571, 137073913, 19308535, 3871163981, 4021308739, 4104605777, 4255800159, 3263785589, 3414450555, 3499326569, 3651041127, 2933202493, 2815956275, 3167684641, 3049390895, 2330014213, 2213296395, 2566595609, 2448830231, 1305906550, 1155237496, 1607244650, 1455525988, 1776460110, 1626319424, 2079897426, 1928707164, 96392454, 213114376, 396673818, 514443284, 562755902, 679998e3, 865136418, 983426092, 3708173718, 3557504664, 3474729866, 3323011204, 4180808110, 4030667424, 3945269170, 3794078908, 2507040230, 2623762152, 2272556026, 2390325492, 2975484382, 3092726480, 2738905026, 2857194700, 3973773121, 3856137295, 4274053469, 4157467219, 3371096953, 3252932727, 3673476453, 3556361835, 2763173681, 2915017791, 3064510765, 3215307299, 2156299017, 2307622919, 2459735317, 2610011675, 2081048481, 1963412655, 1846563261, 1729977011, 1480485785, 1362321559, 1243905413, 1126790795, 878845905, 1030690015, 645401037, 796197571, 274084841, 425408743, 38544885, 188821243, 3613494426, 3731654548, 3313212038, 3430322568, 4082475170, 4200115116, 3780097726, 3896688048, 2668221674, 2516901860, 2366882550, 2216610296, 3141400786, 2989552604, 2837966542, 2687165888, 1202797690, 1320957812, 1437280870, 1554391400, 1669664834, 1787304780, 1906247262, 2022837584, 265905162, 114585348, 499347990, 349075736, 736970802, 585122620, 972512814, 821712160, 2595684844, 2478443234, 2293045232, 2174754046, 3196267988, 3079546586, 2895723464, 2777952454, 3537852828, 3687994002, 3234156416, 3385345166, 4142626212, 4293295786, 3841024952, 3992742070, 174567692, 57326082, 410887952, 292596766, 777231668, 660510266, 1011452712, 893681702, 1108339068, 1258480242, 1343618912, 1494807662, 1715193156, 1865862730, 1948373848, 2100090966, 2701949495, 2818666809, 3004591147, 3122358053, 2235061775, 2352307457, 2535604243, 2653899549, 3915653703, 3764988233, 4219352155, 4067639125, 3444575871, 3294430577, 3746175075, 3594982253, 836553431, 953270745, 600235211, 718002117, 367585007, 484830689, 133361907, 251657213, 2041877159, 1891211689, 1806599355, 1654886325, 1568718495, 1418573201, 1335535747, 1184342925];
 function convertToInt32(bytes2) {
   const result = [];
-  for (let i = 0; i < bytes2.length; i += 4) {
-    result.push(bytes2[i] << 24 | bytes2[i + 1] << 16 | bytes2[i + 2] << 8 | bytes2[i + 3]);
+  for (let i2 = 0; i2 < bytes2.length; i2 += 4) {
+    result.push(bytes2[i2] << 24 | bytes2[i2 + 1] << 16 | bytes2[i2 + 2] << 8 | bytes2[i2 + 3]);
   }
   return result;
 }
@@ -56426,7 +56426,7 @@ var AES = class _AES {
     }
     __classPrivateFieldSet(this, _AES_Ke, [], "f");
     __classPrivateFieldSet(this, _AES_Kd, [], "f");
-    for (let i = 0; i <= rounds; i++) {
+    for (let i2 = 0; i2 <= rounds; i2++) {
       __classPrivateFieldGet(this, _AES_Ke, "f").push([0, 0, 0, 0]);
       __classPrivateFieldGet(this, _AES_Kd, "f").push([0, 0, 0, 0]);
     }
@@ -56434,44 +56434,44 @@ var AES = class _AES {
     const KC = this.key.length / 4;
     const tk = convertToInt32(this.key);
     let index;
-    for (let i = 0; i < KC; i++) {
-      index = i >> 2;
-      __classPrivateFieldGet(this, _AES_Ke, "f")[index][i % 4] = tk[i];
-      __classPrivateFieldGet(this, _AES_Kd, "f")[rounds - index][i % 4] = tk[i];
+    for (let i2 = 0; i2 < KC; i2++) {
+      index = i2 >> 2;
+      __classPrivateFieldGet(this, _AES_Ke, "f")[index][i2 % 4] = tk[i2];
+      __classPrivateFieldGet(this, _AES_Kd, "f")[rounds - index][i2 % 4] = tk[i2];
     }
     let rconpointer = 0;
-    let t = KC, tt;
-    while (t < roundKeyCount) {
+    let t2 = KC, tt;
+    while (t2 < roundKeyCount) {
       tt = tk[KC - 1];
       tk[0] ^= S[tt >> 16 & 255] << 24 ^ S[tt >> 8 & 255] << 16 ^ S[tt & 255] << 8 ^ S[tt >> 24 & 255] ^ rcon[rconpointer] << 24;
       rconpointer += 1;
       if (KC != 8) {
-        for (let i2 = 1; i2 < KC; i2++) {
-          tk[i2] ^= tk[i2 - 1];
+        for (let i3 = 1; i3 < KC; i3++) {
+          tk[i3] ^= tk[i3 - 1];
         }
       } else {
-        for (let i2 = 1; i2 < KC / 2; i2++) {
-          tk[i2] ^= tk[i2 - 1];
+        for (let i3 = 1; i3 < KC / 2; i3++) {
+          tk[i3] ^= tk[i3 - 1];
         }
         tt = tk[KC / 2 - 1];
         tk[KC / 2] ^= S[tt & 255] ^ S[tt >> 8 & 255] << 8 ^ S[tt >> 16 & 255] << 16 ^ S[tt >> 24 & 255] << 24;
-        for (let i2 = KC / 2 + 1; i2 < KC; i2++) {
-          tk[i2] ^= tk[i2 - 1];
+        for (let i3 = KC / 2 + 1; i3 < KC; i3++) {
+          tk[i3] ^= tk[i3 - 1];
         }
       }
-      let i = 0, r, c2;
-      while (i < KC && t < roundKeyCount) {
-        r = t >> 2;
-        c2 = t % 4;
-        __classPrivateFieldGet(this, _AES_Ke, "f")[r][c2] = tk[i];
-        __classPrivateFieldGet(this, _AES_Kd, "f")[rounds - r][c2] = tk[i++];
-        t++;
+      let i2 = 0, r2, c4;
+      while (i2 < KC && t2 < roundKeyCount) {
+        r2 = t2 >> 2;
+        c4 = t2 % 4;
+        __classPrivateFieldGet(this, _AES_Ke, "f")[r2][c4] = tk[i2];
+        __classPrivateFieldGet(this, _AES_Kd, "f")[rounds - r2][c4] = tk[i2++];
+        t2++;
       }
     }
-    for (let r = 1; r < rounds; r++) {
-      for (let c2 = 0; c2 < 4; c2++) {
-        tt = __classPrivateFieldGet(this, _AES_Kd, "f")[r][c2];
-        __classPrivateFieldGet(this, _AES_Kd, "f")[r][c2] = U1[tt >> 24 & 255] ^ U2[tt >> 16 & 255] ^ U3[tt >> 8 & 255] ^ U4[tt & 255];
+    for (let r2 = 1; r2 < rounds; r2++) {
+      for (let c4 = 0; c4 < 4; c4++) {
+        tt = __classPrivateFieldGet(this, _AES_Kd, "f")[r2][c4];
+        __classPrivateFieldGet(this, _AES_Kd, "f")[r2][c4] = U1[tt >> 24 & 255] ^ U2[tt >> 16 & 255] ^ U3[tt >> 8 & 255] ^ U4[tt & 255];
       }
     }
   }
@@ -56480,25 +56480,25 @@ var AES = class _AES {
       throw new TypeError("invalid plaintext size (must be 16 bytes)");
     }
     const rounds = __classPrivateFieldGet(this, _AES_Ke, "f").length - 1;
-    const a = [0, 0, 0, 0];
-    let t = convertToInt32(plaintext);
-    for (let i = 0; i < 4; i++) {
-      t[i] ^= __classPrivateFieldGet(this, _AES_Ke, "f")[0][i];
+    const a2 = [0, 0, 0, 0];
+    let t2 = convertToInt32(plaintext);
+    for (let i2 = 0; i2 < 4; i2++) {
+      t2[i2] ^= __classPrivateFieldGet(this, _AES_Ke, "f")[0][i2];
     }
-    for (let r = 1; r < rounds; r++) {
-      for (let i = 0; i < 4; i++) {
-        a[i] = T12[t[i] >> 24 & 255] ^ T2[t[(i + 1) % 4] >> 16 & 255] ^ T3[t[(i + 2) % 4] >> 8 & 255] ^ T4[t[(i + 3) % 4] & 255] ^ __classPrivateFieldGet(this, _AES_Ke, "f")[r][i];
+    for (let r2 = 1; r2 < rounds; r2++) {
+      for (let i2 = 0; i2 < 4; i2++) {
+        a2[i2] = T12[t2[i2] >> 24 & 255] ^ T2[t2[(i2 + 1) % 4] >> 16 & 255] ^ T3[t2[(i2 + 2) % 4] >> 8 & 255] ^ T4[t2[(i2 + 3) % 4] & 255] ^ __classPrivateFieldGet(this, _AES_Ke, "f")[r2][i2];
       }
-      t = a.slice();
+      t2 = a2.slice();
     }
     const result = new Uint8Array(16);
     let tt = 0;
-    for (let i = 0; i < 4; i++) {
-      tt = __classPrivateFieldGet(this, _AES_Ke, "f")[rounds][i];
-      result[4 * i] = (S[t[i] >> 24 & 255] ^ tt >> 24) & 255;
-      result[4 * i + 1] = (S[t[(i + 1) % 4] >> 16 & 255] ^ tt >> 16) & 255;
-      result[4 * i + 2] = (S[t[(i + 2) % 4] >> 8 & 255] ^ tt >> 8) & 255;
-      result[4 * i + 3] = (S[t[(i + 3) % 4] & 255] ^ tt) & 255;
+    for (let i2 = 0; i2 < 4; i2++) {
+      tt = __classPrivateFieldGet(this, _AES_Ke, "f")[rounds][i2];
+      result[4 * i2] = (S[t2[i2] >> 24 & 255] ^ tt >> 24) & 255;
+      result[4 * i2 + 1] = (S[t2[(i2 + 1) % 4] >> 16 & 255] ^ tt >> 16) & 255;
+      result[4 * i2 + 2] = (S[t2[(i2 + 2) % 4] >> 8 & 255] ^ tt >> 8) & 255;
+      result[4 * i2 + 3] = (S[t2[(i2 + 3) % 4] & 255] ^ tt) & 255;
     }
     return result;
   }
@@ -56507,25 +56507,25 @@ var AES = class _AES {
       throw new TypeError("invalid ciphertext size (must be 16 bytes)");
     }
     const rounds = __classPrivateFieldGet(this, _AES_Kd, "f").length - 1;
-    const a = [0, 0, 0, 0];
-    let t = convertToInt32(ciphertext);
-    for (let i = 0; i < 4; i++) {
-      t[i] ^= __classPrivateFieldGet(this, _AES_Kd, "f")[0][i];
+    const a2 = [0, 0, 0, 0];
+    let t2 = convertToInt32(ciphertext);
+    for (let i2 = 0; i2 < 4; i2++) {
+      t2[i2] ^= __classPrivateFieldGet(this, _AES_Kd, "f")[0][i2];
     }
-    for (let r = 1; r < rounds; r++) {
-      for (let i = 0; i < 4; i++) {
-        a[i] = T5[t[i] >> 24 & 255] ^ T6[t[(i + 3) % 4] >> 16 & 255] ^ T7[t[(i + 2) % 4] >> 8 & 255] ^ T8[t[(i + 1) % 4] & 255] ^ __classPrivateFieldGet(this, _AES_Kd, "f")[r][i];
+    for (let r2 = 1; r2 < rounds; r2++) {
+      for (let i2 = 0; i2 < 4; i2++) {
+        a2[i2] = T5[t2[i2] >> 24 & 255] ^ T6[t2[(i2 + 3) % 4] >> 16 & 255] ^ T7[t2[(i2 + 2) % 4] >> 8 & 255] ^ T8[t2[(i2 + 1) % 4] & 255] ^ __classPrivateFieldGet(this, _AES_Kd, "f")[r2][i2];
       }
-      t = a.slice();
+      t2 = a2.slice();
     }
     const result = new Uint8Array(16);
     let tt = 0;
-    for (let i = 0; i < 4; i++) {
-      tt = __classPrivateFieldGet(this, _AES_Kd, "f")[rounds][i];
-      result[4 * i] = (Si[t[i] >> 24 & 255] ^ tt >> 24) & 255;
-      result[4 * i + 1] = (Si[t[(i + 3) % 4] >> 16 & 255] ^ tt >> 16) & 255;
-      result[4 * i + 2] = (Si[t[(i + 2) % 4] >> 8 & 255] ^ tt >> 8) & 255;
-      result[4 * i + 3] = (Si[t[(i + 1) % 4] & 255] ^ tt) & 255;
+    for (let i2 = 0; i2 < 4; i2++) {
+      tt = __classPrivateFieldGet(this, _AES_Kd, "f")[rounds][i2];
+      result[4 * i2] = (Si[t2[i2] >> 24 & 255] ^ tt >> 24) & 255;
+      result[4 * i2 + 1] = (Si[t2[(i2 + 3) % 4] >> 16 & 255] ^ tt >> 16) & 255;
+      result[4 * i2 + 2] = (Si[t2[(i2 + 2) % 4] >> 8 & 255] ^ tt >> 8) & 255;
+      result[4 * i2 + 3] = (Si[t2[(i2 + 1) % 4] & 255] ^ tt) & 255;
     }
     return result;
   }
@@ -56582,12 +56582,12 @@ var CBC = class _CBC extends ModeOfOperation {
       throw new TypeError("invalid plaintext size (must be multiple of 16 bytes)");
     }
     const ciphertext = new Uint8Array(plaintext.length);
-    for (let i = 0; i < plaintext.length; i += 16) {
+    for (let i2 = 0; i2 < plaintext.length; i2 += 16) {
       for (let j = 0; j < 16; j++) {
-        __classPrivateFieldGet2(this, _CBC_lastBlock, "f")[j] ^= plaintext[i + j];
+        __classPrivateFieldGet2(this, _CBC_lastBlock, "f")[j] ^= plaintext[i2 + j];
       }
       __classPrivateFieldSet2(this, _CBC_lastBlock, this.aes.encrypt(__classPrivateFieldGet2(this, _CBC_lastBlock, "f")), "f");
-      ciphertext.set(__classPrivateFieldGet2(this, _CBC_lastBlock, "f"), i);
+      ciphertext.set(__classPrivateFieldGet2(this, _CBC_lastBlock, "f"), i2);
     }
     return ciphertext;
   }
@@ -56596,11 +56596,11 @@ var CBC = class _CBC extends ModeOfOperation {
       throw new TypeError("invalid ciphertext size (must be multiple of 16 bytes)");
     }
     const plaintext = new Uint8Array(ciphertext.length);
-    for (let i = 0; i < ciphertext.length; i += 16) {
-      const block = this.aes.decrypt(ciphertext.subarray(i, i + 16));
+    for (let i2 = 0; i2 < ciphertext.length; i2 += 16) {
+      const block2 = this.aes.decrypt(ciphertext.subarray(i2, i2 + 16));
       for (let j = 0; j < 16; j++) {
-        plaintext[i + j] = block[j] ^ __classPrivateFieldGet2(this, _CBC_lastBlock, "f")[j];
-        __classPrivateFieldGet2(this, _CBC_lastBlock, "f")[j] = ciphertext[i + j];
+        plaintext[i2 + j] = block2[j] ^ __classPrivateFieldGet2(this, _CBC_lastBlock, "f")[j];
+        __classPrivateFieldGet2(this, _CBC_lastBlock, "f")[j] = ciphertext[i2 + j];
       }
     }
     return plaintext;
@@ -56677,11 +56677,11 @@ var CTR = class _CTR extends ModeOfOperation {
     __classPrivateFieldGet4(this, _CTR_counter, "f").set(value2);
   }
   increment() {
-    for (let i = 15; i >= 0; i--) {
-      if (__classPrivateFieldGet4(this, _CTR_counter, "f")[i] === 255) {
-        __classPrivateFieldGet4(this, _CTR_counter, "f")[i] = 0;
+    for (let i2 = 15; i2 >= 0; i2--) {
+      if (__classPrivateFieldGet4(this, _CTR_counter, "f")[i2] === 255) {
+        __classPrivateFieldGet4(this, _CTR_counter, "f")[i2] = 0;
       } else {
-        __classPrivateFieldGet4(this, _CTR_counter, "f")[i]++;
+        __classPrivateFieldGet4(this, _CTR_counter, "f")[i2]++;
         break;
       }
     }
@@ -56689,13 +56689,13 @@ var CTR = class _CTR extends ModeOfOperation {
   encrypt(plaintext) {
     var _a, _b;
     const crypttext = new Uint8Array(plaintext);
-    for (let i = 0; i < crypttext.length; i++) {
+    for (let i2 = 0; i2 < crypttext.length; i2++) {
       if (__classPrivateFieldGet4(this, _CTR_remainingIndex, "f") === 16) {
         __classPrivateFieldSet3(this, _CTR_remaining, this.aes.encrypt(__classPrivateFieldGet4(this, _CTR_counter, "f")), "f");
         __classPrivateFieldSet3(this, _CTR_remainingIndex, 0, "f");
         this.increment();
       }
-      crypttext[i] ^= __classPrivateFieldGet4(this, _CTR_remaining, "f")[__classPrivateFieldSet3(this, _CTR_remainingIndex, (_b = __classPrivateFieldGet4(this, _CTR_remainingIndex, "f"), _a = _b++, _b), "f"), _a];
+      crypttext[i2] ^= __classPrivateFieldGet4(this, _CTR_remaining, "f")[__classPrivateFieldSet3(this, _CTR_remainingIndex, (_b = __classPrivateFieldGet4(this, _CTR_remainingIndex, "f"), _a = _b++, _b), "f"), _a];
     }
     return crypttext;
   }
@@ -56721,8 +56721,8 @@ function pkcs7Strip(data) {
     throw new TypeError("PKCS#7 padding byte out of range");
   }
   const length2 = data.length - padder;
-  for (let i = 0; i < padder; i++) {
-    if (data[length2 + i] !== padder) {
+  for (let i2 = 0; i2 < padder; i2++) {
+    if (data[length2 + i2] !== padder) {
       throw new TypeError("PKCS#7 invalid padding byte");
     }
   }
@@ -56743,11 +56743,11 @@ function zpad(value2, length2) {
   }
   return value2;
 }
-function getPassword(password) {
-  if (typeof password === "string") {
-    return toUtf8Bytes(password, "NFKC");
+function getPassword(password2) {
+  if (typeof password2 === "string") {
+    return toUtf8Bytes(password2, "NFKC");
   }
-  return getBytesCopy(password);
+  return getBytesCopy(password2);
 }
 function spelunk(object3, _path) {
   const match = _path.match(/^([a-z0-9$_.-]*)(:([a-z]+))?(!)?$/i);
@@ -56867,13 +56867,13 @@ function getDecryptKdfParams(data) {
     if (kdf2.toLowerCase() === "scrypt") {
       const salt = spelunk(data, "crypto.kdfparams.salt:data!");
       const N3 = spelunk(data, "crypto.kdfparams.n:int!");
-      const r = spelunk(data, "crypto.kdfparams.r:int!");
+      const r2 = spelunk(data, "crypto.kdfparams.r:int!");
       const p = spelunk(data, "crypto.kdfparams.p:int!");
       assertArgument(N3 > 0 && (N3 & N3 - 1) === 0, "invalid kdf.N", "kdf.N", N3);
-      assertArgument(r > 0 && p > 0, "invalid kdf", "kdf", kdf2);
+      assertArgument(r2 > 0 && p > 0, "invalid kdf", "kdf", kdf2);
       const dkLen = spelunk(data, "crypto.kdfparams.dklen:int!");
       assertArgument(dkLen === 32, "invalid kdf.dklen", "kdf.dflen", dkLen);
-      return { name: "scrypt", salt, N: N3, r, p, dkLen: 64 };
+      return { name: "scrypt", salt, N: N3, r: r2, p, dkLen: 64 };
     } else if (kdf2.toLowerCase() === "pbkdf2") {
       const salt = spelunk(data, "crypto.kdfparams.salt:data!");
       const prf = spelunk(data, "crypto.kdfparams.prf:string!");
@@ -56889,16 +56889,16 @@ function getDecryptKdfParams(data) {
 }
 function decryptKeystoreJsonSync(json, _password) {
   const data = JSON.parse(json);
-  const password = getPassword(_password);
+  const password2 = getPassword(_password);
   const params = getDecryptKdfParams(data);
   if (params.name === "pbkdf2") {
     const { salt: salt2, count, dkLen: dkLen2, algorithm } = params;
-    const key2 = pbkdf2(password, salt2, count, dkLen2, algorithm);
+    const key2 = pbkdf2(password2, salt2, count, dkLen2, algorithm);
     return getAccount(data, key2);
   }
   assert(params.name === "scrypt", "cannot be reached", "UNKNOWN_ERROR", { params });
-  const { salt, N: N3, r, p, dkLen } = params;
-  const key = scryptSync(password, salt, N3, r, p, dkLen);
+  const { salt, N: N3, r: r2, p, dkLen } = params;
+  const key = scryptSync(password2, salt, N3, r2, p, dkLen);
   return getAccount(data, key);
 }
 function stall3(duration) {
@@ -56910,7 +56910,7 @@ function stall3(duration) {
 }
 async function decryptKeystoreJson(json, _password, progress) {
   const data = JSON.parse(json);
-  const password = getPassword(_password);
+  const password2 = getPassword(_password);
   const params = getDecryptKdfParams(data);
   if (params.name === "pbkdf2") {
     if (progress) {
@@ -56918,7 +56918,7 @@ async function decryptKeystoreJson(json, _password, progress) {
       await stall3(0);
     }
     const { salt: salt2, count, dkLen: dkLen2, algorithm } = params;
-    const key2 = pbkdf2(password, salt2, count, dkLen2, algorithm);
+    const key2 = pbkdf2(password2, salt2, count, dkLen2, algorithm);
     if (progress) {
       progress(1);
       await stall3(0);
@@ -56926,28 +56926,28 @@ async function decryptKeystoreJson(json, _password, progress) {
     return getAccount(data, key2);
   }
   assert(params.name === "scrypt", "cannot be reached", "UNKNOWN_ERROR", { params });
-  const { salt, N: N3, r, p, dkLen } = params;
-  const key = await scrypt2(password, salt, N3, r, p, dkLen, progress);
+  const { salt, N: N3, r: r2, p, dkLen } = params;
+  const key = await scrypt2(password2, salt, N3, r2, p, dkLen, progress);
   return getAccount(data, key);
 }
 function getEncryptKdfParams(options) {
   const salt = options.salt != null ? getBytes(options.salt, "options.salt") : randomBytes3(32);
-  let N3 = 1 << 17, r = 8, p = 1;
+  let N3 = 1 << 17, r2 = 8, p = 1;
   if (options.scrypt) {
     if (options.scrypt.N) {
       N3 = options.scrypt.N;
     }
     if (options.scrypt.r) {
-      r = options.scrypt.r;
+      r2 = options.scrypt.r;
     }
     if (options.scrypt.p) {
       p = options.scrypt.p;
     }
   }
   assertArgument(typeof N3 === "number" && N3 > 0 && Number.isSafeInteger(N3) && (BigInt(N3) & BigInt(N3 - 1)) === BigInt(0), "invalid scrypt N parameter", "options.N", N3);
-  assertArgument(typeof r === "number" && r > 0 && Number.isSafeInteger(r), "invalid scrypt r parameter", "options.r", r);
+  assertArgument(typeof r2 === "number" && r2 > 0 && Number.isSafeInteger(r2), "invalid scrypt r parameter", "options.r", r2);
   assertArgument(typeof p === "number" && p > 0 && Number.isSafeInteger(p), "invalid scrypt p parameter", "options.p", p);
-  return { name: "scrypt", dkLen: 32, salt, N: N3, r, p };
+  return { name: "scrypt", dkLen: 32, salt, N: N3, r: r2, p };
 }
 function _encryptKeystore(key, kdf2, account, options) {
   const privateKey = getBytes(account.privateKey, "privateKey");
@@ -57005,20 +57005,20 @@ function _encryptKeystore(key, kdf2, account, options) {
   }
   return JSON.stringify(data);
 }
-function encryptKeystoreJsonSync(account, password, options) {
+function encryptKeystoreJsonSync(account, password2, options) {
   if (options == null) {
     options = {};
   }
-  const passwordBytes = getPassword(password);
+  const passwordBytes = getPassword(password2);
   const kdf2 = getEncryptKdfParams(options);
   const key = scryptSync(passwordBytes, kdf2.salt, kdf2.N, kdf2.r, kdf2.p, 64);
   return _encryptKeystore(getBytes(key), kdf2, account, options);
 }
-async function encryptKeystoreJson(account, password, options) {
+async function encryptKeystoreJson(account, password2, options) {
   if (options == null) {
     options = {};
   }
-  const passwordBytes = getPassword(password);
+  const passwordBytes = getPassword(password2);
   const kdf2 = getEncryptKdfParams(options);
   const key = await scrypt2(passwordBytes, kdf2.salt, kdf2.N, kdf2.r, kdf2.p, 64, options.progressCallback);
   return _encryptKeystore(getBytes(key), kdf2, account, options);
@@ -57058,8 +57058,8 @@ function ser_I(index, chainCode, publicKey, privateKey) {
   } else {
     data.set(getBytes(publicKey));
   }
-  for (let i = 24; i >= 0; i -= 8) {
-    data[33 + (i >> 3)] = index >> 24 - i & 255;
+  for (let i2 = 24; i2 >= 0; i2 -= 8) {
+    data[33 + (i2 >> 3)] = index >> 24 - i2 & 255;
   }
   const I = getBytes(computeHmac("sha512", chainCode, data));
   return { IL: I.slice(0, 32), IR: I.slice(32) };
@@ -57072,18 +57072,18 @@ function derivePath(node, path2) {
     components.shift();
   }
   let result = node;
-  for (let i = 0; i < components.length; i++) {
-    const component = components[i];
+  for (let i2 = 0; i2 < components.length; i2++) {
+    const component = components[i2];
     if (component.match(/^[0-9]+'$/)) {
       const index = parseInt(component.substring(0, component.length - 1));
-      assertArgument(index < HardenedBit, "invalid path index", `path[${i}]`, component);
+      assertArgument(index < HardenedBit, "invalid path index", `path[${i2}]`, component);
       result = result.deriveChild(HardenedBit + index);
     } else if (component.match(/^[0-9]+$/)) {
       const index = parseInt(component);
-      assertArgument(index < HardenedBit, "invalid path index", `path[${i}]`, component);
+      assertArgument(index < HardenedBit, "invalid path index", `path[${i2}]`, component);
       result = result.deriveChild(index);
     } else {
-      assertArgument(false, "invalid path component", `path[${i}]`, component);
+      assertArgument(false, "invalid path component", `path[${i2}]`, component);
     }
   }
   return result;
@@ -57175,8 +57175,8 @@ var HDNodeWallet = class _HDNodeWallet extends BaseWallet {
    *  If %%progressCallback%% is specified, it will receive periodic
    *  updates as the encryption process progreses.
    */
-  async encrypt(password, progressCallback) {
-    return await encryptKeystoreJson(this.#account(), password, { progressCallback });
+  async encrypt(password2, progressCallback) {
+    return await encryptKeystoreJson(this.#account(), password2, { progressCallback });
   }
   /**
    *  Returns a [JSON Keystore Wallet](json-wallets) encryped with
@@ -57188,8 +57188,8 @@ var HDNodeWallet = class _HDNodeWallet extends BaseWallet {
    *  This method will block the event loop (freezing all UI) until
    *  it is complete, which may be a non-trivial duration.
    */
-  encryptSync(password) {
-    return encryptKeystoreJsonSync(this.#account(), password);
+  encryptSync(password2) {
+    return encryptKeystoreJsonSync(this.#account(), password2);
   }
   /**
    *  The extended key.
@@ -57291,9 +57291,9 @@ var HDNodeWallet = class _HDNodeWallet extends BaseWallet {
   /**
    *  Creates a new random HDNode.
    */
-  static createRandom(password, path2, wordlist3) {
-    if (password == null) {
-      password = "";
+  static createRandom(password2, path2, wordlist3) {
+    if (password2 == null) {
+      password2 = "";
     }
     if (path2 == null) {
       path2 = defaultPath2;
@@ -57301,7 +57301,7 @@ var HDNodeWallet = class _HDNodeWallet extends BaseWallet {
     if (wordlist3 == null) {
       wordlist3 = LangEn.wordlist();
     }
-    const mnemonic = Mnemonic.fromEntropy(randomBytes3(16), password, wordlist3);
+    const mnemonic = Mnemonic.fromEntropy(randomBytes3(16), password2, wordlist3);
     return _HDNodeWallet.#fromSeed(mnemonic.computeSeed(), mnemonic).derivePath(path2);
   }
   /**
@@ -57316,9 +57316,9 @@ var HDNodeWallet = class _HDNodeWallet extends BaseWallet {
   /**
    *  Creates an HD Node from a mnemonic %%phrase%%.
    */
-  static fromPhrase(phrase, password, path2, wordlist3) {
-    if (password == null) {
-      password = "";
+  static fromPhrase(phrase, password2, path2, wordlist3) {
+    if (password2 == null) {
+      password2 = "";
     }
     if (path2 == null) {
       path2 = defaultPath2;
@@ -57326,7 +57326,7 @@ var HDNodeWallet = class _HDNodeWallet extends BaseWallet {
     if (wordlist3 == null) {
       wordlist3 = LangEn.wordlist();
     }
-    const mnemonic = Mnemonic.fromPhrase(phrase, password, wordlist3);
+    const mnemonic = Mnemonic.fromPhrase(phrase, password2, wordlist3);
     return _HDNodeWallet.#fromSeed(mnemonic.computeSeed(), mnemonic).derivePath(path2);
   }
   /**
@@ -57460,18 +57460,18 @@ function isCrowdsaleJson(json) {
 }
 function decryptCrowdsaleJson(json, _password) {
   const data = JSON.parse(json);
-  const password = getPassword(_password);
+  const password2 = getPassword(_password);
   const address = getAddress(spelunk(data, "ethaddr:string!"));
   const encseed = looseArrayify(spelunk(data, "encseed:string!"));
   assertArgument(encseed && encseed.length % 16 === 0, "invalid encseed", "json", json);
-  const key = getBytes(pbkdf2(password, password, 2e3, 32, "sha256")).slice(0, 16);
+  const key = getBytes(pbkdf2(password2, password2, 2e3, 32, "sha256")).slice(0, 16);
   const iv = encseed.slice(0, 16);
   const encryptedSeed = encseed.slice(16);
   const aesCbc = new CBC(key, iv);
   const seed = pkcs7Strip(getBytes(aesCbc.decrypt(encryptedSeed)));
   let seedHex = "";
-  for (let i = 0; i < seed.length; i++) {
-    seedHex += String.fromCharCode(seed[i]);
+  for (let i2 = 0; i2 < seed.length; i2++) {
+    seedHex += String.fromCharCode(seed[i2]);
   }
   return { address, privateKey: id(seedHex) };
 }
@@ -57506,9 +57506,9 @@ var Wallet = class _Wallet extends BaseWallet {
    *  If %%progressCallback%% is specified, it will receive periodic
    *  updates as the encryption process progreses.
    */
-  async encrypt(password, progressCallback) {
+  async encrypt(password2, progressCallback) {
     const account = { address: this.address, privateKey: this.privateKey };
-    return await encryptKeystoreJson(account, password, { progressCallback });
+    return await encryptKeystoreJson(account, password2, { progressCallback });
   }
   /**
    *  Returns a [JSON Keystore Wallet](json-wallets) encryped with
@@ -57520,9 +57520,9 @@ var Wallet = class _Wallet extends BaseWallet {
    *  This method will block the event loop (freezing all UI) until
    *  it is complete, which may be a non-trivial duration.
    */
-  encryptSync(password) {
+  encryptSync(password2) {
     const account = { address: this.address, privateKey: this.privateKey };
-    return encryptKeystoreJsonSync(account, password);
+    return encryptKeystoreJsonSync(account, password2);
   }
   static #fromAccount(account) {
     assertArgument(account, "invalid JSON wallet", "json", "[ REDACTED ]");
@@ -57545,16 +57545,16 @@ var Wallet = class _Wallet extends BaseWallet {
    *  If %%progress%% is provided, it is called periodically during
    *  decryption so that any UI can be updated.
    */
-  static async fromEncryptedJson(json, password, progress) {
+  static async fromEncryptedJson(json, password2, progress) {
     let account = null;
     if (isKeystoreJson(json)) {
-      account = await decryptKeystoreJson(json, password, progress);
+      account = await decryptKeystoreJson(json, password2, progress);
     } else if (isCrowdsaleJson(json)) {
       if (progress) {
         progress(0);
         await stall4(0);
       }
-      account = decryptCrowdsaleJson(json, password);
+      account = decryptCrowdsaleJson(json, password2);
       if (progress) {
         progress(1);
         await stall4(0);
@@ -57569,12 +57569,12 @@ var Wallet = class _Wallet extends BaseWallet {
    *  will lock up and freeze the UI during decryption, which may take
    *  some time.
    */
-  static fromEncryptedJsonSync(json, password) {
+  static fromEncryptedJsonSync(json, password2) {
     let account = null;
     if (isKeystoreJson(json)) {
-      account = decryptKeystoreJsonSync(json, password);
+      account = decryptKeystoreJsonSync(json, password2);
     } else if (isCrowdsaleJson(json)) {
-      account = decryptCrowdsaleJson(json, password);
+      account = decryptCrowdsaleJson(json, password2);
     } else {
       assertArgument(false, "invalid JSON wallet", "json", "[ REDACTED ]");
     }
@@ -57607,6 +57607,1278 @@ var Wallet = class _Wallet extends BaseWallet {
 
 // ravenne.js
 var import_prompts = __toESM(require_prompts3(), 1);
+
+// node_modules/@clack/core/dist/index.mjs
+var import_node_util = require("node:util");
+var import_node_process = require("node:process");
+var f$1 = __toESM(require("node:readline"), 1);
+var import_node_readline = __toESM(require("node:readline"), 1);
+
+// node_modules/fast-string-truncated-width/dist/utils.js
+var getCodePointsLength = /* @__PURE__ */ (() => {
+  const SURROGATE_PAIR_RE = /[\uD800-\uDBFF][\uDC00-\uDFFF]/g;
+  return (input) => {
+    let surrogatePairsNr = 0;
+    SURROGATE_PAIR_RE.lastIndex = 0;
+    while (SURROGATE_PAIR_RE.test(input)) {
+      surrogatePairsNr += 1;
+    }
+    return input.length - surrogatePairsNr;
+  };
+})();
+var isFullWidth = (x) => {
+  return x === 12288 || x >= 65281 && x <= 65376 || x >= 65504 && x <= 65510;
+};
+var isWideNotCJKTNotEmoji = (x) => {
+  return x === 8987 || x === 9001 || x >= 12272 && x <= 12287 || x >= 12289 && x <= 12350 || x >= 12441 && x <= 12543 || x >= 12549 && x <= 12591 || x >= 12593 && x <= 12686 || x >= 12688 && x <= 12771 || x >= 12783 && x <= 12830 || x >= 12832 && x <= 12871 || x >= 12880 && x <= 19903 || x >= 65040 && x <= 65049 || x >= 65072 && x <= 65106 || x >= 65108 && x <= 65126 || x >= 65128 && x <= 65131 || x >= 127488 && x <= 127490 || x >= 127504 && x <= 127547 || x >= 127552 && x <= 127560 || x >= 131072 && x <= 196605 || x >= 196608 && x <= 262141;
+};
+
+// node_modules/fast-string-truncated-width/dist/index.js
+var ANSI_RE = /[\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-ORZcf-nqry=><]|\u001b\]8;[^;]*;.*?(?:\u0007|\u001b\u005c)/y;
+var CONTROL_RE = /[\x00-\x08\x0A-\x1F\x7F-\x9F]{1,1000}/y;
+var CJKT_WIDE_RE = /(?:(?![\uFF61-\uFF9F\uFF00-\uFFEF])[\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}\p{Script=Hangul}\p{Script=Tangut}]){1,1000}/yu;
+var TAB_RE = /\t{1,1000}/y;
+var EMOJI_RE = /[\u{1F1E6}-\u{1F1FF}]{2}|\u{1F3F4}[\u{E0061}-\u{E007A}]{2}[\u{E0030}-\u{E0039}\u{E0061}-\u{E007A}]{1,3}\u{E007F}|(?:\p{Emoji}\uFE0F\u20E3?|\p{Emoji_Modifier_Base}\p{Emoji_Modifier}?|\p{Emoji_Presentation})(?:\u200D(?:\p{Emoji_Modifier_Base}\p{Emoji_Modifier}?|\p{Emoji_Presentation}|\p{Emoji}\uFE0F\u20E3?))*/yu;
+var LATIN_RE = /(?:[\x20-\x7E\xA0-\xFF](?!\uFE0F)){1,1000}/y;
+var MODIFIER_RE = /\p{M}+/gu;
+var NO_TRUNCATION = { limit: Infinity, ellipsis: "" };
+var getStringTruncatedWidth = (input, truncationOptions = {}, widthOptions = {}) => {
+  const LIMIT = truncationOptions.limit ?? Infinity;
+  const ELLIPSIS = truncationOptions.ellipsis ?? "";
+  const ELLIPSIS_WIDTH = truncationOptions?.ellipsisWidth ?? (ELLIPSIS ? getStringTruncatedWidth(ELLIPSIS, NO_TRUNCATION, widthOptions).width : 0);
+  const ANSI_WIDTH = 0;
+  const CONTROL_WIDTH = widthOptions.controlWidth ?? 0;
+  const TAB_WIDTH = widthOptions.tabWidth ?? 8;
+  const EMOJI_WIDTH = widthOptions.emojiWidth ?? 2;
+  const FULL_WIDTH_WIDTH = 2;
+  const REGULAR_WIDTH = widthOptions.regularWidth ?? 1;
+  const WIDE_WIDTH = widthOptions.wideWidth ?? FULL_WIDTH_WIDTH;
+  const PARSE_BLOCKS = [
+    [LATIN_RE, REGULAR_WIDTH],
+    [ANSI_RE, ANSI_WIDTH],
+    [CONTROL_RE, CONTROL_WIDTH],
+    [TAB_RE, TAB_WIDTH],
+    [EMOJI_RE, EMOJI_WIDTH],
+    [CJKT_WIDE_RE, WIDE_WIDTH]
+  ];
+  let indexPrev = 0;
+  let index = 0;
+  let length2 = input.length;
+  let lengthExtra = 0;
+  let truncationEnabled = false;
+  let truncationIndex = length2;
+  let truncationLimit = Math.max(0, LIMIT - ELLIPSIS_WIDTH);
+  let unmatchedStart = 0;
+  let unmatchedEnd = 0;
+  let width = 0;
+  let widthExtra = 0;
+  outer: while (true) {
+    if (unmatchedEnd > unmatchedStart || index >= length2 && index > indexPrev) {
+      const unmatched = input.slice(unmatchedStart, unmatchedEnd) || input.slice(indexPrev, index);
+      lengthExtra = 0;
+      for (const char of unmatched.replaceAll(MODIFIER_RE, "")) {
+        const codePoint = char.codePointAt(0) || 0;
+        if (isFullWidth(codePoint)) {
+          widthExtra = FULL_WIDTH_WIDTH;
+        } else if (isWideNotCJKTNotEmoji(codePoint)) {
+          widthExtra = WIDE_WIDTH;
+        } else {
+          widthExtra = REGULAR_WIDTH;
+        }
+        if (width + widthExtra > truncationLimit) {
+          truncationIndex = Math.min(truncationIndex, Math.max(unmatchedStart, indexPrev) + lengthExtra);
+        }
+        if (width + widthExtra > LIMIT) {
+          truncationEnabled = true;
+          break outer;
+        }
+        lengthExtra += char.length;
+        width += widthExtra;
+      }
+      unmatchedStart = unmatchedEnd = 0;
+    }
+    if (index >= length2) {
+      break outer;
+    }
+    for (let i2 = 0, l = PARSE_BLOCKS.length; i2 < l; i2++) {
+      const [BLOCK_RE, BLOCK_WIDTH] = PARSE_BLOCKS[i2];
+      BLOCK_RE.lastIndex = index;
+      if (BLOCK_RE.test(input)) {
+        lengthExtra = BLOCK_RE === CJKT_WIDE_RE ? getCodePointsLength(input.slice(index, BLOCK_RE.lastIndex)) : BLOCK_RE === EMOJI_RE ? 1 : BLOCK_RE.lastIndex - index;
+        widthExtra = lengthExtra * BLOCK_WIDTH;
+        if (width + widthExtra > truncationLimit) {
+          truncationIndex = Math.min(truncationIndex, index + Math.floor((truncationLimit - width) / BLOCK_WIDTH));
+        }
+        if (width + widthExtra > LIMIT) {
+          truncationEnabled = true;
+          break outer;
+        }
+        width += widthExtra;
+        unmatchedStart = indexPrev;
+        unmatchedEnd = index;
+        index = indexPrev = BLOCK_RE.lastIndex;
+        continue outer;
+      }
+    }
+    index += 1;
+  }
+  return {
+    width: truncationEnabled ? truncationLimit : width,
+    index: truncationEnabled ? truncationIndex : length2,
+    truncated: truncationEnabled,
+    ellipsed: truncationEnabled && LIMIT >= ELLIPSIS_WIDTH
+  };
+};
+var dist_default = getStringTruncatedWidth;
+
+// node_modules/fast-string-width/dist/index.js
+var NO_TRUNCATION2 = {
+  limit: Infinity,
+  ellipsis: "",
+  ellipsisWidth: 0
+};
+var fastStringWidth = (input, options = {}) => {
+  return dist_default(input, NO_TRUNCATION2, options).width;
+};
+var dist_default2 = fastStringWidth;
+
+// node_modules/fast-wrap-ansi/lib/main.js
+var ESC = "\x1B";
+var CSI = "\x9B";
+var END_CODE = 39;
+var ANSI_ESCAPE_BELL = "\x07";
+var ANSI_CSI = "[";
+var ANSI_OSC = "]";
+var ANSI_SGR_TERMINATOR = "m";
+var ANSI_ESCAPE_LINK = `${ANSI_OSC}8;;`;
+var GROUP_REGEX = new RegExp(`(?:\\${ANSI_CSI}(?<code>\\d+)m|\\${ANSI_ESCAPE_LINK}(?<uri>.*)${ANSI_ESCAPE_BELL})`, "y");
+var getClosingCode = (openingCode) => {
+  if (openingCode >= 30 && openingCode <= 37)
+    return 39;
+  if (openingCode >= 90 && openingCode <= 97)
+    return 39;
+  if (openingCode >= 40 && openingCode <= 47)
+    return 49;
+  if (openingCode >= 100 && openingCode <= 107)
+    return 49;
+  if (openingCode === 1 || openingCode === 2)
+    return 22;
+  if (openingCode === 3)
+    return 23;
+  if (openingCode === 4)
+    return 24;
+  if (openingCode === 7)
+    return 27;
+  if (openingCode === 8)
+    return 28;
+  if (openingCode === 9)
+    return 29;
+  if (openingCode === 0)
+    return 0;
+  return void 0;
+};
+var wrapAnsiCode = (code) => `${ESC}${ANSI_CSI}${code}${ANSI_SGR_TERMINATOR}`;
+var wrapAnsiHyperlink = (url) => `${ESC}${ANSI_ESCAPE_LINK}${url}${ANSI_ESCAPE_BELL}`;
+var wrapWord = (rows, word, columns) => {
+  const characters = word[Symbol.iterator]();
+  let isInsideEscape = false;
+  let isInsideLinkEscape = false;
+  let lastRow = rows.at(-1);
+  let visible = lastRow === void 0 ? 0 : dist_default2(lastRow);
+  let currentCharacter = characters.next();
+  let nextCharacter = characters.next();
+  let rawCharacterIndex = 0;
+  while (!currentCharacter.done) {
+    const character = currentCharacter.value;
+    const characterLength = dist_default2(character);
+    if (visible + characterLength <= columns) {
+      rows[rows.length - 1] += character;
+    } else {
+      rows.push(character);
+      visible = 0;
+    }
+    if (character === ESC || character === CSI) {
+      isInsideEscape = true;
+      isInsideLinkEscape = word.startsWith(ANSI_ESCAPE_LINK, rawCharacterIndex + 1);
+    }
+    if (isInsideEscape) {
+      if (isInsideLinkEscape) {
+        if (character === ANSI_ESCAPE_BELL) {
+          isInsideEscape = false;
+          isInsideLinkEscape = false;
+        }
+      } else if (character === ANSI_SGR_TERMINATOR) {
+        isInsideEscape = false;
+      }
+    } else {
+      visible += characterLength;
+      if (visible === columns && !nextCharacter.done) {
+        rows.push("");
+        visible = 0;
+      }
+    }
+    currentCharacter = nextCharacter;
+    nextCharacter = characters.next();
+    rawCharacterIndex += character.length;
+  }
+  lastRow = rows.at(-1);
+  if (!visible && lastRow !== void 0 && lastRow.length && rows.length > 1) {
+    rows[rows.length - 2] += rows.pop();
+  }
+};
+var stringVisibleTrimSpacesRight = (string2) => {
+  const words2 = string2.split(" ");
+  let last = words2.length;
+  while (last) {
+    if (dist_default2(words2[last - 1])) {
+      break;
+    }
+    last--;
+  }
+  if (last === words2.length) {
+    return string2;
+  }
+  return words2.slice(0, last).join(" ") + words2.slice(last).join("");
+};
+var exec = (string2, columns, options = {}) => {
+  if (options.trim !== false && string2.trim() === "") {
+    return "";
+  }
+  let returnValue = "";
+  let escapeCode;
+  let escapeUrl;
+  const words2 = string2.split(" ");
+  let rows = [""];
+  let rowLength = 0;
+  for (let index = 0; index < words2.length; index++) {
+    const word = words2[index];
+    if (options.trim !== false) {
+      const row = rows.at(-1) ?? "";
+      const trimmed = row.trimStart();
+      if (row.length !== trimmed.length) {
+        rows[rows.length - 1] = trimmed;
+        rowLength = dist_default2(trimmed);
+      }
+    }
+    if (index !== 0) {
+      if (rowLength >= columns && (options.wordWrap === false || options.trim === false)) {
+        rows.push("");
+        rowLength = 0;
+      }
+      if (rowLength || options.trim === false) {
+        rows[rows.length - 1] += " ";
+        rowLength++;
+      }
+    }
+    const wordLength = dist_default2(word);
+    if (options.hard && wordLength > columns) {
+      const remainingColumns = columns - rowLength;
+      const breaksStartingThisLine = 1 + Math.floor((wordLength - remainingColumns - 1) / columns);
+      const breaksStartingNextLine = Math.floor((wordLength - 1) / columns);
+      if (breaksStartingNextLine < breaksStartingThisLine) {
+        rows.push("");
+      }
+      wrapWord(rows, word, columns);
+      rowLength = dist_default2(rows.at(-1) ?? "");
+      continue;
+    }
+    if (rowLength + wordLength > columns && rowLength && wordLength) {
+      if (options.wordWrap === false && rowLength < columns) {
+        wrapWord(rows, word, columns);
+        rowLength = dist_default2(rows.at(-1) ?? "");
+        continue;
+      }
+      rows.push("");
+      rowLength = 0;
+    }
+    if (rowLength + wordLength > columns && options.wordWrap === false) {
+      wrapWord(rows, word, columns);
+      rowLength = dist_default2(rows.at(-1) ?? "");
+      continue;
+    }
+    rows[rows.length - 1] += word;
+    rowLength += wordLength;
+  }
+  if (options.trim !== false) {
+    rows = rows.map((row) => stringVisibleTrimSpacesRight(row));
+  }
+  const preString = rows.join("\n");
+  let inSurrogate = false;
+  for (let i2 = 0; i2 < preString.length; i2++) {
+    const character = preString[i2];
+    returnValue += character;
+    if (!inSurrogate) {
+      inSurrogate = character >= "\uD800" && character <= "\uDBFF";
+      if (inSurrogate) {
+        continue;
+      }
+    } else {
+      inSurrogate = false;
+    }
+    if (character === ESC || character === CSI) {
+      GROUP_REGEX.lastIndex = i2 + 1;
+      const groupsResult = GROUP_REGEX.exec(preString);
+      const groups = groupsResult?.groups;
+      if (groups?.code !== void 0) {
+        const code = Number.parseFloat(groups.code);
+        escapeCode = code === END_CODE ? void 0 : code;
+      } else if (groups?.uri !== void 0) {
+        escapeUrl = groups.uri.length === 0 ? void 0 : groups.uri;
+      }
+    }
+    if (preString[i2 + 1] === "\n") {
+      if (escapeUrl) {
+        returnValue += wrapAnsiHyperlink("");
+      }
+      const closingCode = escapeCode ? getClosingCode(escapeCode) : void 0;
+      if (escapeCode && closingCode) {
+        returnValue += wrapAnsiCode(closingCode);
+      }
+    } else if (character === "\n") {
+      if (escapeCode && getClosingCode(escapeCode)) {
+        returnValue += wrapAnsiCode(escapeCode);
+      }
+      if (escapeUrl) {
+        returnValue += wrapAnsiHyperlink(escapeUrl);
+      }
+    }
+  }
+  return returnValue;
+};
+var CRLF_OR_LF = /\r?\n/;
+function wrapAnsi(string2, columns, options) {
+  return String(string2).normalize().split(CRLF_OR_LF).map((line) => exec(line, columns, options)).join("\n");
+}
+
+// node_modules/@clack/core/node_modules/sisteransi/dist/index.js
+var ESC2 = "\x1B";
+var CSI2 = `${ESC2}[`;
+var cursor = {
+  to(x, y) {
+    if (!y)
+      return `${CSI2}${x + 1}G`;
+    return `${CSI2}${y + 1};${x + 1}H`;
+  },
+  move(x, y) {
+    let ret = "";
+    if (x < 0)
+      ret += `${CSI2}${-x}D`;
+    else if (x > 0)
+      ret += `${CSI2}${x}C`;
+    if (y < 0)
+      ret += `${CSI2}${-y}A`;
+    else if (y > 0)
+      ret += `${CSI2}${y}B`;
+    return ret;
+  },
+  up: (count = 1) => `${CSI2}${count}A`,
+  down: (count = 1) => `${CSI2}${count}B`,
+  forward: (count = 1) => `${CSI2}${count}C`,
+  backward: (count = 1) => `${CSI2}${count}D`,
+  nextLine: (count = 1) => `${CSI2}E`.repeat(count),
+  prevLine: (count = 1) => `${CSI2}F`.repeat(count),
+  left: `${CSI2}G`,
+  hide: `${CSI2}?25l`,
+  show: `${CSI2}?25h`,
+  save: `${ESC2}7`,
+  restore: `${ESC2}8`
+};
+var erase = {
+  screen: `${CSI2}2J`,
+  up: (count = 1) => `${CSI2}1J`.repeat(count),
+  down: (count = 1) => `${CSI2}J`.repeat(count),
+  line: `${CSI2}2K`,
+  lineEnd: `${CSI2}K`,
+  lineStart: `${CSI2}1K`,
+  lines(count) {
+    let clear3 = "";
+    for (let i2 = 0; i2 < count; i2++)
+      clear3 += this.line + (i2 < count - 1 ? cursor.up() : "");
+    if (count)
+      clear3 += cursor.left;
+    return clear3;
+  }
+};
+var clear = {
+  screen: `${ESC2}c`
+};
+
+// node_modules/@clack/core/dist/index.mjs
+var import_node_tty = require("node:tty");
+function findCursor(o, s, l) {
+  if (!l.some((r2) => !r2.disabled))
+    return o;
+  const t2 = o + s, n4 = Math.max(l.length - 1, 0), e = t2 < 0 ? n4 : t2 > n4 ? 0 : t2;
+  return l[e]?.disabled ? findCursor(e, s < 0 ? -1 : 1, l) : e;
+}
+var a$1 = ["up", "down", "left", "right", "space", "enter", "cancel"];
+var t = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December"
+];
+var settings = {
+  actions: new Set(a$1),
+  aliases: /* @__PURE__ */ new Map([
+    // vim support
+    ["k", "up"],
+    ["j", "down"],
+    ["h", "left"],
+    ["l", "right"],
+    ["", "cancel"],
+    // opinionated defaults!
+    ["escape", "cancel"]
+  ]),
+  messages: {
+    cancel: "Canceled",
+    error: "Something went wrong"
+  },
+  withGuide: true,
+  accessible: void 0,
+  date: {
+    monthNames: [...t],
+    messages: {
+      required: "Please enter a valid date",
+      invalidMonth: "There are only 12 months in a year",
+      invalidDay: (n4, e) => `There are only ${n4} days in ${e}`,
+      afterMin: (n4) => `Date must be on or after ${n4.toISOString().slice(0, 10)}`,
+      beforeMax: (n4) => `Date must be on or before ${n4.toISOString().slice(0, 10)}`
+    }
+  }
+};
+function isAccessible(n4) {
+  if (n4 !== void 0) return n4;
+  if (settings.accessible !== void 0) return settings.accessible;
+  const e = process.env.ACCESSIBLE;
+  return e !== void 0 && e !== "" && e !== "0" && e !== "false";
+}
+function isActionKey(n4, e) {
+  if (typeof n4 == "string")
+    return settings.aliases.get(n4) === e;
+  for (const s of n4)
+    if (s !== void 0 && isActionKey(s, e))
+      return true;
+  return false;
+}
+function diffLines(i2, s) {
+  if (i2 === s) return;
+  const e = i2.split(`
+`), t2 = s.split(`
+`), r2 = Math.max(e.length, t2.length), f2 = [];
+  for (let n4 = 0; n4 < r2; n4++)
+    e[n4] !== t2[n4] && f2.push(n4);
+  return {
+    lines: f2,
+    numLinesBefore: e.length,
+    numLinesAfter: t2.length,
+    numLines: r2
+  };
+}
+var R = globalThis.process.platform.startsWith("win");
+var CANCEL_SYMBOL = /* @__PURE__ */ Symbol("clack:cancel");
+function isCancel(e) {
+  return e === CANCEL_SYMBOL;
+}
+function setRawMode(e, r2) {
+  const o = e;
+  o.isTTY && o.setRawMode(r2);
+}
+function block({
+  input: e = import_node_process.stdin,
+  output: r2 = import_node_process.stdout,
+  overwrite: o = true,
+  hideCursor: n4 = true
+} = {}) {
+  const s = f$1.createInterface({
+    input: e,
+    output: r2,
+    prompt: "",
+    tabSize: 1
+  });
+  f$1.emitKeypressEvents(e, s), e instanceof import_node_tty.ReadStream && e.isTTY && e.setRawMode(true);
+  const t2 = (l, { name: i2, sequence: p }) => {
+    const w = String(l);
+    if (isActionKey([w, i2, p], "cancel")) {
+      n4 && r2.write(cursor.show), process.exit(0);
+      return;
+    }
+    if (!o) return;
+    const c4 = i2 === "return" ? 0 : -1, a2 = i2 === "return" ? -1 : 0;
+    f$1.moveCursor(r2, c4, a2, () => {
+      f$1.clearLine(r2, 1, () => {
+        e.once("keypress", t2);
+      });
+    });
+  };
+  return n4 && r2.write(cursor.hide), e.once("keypress", t2), () => {
+    e.off("keypress", t2), n4 && r2.write(cursor.show), e instanceof import_node_tty.ReadStream && e.isTTY && !R && e.setRawMode(false), s.terminal = false, s.close();
+  };
+}
+var getColumns = (e) => "columns" in e && typeof e.columns == "number" ? e.columns : 80;
+var getRows = (e) => "rows" in e && typeof e.rows == "number" ? e.rows : 20;
+function wrapTextWithPrefix(e, r2, o, n4 = o, s = o, t2) {
+  const l = getColumns(e ?? import_node_process.stdout), i2 = dist_default2(o);
+  return wrapAnsi(r2, l - i2, {
+    hard: true,
+    trim: false
+  }).split(`
+`).map((c4, a2, g) => {
+    const m = t2 ? t2(c4, a2) : c4;
+    return a2 === 0 ? `${n4}${m}` : a2 === g.length - 1 ? `${s}${m}` : `${o}${m}`;
+  }).join(`
+`);
+}
+function runValidation(e, a2) {
+  if ("~standard" in e) {
+    const n4 = e["~standard"].validate(a2);
+    return n4 instanceof Promise ? n4.then((r2) => r2.issues?.at(0)?.message) : n4.issues?.at(0)?.message;
+  }
+  return e(a2);
+}
+var C$1 = class C {
+  input;
+  output;
+  _abortSignal;
+  rl;
+  opts;
+  _render;
+  _track = false;
+  _prevFrame = "";
+  _subscribers = /* @__PURE__ */ new Map();
+  _cursor = 0;
+  state = "initial";
+  error = "";
+  value;
+  userInput = "";
+  /**
+   * Whether accessible (static, screen-reader friendly) output is enabled for
+   * this prompt, resolved from the `accessible` option, the global setting,
+   * and the `ACCESSIBLE` env var.
+   */
+  get accessible() {
+    return isAccessible(this.opts.accessible);
+  }
+  constructor(t2, e = true) {
+    const { input: i2 = import_node_process.stdin, output: s = import_node_process.stdout, render: r2, signal: n4, ...o } = t2;
+    this.opts = o, this.onKeypress = this.onKeypress.bind(this), this.close = this.close.bind(this), this.render = this.render.bind(this), this._render = r2.bind(this), this._track = e, this._abortSignal = n4, this.input = i2, this.output = s;
+  }
+  /**
+   * Unsubscribe all listeners
+   */
+  unsubscribe() {
+    this._subscribers.clear();
+  }
+  /**
+   * Set a subscriber with opts
+   * @param event - The event name
+   */
+  setSubscriber(t2, e) {
+    const i2 = this._subscribers.get(t2) ?? [];
+    i2.push(e), this._subscribers.set(t2, i2);
+  }
+  /**
+   * Subscribe to an event
+   * @param event - The event name
+   * @param cb - The callback
+   */
+  on(t2, e) {
+    this.setSubscriber(t2, { cb: e });
+  }
+  /**
+   * Subscribe to an event once
+   * @param event - The event name
+   * @param cb - The callback
+   */
+  once(t2, e) {
+    this.setSubscriber(t2, { cb: e, once: true });
+  }
+  /**
+   * Emit an event with data
+   * @param event - The event name
+   * @param data - The data to pass to the callback
+   */
+  emit(t2, ...e) {
+    const i2 = this._subscribers.get(t2) ?? [], s = [];
+    for (const r2 of i2)
+      r2.cb(...e), r2.once && s.push(() => i2.splice(i2.indexOf(r2), 1));
+    for (const r2 of s)
+      r2();
+  }
+  prompt() {
+    return new Promise((t2) => {
+      if (this._abortSignal) {
+        if (this._abortSignal.aborted)
+          return this.state = "cancel", this.close(), t2(CANCEL_SYMBOL);
+        this._abortSignal.addEventListener(
+          "abort",
+          () => {
+            this.state = "cancel", this.close();
+          },
+          { once: true }
+        );
+      }
+      this.rl = import_node_readline.default.createInterface({
+        input: this.input,
+        tabSize: 2,
+        prompt: "",
+        escapeCodeTimeout: 50,
+        terminal: true
+      }), this.rl.prompt(), this.opts.initialUserInput !== void 0 && this._setUserInput(this.opts.initialUserInput, true), this.input.on("keypress", this.onKeypress), setRawMode(this.input, true), this.output.on("resize", this.render), this.render(), this.once("submit", () => {
+        this.output.write(cursor.show), this.output.off("resize", this.render), setRawMode(this.input, false), t2(this.value);
+      }), this.once("cancel", () => {
+        this.output.write(cursor.show), this.output.off("resize", this.render), setRawMode(this.input, false), t2(CANCEL_SYMBOL);
+      });
+    });
+  }
+  _isActionKey(t2, e) {
+    return t2 === "	";
+  }
+  _shouldSubmit(t2, e) {
+    return true;
+  }
+  _setValue(t2) {
+    this.value = t2, this.emit("value", this.value);
+  }
+  _setUserInput(t2, e) {
+    this.userInput = t2 ?? "", this.emit("userInput", this.userInput), e && this._track && this.rl && (this.rl.write(this.userInput), this._cursor = this.rl.cursor);
+  }
+  _clearUserInput() {
+    this.rl?.write(null, { ctrl: true, name: "u" }), this._setUserInput("");
+  }
+  async onKeypress(t2, e) {
+    if (this.state !== "validating") {
+      if (this._track && e.name !== "return" && (e.name && this._isActionKey(t2, e) && this.rl?.write(null, { ctrl: true, name: "h" }), this._cursor = this.rl?.cursor ?? 0, this._setUserInput(this.rl?.line)), this.state === "error" && (this.state = "active"), e?.name && (!this._track && settings.aliases.has(e.name) && this.emit("cursor", settings.aliases.get(e.name)), settings.actions.has(e.name) && this.emit("cursor", e.name)), t2 && (t2.toLowerCase() === "y" || t2.toLowerCase() === "n") && this.emit("confirm", t2.toLowerCase() === "y"), this.emit("key", t2, e), e?.name === "return" && this._shouldSubmit(t2, e)) {
+        if (this.opts.validate) {
+          const i2 = runValidation(this.opts.validate, this.value);
+          let s;
+          i2 instanceof Promise ? (this.state = "validating", this.render(), s = await i2) : s = i2, s && (this.error = s instanceof Error ? s.message : s, this.state = "error", this.rl?.write(this.userInput));
+        }
+        this.state !== "error" && (this.state = "submit");
+      }
+      isActionKey([t2, e?.name, e?.sequence], "cancel") && (this.state = "cancel"), (this.state === "submit" || this.state === "cancel") && this.emit("finalize"), this.render(), (this.state === "submit" || this.state === "cancel") && this.close();
+    }
+  }
+  close() {
+    this.input.unpipe(), this.input.removeListener("keypress", this.onKeypress), this.output.write(`
+`), setRawMode(this.input, false), this.rl?.close(), this.rl = void 0, this.emit(`${this.state}`, this.value), this.unsubscribe();
+  }
+  restoreCursor() {
+    const t2 = wrapAnsi(this._prevFrame, getColumns(this.output), { hard: true, trim: false }).split(`
+`).length - 1;
+    this.output.write(cursor.move(-999, t2 * -1));
+  }
+  render() {
+    const t2 = wrapAnsi(this._render(this) ?? "", getColumns(this.output), {
+      hard: true,
+      trim: false
+    });
+    if (t2 !== this._prevFrame) {
+      if (this.state === "initial")
+        this.output.write(cursor.hide);
+      else {
+        const e = diffLines(this._prevFrame, t2), i2 = getRows(this.output);
+        if (this.restoreCursor(), e) {
+          const s = Math.max(0, e.numLinesAfter - i2), r2 = Math.max(0, e.numLinesBefore - i2);
+          let n4 = e.lines.find((o) => o >= s);
+          if (n4 === void 0) {
+            this._prevFrame = t2;
+            return;
+          }
+          if (e.lines.length === 1) {
+            this.output.write(cursor.move(0, n4 - r2)), this.output.write(erase.lines(1));
+            const o = t2.split(`
+`);
+            this.output.write(o[n4]), this._prevFrame = t2, this.output.write(cursor.move(0, o.length - n4 - 1));
+            return;
+          } else if (e.lines.length > 1) {
+            if (s < r2)
+              n4 = s;
+            else {
+              const h2 = n4 - r2;
+              h2 > 0 && this.output.write(cursor.move(0, h2));
+            }
+            this.output.write(erase.down());
+            const m = t2.split(`
+`).slice(n4);
+            this.output.write(m.join(`
+`)), this._prevFrame = t2;
+            return;
+          }
+        }
+        this.output.write(erase.down());
+      }
+      this.output.write(t2), this.state === "initial" && (this.state = "active"), this._prevFrame = t2;
+    }
+  }
+};
+var u = class extends C$1 {
+  _mask = "\u2022";
+  get cursor() {
+    return this._cursor;
+  }
+  get masked() {
+    return this.userInput.replaceAll(/./g, this._mask);
+  }
+  get userInputWithCursor() {
+    if (this.state === "submit" || this.state === "cancel")
+      return this.masked;
+    const t2 = this.userInput;
+    if (this.cursor >= t2.length)
+      return `${this.masked}${(0, import_node_util.styleText)(["inverse", "hidden"], "_")}`;
+    const s = this.masked, r2 = s.slice(0, this.cursor), i2 = s.slice(this.cursor, this.cursor + 1), o = s.slice(this.cursor + 1);
+    return `${r2}${(0, import_node_util.styleText)("inverse", i2)}${o}`;
+  }
+  clear() {
+    this._clearUserInput();
+  }
+  constructor({ mask: t2, ...s }) {
+    super(s), this._mask = t2 ?? "\u2022", this.on("userInput", (r2) => {
+      this._setValue(r2);
+    }), this.on("finalize", () => {
+      this.value === void 0 && (this.value = "");
+    });
+  }
+};
+var n$1 = class n2 extends C$1 {
+  options;
+  cursor = 0;
+  get _selectedValue() {
+    return this.options[this.cursor];
+  }
+  changeValue() {
+    const e = this._selectedValue;
+    this.value = e === void 0 ? void 0 : e.value;
+  }
+  constructor(e) {
+    super(e, false), this.options = e.options;
+    const o = this.options.findIndex(({ value: s }) => s === e.initialValue), t2 = o === -1 ? 0 : o;
+    this.cursor = this.options[t2]?.disabled ? findCursor(t2, 1, this.options) : t2, this.changeValue(), this.on("cursor", (s) => {
+      switch (s) {
+        case "left":
+        case "up":
+          this.cursor = findCursor(this.cursor, -1, this.options);
+          break;
+        case "down":
+        case "right":
+          this.cursor = findCursor(this.cursor, 1, this.options);
+          break;
+      }
+      this.changeValue();
+    });
+  }
+};
+var n3 = class extends C$1 {
+  get userInputWithCursor() {
+    if (this.state === "submit")
+      return this.userInput;
+    const t2 = this.userInput;
+    if (this.cursor >= t2.length)
+      return `${this.userInput}\u2588`;
+    const r2 = t2.slice(0, this.cursor), s = t2.slice(this.cursor, this.cursor + 1), e = t2.slice(this.cursor + 1);
+    return `${r2}${(0, import_node_util.styleText)("inverse", s)}${e}`;
+  }
+  get cursor() {
+    return this._cursor;
+  }
+  constructor(t2) {
+    super({
+      ...t2,
+      initialUserInput: t2.initialUserInput ?? t2.initialValue
+    }), this.on("userInput", (r2) => {
+      this._setValue(r2);
+    }), this.on("finalize", () => {
+      this.value || (this.value = t2.defaultValue), this.value === void 0 && (this.value = "");
+    });
+  }
+};
+
+// node_modules/@clack/prompts/dist/index.mjs
+var import_node_util2 = require("node:util");
+var import_node_process2 = __toESM(require("node:process"), 1);
+
+// node_modules/@clack/prompts/node_modules/sisteransi/dist/index.js
+var ESC3 = "\x1B";
+var CSI3 = `${ESC3}[`;
+var cursor2 = {
+  to(x, y) {
+    if (!y)
+      return `${CSI3}${x + 1}G`;
+    return `${CSI3}${y + 1};${x + 1}H`;
+  },
+  move(x, y) {
+    let ret = "";
+    if (x < 0)
+      ret += `${CSI3}${-x}D`;
+    else if (x > 0)
+      ret += `${CSI3}${x}C`;
+    if (y < 0)
+      ret += `${CSI3}${-y}A`;
+    else if (y > 0)
+      ret += `${CSI3}${y}B`;
+    return ret;
+  },
+  up: (count = 1) => `${CSI3}${count}A`,
+  down: (count = 1) => `${CSI3}${count}B`,
+  forward: (count = 1) => `${CSI3}${count}C`,
+  backward: (count = 1) => `${CSI3}${count}D`,
+  nextLine: (count = 1) => `${CSI3}E`.repeat(count),
+  prevLine: (count = 1) => `${CSI3}F`.repeat(count),
+  left: `${CSI3}G`,
+  hide: `${CSI3}?25l`,
+  show: `${CSI3}?25h`,
+  save: `${ESC3}7`,
+  restore: `${ESC3}8`
+};
+var erase2 = {
+  screen: `${CSI3}2J`,
+  up: (count = 1) => `${CSI3}1J`.repeat(count),
+  down: (count = 1) => `${CSI3}J`.repeat(count),
+  line: `${CSI3}2K`,
+  lineEnd: `${CSI3}K`,
+  lineStart: `${CSI3}1K`,
+  lines(count) {
+    let clear3 = "";
+    for (let i2 = 0; i2 < count; i2++)
+      clear3 += this.line + (i2 < count - 1 ? cursor2.up() : "");
+    if (count)
+      clear3 += cursor2.left;
+    return clear3;
+  }
+};
+var clear2 = {
+  screen: `${ESC3}c`
+};
+
+// node_modules/@clack/prompts/dist/index.mjs
+function isUnicodeSupported() {
+  if (import_node_process2.default.platform !== "win32") {
+    return import_node_process2.default.env.TERM !== "linux";
+  }
+  return Boolean(import_node_process2.default.env.CI) || Boolean(import_node_process2.default.env.WT_SESSION) || Boolean(import_node_process2.default.env.TERMINUS_SUBLIME) || import_node_process2.default.env.ConEmuTask === "{cmd::Cmder}" || import_node_process2.default.env.TERM_PROGRAM === "Terminus-Sublime" || import_node_process2.default.env.TERM_PROGRAM === "vscode" || import_node_process2.default.env.TERM === "xterm-256color" || import_node_process2.default.env.TERM === "alacritty" || import_node_process2.default.env.TERMINAL_EMULATOR === "JetBrains-JediTerm";
+}
+var unicode = isUnicodeSupported();
+var isCI = () => process.env.CI === "true";
+var unicodeOr = (e, o) => unicode ? e : o;
+var S_STEP_ACTIVE = unicodeOr("\u25C6", "*");
+var S_STEP_CANCEL = unicodeOr("\u25A0", "x");
+var S_STEP_ERROR = unicodeOr("\u25B2", "x");
+var S_STEP_SUBMIT = unicodeOr("\u25C7", "o");
+var S_BAR_START = unicodeOr("\u250C", "T");
+var S_BAR = unicodeOr("\u2502", "|");
+var S_BAR_END = unicodeOr("\u2514", "\u2014");
+var S_BAR_START_RIGHT = unicodeOr("\u2510", "T");
+var S_BAR_END_RIGHT = unicodeOr("\u2518", "\u2014");
+var S_RADIO_ACTIVE = unicodeOr("\u25CF", ">");
+var S_RADIO_INACTIVE = unicodeOr("\u25CB", " ");
+var S_CHECKBOX_ACTIVE = unicodeOr("\u25FB", "[\u2022]");
+var S_CHECKBOX_SELECTED = unicodeOr("\u25FC", "[+]");
+var S_CHECKBOX_INACTIVE = unicodeOr("\u25FB", "[ ]");
+var S_PASSWORD_MASK = unicodeOr("\u25AA", "\u2022");
+var S_BAR_H = unicodeOr("\u2500", "-");
+var S_CORNER_TOP_RIGHT = unicodeOr("\u256E", "+");
+var S_CONNECT_LEFT = unicodeOr("\u251C", "+");
+var S_CORNER_BOTTOM_RIGHT = unicodeOr("\u256F", "+");
+var S_CORNER_BOTTOM_LEFT = unicodeOr("\u2570", "+");
+var S_CORNER_TOP_LEFT = unicodeOr("\u256D", "+");
+var S_INFO = unicodeOr("\u25CF", "\u2022");
+var S_SUCCESS = unicodeOr("\u25C6", "*");
+var S_WARN = unicodeOr("\u25B2", "!");
+var S_ERROR = unicodeOr("\u25A0", "x");
+var symbol = (e) => {
+  switch (e) {
+    case "initial":
+    case "active":
+      return (0, import_node_util2.styleText)("cyan", S_STEP_ACTIVE);
+    case "cancel":
+      return (0, import_node_util2.styleText)("red", S_STEP_CANCEL);
+    case "error":
+      return (0, import_node_util2.styleText)("yellow", S_STEP_ERROR);
+    case "submit":
+      return (0, import_node_util2.styleText)("green", S_STEP_SUBMIT);
+    case "validating":
+      return (0, import_node_util2.styleText)("dim", S_STEP_ACTIVE);
+  }
+};
+var symbolBar = (e) => {
+  switch (e) {
+    case "initial":
+    case "active":
+      return (0, import_node_util2.styleText)("cyan", S_BAR);
+    case "cancel":
+      return (0, import_node_util2.styleText)("red", S_BAR);
+    case "error":
+      return (0, import_node_util2.styleText)("yellow", S_BAR);
+    case "submit":
+      return (0, import_node_util2.styleText)("green", S_BAR);
+  }
+};
+function formatInstructionFooter(e, o, r2) {
+  const s = r2 ? `${(0, import_node_util2.styleText)("cyan", S_BAR)}  ` : "", n4 = wrapTextWithPrefix(e, o.join(" \u2022 "), s).split(`
+`);
+  return r2 && n4.push((0, import_node_util2.styleText)("cyan", S_BAR_END)), n4;
+}
+var E$1 = (l, e, w, p, b2, C2 = false) => {
+  let r2 = e, O = 0;
+  if (C2)
+    for (let i2 = p - 1; i2 >= w; i2--) {
+      const m = l[i2];
+      if (m && (r2 -= m.length), O++, r2 <= b2) break;
+    }
+  else
+    for (let i2 = w; i2 < p; i2++) {
+      const m = l[i2];
+      if (m && (r2 -= m.length), O++, r2 <= b2) break;
+    }
+  return { lineCount: r2, removals: O };
+};
+var limitOptions = ({
+  cursor: l,
+  options: e,
+  style: w,
+  output: p = process.stdout,
+  maxItems: b2 = Number.POSITIVE_INFINITY,
+  columnPadding: C2 = 0,
+  rowPadding: r2 = 4
+}) => {
+  const i2 = getColumns(p) - C2, m = getRows(p), M = (0, import_node_util2.styleText)("dim", "..."), v = Math.max(m - r2, 0), a2 = Math.max(Math.min(b2, v), 5);
+  let f2 = 0;
+  l >= a2 - 3 && (f2 = Math.max(
+    Math.min(l - a2 + 3, e.length - a2),
+    0
+  ));
+  let d = a2 < e.length && f2 > 0, c4 = a2 < e.length && f2 + a2 < e.length;
+  const I = Math.min(
+    f2 + a2,
+    e.length
+  ), s = [];
+  let g = 0;
+  d && g++, c4 && g++;
+  const T = f2 + (d ? 1 : 0), W2 = I - (c4 ? 1 : 0);
+  for (let t2 = T; t2 < W2; t2++) {
+    const n4 = e[t2], o = n4 !== void 0 ? w(n4, t2 === l) : "", h2 = wrapAnsi(o, i2, {
+      hard: true,
+      trim: false
+    }).split(`
+`);
+    s.push(h2), g += h2.length;
+  }
+  if (g > v) {
+    let t2 = 0, n4 = 0, o = g;
+    const h2 = l - T;
+    let u3 = v;
+    const L = () => E$1(s, o, 0, h2, u3), y = () => E$1(
+      s,
+      o,
+      h2 + 1,
+      s.length,
+      u3,
+      true
+    );
+    d ? ({ lineCount: o, removals: t2 } = L(), o > u3 && (c4 || (u3 -= 1), { lineCount: o, removals: n4 } = y())) : (c4 || (u3 -= 1), { lineCount: o, removals: n4 } = y(), o > u3 && (u3 -= 1, { lineCount: o, removals: t2 } = L())), t2 > 0 && (d = true, s.splice(0, t2)), n4 > 0 && (c4 = true, s.splice(s.length - n4, n4));
+  }
+  const x = [];
+  d && x.push(M);
+  for (const t2 of s)
+    for (const n4 of t2)
+      x.push(n4);
+  return c4 && x.push(M), x;
+};
+var MULTISELECT_INSTRUCTIONS = [
+  `${(0, import_node_util2.styleText)("dim", "\u2191/\u2193")} to navigate`,
+  `${(0, import_node_util2.styleText)("dim", "Space:")} select`,
+  `${(0, import_node_util2.styleText)("dim", "Enter:")} confirm`
+];
+var intro = (o = "", t2) => {
+  const i2 = t2?.output ?? process.stdout, e = t2?.withGuide ?? settings.withGuide ? `${(0, import_node_util2.styleText)("gray", S_BAR_START)}  ` : "";
+  i2.write(`${e}${o}
+`);
+};
+var outro = (o = "", t2) => {
+  const i2 = t2?.output ?? process.stdout, e = t2?.withGuide ?? settings.withGuide ? `${(0, import_node_util2.styleText)("gray", S_BAR)}
+${(0, import_node_util2.styleText)("gray", S_BAR_END)}  ` : "";
+  i2.write(`${e}${o}
+
+`);
+};
+var password = (e) => new u({
+  validate: e.validate,
+  mask: e.mask ?? S_PASSWORD_MASK,
+  signal: e.signal,
+  input: e.input,
+  output: e.output,
+  render() {
+    const r2 = e.withGuide ?? settings.withGuide, o = `${r2 ? `${(0, import_node_util2.styleText)("gray", S_BAR)}
+` : ""}${symbol(this.state)}  ${e.message}
+`, m = this.userInputWithCursor, i2 = this.masked;
+    switch (this.state) {
+      case "error": {
+        const s = r2 ? `${(0, import_node_util2.styleText)("yellow", S_BAR)}  ` : "", n4 = r2 ? `${(0, import_node_util2.styleText)("yellow", S_BAR_END)}  ` : "", d = i2 ?? "";
+        return e.clearOnError && this.clear(), `${o.trim()}
+${s}${d}
+${n4}${(0, import_node_util2.styleText)("yellow", this.error)}
+`;
+      }
+      case "submit": {
+        const s = r2 ? `${(0, import_node_util2.styleText)("gray", S_BAR)}  ` : "", n4 = i2 ? (0, import_node_util2.styleText)("dim", i2) : "";
+        return `${o}${s}${n4}`;
+      }
+      case "cancel": {
+        const s = r2 ? `${(0, import_node_util2.styleText)("gray", S_BAR)}  ` : "", n4 = i2 ? (0, import_node_util2.styleText)(["strikethrough", "dim"], i2) : "";
+        return `${o}${s}${n4}${i2 && r2 ? `
+${(0, import_node_util2.styleText)("gray", S_BAR)}` : ""}`;
+      }
+      default: {
+        const s = r2 ? `${(0, import_node_util2.styleText)("cyan", S_BAR)}  ` : "", n4 = r2 ? (0, import_node_util2.styleText)("cyan", S_BAR_END) : "";
+        return `${o}${s}${m}
+${n4}
+`;
+      }
+    }
+  }
+}).prompt();
+var Y = 3e4;
+var Z = (c4) => (0, import_node_util2.styleText)("magenta", c4);
+var spinner = ({
+  indicator: c4 = "dots",
+  onCancel: b2,
+  output: n4 = process.stdout,
+  cancelMessage: _,
+  errorMessage: C2,
+  frames: M = unicode ? ["\u25D2", "\u25D0", "\u25D3", "\u25D1"] : ["\u2022", "o", "O", "0"],
+  delay: O = unicode ? 80 : 120,
+  signal: g,
+  ...E
+} = {}) => {
+  const u3 = isCI(), h2 = isAccessible(E.accessible);
+  let x, I, p = false, l = false, r2 = "", v, w = performance.now();
+  const y = getColumns(n4), F = E?.styleFrame ?? Z, S2 = (e) => {
+    const s = e > 1 ? C2 ?? settings.messages.error : _ ?? settings.messages.cancel;
+    l = e === 1, p && (m(s, e), l && typeof b2 == "function" && b2());
+  }, $ = () => S2(2), a2 = () => S2(1), H = () => {
+    process.on("uncaughtExceptionMonitor", $), process.on("unhandledRejection", $), process.on("SIGINT", a2), process.on("SIGTERM", a2), process.on("exit", S2), g && g.addEventListener("abort", a2);
+  }, B = () => {
+    process.removeListener("uncaughtExceptionMonitor", $), process.removeListener("unhandledRejection", $), process.removeListener("SIGINT", a2), process.removeListener("SIGTERM", a2), process.removeListener("exit", S2), g && g.removeEventListener("abort", a2);
+  }, R2 = () => {
+    if (v === void 0) return;
+    u3 && n4.write(`
+`);
+    const s = wrapAnsi(v, y, {
+      hard: true,
+      trim: false
+    }).split(`
+`);
+    s.length > 1 && n4.write(cursor2.up(s.length - 1)), n4.write(cursor2.to(0)), n4.write(erase2.down());
+  }, L = (e) => e.replace(/\.+$/, ""), T = (e) => {
+    const s = (performance.now() - e) / 1e3, i2 = Math.floor(s / 60), t2 = Math.floor(s % 60);
+    return i2 > 0 ? `[${i2}m ${t2}s]` : `[${t2}s]`;
+  }, N3 = E.withGuide ?? settings.withGuide, P2 = (e = "") => {
+    if (p = true, l = false, r2 = L(e), w = performance.now(), H(), h2) {
+      r2 !== "" && n4.write(`${r2}
+`), I = setInterval(() => {
+        n4.write(r2 === "" ? `still working
+` : `still working: ${r2}
+`);
+      }, Y);
+      return;
+    }
+    x = block({ output: n4 }), N3 && n4.write(`${(0, import_node_util2.styleText)("gray", S_BAR)}
+`);
+    let s = 0, i2 = 0;
+    I = setInterval(() => {
+      if (u3 && r2 === v)
+        return;
+      R2(), v = r2;
+      const t2 = F(M[s]);
+      let o;
+      if (u3)
+        o = `${t2}  ${r2}...`;
+      else if (c4 === "timer")
+        o = `${t2}  ${r2} ${T(w)}`;
+      else {
+        const j = ".".repeat(Math.floor(i2)).slice(0, 3);
+        o = `${t2}  ${r2}${j}`;
+      }
+      const D = wrapAnsi(o, y, {
+        hard: true,
+        trim: false
+      });
+      n4.write(D), s = s + 1 < M.length ? s + 1 : 0, i2 = i2 < 4 ? i2 + 0.125 : 0;
+    }, O);
+  }, m = (e = "", s = 0, i2 = false) => {
+    if (p) {
+      if (p = false, l = s === 1, clearInterval(I), h2 || R2(), r2 = e ?? r2, !i2)
+        if (h2) {
+          const t2 = s === 1 ? _ ?? settings.messages.cancel : s === 2 ? C2 ?? settings.messages.error : "Done", o = r2 || t2;
+          c4 === "timer" ? n4.write(`${o} ${T(w)}
+`) : n4.write(`${o}
+`);
+        } else {
+          const t2 = s === 0 ? (0, import_node_util2.styleText)("green", S_STEP_SUBMIT) : s === 1 ? (0, import_node_util2.styleText)("red", S_STEP_CANCEL) : (0, import_node_util2.styleText)("red", S_STEP_ERROR);
+          c4 === "timer" ? n4.write(`${t2}  ${r2} ${T(w)}
+`) : n4.write(`${t2}  ${r2}
+`);
+        }
+      B(), x?.();
+    }
+  };
+  return {
+    start: P2,
+    stop: (e = "") => m(e, 0),
+    message: (e = "") => {
+      r2 = L(e ?? r2);
+    },
+    cancel: (e = "") => m(e, 1),
+    error: (e = "") => m(e, 2),
+    clear: () => m("", 0, true),
+    get isCancelled() {
+      return l;
+    }
+  };
+};
+var u2 = {
+  light: unicodeOr("\u2500", "-"),
+  heavy: unicodeOr("\u2501", "="),
+  block: unicodeOr("\u2588", "#")
+};
+var SELECT_INSTRUCTIONS = [
+  `${(0, import_node_util2.styleText)("dim", "\u2191/\u2193")} to navigate`,
+  `${(0, import_node_util2.styleText)("dim", "Enter:")} confirm`
+];
+var c2 = (t2, o) => t2.includes(`
+`) ? t2.split(`
+`).map((d) => o(d)).join(`
+`) : o(t2);
+var select = (t2) => {
+  const o = (n4, m) => {
+    if (n4 === void 0)
+      return "";
+    const s = n4.label ?? String(n4.value);
+    switch (m) {
+      case "disabled":
+        return `${(0, import_node_util2.styleText)("gray", S_RADIO_INACTIVE)} ${c2(s, (i2) => (0, import_node_util2.styleText)("gray", i2))}${n4.hint ? ` ${(0, import_node_util2.styleText)("dim", `(${n4.hint ?? "disabled"})`)}` : ""}`;
+      case "selected":
+        return `${c2(s, (i2) => (0, import_node_util2.styleText)("dim", i2))}`;
+      case "active":
+        return `${(0, import_node_util2.styleText)("green", S_RADIO_ACTIVE)} ${s}${n4.hint ? ` ${(0, import_node_util2.styleText)("dim", `(${n4.hint})`)}` : ""}`;
+      case "cancelled":
+        return `${c2(s, (i2) => (0, import_node_util2.styleText)(["strikethrough", "dim"], i2))}`;
+      default:
+        return `${(0, import_node_util2.styleText)("dim", S_RADIO_INACTIVE)} ${c2(s, (i2) => (0, import_node_util2.styleText)("dim", i2))}`;
+    }
+  }, d = t2.showInstructions ?? true;
+  return new n$1({
+    options: t2.options,
+    signal: t2.signal,
+    input: t2.input,
+    output: t2.output,
+    initialValue: t2.initialValue,
+    render() {
+      const n4 = t2.withGuide ?? settings.withGuide, m = `${symbol(this.state)}  `, s = `${symbolBar(this.state)}  `, i2 = wrapTextWithPrefix(
+        t2.output,
+        t2.message,
+        s,
+        m
+      ), u3 = `${n4 ? `${(0, import_node_util2.styleText)("gray", S_BAR)}
+` : ""}${i2}
+`;
+      switch (this.state) {
+        case "submit": {
+          const r2 = n4 ? `${(0, import_node_util2.styleText)("gray", S_BAR)}  ` : "", a2 = wrapTextWithPrefix(
+            t2.output,
+            o(this.options[this.cursor], "selected"),
+            r2
+          );
+          return `${u3}${a2}`;
+        }
+        case "cancel": {
+          const r2 = n4 ? `${(0, import_node_util2.styleText)("gray", S_BAR)}  ` : "", a2 = wrapTextWithPrefix(
+            t2.output,
+            o(this.options[this.cursor], "cancelled"),
+            r2
+          );
+          return `${u3}${a2}${n4 ? `
+${(0, import_node_util2.styleText)("gray", S_BAR)}` : ""}`;
+        }
+        default: {
+          const r2 = n4 ? `${(0, import_node_util2.styleText)("cyan", S_BAR)}  ` : "", a2 = u3.split(`
+`).length, p = d ? formatInstructionFooter(t2.output, SELECT_INSTRUCTIONS, n4) : n4 ? [(0, import_node_util2.styleText)("cyan", S_BAR_END)] : [], f2 = p.join(`
+`), b2 = p.length + 1;
+          return `${u3}${r2}${limitOptions({
+            output: t2.output,
+            cursor: this.cursor,
+            options: this.options,
+            maxItems: t2.maxItems,
+            columnPadding: r2.length,
+            rowPadding: a2 + b2,
+            style: (g, x) => o(g, g.disabled ? "disabled" : x ? "active" : "inactive")
+          }).join(`
+${r2}`)}
+${f2}
+`;
+        }
+      }
+    }
+  }).prompt();
+};
+var i = `${(0, import_node_util2.styleText)("gray", S_BAR)}  `;
+var text = (t2) => new n3({
+  validate: t2.validate,
+  placeholder: t2.placeholder,
+  defaultValue: t2.defaultValue,
+  initialValue: t2.initialValue,
+  output: t2.output,
+  signal: t2.signal,
+  input: t2.input,
+  render() {
+    const r2 = t2?.withGuide ?? settings.withGuide, l = `${`${r2 ? `${(0, import_node_util2.styleText)("gray", S_BAR)}
+` : ""}${symbol(this.state)}  `}${t2.message}
+`, d = t2.placeholder && t2.placeholder.length > 0 ? (
+      // biome-ignore lint/style/noNonNullAssertion: guarded by placeholder.length > 0
+      (0, import_node_util2.styleText)("inverse", t2.placeholder[0]) + (0, import_node_util2.styleText)("dim", t2.placeholder.slice(1))
+    ) : (0, import_node_util2.styleText)(["inverse", "hidden"], "_"), o = this.userInput ? this.userInputWithCursor : d, s = this.value ?? "";
+    switch (this.state) {
+      case "validating": {
+        const n4 = r2 ? `${(0, import_node_util2.styleText)("cyan", S_BAR)}  ` : "", i2 = r2 ? (0, import_node_util2.styleText)("cyan", S_BAR_END) : "", c4 = (0, import_node_util2.styleText)("dim", o), $ = (0, import_node_util2.styleText)("dim", "Validating...");
+        return `${l}${n4}${c4}
+${i2}  ${$}
+`;
+      }
+      case "error": {
+        const n4 = this.error ? `  ${(0, import_node_util2.styleText)("yellow", this.error)}` : "", i2 = r2 ? `${(0, import_node_util2.styleText)("yellow", S_BAR)}  ` : "", c4 = r2 ? (0, import_node_util2.styleText)("yellow", S_BAR_END) : "";
+        return `${l.trim()}
+${i2}${o}
+${c4}${n4}
+`;
+      }
+      case "submit": {
+        const n4 = s ? `${r2 ? "  " : ""}${(0, import_node_util2.styleText)("dim", s)}` : "", i2 = r2 ? (0, import_node_util2.styleText)("gray", S_BAR) : "";
+        return `${l}${i2}${n4}`;
+      }
+      case "cancel": {
+        const n4 = s ? `  ${(0, import_node_util2.styleText)(["strikethrough", "dim"], s)}` : "", i2 = r2 ? (0, import_node_util2.styleText)("gray", S_BAR) : "";
+        return `${l}${i2}${n4}${s.trim() ? `
+${i2}` : ""}`;
+      }
+      default: {
+        const n4 = r2 ? `${(0, import_node_util2.styleText)("cyan", S_BAR)}  ` : "", i2 = r2 ? (0, import_node_util2.styleText)("cyan", S_BAR_END) : "";
+        return `${l}${n4}${o}
+${i2}
+`;
+      }
+    }
+  }
+}).prompt();
+
+// ravenne.js
 var import_qrcode_terminal = __toESM(require_main(), 1);
 var import_node_fs = __toESM(require("node:fs"), 1);
 var import_node_path = __toESM(require("node:path"), 1);
@@ -57738,16 +59010,16 @@ function decode2(buffer) {
     s: buffer.slice(6 + lenR)
   };
 }
-function encode(r, s) {
-  const lenR = r.length;
+function encode(r2, s) {
+  const lenR = r2.length;
   const lenS = s.length;
   if (lenR === 0) throw new Error("R length is zero");
   if (lenS === 0) throw new Error("S length is zero");
   if (lenR > 33) throw new Error("R length is too long");
   if (lenS > 33) throw new Error("S length is too long");
-  if (r[0] & 128) throw new Error("R value is negative");
+  if (r2[0] & 128) throw new Error("R value is negative");
   if (s[0] & 128) throw new Error("S value is negative");
-  if (lenR > 1 && r[0] === 0 && !(r[1] & 128))
+  if (lenR > 1 && r2[0] === 0 && !(r2[1] & 128))
     throw new Error("R value excessively padded");
   if (lenS > 1 && s[0] === 0 && !(s[1] & 128))
     throw new Error("S value excessively padded");
@@ -57755,8 +59027,8 @@ function encode(r, s) {
   signature2[0] = 48;
   signature2[1] = signature2.length - 2;
   signature2[2] = 2;
-  signature2[3] = r.length;
-  signature2.set(r, 4);
+  signature2[3] = r2.length;
+  signature2.set(r2, 4);
   signature2[4 + lenR] = 2;
   signature2[5 + lenR] = s.length;
   signature2.set(s, 6 + lenR);
@@ -58051,8 +59323,8 @@ function readInt64(buffer, offset, littleEndian) {
 }
 
 // node_modules/bitcoinjs-lib/src/esm/push_data.js
-function encodingLength(i) {
-  return i < OPS.OP_PUSHDATA1 ? 1 : i <= 255 ? 2 : i <= 65535 ? 3 : 5;
+function encodingLength(i2) {
+  return i2 < OPS.OP_PUSHDATA1 ? 1 : i2 <= 255 ? 2 : i2 <= 65535 ? 3 : 5;
 }
 function encode2(buffer, num, offset) {
   const size = encodingLength(num);
@@ -58112,29 +59384,29 @@ function decode4(buffer, maxLength, minimal) {
     }
   }
   if (length2 === 5) {
-    const a = readUInt32(buffer, 0, "LE");
+    const a2 = readUInt32(buffer, 0, "LE");
     const b2 = readUInt8(buffer, 4);
-    if (b2 & 128) return -((b2 & ~128) * 4294967296 + a);
-    return b2 * 4294967296 + a;
+    if (b2 & 128) return -((b2 & ~128) * 4294967296 + a2);
+    return b2 * 4294967296 + a2;
   }
   let result = 0;
-  for (let i = 0; i < length2; ++i) {
-    result |= buffer[i] << 8 * i;
+  for (let i2 = 0; i2 < length2; ++i2) {
+    result |= buffer[i2] << 8 * i2;
   }
   if (buffer[length2 - 1] & 128)
     return -(result & ~(128 << 8 * (length2 - 1)));
   return result;
 }
-function scriptNumSize(i) {
-  return i > 2147483647 ? 5 : i > 8388607 ? 4 : i > 32767 ? 3 : i > 127 ? 2 : i > 0 ? 1 : 0;
+function scriptNumSize(i2) {
+  return i2 > 2147483647 ? 5 : i2 > 8388607 ? 4 : i2 > 32767 ? 3 : i2 > 127 ? 2 : i2 > 0 ? 1 : 0;
 }
 function encode3(_number) {
   let value2 = Math.abs(_number);
   const size = scriptNumSize(value2);
   const buffer = new Uint8Array(size);
   const negative = _number < 0;
-  for (let i = 0; i < size; ++i) {
-    writeUInt8(buffer, i, value2 & 255);
+  for (let i2 = 0; i2 < size; ++i2) {
+    writeUInt8(buffer, i2, value2 & 255);
     value2 >>= 8;
   }
   if (buffer[size - 1] & 128) {
@@ -58748,26 +60020,26 @@ var EC_P = fromHex(
   "fffffffffffffffffffffffffffffffffffffffffffffffffffffffefffffc2f"
 );
 var NBufferSchemaFactory = (size) => pipe(instance(Uint8Array), length(size));
-function stacksEqual(a, b2) {
-  if (a.length !== b2.length) return false;
-  return a.every((x, i) => {
-    return compare(x, b2[i]) === 0;
+function stacksEqual(a2, b2) {
+  if (a2.length !== b2.length) return false;
+  return a2.every((x, i2) => {
+    return compare(x, b2[i2]) === 0;
   });
 }
 function isPoint(p) {
   if (!(p instanceof Uint8Array)) return false;
   if (p.length < 33) return false;
-  const t = p[0];
+  const t2 = p[0];
   const x = p.slice(1, 33);
   if (compare(ZERO32, x) === 0) return false;
   if (compare(x, EC_P) >= 0) return false;
-  if ((t === 2 || t === 3) && p.length === 33) {
+  if ((t2 === 2 || t2 === 3) && p.length === 33) {
     return true;
   }
   const y = p.slice(33);
   if (compare(ZERO32, y) === 0) return false;
   if (compare(y, EC_P) >= 0) return false;
-  if (t === 4 && p.length === 65) return true;
+  if (t2 === 4 && p.length === 65) return true;
   return false;
 }
 var TAPLEAF_VERSION_MASK = 254;
@@ -58781,7 +60053,7 @@ function isTapleaf(o) {
 function isTaptree(scriptTree) {
   if (!Array.isArray(scriptTree)) return isTapleaf(scriptTree);
   if (scriptTree.length !== 2) return false;
-  return scriptTree.every((t) => isTaptree(t));
+  return scriptTree.every((t2) => isTaptree(t2));
 }
 var Buffer256bitSchema = NBufferSchemaFactory(32);
 var Hash160bitSchema = NBufferSchemaFactory(20);
@@ -58805,8 +60077,8 @@ var SatoshiSchema = pipe(
   minValue(0n),
   maxValue2(0x7fffffffffffffffn)
 );
-var NullablePartial = (a) => object2(
-  Object.entries(a).reduce(
+var NullablePartial = (a2) => object2(
+  Object.entries(a2).reduce(
     (acc, next) => ({ ...acc, [next[0]]: nullish(next[1]) }),
     {}
   )
@@ -58815,10 +60087,10 @@ var NullablePartial = (a) => object2(
 // node_modules/bitcoinjs-lib/src/esm/script_signature.js
 var ZERO = new Uint8Array(1);
 function toDER(x) {
-  let i = 0;
-  while (x[i] === 0) ++i;
-  if (i === x.length) return ZERO;
-  x = x.slice(i);
+  let i2 = 0;
+  while (x[i2] === 0) ++i2;
+  if (i2 === x.length) return ZERO;
+  x = x.slice(i2);
   if (x[0] & 128) return concat2([ZERO, x]);
   return x;
 }
@@ -58835,9 +60107,9 @@ function decode5(buffer) {
     throw new Error("Invalid hashType " + hashType);
   }
   const decoded = decode2(buffer.subarray(0, -1));
-  const r = fromDER(decoded.r);
+  const r2 = fromDER(decoded.r);
   const s = fromDER(decoded.s);
-  const signature2 = concat2([r, s]);
+  const signature2 = concat2([r2, s]);
   return { signature: signature2, hashType };
 }
 function encode4(signature2, hashType) {
@@ -58853,9 +60125,9 @@ function encode4(signature2, hashType) {
   }
   const hashTypeBuffer = new Uint8Array(1);
   writeUInt8(hashTypeBuffer, 0, hashType);
-  const r = toDER(signature2.slice(0, 32));
+  const r2 = toDER(signature2.slice(0, 32));
   const s = toDER(signature2.slice(32, 64));
-  return concat2([encode(r, s), hashTypeBuffer]);
+  return concat2([encode(r2, s), hashTypeBuffer]);
 }
 
 // node_modules/bitcoinjs-lib/src/esm/script.js
@@ -58925,16 +60197,16 @@ function decompile(buffer) {
   if (chunksIsArray(buffer)) return buffer;
   parse(BufferSchema, buffer);
   const chunks = [];
-  let i = 0;
-  while (i < buffer.length) {
-    const opcode = buffer[i];
+  let i2 = 0;
+  while (i2 < buffer.length) {
+    const opcode = buffer[i2];
     if (opcode > OPS.OP_0 && opcode <= OPS.OP_PUSHDATA4) {
-      const d = decode3(buffer, i);
+      const d = decode3(buffer, i2);
       if (d === null) return null;
-      i += d.size;
-      if (i + d.number > buffer.length) return null;
-      const data = buffer.slice(i, i + d.number);
-      i += d.number;
+      i2 += d.size;
+      if (i2 + d.number > buffer.length) return null;
+      const data = buffer.slice(i2, i2 + d.number);
+      i2 += d.number;
       const op = asMinimalOP(data);
       if (op !== void 0) {
         chunks.push(op);
@@ -58943,7 +60215,7 @@ function decompile(buffer) {
       }
     } else {
       chunks.push(opcode);
-      i += 1;
+      i2 += 1;
     }
   }
   return chunks;
@@ -59018,8 +60290,8 @@ function value(f2) {
 
 // node_modules/bitcoinjs-lib/src/esm/payments/embed.js
 var OPS2 = OPS;
-function p2data(a, opts) {
-  if (!a.data && !a.output) throw new TypeError("Not enough data");
+function p2data(a2, opts) {
+  if (!a2.data && !a2.output) throw new TypeError("Not enough data");
   opts = Object.assign({ validate: true }, opts || {});
   parse(
     partial(
@@ -59029,36 +60301,36 @@ function p2data(a, opts) {
         data: array(BufferSchema)
       })
     ),
-    a
+    a2
   );
-  const network = a.network || bitcoin;
+  const network = a2.network || bitcoin;
   const o = { name: "embed", network };
   prop(o, "output", () => {
-    if (!a.data) return;
-    return compile([OPS2.OP_RETURN].concat(a.data));
+    if (!a2.data) return;
+    return compile([OPS2.OP_RETURN].concat(a2.data));
   });
   prop(o, "data", () => {
-    if (!a.output) return;
-    return decompile(a.output).slice(1);
+    if (!a2.output) return;
+    return decompile(a2.output).slice(1);
   });
   if (opts.validate) {
-    if (a.output) {
-      const chunks = decompile(a.output);
+    if (a2.output) {
+      const chunks = decompile(a2.output);
       if (chunks[0] !== OPS2.OP_RETURN) throw new TypeError("Output is invalid");
       if (!chunks.slice(1).every((chunk) => is(BufferSchema, chunk)))
         throw new TypeError("Output is invalid");
-      if (a.data && !stacksEqual(a.data, o.data))
+      if (a2.data && !stacksEqual(a2.data, o.data))
         throw new TypeError("Data mismatch");
     }
   }
-  return Object.assign(o, a);
+  return Object.assign(o, a2);
 }
 
 // node_modules/bitcoinjs-lib/src/esm/payments/p2ms.js
 var OPS3 = OPS;
 var OP_INT_BASE2 = OPS3.OP_RESERVED;
-function encodeSmallOrScriptNum(n2) {
-  return n2 <= 16 ? OP_INT_BASE2 + n2 : encode3(n2);
+function encodeSmallOrScriptNum(n4) {
+  return n4 <= 16 ? OP_INT_BASE2 + n4 : encode3(n4);
 }
 function decodeSmallOrScriptNum(chunk) {
   if (typeof chunk === "number") {
@@ -59073,8 +60345,8 @@ function isSmallOrScriptNum(chunk) {
     return chunk - OP_INT_BASE2 >= 1 && chunk - OP_INT_BASE2 <= 16;
   else return Number.isInteger(decode4(chunk));
 }
-function p2ms(a, opts) {
-  if (!a.input && !a.output && !(a.pubkeys && a.m !== void 0) && !a.signatures)
+function p2ms(a2, opts) {
+  if (!a2.input && !a2.output && !(a2.pubkeys && a2.m !== void 0) && !a2.signatures)
     throw new TypeError("Not enough data");
   opts = Object.assign({ validate: true }, opts || {});
   function isAcceptableSignature(x) {
@@ -59095,9 +60367,9 @@ function p2ms(a, opts) {
         input: BufferSchema
       })
     ),
-    a
+    a2
   );
-  const network = a.network || bitcoin;
+  const network = a2.network || bitcoin;
   const o = { network };
   let chunks = [];
   let decoded = false;
@@ -59111,13 +60383,13 @@ function p2ms(a, opts) {
     o.pubkeys = chunks.slice(1, -2);
   }
   prop(o, "output", () => {
-    if (!a.m) return;
+    if (!a2.m) return;
     if (!o.n) return;
-    if (!a.pubkeys) return;
+    if (!a2.pubkeys) return;
     return compile(
       [].concat(
-        encodeSmallOrScriptNum(a.m),
-        a.pubkeys,
+        encodeSmallOrScriptNum(a2.m),
+        a2.pubkeys,
         encodeSmallOrScriptNum(o.n),
         OPS3.OP_CHECKMULTISIG
       )
@@ -59133,17 +60405,17 @@ function p2ms(a, opts) {
     return o.pubkeys.length;
   });
   prop(o, "pubkeys", () => {
-    if (!a.output) return;
-    decode20(a.output);
+    if (!a2.output) return;
+    decode20(a2.output);
     return o.pubkeys;
   });
   prop(o, "signatures", () => {
-    if (!a.input) return;
-    return decompile(a.input).slice(1);
+    if (!a2.input) return;
+    return decompile(a2.input).slice(1);
   });
   prop(o, "input", () => {
-    if (!a.signatures) return;
-    return compile([OPS3.OP_0].concat(a.signatures));
+    if (!a2.signatures) return;
+    return compile([OPS3.OP_0].concat(a2.signatures));
   });
   prop(o, "witness", () => {
     if (!o.input) return;
@@ -59154,8 +60426,8 @@ function p2ms(a, opts) {
     return `p2ms(${o.m} of ${o.n})`;
   });
   if (opts.validate) {
-    if (a.output) {
-      decode20(a.output);
+    if (a2.output) {
+      decode20(a2.output);
       if (!isSmallOrScriptNum(chunks[0]))
         throw new TypeError("Output is invalid");
       if (!isSmallOrScriptNum(chunks[chunks.length - 2]))
@@ -59166,40 +60438,40 @@ function p2ms(a, opts) {
         throw new TypeError("Output is invalid");
       if (!o.pubkeys.every((x) => isPoint(x)))
         throw new TypeError("Output is invalid");
-      if (a.m !== void 0 && a.m !== o.m) throw new TypeError("m mismatch");
-      if (a.n !== void 0 && a.n !== o.n) throw new TypeError("n mismatch");
-      if (a.pubkeys && !stacksEqual(a.pubkeys, o.pubkeys))
+      if (a2.m !== void 0 && a2.m !== o.m) throw new TypeError("m mismatch");
+      if (a2.n !== void 0 && a2.n !== o.n) throw new TypeError("n mismatch");
+      if (a2.pubkeys && !stacksEqual(a2.pubkeys, o.pubkeys))
         throw new TypeError("Pubkeys mismatch");
     }
-    if (a.pubkeys) {
-      if (a.n !== void 0 && a.n !== a.pubkeys.length)
+    if (a2.pubkeys) {
+      if (a2.n !== void 0 && a2.n !== a2.pubkeys.length)
         throw new TypeError("Pubkey count mismatch");
-      o.n = a.pubkeys.length;
+      o.n = a2.pubkeys.length;
       if (o.n < o.m) throw new TypeError("Pubkey count cannot be less than m");
     }
-    if (a.signatures) {
-      if (a.signatures.length < o.m)
+    if (a2.signatures) {
+      if (a2.signatures.length < o.m)
         throw new TypeError("Not enough signatures provided");
-      if (a.signatures.length > o.m)
+      if (a2.signatures.length > o.m)
         throw new TypeError("Too many signatures provided");
     }
-    if (a.input) {
-      if (a.input[0] !== OPS3.OP_0) throw new TypeError("Input is invalid");
+    if (a2.input) {
+      if (a2.input[0] !== OPS3.OP_0) throw new TypeError("Input is invalid");
       if (o.signatures.length === 0 || !o.signatures.every(isAcceptableSignature))
         throw new TypeError("Input has invalid signature(s)");
-      if (a.signatures && !stacksEqual(a.signatures, o.signatures))
+      if (a2.signatures && !stacksEqual(a2.signatures, o.signatures))
         throw new TypeError("Signature mismatch");
-      if (a.m !== void 0 && a.m !== a.signatures.length)
+      if (a2.m !== void 0 && a2.m !== a2.signatures.length)
         throw new TypeError("Signature count mismatch");
     }
   }
-  return Object.assign(o, a);
+  return Object.assign(o, a2);
 }
 
 // node_modules/bitcoinjs-lib/src/esm/payments/p2pk.js
 var OPS4 = OPS;
-function p2pk(a, opts) {
-  if (!a.input && !a.output && !a.pubkey && !a.input && !a.signature)
+function p2pk(a2, opts) {
+  if (!a2.input && !a2.output && !a2.pubkey && !a2.input && !a2.signature)
     throw new TypeError("Not enough data");
   opts = Object.assign({ validate: true }, opts || {});
   parse(
@@ -59215,52 +60487,52 @@ function p2pk(a, opts) {
         input: BufferSchema
       })
     ),
-    a
+    a2
   );
   const _chunks = value(() => {
-    return decompile(a.input);
+    return decompile(a2.input);
   });
-  const network = a.network || bitcoin;
+  const network = a2.network || bitcoin;
   const o = { name: "p2pk", network };
   prop(o, "output", () => {
-    if (!a.pubkey) return;
-    return compile([a.pubkey, OPS4.OP_CHECKSIG]);
+    if (!a2.pubkey) return;
+    return compile([a2.pubkey, OPS4.OP_CHECKSIG]);
   });
   prop(o, "pubkey", () => {
-    if (!a.output) return;
-    return a.output.slice(1, -1);
+    if (!a2.output) return;
+    return a2.output.slice(1, -1);
   });
   prop(o, "signature", () => {
-    if (!a.input) return;
+    if (!a2.input) return;
     return _chunks()[0];
   });
   prop(o, "input", () => {
-    if (!a.signature) return;
-    return compile([a.signature]);
+    if (!a2.signature) return;
+    return compile([a2.signature]);
   });
   prop(o, "witness", () => {
     if (!o.input) return;
     return [];
   });
   if (opts.validate) {
-    if (a.output) {
-      if (a.output[a.output.length - 1] !== OPS4.OP_CHECKSIG)
+    if (a2.output) {
+      if (a2.output[a2.output.length - 1] !== OPS4.OP_CHECKSIG)
         throw new TypeError("Output is invalid");
       if (!isPoint(o.pubkey)) throw new TypeError("Output pubkey is invalid");
-      if (a.pubkey && compare(a.pubkey, o.pubkey) !== 0)
+      if (a2.pubkey && compare(a2.pubkey, o.pubkey) !== 0)
         throw new TypeError("Pubkey mismatch");
     }
-    if (a.signature) {
-      if (a.input && compare(a.input, o.input) !== 0)
+    if (a2.signature) {
+      if (a2.input && compare(a2.input, o.input) !== 0)
         throw new TypeError("Signature mismatch");
     }
-    if (a.input) {
+    if (a2.input) {
       if (_chunks().length !== 1) throw new TypeError("Input is invalid");
       if (!isCanonicalScriptSignature(o.signature))
         throw new TypeError("Input has invalid signature");
     }
   }
-  return Object.assign(o, a);
+  return Object.assign(o, a2);
 }
 
 // node_modules/bitcoinjs-lib/src/esm/crypto.js
@@ -59879,13 +61151,13 @@ function base(ALPHABET2) {
   for (let j = 0; j < BASE_MAP.length; j++) {
     BASE_MAP[j] = 255;
   }
-  for (let i = 0; i < ALPHABET2.length; i++) {
-    const x = ALPHABET2.charAt(i);
+  for (let i2 = 0; i2 < ALPHABET2.length; i2++) {
+    const x = ALPHABET2.charAt(i2);
     const xc = x.charCodeAt(0);
     if (BASE_MAP[xc] !== 255) {
       throw new TypeError(x + " is ambiguous");
     }
-    BASE_MAP[xc] = i;
+    BASE_MAP[xc] = i2;
   }
   const BASE = ALPHABET2.length;
   const LEADER = ALPHABET2.charAt(0);
@@ -59916,8 +61188,8 @@ function base(ALPHABET2) {
     const b58 = new Uint8Array(size);
     while (pbegin !== pend) {
       let carry = source[pbegin];
-      let i = 0;
-      for (let it1 = size - 1; (carry !== 0 || i < length2) && it1 !== -1; it1--, i++) {
+      let i2 = 0;
+      for (let it1 = size - 1; (carry !== 0 || i2 < length2) && it1 !== -1; it1--, i2++) {
         carry += 256 * b58[it1] >>> 0;
         b58[it1] = carry % BASE >>> 0;
         carry = carry / BASE >>> 0;
@@ -59925,7 +61197,7 @@ function base(ALPHABET2) {
       if (carry !== 0) {
         throw new Error("Non-zero carry");
       }
-      length2 = i;
+      length2 = i2;
       pbegin++;
     }
     let it2 = size - length2;
@@ -59963,8 +61235,8 @@ function base(ALPHABET2) {
       if (carry === 255) {
         return;
       }
-      let i = 0;
-      for (let it3 = size - 1; (carry !== 0 || i < length2) && it3 !== -1; it3--, i++) {
+      let i2 = 0;
+      for (let it3 = size - 1; (carry !== 0 || i2 < length2) && it3 !== -1; it3--, i2++) {
         carry += BASE * b256[it3] >>> 0;
         b256[it3] = carry % 256 >>> 0;
         carry = carry / 256 >>> 0;
@@ -59972,7 +61244,7 @@ function base(ALPHABET2) {
       if (carry !== 0) {
         throw new Error("Non-zero carry");
       }
-      length2 = i;
+      length2 = i2;
       psz++;
     }
     let it4 = size - length2;
@@ -60052,8 +61324,8 @@ var esm_default3 = base_default(sha256x2);
 
 // node_modules/bitcoinjs-lib/src/esm/payments/p2pkh.js
 var OPS5 = OPS;
-function p2pkh(a, opts) {
-  if (!a.address && !a.hash && !a.output && !a.pubkey && !a.input)
+function p2pkh(a2, opts) {
+  if (!a2.address && !a2.hash && !a2.output && !a2.pubkey && !a2.input)
     throw new TypeError("Not enough data");
   opts = Object.assign({ validate: true }, opts || {});
   parse(
@@ -60068,18 +61340,18 @@ function p2pkh(a, opts) {
         input: BufferSchema
       })
     ),
-    a
+    a2
   );
   const _address = value(() => {
-    const payload = esm_default3.decode(a.address);
+    const payload = esm_default3.decode(a2.address);
     const version2 = readUInt8(payload, 0);
     const hash2 = payload.slice(1);
     return { version: version2, hash: hash2 };
   });
   const _chunks = value(() => {
-    return decompile(a.input);
+    return decompile(a2.input);
   });
-  const network = a.network || bitcoin;
+  const network = a2.network || bitcoin;
   const o = { name: "p2pkh", network };
   prop(o, "address", () => {
     if (!o.hash) return;
@@ -60089,9 +61361,9 @@ function p2pkh(a, opts) {
     return esm_default3.encode(payload);
   });
   prop(o, "hash", () => {
-    if (a.output) return a.output.slice(3, 23);
-    if (a.address) return _address().hash;
-    if (a.pubkey || o.pubkey) return hash160(a.pubkey || o.pubkey);
+    if (a2.output) return a2.output.slice(3, 23);
+    if (a2.address) return _address().hash;
+    if (a2.pubkey || o.pubkey) return hash160(a2.pubkey || o.pubkey);
   });
   prop(o, "output", () => {
     if (!o.hash) return;
@@ -60104,17 +61376,17 @@ function p2pkh(a, opts) {
     ]);
   });
   prop(o, "pubkey", () => {
-    if (!a.input) return;
+    if (!a2.input) return;
     return _chunks()[1];
   });
   prop(o, "signature", () => {
-    if (!a.input) return;
+    if (!a2.input) return;
     return _chunks()[0];
   });
   prop(o, "input", () => {
-    if (!a.pubkey) return;
-    if (!a.signature) return;
-    return compile([a.signature, a.pubkey]);
+    if (!a2.pubkey) return;
+    if (!a2.signature) return;
+    return compile([a2.signature, a2.pubkey]);
   });
   prop(o, "witness", () => {
     if (!o.input) return;
@@ -60122,53 +61394,53 @@ function p2pkh(a, opts) {
   });
   if (opts.validate) {
     let hash2 = Uint8Array.from([]);
-    if (a.address) {
+    if (a2.address) {
       if (_address().version !== network.pubKeyHash)
         throw new TypeError("Invalid version or Network mismatch");
       if (_address().hash.length !== 20) throw new TypeError("Invalid address");
       hash2 = _address().hash;
     }
-    if (a.hash) {
-      if (hash2.length > 0 && compare(hash2, a.hash) !== 0)
+    if (a2.hash) {
+      if (hash2.length > 0 && compare(hash2, a2.hash) !== 0)
         throw new TypeError("Hash mismatch");
-      else hash2 = a.hash;
+      else hash2 = a2.hash;
     }
-    if (a.output) {
-      if (a.output.length !== 25 || a.output[0] !== OPS5.OP_DUP || a.output[1] !== OPS5.OP_HASH160 || a.output[2] !== 20 || a.output[23] !== OPS5.OP_EQUALVERIFY || a.output[24] !== OPS5.OP_CHECKSIG)
+    if (a2.output) {
+      if (a2.output.length !== 25 || a2.output[0] !== OPS5.OP_DUP || a2.output[1] !== OPS5.OP_HASH160 || a2.output[2] !== 20 || a2.output[23] !== OPS5.OP_EQUALVERIFY || a2.output[24] !== OPS5.OP_CHECKSIG)
         throw new TypeError("Output is invalid");
-      const hash22 = a.output.slice(3, 23);
+      const hash22 = a2.output.slice(3, 23);
       if (hash2.length > 0 && compare(hash2, hash22) !== 0)
         throw new TypeError("Hash mismatch");
       else hash2 = hash22;
     }
-    if (a.pubkey) {
-      const pkh = hash160(a.pubkey);
+    if (a2.pubkey) {
+      const pkh = hash160(a2.pubkey);
       if (hash2.length > 0 && compare(hash2, pkh) !== 0)
         throw new TypeError("Hash mismatch");
       else hash2 = pkh;
     }
-    if (a.input) {
+    if (a2.input) {
       const chunks = _chunks();
       if (chunks.length !== 2) throw new TypeError("Input is invalid");
       if (!isCanonicalScriptSignature(chunks[0]))
         throw new TypeError("Input has invalid signature");
       if (!isPoint(chunks[1])) throw new TypeError("Input has invalid pubkey");
-      if (a.signature && compare(a.signature, chunks[0]) !== 0)
+      if (a2.signature && compare(a2.signature, chunks[0]) !== 0)
         throw new TypeError("Signature mismatch");
-      if (a.pubkey && compare(a.pubkey, chunks[1]) !== 0)
+      if (a2.pubkey && compare(a2.pubkey, chunks[1]) !== 0)
         throw new TypeError("Pubkey mismatch");
       const pkh = hash160(chunks[1]);
       if (hash2.length > 0 && compare(hash2, pkh) !== 0)
         throw new TypeError("Hash mismatch");
     }
   }
-  return Object.assign(o, a);
+  return Object.assign(o, a2);
 }
 
 // node_modules/bitcoinjs-lib/src/esm/payments/p2sh.js
 var OPS6 = OPS;
-function p2sh(a, opts) {
-  if (!a.address && !a.hash && !a.output && !a.redeem && !a.input)
+function p2sh(a2, opts) {
+  if (!a2.address && !a2.hash && !a2.output && !a2.redeem && !a2.input)
     throw new TypeError("Not enough data");
   opts = Object.assign({ validate: true }, opts || {});
   parse(
@@ -60190,21 +61462,21 @@ function p2sh(a, opts) {
         witness: array(BufferSchema)
       })
     ),
-    a
+    a2
   );
-  let network = a.network;
+  let network = a2.network;
   if (!network) {
-    network = a.redeem && a.redeem.network || bitcoin;
+    network = a2.redeem && a2.redeem.network || bitcoin;
   }
   const o = { network };
   const _address = value(() => {
-    const payload = esm_default3.decode(a.address);
+    const payload = esm_default3.decode(a2.address);
     const version2 = readUInt8(payload, 0);
     const hash2 = payload.slice(1);
     return { version: version2, hash: hash2 };
   });
   const _chunks = value(() => {
-    return decompile(a.input);
+    return decompile(a2.input);
   });
   const _redeem = value(() => {
     const chunks = _chunks();
@@ -60213,7 +61485,7 @@ function p2sh(a, opts) {
       network,
       output: lastChunk === OPS6.OP_FALSE ? Uint8Array.from([]) : lastChunk,
       input: compile(chunks.slice(0, -1)),
-      witness: a.witness || []
+      witness: a2.witness || []
     };
   });
   prop(o, "address", () => {
@@ -60224,8 +61496,8 @@ function p2sh(a, opts) {
     return esm_default3.encode(payload);
   });
   prop(o, "hash", () => {
-    if (a.output) return a.output.slice(2, 22);
-    if (a.address) return _address().hash;
+    if (a2.output) return a2.output.slice(2, 22);
+    if (a2.address) return _address().hash;
     if (o.redeem && o.redeem.output) return hash160(o.redeem.output);
   });
   prop(o, "output", () => {
@@ -60233,13 +61505,13 @@ function p2sh(a, opts) {
     return compile([OPS6.OP_HASH160, o.hash, OPS6.OP_EQUAL]);
   });
   prop(o, "redeem", () => {
-    if (!a.input) return;
+    if (!a2.input) return;
     return _redeem();
   });
   prop(o, "input", () => {
-    if (!a.redeem || !a.redeem.input || !a.redeem.output) return;
+    if (!a2.redeem || !a2.redeem.input || !a2.redeem.output) return;
     return compile(
-      [].concat(decompile(a.redeem.input), a.redeem.output)
+      [].concat(decompile(a2.redeem.input), a2.redeem.output)
     );
   });
   prop(o, "witness", () => {
@@ -60254,21 +61526,21 @@ function p2sh(a, opts) {
   });
   if (opts.validate) {
     let hash2 = Uint8Array.from([]);
-    if (a.address) {
+    if (a2.address) {
       if (_address().version !== network.scriptHash)
         throw new TypeError("Invalid version or Network mismatch");
       if (_address().hash.length !== 20) throw new TypeError("Invalid address");
       hash2 = _address().hash;
     }
-    if (a.hash) {
-      if (hash2.length > 0 && compare(hash2, a.hash) !== 0)
+    if (a2.hash) {
+      if (hash2.length > 0 && compare(hash2, a2.hash) !== 0)
         throw new TypeError("Hash mismatch");
-      else hash2 = a.hash;
+      else hash2 = a2.hash;
     }
-    if (a.output) {
-      if (a.output.length !== 23 || a.output[0] !== OPS6.OP_HASH160 || a.output[1] !== 20 || a.output[22] !== OPS6.OP_EQUAL)
+    if (a2.output) {
+      if (a2.output.length !== 23 || a2.output[0] !== OPS6.OP_HASH160 || a2.output[1] !== 20 || a2.output[22] !== OPS6.OP_EQUAL)
         throw new TypeError("Output is invalid");
-      const hash22 = a.output.slice(2, 22);
+      const hash22 = a2.output.slice(2, 22);
       if (hash2.length > 0 && compare(hash2, hash22) !== 0)
         throw new TypeError("Hash mismatch");
       else hash2 = hash22;
@@ -60304,39 +61576,39 @@ function p2sh(a, opts) {
         }
       }
     };
-    if (a.input) {
+    if (a2.input) {
       const chunks = _chunks();
       if (!chunks || chunks.length < 1) throw new TypeError("Input too short");
       if (!(_redeem().output instanceof Uint8Array))
         throw new TypeError("Input is invalid");
       checkRedeem(_redeem());
     }
-    if (a.redeem) {
-      if (a.redeem.network && a.redeem.network !== network)
+    if (a2.redeem) {
+      if (a2.redeem.network && a2.redeem.network !== network)
         throw new TypeError("Network mismatch");
-      if (a.input) {
+      if (a2.input) {
         const redeem = _redeem();
-        if (a.redeem.output && compare(a.redeem.output, redeem.output) !== 0)
+        if (a2.redeem.output && compare(a2.redeem.output, redeem.output) !== 0)
           throw new TypeError("Redeem.output mismatch");
-        if (a.redeem.input && compare(a.redeem.input, redeem.input) !== 0)
+        if (a2.redeem.input && compare(a2.redeem.input, redeem.input) !== 0)
           throw new TypeError("Redeem.input mismatch");
       }
-      checkRedeem(a.redeem);
+      checkRedeem(a2.redeem);
     }
-    if (a.witness) {
-      if (a.redeem && a.redeem.witness && !stacksEqual(a.redeem.witness, a.witness))
+    if (a2.witness) {
+      if (a2.redeem && a2.redeem.witness && !stacksEqual(a2.redeem.witness, a2.witness))
         throw new TypeError("Witness and redeem.witness mismatch");
     }
   }
-  return Object.assign(o, a);
+  return Object.assign(o, a2);
 }
 
 // node_modules/bitcoinjs-lib/src/esm/payments/p2wpkh.js
 var import_bech32 = __toESM(require_dist2(), 1);
 var OPS7 = OPS;
 var EMPTY_BUFFER = new Uint8Array(0);
-function p2wpkh(a, opts) {
-  if (!a.address && !a.hash && !a.output && !a.pubkey && !a.witness)
+function p2wpkh(a2, opts) {
+  if (!a2.address && !a2.hash && !a2.output && !a2.pubkey && !a2.witness)
     throw new TypeError("Not enough data");
   opts = Object.assign({ validate: true }, opts || {});
   parse(
@@ -60352,10 +61624,10 @@ function p2wpkh(a, opts) {
         witness: array(BufferSchema)
       })
     ),
-    a
+    a2
   );
   const _address = value(() => {
-    const result = import_bech32.bech32.decode(a.address);
+    const result = import_bech32.bech32.decode(a2.address);
     const version2 = result.words.shift();
     const data = import_bech32.bech32.fromWords(result.words);
     return {
@@ -60364,7 +61636,7 @@ function p2wpkh(a, opts) {
       data: Uint8Array.from(data)
     };
   });
-  const network = a.network || bitcoin;
+  const network = a2.network || bitcoin;
   const o = { name: "p2wpkh", network };
   prop(o, "address", () => {
     if (!o.hash) return;
@@ -60373,35 +61645,35 @@ function p2wpkh(a, opts) {
     return import_bech32.bech32.encode(network.bech32, words2);
   });
   prop(o, "hash", () => {
-    if (a.output) return a.output.slice(2, 22);
-    if (a.address) return _address().data;
-    if (a.pubkey || o.pubkey) return hash160(a.pubkey || o.pubkey);
+    if (a2.output) return a2.output.slice(2, 22);
+    if (a2.address) return _address().data;
+    if (a2.pubkey || o.pubkey) return hash160(a2.pubkey || o.pubkey);
   });
   prop(o, "output", () => {
     if (!o.hash) return;
     return compile([OPS7.OP_0, o.hash]);
   });
   prop(o, "pubkey", () => {
-    if (a.pubkey) return a.pubkey;
-    if (!a.witness) return;
-    return a.witness[1];
+    if (a2.pubkey) return a2.pubkey;
+    if (!a2.witness) return;
+    return a2.witness[1];
   });
   prop(o, "signature", () => {
-    if (!a.witness) return;
-    return a.witness[0];
+    if (!a2.witness) return;
+    return a2.witness[0];
   });
   prop(o, "input", () => {
     if (!o.witness) return;
     return EMPTY_BUFFER;
   });
   prop(o, "witness", () => {
-    if (!a.pubkey) return;
-    if (!a.signature) return;
-    return [a.signature, a.pubkey];
+    if (!a2.pubkey) return;
+    if (!a2.signature) return;
+    return [a2.signature, a2.pubkey];
   });
   if (opts.validate) {
     let hash2 = Uint8Array.from([]);
-    if (a.address) {
+    if (a2.address) {
       if (network && network.bech32 !== _address().prefix)
         throw new TypeError("Invalid prefix or Network mismatch");
       if (_address().version !== 0)
@@ -60410,42 +61682,42 @@ function p2wpkh(a, opts) {
         throw new TypeError("Invalid address data");
       hash2 = _address().data;
     }
-    if (a.hash) {
-      if (hash2.length > 0 && compare(hash2, a.hash) !== 0)
+    if (a2.hash) {
+      if (hash2.length > 0 && compare(hash2, a2.hash) !== 0)
         throw new TypeError("Hash mismatch");
-      else hash2 = a.hash;
+      else hash2 = a2.hash;
     }
-    if (a.output) {
-      if (a.output.length !== 22 || a.output[0] !== OPS7.OP_0 || a.output[1] !== 20)
+    if (a2.output) {
+      if (a2.output.length !== 22 || a2.output[0] !== OPS7.OP_0 || a2.output[1] !== 20)
         throw new TypeError("Output is invalid");
-      if (hash2.length > 0 && compare(hash2, a.output.slice(2)) !== 0)
+      if (hash2.length > 0 && compare(hash2, a2.output.slice(2)) !== 0)
         throw new TypeError("Hash mismatch");
-      else hash2 = a.output.slice(2);
+      else hash2 = a2.output.slice(2);
     }
-    if (a.pubkey) {
-      const pkh = hash160(a.pubkey);
+    if (a2.pubkey) {
+      const pkh = hash160(a2.pubkey);
       if (hash2.length > 0 && compare(hash2, pkh) !== 0)
         throw new TypeError("Hash mismatch");
       else hash2 = pkh;
-      if (!isPoint(a.pubkey) || a.pubkey.length !== 33)
+      if (!isPoint(a2.pubkey) || a2.pubkey.length !== 33)
         throw new TypeError("Invalid pubkey for p2wpkh");
     }
-    if (a.witness) {
-      if (a.witness.length !== 2) throw new TypeError("Witness is invalid");
-      if (!isCanonicalScriptSignature(a.witness[0]))
+    if (a2.witness) {
+      if (a2.witness.length !== 2) throw new TypeError("Witness is invalid");
+      if (!isCanonicalScriptSignature(a2.witness[0]))
         throw new TypeError("Witness has invalid signature");
-      if (!isPoint(a.witness[1]) || a.witness[1].length !== 33)
+      if (!isPoint(a2.witness[1]) || a2.witness[1].length !== 33)
         throw new TypeError("Witness has invalid pubkey");
-      if (a.signature && compare(a.signature, a.witness[0]) !== 0)
+      if (a2.signature && compare(a2.signature, a2.witness[0]) !== 0)
         throw new TypeError("Signature mismatch");
-      if (a.pubkey && compare(a.pubkey, a.witness[1]) !== 0)
+      if (a2.pubkey && compare(a2.pubkey, a2.witness[1]) !== 0)
         throw new TypeError("Pubkey mismatch");
-      const pkh = hash160(a.witness[1]);
+      const pkh = hash160(a2.witness[1]);
       if (hash2.length > 0 && compare(hash2, pkh) !== 0)
         throw new TypeError("Hash mismatch");
     }
   }
-  return Object.assign(o, a);
+  return Object.assign(o, a2);
 }
 
 // node_modules/bitcoinjs-lib/src/esm/payments/p2wsh.js
@@ -60459,8 +61731,8 @@ function chunkHasUncompressedPubkey(chunk) {
     return false;
   }
 }
-function p2wsh(a, opts) {
-  if (!a.address && !a.hash && !a.output && !a.redeem && !a.witness)
+function p2wsh(a2, opts) {
+  if (!a2.address && !a2.hash && !a2.output && !a2.redeem && !a2.witness)
     throw new TypeError("Not enough data");
   opts = Object.assign({ validate: true }, opts || {});
   parse(
@@ -60478,10 +61750,10 @@ function p2wsh(a, opts) {
       input: NBufferSchemaFactory(0),
       witness: array(BufferSchema)
     }),
-    a
+    a2
   );
   const _address = value(() => {
-    const result = import_bech322.bech32.decode(a.address);
+    const result = import_bech322.bech32.decode(a2.address);
     const version2 = result.words.shift();
     const data = import_bech322.bech32.fromWords(result.words);
     return {
@@ -60491,11 +61763,11 @@ function p2wsh(a, opts) {
     };
   });
   const _rchunks = value(() => {
-    return decompile(a.redeem.input);
+    return decompile(a2.redeem.input);
   });
-  let network = a.network;
+  let network = a2.network;
   if (!network) {
-    network = a.redeem && a.redeem.network || bitcoin;
+    network = a2.redeem && a2.redeem.network || bitcoin;
   }
   const o = { network };
   prop(o, "address", () => {
@@ -60505,8 +61777,8 @@ function p2wsh(a, opts) {
     return import_bech322.bech32.encode(network.bech32, words2);
   });
   prop(o, "hash", () => {
-    if (a.output) return a.output.slice(2);
-    if (a.address) return _address().data;
+    if (a2.output) return a2.output.slice(2);
+    if (a2.address) return _address().data;
     if (o.redeem && o.redeem.output) return sha256(o.redeem.output);
   });
   prop(o, "output", () => {
@@ -60514,11 +61786,11 @@ function p2wsh(a, opts) {
     return compile([OPS8.OP_0, o.hash]);
   });
   prop(o, "redeem", () => {
-    if (!a.witness) return;
+    if (!a2.witness) return;
     return {
-      output: a.witness[a.witness.length - 1],
+      output: a2.witness[a2.witness.length - 1],
       input: EMPTY_BUFFER2,
-      witness: a.witness.slice(0, -1)
+      witness: a2.witness.slice(0, -1)
     };
   });
   prop(o, "input", () => {
@@ -60526,16 +61798,16 @@ function p2wsh(a, opts) {
     return EMPTY_BUFFER2;
   });
   prop(o, "witness", () => {
-    if (a.redeem && a.redeem.input && a.redeem.input.length > 0 && a.redeem.output && a.redeem.output.length > 0) {
+    if (a2.redeem && a2.redeem.input && a2.redeem.input.length > 0 && a2.redeem.output && a2.redeem.output.length > 0) {
       const stack = toStack(_rchunks());
-      o.redeem = Object.assign({ witness: stack }, a.redeem);
+      o.redeem = Object.assign({ witness: stack }, a2.redeem);
       o.redeem.input = EMPTY_BUFFER2;
-      return [].concat(stack, a.redeem.output);
+      return [].concat(stack, a2.redeem.output);
     }
-    if (!a.redeem) return;
-    if (!a.redeem.output) return;
-    if (!a.redeem.witness) return;
-    return [].concat(a.redeem.witness, a.redeem.output);
+    if (!a2.redeem) return;
+    if (!a2.redeem.output) return;
+    if (!a2.redeem.witness) return;
+    return [].concat(a2.redeem.witness, a2.redeem.output);
   });
   prop(o, "name", () => {
     const nameParts = ["p2wsh"];
@@ -60545,7 +61817,7 @@ function p2wsh(a, opts) {
   });
   if (opts.validate) {
     let hash2 = Uint8Array.from([]);
-    if (a.address) {
+    if (a2.address) {
       if (_address().prefix !== network.bech32)
         throw new TypeError("Invalid prefix or Network mismatch");
       if (_address().version !== 0)
@@ -60554,29 +61826,29 @@ function p2wsh(a, opts) {
         throw new TypeError("Invalid address data");
       hash2 = _address().data;
     }
-    if (a.hash) {
-      if (hash2.length > 0 && compare(hash2, a.hash) !== 0)
+    if (a2.hash) {
+      if (hash2.length > 0 && compare(hash2, a2.hash) !== 0)
         throw new TypeError("Hash mismatch");
-      else hash2 = a.hash;
+      else hash2 = a2.hash;
     }
-    if (a.output) {
-      if (a.output.length !== 34 || a.output[0] !== OPS8.OP_0 || a.output[1] !== 32)
+    if (a2.output) {
+      if (a2.output.length !== 34 || a2.output[0] !== OPS8.OP_0 || a2.output[1] !== 32)
         throw new TypeError("Output is invalid");
-      const hash22 = a.output.slice(2);
+      const hash22 = a2.output.slice(2);
       if (hash2.length > 0 && compare(hash2, hash22) !== 0)
         throw new TypeError("Hash mismatch");
       else hash2 = hash22;
     }
-    if (a.redeem) {
-      if (a.redeem.network && a.redeem.network !== network)
+    if (a2.redeem) {
+      if (a2.redeem.network && a2.redeem.network !== network)
         throw new TypeError("Network mismatch");
-      if (a.redeem.input && a.redeem.input.length > 0 && a.redeem.witness && a.redeem.witness.length > 0)
+      if (a2.redeem.input && a2.redeem.input.length > 0 && a2.redeem.witness && a2.redeem.witness.length > 0)
         throw new TypeError("Ambiguous witness source");
-      if (a.redeem.output) {
-        const decompile2 = decompile(a.redeem.output);
+      if (a2.redeem.output) {
+        const decompile2 = decompile(a2.redeem.output);
         if (!decompile2 || decompile2.length < 1)
           throw new TypeError("Redeem.output is invalid");
-        if (a.redeem.output.byteLength > 3600)
+        if (a2.redeem.output.byteLength > 3600)
           throw new TypeError(
             "Redeem.output unspendable if larger than 3600 bytes"
           );
@@ -60584,16 +61856,16 @@ function p2wsh(a, opts) {
           throw new TypeError(
             "Redeem.output unspendable with more than 201 non-push ops"
           );
-        const hash22 = sha256(a.redeem.output);
+        const hash22 = sha256(a2.redeem.output);
         if (hash2.length > 0 && compare(hash2, hash22) !== 0)
           throw new TypeError("Hash mismatch");
         else hash2 = hash22;
       }
-      if (a.redeem.input && !isPushOnly(_rchunks()))
+      if (a2.redeem.input && !isPushOnly(_rchunks()))
         throw new TypeError("Non push-only scriptSig");
-      if (a.witness && a.redeem.witness && !stacksEqual(a.witness, a.redeem.witness))
+      if (a2.witness && a2.redeem.witness && !stacksEqual(a2.witness, a2.redeem.witness))
         throw new TypeError("Witness and redeem.witness mismatch");
-      if (a.redeem.input && _rchunks().some(chunkHasUncompressedPubkey) || a.redeem.output && (decompile(a.redeem.output) || []).some(
+      if (a2.redeem.input && _rchunks().some(chunkHasUncompressedPubkey) || a2.redeem.output && (decompile(a2.redeem.output) || []).some(
         chunkHasUncompressedPubkey
       )) {
         throw new TypeError(
@@ -60601,15 +61873,15 @@ function p2wsh(a, opts) {
         );
       }
     }
-    if (a.witness && a.witness.length > 0) {
-      const wScript = a.witness[a.witness.length - 1];
-      if (a.redeem && a.redeem.output && compare(a.redeem.output, wScript) !== 0)
+    if (a2.witness && a2.witness.length > 0) {
+      const wScript = a2.witness[a2.witness.length - 1];
+      if (a2.redeem && a2.redeem.output && compare(a2.redeem.output, wScript) !== 0)
         throw new TypeError("Witness and redeem.output mismatch");
-      if (a.witness.some(chunkHasUncompressedPubkey) || (decompile(wScript) || []).some(chunkHasUncompressedPubkey))
+      if (a2.witness.some(chunkHasUncompressedPubkey) || (decompile(wScript) || []).some(chunkHasUncompressedPubkey))
         throw new TypeError("Witness contains uncompressed pubkey");
     }
   }
-  return Object.assign(o, a);
+  return Object.assign(o, a2);
 }
 
 // node_modules/bitcoinjs-lib/src/esm/ecc_lib.js
@@ -60629,43 +61901,43 @@ __export(esm_exports, {
   encode: () => encode5,
   encodingLength: () => encodingLength2
 });
-var checkUInt64 = (n2) => {
-  if (n2 < 0 || n2 > 0xffffffffffffffffn) {
+var checkUInt64 = (n4) => {
+  if (n4 < 0 || n4 > 0xffffffffffffffffn) {
     throw new RangeError("value out of range");
   }
 };
-function checkUInt53(n2) {
-  if (n2 < 0 || n2 > Number.MAX_SAFE_INTEGER || n2 % 1 !== 0)
+function checkUInt53(n4) {
+  if (n4 < 0 || n4 > Number.MAX_SAFE_INTEGER || n4 % 1 !== 0)
     throw new RangeError("value out of range");
 }
-function checkUint53OrUint64(n2) {
-  if (typeof n2 === "number")
-    checkUInt53(n2);
+function checkUint53OrUint64(n4) {
+  if (typeof n4 === "number")
+    checkUInt53(n4);
   else
-    checkUInt64(n2);
+    checkUInt64(n4);
 }
-function encode5(n2, buffer, offset) {
-  checkUint53OrUint64(n2);
+function encode5(n4, buffer, offset) {
+  checkUint53OrUint64(n4);
   if (offset === void 0)
     offset = 0;
   if (buffer === void 0) {
-    buffer = new Uint8Array(encodingLength2(n2));
+    buffer = new Uint8Array(encodingLength2(n4));
   }
   let bytes2 = 0;
-  if (n2 < 253) {
-    buffer.set([Number(n2)], offset);
+  if (n4 < 253) {
+    buffer.set([Number(n4)], offset);
     bytes2 = 1;
-  } else if (n2 <= 65535) {
+  } else if (n4 <= 65535) {
     buffer.set([253], offset);
-    writeUInt16(buffer, offset + 1, Number(n2), "LE");
+    writeUInt16(buffer, offset + 1, Number(n4), "LE");
     bytes2 = 3;
-  } else if (n2 <= 4294967295) {
+  } else if (n4 <= 4294967295) {
     buffer.set([254], offset);
-    writeUInt32(buffer, offset + 1, Number(n2), "LE");
+    writeUInt32(buffer, offset + 1, Number(n4), "LE");
     bytes2 = 5;
   } else {
     buffer.set([255], offset);
-    writeUInt64(buffer, offset + 1, BigInt(n2), "LE");
+    writeUInt64(buffer, offset + 1, BigInt(n4), "LE");
     bytes2 = 9;
   }
   return { buffer, bytes: bytes2 };
@@ -60697,9 +61969,9 @@ function decode6(buffer, offset) {
     return { numberValue: number3 <= Number.MAX_SAFE_INTEGER ? Number(number3) : null, bigintValue: number3, bytes: 9 };
   }
 }
-function encodingLength2(n2) {
-  checkUint53OrUint64(n2);
-  return n2 < 253 ? 1 : n2 <= 65535 ? 3 : n2 <= 4294967295 ? 5 : 9;
+function encodingLength2(n4) {
+  checkUint53OrUint64(n4);
+  return n4 < 253 ? 1 : n4 <= 65535 ? 3 : n4 <= 4294967295 ? 5 : 9;
 }
 
 // node_modules/bitcoinjs-lib/src/esm/bufferutils.js
@@ -60718,9 +61990,9 @@ function reverseBuffer(buffer) {
   if (buffer.length < 1) return buffer;
   let j = buffer.length - 1;
   let tmp = 0;
-  for (let i = 0; i < buffer.length / 2; i++) {
-    tmp = buffer[i];
-    buffer[i] = buffer[j];
+  for (let i2 = 0; i2 < buffer.length / 2; i2++) {
+    tmp = buffer[i2];
+    buffer[i2] = buffer[j];
     buffer[j] = tmp;
     j--;
   }
@@ -60745,23 +62017,23 @@ var BufferWriter = class _BufferWriter {
       offset
     ]);
   }
-  writeUInt8(i) {
-    this.offset = writeUInt8(this.buffer, this.offset, i);
+  writeUInt8(i2) {
+    this.offset = writeUInt8(this.buffer, this.offset, i2);
   }
-  writeInt32(i) {
-    this.offset = writeInt32(this.buffer, this.offset, i, "LE");
+  writeInt32(i2) {
+    this.offset = writeInt32(this.buffer, this.offset, i2, "LE");
   }
-  writeInt64(i) {
-    this.offset = writeInt64(this.buffer, this.offset, BigInt(i), "LE");
+  writeInt64(i2) {
+    this.offset = writeInt64(this.buffer, this.offset, BigInt(i2), "LE");
   }
-  writeUInt32(i) {
-    this.offset = writeUInt32(this.buffer, this.offset, i, "LE");
+  writeUInt32(i2) {
+    this.offset = writeUInt32(this.buffer, this.offset, i2, "LE");
   }
-  writeUInt64(i) {
-    this.offset = writeUInt64(this.buffer, this.offset, BigInt(i), "LE");
+  writeUInt64(i2) {
+    this.offset = writeUInt64(this.buffer, this.offset, BigInt(i2), "LE");
   }
-  writeVarInt(i) {
-    const { bytes: bytes2 } = encode5(i, this.buffer, this.offset);
+  writeVarInt(i2) {
+    const { bytes: bytes2 } = encode5(i2, this.buffer, this.offset);
     this.offset += bytes2;
   }
   writeSlice(slice) {
@@ -60822,9 +62094,9 @@ var BufferReader = class {
     this.offset += bytes2;
     return bigintValue;
   }
-  readSlice(n2) {
-    verifuint(n2, MAX_JS_NUMBER);
-    const num = Number(n2);
+  readSlice(n4) {
+    verifuint(n4, MAX_JS_NUMBER);
+    const num = Number(n4);
     if (this.buffer.length < this.offset + num) {
       throw new Error("Cannot read slice out of bounds");
     }
@@ -60838,7 +62110,7 @@ var BufferReader = class {
   readVector() {
     const count = this.readVarInt();
     const vector = [];
-    for (let i = 0; i < count; i++) vector.push(this.readVarSlice());
+    for (let i2 = 0; i2 < count; i2++) vector.push(this.readVarSlice());
     return vector;
   }
 };
@@ -60867,7 +62139,7 @@ function rootHashFromPath(controlBlock, leafHash) {
 function toHashTree(scriptTree) {
   if (isTapleaf(scriptTree)) return { hash: tapleafHash(scriptTree) };
   const hashes = [toHashTree(scriptTree[0]), toHashTree(scriptTree[1])];
-  hashes.sort((a, b2) => compare(a.hash, b2.hash));
+  hashes.sort((a2, b2) => compare(a2.hash, b2.hash));
   const [left, right] = hashes;
   return {
     hash: tapBranchHash(left.hash, right.hash),
@@ -60893,17 +62165,17 @@ function tapleafHash(leaf) {
     concat2([Uint8Array.from([version2]), serializeScript(leaf.output)])
   );
 }
-function tapTweakHash(pubKey, h) {
+function tapTweakHash(pubKey, h2) {
   return taggedHash(
     "TapTweak",
-    concat2(h ? [pubKey, h] : [pubKey])
+    concat2(h2 ? [pubKey, h2] : [pubKey])
   );
 }
-function tweakKey(pubKey, h) {
+function tweakKey(pubKey, h2) {
   if (!(pubKey instanceof Uint8Array)) return null;
   if (pubKey.length !== 32) return null;
-  if (h && h.length !== 32) return null;
-  const tweakHash = tapTweakHash(pubKey, h);
+  if (h2 && h2.length !== 32) return null;
+  const tweakHash = tapTweakHash(pubKey, h2);
   const res = getEccLib().xOnlyPointAddTweak(pubKey, tweakHash);
   if (!res || res.xOnlyPubkey === null) return null;
   return {
@@ -60911,8 +62183,8 @@ function tweakKey(pubKey, h) {
     x: Uint8Array.from(res.xOnlyPubkey)
   };
 }
-function tapBranchHash(a, b2) {
-  return taggedHash("TapBranch", concat2([a, b2]));
+function tapBranchHash(a2, b2) {
+  return taggedHash("TapBranch", concat2([a2, b2]));
 }
 function serializeScript(s) {
   const varintLen = esm_exports.encodingLength(s.length);
@@ -60926,8 +62198,8 @@ var import_bech323 = __toESM(require_dist2(), 1);
 var OPS9 = OPS;
 var TAPROOT_WITNESS_VERSION = 1;
 var ANNEX_PREFIX = 80;
-function p2tr(a, opts) {
-  if (!a.address && !a.output && !a.pubkey && !a.internalPubkey && !(a.witness && a.witness.length > 1))
+function p2tr(a2, opts) {
+  if (!a2.address && !a2.output && !a2.pubkey && !a2.internalPubkey && !(a2.witness && a2.witness.length > 1))
     throw new TypeError("Not enough data");
   opts = Object.assign({ validate: true }, opts || {});
   parse(
@@ -60960,24 +62232,24 @@ function p2tr(a, opts) {
         redeemVersion: number2()
       })
     ),
-    a
+    a2
   );
   const _address = value(() => {
-    return fromBech32(a.address);
+    return fromBech32(a2.address);
   });
   const _witness = value(() => {
-    if (!a.witness || !a.witness.length) return;
-    if (a.witness.length >= 2 && a.witness[a.witness.length - 1][0] === ANNEX_PREFIX) {
-      return a.witness.slice(0, -1);
+    if (!a2.witness || !a2.witness.length) return;
+    if (a2.witness.length >= 2 && a2.witness[a2.witness.length - 1][0] === ANNEX_PREFIX) {
+      return a2.witness.slice(0, -1);
     }
-    return a.witness.slice();
+    return a2.witness.slice();
   });
   const _hashTree = value(() => {
-    if (a.scriptTree) return toHashTree(a.scriptTree);
-    if (a.hash) return { hash: a.hash };
+    if (a2.scriptTree) return toHashTree(a2.scriptTree);
+    if (a2.hash) return { hash: a2.hash };
     return;
   });
-  const network = a.network || bitcoin;
+  const network = a2.network || bitcoin;
   const o = { name: "p2tr", network };
   prop(o, "address", () => {
     if (!o.pubkey) return;
@@ -61003,9 +62275,9 @@ function p2tr(a, opts) {
     return compile([OPS9.OP_1, o.pubkey]);
   });
   prop(o, "redeemVersion", () => {
-    if (a.redeemVersion) return a.redeemVersion;
-    if (a.redeem && a.redeem.redeemVersion !== void 0 && a.redeem.redeemVersion !== null) {
-      return a.redeem.redeemVersion;
+    if (a2.redeemVersion) return a2.redeemVersion;
+    if (a2.redeem && a2.redeem.redeemVersion !== void 0 && a2.redeem.redeemVersion !== null) {
+      return a2.redeem.redeemVersion;
     }
     return LEAF_VERSION_TAPSCRIPT;
   });
@@ -61019,51 +62291,51 @@ function p2tr(a, opts) {
     };
   });
   prop(o, "pubkey", () => {
-    if (a.pubkey) return a.pubkey;
-    if (a.output) return a.output.slice(2);
-    if (a.address) return _address().data;
+    if (a2.pubkey) return a2.pubkey;
+    if (a2.output) return a2.output.slice(2);
+    if (a2.address) return _address().data;
     if (o.internalPubkey) {
       const tweakedKey = tweakKey(o.internalPubkey, o.hash);
       if (tweakedKey) return tweakedKey.x;
     }
   });
   prop(o, "internalPubkey", () => {
-    if (a.internalPubkey) return a.internalPubkey;
+    if (a2.internalPubkey) return a2.internalPubkey;
     const witness = _witness();
     if (witness && witness.length > 1)
       return witness[witness.length - 1].slice(1, 33);
   });
   prop(o, "signature", () => {
-    if (a.signature) return a.signature;
+    if (a2.signature) return a2.signature;
     const witness = _witness();
     if (!witness || witness.length !== 1) return;
     return witness[0];
   });
   prop(o, "witness", () => {
-    if (a.witness) return a.witness;
+    if (a2.witness) return a2.witness;
     const hashTree = _hashTree();
-    if (hashTree && a.redeem && a.redeem.output && a.internalPubkey) {
+    if (hashTree && a2.redeem && a2.redeem.output && a2.internalPubkey) {
       const leafHash = tapleafHash({
-        output: a.redeem.output,
+        output: a2.redeem.output,
         version: o.redeemVersion
       });
       const path2 = findScriptPath(hashTree, leafHash);
       if (!path2) return;
-      const outputKey = tweakKey(a.internalPubkey, hashTree.hash);
+      const outputKey = tweakKey(a2.internalPubkey, hashTree.hash);
       if (!outputKey) return;
       const controlBock = concat2(
         [
           Uint8Array.from([o.redeemVersion | outputKey.parity]),
-          a.internalPubkey
+          a2.internalPubkey
         ].concat(path2)
       );
-      return [a.redeem.output, controlBock];
+      return [a2.redeem.output, controlBock];
     }
-    if (a.signature) return [a.signature];
+    if (a2.signature) return [a2.signature];
   });
   if (opts.validate) {
     let pubkey = Uint8Array.from([]);
-    if (a.address) {
+    if (a2.address) {
       if (network && network.bech32 !== _address().prefix)
         throw new TypeError("Invalid prefix or Network mismatch");
       if (_address().version !== TAPROOT_WITNESS_VERSION)
@@ -61072,20 +62344,20 @@ function p2tr(a, opts) {
         throw new TypeError("Invalid address data");
       pubkey = _address().data;
     }
-    if (a.pubkey) {
-      if (pubkey.length > 0 && compare(pubkey, a.pubkey) !== 0)
+    if (a2.pubkey) {
+      if (pubkey.length > 0 && compare(pubkey, a2.pubkey) !== 0)
         throw new TypeError("Pubkey mismatch");
-      else pubkey = a.pubkey;
+      else pubkey = a2.pubkey;
     }
-    if (a.output) {
-      if (a.output.length !== 34 || a.output[0] !== OPS9.OP_1 || a.output[1] !== 32)
+    if (a2.output) {
+      if (a2.output.length !== 34 || a2.output[0] !== OPS9.OP_1 || a2.output[1] !== 32)
         throw new TypeError("Output is invalid");
-      if (pubkey.length > 0 && compare(pubkey, a.output.slice(2)) !== 0)
+      if (pubkey.length > 0 && compare(pubkey, a2.output.slice(2)) !== 0)
         throw new TypeError("Pubkey mismatch");
-      else pubkey = a.output.slice(2);
+      else pubkey = a2.output.slice(2);
     }
-    if (a.internalPubkey) {
-      const tweakedKey = tweakKey(a.internalPubkey, o.hash);
+    if (a2.internalPubkey) {
+      const tweakedKey = tweakKey(a2.internalPubkey, o.hash);
       if (pubkey.length > 0 && compare(pubkey, tweakedKey.x) !== 0)
         throw new TypeError("Pubkey mismatch");
       else pubkey = tweakedKey.x;
@@ -61095,38 +62367,38 @@ function p2tr(a, opts) {
         throw new TypeError("Invalid pubkey for p2tr");
     }
     const hashTree = _hashTree();
-    if (a.hash && hashTree) {
-      if (compare(a.hash, hashTree.hash) !== 0)
+    if (a2.hash && hashTree) {
+      if (compare(a2.hash, hashTree.hash) !== 0)
         throw new TypeError("Hash mismatch");
     }
-    if (a.redeem && a.redeem.output && hashTree) {
+    if (a2.redeem && a2.redeem.output && hashTree) {
       const leafHash = tapleafHash({
-        output: a.redeem.output,
+        output: a2.redeem.output,
         version: o.redeemVersion
       });
       if (!findScriptPath(hashTree, leafHash))
         throw new TypeError("Redeem script not in tree");
     }
     const witness = _witness();
-    if (a.redeem && o.redeem) {
-      if (a.redeem.redeemVersion) {
-        if (a.redeem.redeemVersion !== o.redeem.redeemVersion)
+    if (a2.redeem && o.redeem) {
+      if (a2.redeem.redeemVersion) {
+        if (a2.redeem.redeemVersion !== o.redeem.redeemVersion)
           throw new TypeError("Redeem.redeemVersion and witness mismatch");
       }
-      if (a.redeem.output) {
-        if (decompile(a.redeem.output).length === 0)
+      if (a2.redeem.output) {
+        if (decompile(a2.redeem.output).length === 0)
           throw new TypeError("Redeem.output is invalid");
-        if (o.redeem.output && compare(a.redeem.output, o.redeem.output) !== 0)
+        if (o.redeem.output && compare(a2.redeem.output, o.redeem.output) !== 0)
           throw new TypeError("Redeem.output and witness mismatch");
       }
-      if (a.redeem.witness) {
-        if (o.redeem.witness && !stacksEqual(a.redeem.witness, o.redeem.witness))
+      if (a2.redeem.witness) {
+        if (o.redeem.witness && !stacksEqual(a2.redeem.witness, o.redeem.witness))
           throw new TypeError("Redeem.witness and witness mismatch");
       }
     }
     if (witness && witness.length) {
       if (witness.length === 1) {
-        if (a.signature && compare(a.signature, witness[0]) !== 0)
+        if (a2.signature && compare(a2.signature, witness[0]) !== 0)
           throw new TypeError("Signature mismatch");
       } else {
         const controlBlock = witness[witness.length - 1];
@@ -61144,7 +62416,7 @@ function p2tr(a, opts) {
             `The script path is too long. Got ${m}, expected max 128.`
           );
         const internalPubkey = controlBlock.slice(1, 33);
-        if (a.internalPubkey && compare(a.internalPubkey, internalPubkey) !== 0)
+        if (a2.internalPubkey && compare(a2.internalPubkey, internalPubkey) !== 0)
           throw new TypeError("Internal pubkey mismatch");
         if (!getEccLib().isXOnlyPoint(internalPubkey))
           throw new TypeError("Invalid internalPubkey for p2tr witness");
@@ -61162,7 +62434,7 @@ function p2tr(a, opts) {
       }
     }
   }
-  return Object.assign(o, a);
+  return Object.assign(o, a2);
 }
 
 // node_modules/bitcoinjs-lib/src/esm/address.js
@@ -61347,7 +62619,7 @@ var Transaction2 = class _Transaction {
       bufferReader.offset -= 2;
     }
     const vinLen = bufferReader.readVarInt();
-    for (let i = 0; i < vinLen; ++i) {
+    for (let i2 = 0; i2 < vinLen; ++i2) {
       tx.ins.push({
         hash: bufferReader.readSlice(32),
         index: bufferReader.readUInt32(),
@@ -61357,15 +62629,15 @@ var Transaction2 = class _Transaction {
       });
     }
     const voutLen = bufferReader.readVarInt();
-    for (let i = 0; i < voutLen; ++i) {
+    for (let i2 = 0; i2 < voutLen; ++i2) {
       tx.outs.push({
         value: bufferReader.readInt64(),
         script: bufferReader.readVarSlice()
       });
     }
     if (hasWitnesses) {
-      for (let i = 0; i < vinLen; ++i) {
-        tx.ins[i].witness = bufferReader.readVector();
+      for (let i2 = 0; i2 < vinLen; ++i2) {
+        tx.ins[i2].witness = bufferReader.readVector();
       }
       if (!tx.hasWitnesses())
         throw new Error("Transaction has superfluous witness data");
@@ -61381,8 +62653,8 @@ var Transaction2 = class _Transaction {
   }
   static isCoinbaseHash(buffer) {
     parse(Hash256bitSchema, buffer);
-    for (let i = 0; i < 32; ++i) {
-      if (buffer[i] !== 0) return false;
+    for (let i2 = 0; i2 < 32; ++i2) {
+      if (buffer[i2] !== 0) return false;
     }
     return true;
   }
@@ -61496,15 +62768,15 @@ var Transaction2 = class _Transaction {
     const txTmp = this.clone();
     if ((hashType & 31) === _Transaction.SIGHASH_NONE) {
       txTmp.outs = [];
-      txTmp.ins.forEach((input, i) => {
-        if (i === inIndex) return;
+      txTmp.ins.forEach((input, i2) => {
+        if (i2 === inIndex) return;
         input.sequence = 0;
       });
     } else if ((hashType & 31) === _Transaction.SIGHASH_SINGLE) {
       if (inIndex >= this.outs.length) return ONE;
       txTmp.outs.length = inIndex + 1;
-      for (let i = 0; i < inIndex; i++) {
-        txTmp.outs[i] = BLANK_OUTPUT;
+      for (let i2 = 0; i2 < inIndex; i2++) {
+        txTmp.outs[i2] = BLANK_OUTPUT;
       }
       txTmp.ins.forEach((input, y) => {
         if (y === inIndex) return;
@@ -61559,7 +62831,7 @@ var Transaction2 = class _Transaction {
       values.forEach((value2) => bufferWriter.writeInt64(value2));
       hashAmounts = sha256(bufferWriter.end());
       bufferWriter = BufferWriter.withCapacity(
-        prevOutScripts.map(varSliceSize).reduce((a, b2) => a + b2)
+        prevOutScripts.map(varSliceSize).reduce((a2, b2) => a2 + b2)
       );
       prevOutScripts.forEach(
         (prevOutScript) => bufferWriter.writeVarSlice(prevOutScript)
@@ -61572,7 +62844,7 @@ var Transaction2 = class _Transaction {
     if (!(isNone || isSingle)) {
       if (!this.outs.length)
         throw new Error("Add outputs to the transaction before signing.");
-      const txOutsSize = this.outs.map((output2) => 8 + varSliceSize(output2.script)).reduce((a, b2) => a + b2);
+      const txOutsSize = this.outs.map((output2) => 8 + varSliceSize(output2.script)).reduce((a2, b2) => a2 + b2);
       const bufferWriter = BufferWriter.withCapacity(txOutsSize);
       this.outs.forEach((out) => {
         bufferWriter.writeInt64(out.value);
@@ -61818,7 +63090,7 @@ __export(globalXpub_exports, {
   encode: () => encode6,
   expected: () => expected
 });
-var range = (n2) => [...Array(n2).keys()];
+var range = (n4) => [...Array(n4).keys()];
 function decode7(keyVal) {
   if (keyVal.key[0] !== GlobalTypes.GLOBAL_XPUB) {
     throw new Error(
@@ -61841,8 +63113,8 @@ function decode7(keyVal) {
     extendedPubkey,
     path: "m"
   };
-  for (const i of range(keyVal.value.length / 4 - 1)) {
-    const val = readUInt32(keyVal.value, i * 4 + 4, "LE");
+  for (const i2 of range(keyVal.value.length / 4 - 1)) {
+    const val = readUInt32(keyVal.value, i2 * 4 + 4, "LE");
     const isHard = !!(val & 2147483648);
     const idx = val & 2147483647;
     data.path += "/" + idx.toString(10) + (isHard ? "'" : "");
@@ -62390,7 +63662,7 @@ function canAdd9(currentData, newData) {
 }
 
 // node_modules/bip174/src/esm/lib/converter/shared/bip32Derivation.js
-var range2 = (n2) => [...Array(n2).keys()];
+var range2 = (n4) => [...Array(n4).keys()];
 var isValidDERKey = (pubkey) => pubkey.length === 33 && [2, 3].includes(pubkey[0]) || pubkey.length === 65 && 4 === pubkey[0];
 function makeConverter(TYPE_BYTE, isValidPubkey = isValidDERKey) {
   function decode20(keyVal) {
@@ -62415,8 +63687,8 @@ function makeConverter(TYPE_BYTE, isValidPubkey = isValidDERKey) {
       pubkey,
       path: "m"
     };
-    for (const i of range2(keyVal.value.length / 4 - 1)) {
-      const val = readUInt32(keyVal.value, i * 4 + 4, "LE");
+    for (const i2 of range2(keyVal.value.length / 4 - 1)) {
+      const val = readUInt32(keyVal.value, i2 * 4 + 4, "LE");
       const isHard = !!(val & 2147483648);
       const idx = val & 2147483647;
       data.path += "/" + idx.toString(10) + (isHard ? "'" : "");
@@ -62524,8 +63796,8 @@ function makeConverter3(TYPE_BYTE) {
       value: keyVal.value.slice(nHashesLen + Number(nHashes) * 32)
     });
     const leafHashes = new Array(Number(nHashes));
-    for (let i = 0, _offset = nHashesLen; i < nHashes; i++, _offset += 32) {
-      leafHashes[i] = keyVal.value.slice(_offset, _offset + 32);
+    for (let i2 = 0, _offset = nHashesLen; i2 < nHashes; i2++, _offset += 32) {
+      leafHashes[i2] = keyVal.value.slice(_offset, _offset + 32);
     }
     return { ...base2, leafHashes };
   }
@@ -62664,7 +63936,7 @@ var outputs = {
 };
 
 // node_modules/bip174/src/esm/lib/converter/tools.js
-var range3 = (n2) => [...Array(n2).keys()];
+var range3 = (n4) => [...Array(n4).keys()];
 function keyValsToBuffer(keyVals) {
   const buffers = keyVals.map(keyValToBuffer);
   buffers.push(Uint8Array.from([0]));
@@ -63006,8 +64278,8 @@ function psbtToBuffer({ globalMap, inputs: inputs2, outputs: outputs2 }) {
     [header2, globalBuffer].concat(inputBuffers, outputBuffers)
   );
 }
-var sortKeyVals = (a, b2) => {
-  return compare(a.key, b2.key);
+var sortKeyVals = (a2, b2) => {
+  return compare(a2.key, b2.key);
 };
 function keyValsFromMap(keyValMap, converterFactory) {
   const keyHexSet = /* @__PURE__ */ new Set();
@@ -63034,7 +64306,7 @@ function keyValsFromMap(keyValMap, converterFactory) {
 function psbtToKeyVals({ globalMap, inputs: inputs2, outputs: outputs2 }) {
   return {
     globalKeyVals: keyValsFromMap(globalMap, globals),
-    inputKeyVals: inputs2.map((i) => keyValsFromMap(i, inputs)),
+    inputKeyVals: inputs2.map((i2) => keyValsFromMap(i2, inputs)),
     outputKeyVals: outputs2.map((o) => keyValsFromMap(o, outputs))
   };
 }
@@ -63372,11 +64644,11 @@ function witnessStackToScriptWitness(witness) {
   function writeSlice(slice) {
     buffer = concat2([buffer, slice]);
   }
-  function writeVarInt(i) {
+  function writeVarInt(i2) {
     const currentLen = buffer.length;
-    const varintLen = encodingLength2(i);
+    const varintLen = encodingLength2(i2);
     buffer = concat2([buffer, new Uint8Array(varintLen)]);
-    encode5(i, buffer, currentLen);
+    encode5(i2, buffer, currentLen);
   }
   function writeVarSlice(slice) {
     writeVarInt(slice.length);
@@ -63613,7 +64885,7 @@ function sortSignatures(input, tapLeaf) {
     output: tapLeaf.script,
     version: tapLeaf.leafVersion
   });
-  return (input.tapScriptSig || []).filter((tss) => compare(tss.leafHash, leafHash) === 0).map((tss) => addPubkeyPositionInScript(tapLeaf.script, tss)).sort((t1, t2) => t2.positionInScript - t1.positionInScript).map((t) => t.signature);
+  return (input.tapScriptSig || []).filter((tss) => compare(tss.leafHash, leafHash) === 0).map((tss) => addPubkeyPositionInScript(tapLeaf.script, tss)).sort((t1, t2) => t2.positionInScript - t1.positionInScript).map((t2) => t2.signature);
 }
 function addPubkeyPositionInScript(script, tss) {
   return Object.assign(
@@ -63628,7 +64900,7 @@ function findTapLeafToFinalize(input, inputIndex, leafHashToFinalize) {
     throw new Error(
       `Can not finalize taproot input #${inputIndex}. No tapleaf script signature provided.`
     );
-  const tapLeaf = (input.tapLeafScript || []).sort((a, b2) => a.controlBlock.length - b2.controlBlock.length).find(
+  const tapLeaf = (input.tapLeafScript || []).sort((a2, b2) => a2.controlBlock.length - b2.controlBlock.length).find(
     (leaf) => canFinalizeLeaf(leaf, input.tapScriptSig, leafHashToFinalize)
   );
   if (!tapLeaf)
@@ -63746,10 +65018,10 @@ var Psbt2 = class _Psbt {
   }
   combine(...those) {
     this.data.combine(...those.map((o) => o.data));
-    const c2 = this.__CACHE;
-    c2.__FEE = void 0;
-    c2.__FEE_RATE = void 0;
-    c2.__EXTRACTED_TX = void 0;
+    const c4 = this.__CACHE;
+    c4.__FEE = void 0;
+    c4.__FEE_RATE = void 0;
+    c4.__EXTRACTED_TX = void 0;
     return this;
   }
   clone() {
@@ -63764,28 +65036,28 @@ var Psbt2 = class _Psbt {
   setVersion(version2) {
     check32Bit(version2);
     checkInputsForPartialSig(this.data.inputs, "setVersion");
-    const c2 = this.__CACHE;
-    c2.__TX.version = version2;
-    c2.__EXTRACTED_TX = void 0;
+    const c4 = this.__CACHE;
+    c4.__TX.version = version2;
+    c4.__EXTRACTED_TX = void 0;
     return this;
   }
   setLocktime(locktime) {
     check32Bit(locktime);
     checkInputsForPartialSig(this.data.inputs, "setLocktime");
-    const c2 = this.__CACHE;
-    c2.__TX.locktime = locktime;
-    c2.__EXTRACTED_TX = void 0;
+    const c4 = this.__CACHE;
+    c4.__TX.locktime = locktime;
+    c4.__EXTRACTED_TX = void 0;
     return this;
   }
   setInputSequence(inputIndex, sequence) {
     check32Bit(sequence);
     checkInputsForPartialSig(this.data.inputs, "setInputSequence");
-    const c2 = this.__CACHE;
-    if (c2.__TX.ins.length <= inputIndex) {
+    const c4 = this.__CACHE;
+    if (c4.__TX.ins.length <= inputIndex) {
       throw new Error("Input index too high");
     }
-    c2.__TX.ins[inputIndex].sequence = sequence;
-    c2.__EXTRACTED_TX = void 0;
+    c4.__TX.ins[inputIndex].sequence = sequence;
+    c4.__EXTRACTED_TX = void 0;
     return this;
   }
   addInputs(inputDatas) {
@@ -63801,18 +65073,18 @@ var Psbt2 = class _Psbt {
     checkTaprootInputFields(inputData, inputData, "addInput");
     checkInputsForPartialSig(this.data.inputs, "addInput");
     if (inputData.witnessScript) checkInvalidP2WSH(inputData.witnessScript);
-    const c2 = this.__CACHE;
+    const c4 = this.__CACHE;
     this.data.addInput(inputData);
-    const txIn = c2.__TX.ins[c2.__TX.ins.length - 1];
-    checkTxInputCache(c2, txIn);
+    const txIn = c4.__TX.ins[c4.__TX.ins.length - 1];
+    checkTxInputCache(c4, txIn);
     const inputIndex = this.data.inputs.length - 1;
     const input = this.data.inputs[inputIndex];
     if (input.nonWitnessUtxo) {
       addNonWitnessTxCache(this.__CACHE, input, inputIndex);
     }
-    c2.__FEE = void 0;
-    c2.__FEE_RATE = void 0;
-    c2.__EXTRACTED_TX = void 0;
+    c4.__FEE = void 0;
+    c4.__FEE_RATE = void 0;
+    c4.__EXTRACTED_TX = void 0;
     return this;
   }
   addOutputs(outputDatas) {
@@ -63833,22 +65105,22 @@ var Psbt2 = class _Psbt {
       outputData = Object.assign({}, outputData, { script });
     }
     checkTaprootOutputFields(outputData, outputData, "addOutput");
-    const c2 = this.__CACHE;
+    const c4 = this.__CACHE;
     this.data.addOutput(outputData);
-    c2.__FEE = void 0;
-    c2.__FEE_RATE = void 0;
-    c2.__EXTRACTED_TX = void 0;
+    c4.__FEE = void 0;
+    c4.__FEE_RATE = void 0;
+    c4.__EXTRACTED_TX = void 0;
     return this;
   }
   extractTransaction(disableFeeCheck) {
     if (!this.data.inputs.every(isFinalized)) throw new Error("Not finalized");
-    const c2 = this.__CACHE;
+    const c4 = this.__CACHE;
     if (!disableFeeCheck) {
-      checkFees(this, c2, this.opts);
+      checkFees(this, c4, this.opts);
     }
-    if (c2.__EXTRACTED_TX) return c2.__EXTRACTED_TX;
-    const tx = c2.__TX.clone();
-    inputFinalizeGetAmts(this.data.inputs, tx, c2, true);
+    if (c4.__EXTRACTED_TX) return c4.__EXTRACTED_TX;
+    const tx = c4.__TX.clone();
+    inputFinalizeGetAmts(this.data.inputs, tx, c4, true);
     return tx;
   }
   getFeeRate() {
@@ -64036,7 +65308,7 @@ var Psbt2 = class _Psbt {
       this.__CACHE
     );
     if (!allHashses.length) throw new Error("No signatures for this pubkey");
-    const tapKeyHash = allHashses.find((h) => !h.leafHash);
+    const tapKeyHash = allHashses.find((h2) => !h2.leafHash);
     let validationResultCount = 0;
     if (tapKeySig && tapKeyHash) {
       const isValidTapkeySig = validator(
@@ -64050,7 +65322,7 @@ var Psbt2 = class _Psbt {
     if (tapScriptSig) {
       for (const tapSig of tapScriptSig) {
         const tapSigHash = allHashses.find(
-          (h) => compare(h.pubkey, tapSig.pubkey) === 0
+          (h2) => compare(h2.pubkey, tapSig.pubkey) === 0
         );
         if (tapSigHash) {
           const isValidTapScriptSig = validator(
@@ -64070,9 +65342,9 @@ var Psbt2 = class _Psbt {
       throw new Error("Need HDSigner to sign input");
     }
     const results = [];
-    for (const i of range4(this.data.inputs.length)) {
+    for (const i2 of range4(this.data.inputs.length)) {
       try {
-        this.signInputHD(i, hdKeyPair, sighashTypes);
+        this.signInputHD(i2, hdKeyPair, sighashTypes);
         results.push(true);
       } catch (err) {
         results.push(false);
@@ -64090,9 +65362,9 @@ var Psbt2 = class _Psbt {
       }
       const results = [];
       const promises = [];
-      for (const i of range4(this.data.inputs.length)) {
+      for (const i2 of range4(this.data.inputs.length)) {
         promises.push(
-          this.signInputHDAsync(i, hdKeyPair, sighashTypes).then(
+          this.signInputHDAsync(i2, hdKeyPair, sighashTypes).then(
             () => {
               results.push(true);
             },
@@ -64136,9 +65408,9 @@ var Psbt2 = class _Psbt {
     if (!keyPair || !keyPair.publicKey)
       throw new Error("Need Signer to sign input");
     const results = [];
-    for (const i of range4(this.data.inputs.length)) {
+    for (const i2 of range4(this.data.inputs.length)) {
       try {
-        this.signInput(i, keyPair, sighashTypes);
+        this.signInput(i2, keyPair, sighashTypes);
         results.push(true);
       } catch (err) {
         results.push(false);
@@ -64155,9 +65427,9 @@ var Psbt2 = class _Psbt {
         return reject(new Error("Need Signer to sign input"));
       const results = [];
       const promises = [];
-      for (const [i] of this.data.inputs.entries()) {
+      for (const [i2] of this.data.inputs.entries()) {
         promises.push(
-          this.signInputAsync(i, keyPair, sighashTypes).then(
+          this.signInputAsync(i2, keyPair, sighashTypes).then(
             () => {
               results.push(true);
             },
@@ -64229,19 +65501,19 @@ var Psbt2 = class _Psbt {
       tapLeafHashToSign,
       allowedSighashTypes
     );
-    const tapKeySig = hashesForSig.filter((h) => !h.leafHash).map(
-      (h) => serializeTaprootSignature(
-        keyPair.signSchnorr(h.hash),
+    const tapKeySig = hashesForSig.filter((h2) => !h2.leafHash).map(
+      (h2) => serializeTaprootSignature(
+        keyPair.signSchnorr(h2.hash),
         input.sighashType
       )
     )[0];
-    const tapScriptSig = hashesForSig.filter((h) => !!h.leafHash).map((h) => ({
+    const tapScriptSig = hashesForSig.filter((h2) => !!h2.leafHash).map((h2) => ({
       pubkey: toXOnly(keyPair.publicKey),
       signature: serializeTaprootSignature(
-        keyPair.signSchnorr(h.hash),
+        keyPair.signSchnorr(h2.hash),
         input.sighashType
       ),
-      leafHash: h.leafHash
+      leafHash: h2.leafHash
     }));
     if (tapKeySig) {
       this.data.updateInput(inputIndex, { tapKeySig });
@@ -64310,7 +65582,7 @@ var Psbt2 = class _Psbt {
       sighashTypes
     );
     const signaturePromises = [];
-    const tapKeyHash = hashesForSig.filter((h) => !h.leafHash)[0];
+    const tapKeyHash = hashesForSig.filter((h2) => !h2.leafHash)[0];
     if (tapKeyHash) {
       const tapKeySigPromise = Promise.resolve(
         keyPair.signSchnorr(tapKeyHash.hash)
@@ -64319,7 +65591,7 @@ var Psbt2 = class _Psbt {
       });
       signaturePromises.push(tapKeySigPromise);
     }
-    const tapScriptHashes = hashesForSig.filter((h) => !!h.leafHash);
+    const tapScriptHashes = hashesForSig.filter((h2) => !!h2.leafHash);
     if (tapScriptHashes.length) {
       const tapScriptSigPromises = tapScriptHashes.map((tsh) => {
         return Promise.resolve(keyPair.signSchnorr(tsh.hash)).then(
@@ -64396,10 +65668,10 @@ var Psbt2 = class _Psbt {
       );
     }
     if (updateData.nonWitnessUtxo || updateData.witnessUtxo) {
-      const c2 = this.__CACHE;
-      c2.__FEE = void 0;
-      c2.__FEE_RATE = void 0;
-      c2.__EXTRACTED_TX = void 0;
+      const c4 = this.__CACHE;
+      c4.__FEE = void 0;
+      c4.__FEE_RATE = void 0;
+      c4.__EXTRACTED_TX = void 0;
     }
     return this;
   }
@@ -64579,22 +65851,22 @@ var checkWitnessScript = scriptCheckerFactory(
   p2wsh,
   "Witness script"
 );
-function getTxCacheValue(key, name, inputs2, c2) {
+function getTxCacheValue(key, name, inputs2, c4) {
   if (!inputs2.every(isFinalized))
     throw new Error(`PSBT must be finalized to calculate ${name}`);
-  if (key === "__FEE_RATE" && c2.__FEE_RATE) return c2.__FEE_RATE;
-  if (key === "__FEE" && c2.__FEE) return c2.__FEE;
+  if (key === "__FEE_RATE" && c4.__FEE_RATE) return c4.__FEE_RATE;
+  if (key === "__FEE" && c4.__FEE) return c4.__FEE;
   let tx;
   let mustFinalize = true;
-  if (c2.__EXTRACTED_TX) {
-    tx = c2.__EXTRACTED_TX;
+  if (c4.__EXTRACTED_TX) {
+    tx = c4.__EXTRACTED_TX;
     mustFinalize = false;
   } else {
-    tx = c2.__TX.clone();
+    tx = c4.__TX.clone();
   }
-  inputFinalizeGetAmts(inputs2, tx, c2, mustFinalize);
-  if (key === "__FEE_RATE") return c2.__FEE_RATE;
-  else if (key === "__FEE") return c2.__FEE;
+  inputFinalizeGetAmts(inputs2, tx, c4, mustFinalize);
+  if (key === "__FEE_RATE") return c4.__FEE_RATE;
+  else if (key === "__FEE") return c4.__FEE;
 }
 function getFinalScripts(inputIndex, input, script, isSegwit, isP2SH, isP2WSH) {
   const scriptType = classifyScript(script);
@@ -64764,7 +66036,7 @@ function getTaprootHashesForSigValidation(inputIndex, input, inputs2, pubkey, ca
 function getTaprootHashesForSig(inputIndex, input, inputs2, pubkey, cache, keySpend, sighashType, tapLeafHashToSign) {
   const unsignedTx = cache.__TX;
   const prevOuts = inputs2.map(
-    (i, index) => getScriptAndAmountFromUtxo(index, i, cache)
+    (i2, index) => getScriptAndAmountFromUtxo(index, i2, cache)
   );
   const signingScripts = prevOuts.map((o) => o.script);
   const values = prevOuts.map((o) => o.value);
@@ -64904,9 +66176,9 @@ function getSortedSigs(script, partialSig) {
 }
 function scriptWitnessToWitnessStack(buffer) {
   let offset = 0;
-  function readSlice(n2) {
-    offset += n2;
-    return buffer.slice(offset - n2, offset);
+  function readSlice(n4) {
+    offset += n4;
+    return buffer.slice(offset - n4, offset);
   }
   function readVarInt() {
     const vi = decode6(buffer, offset);
@@ -64919,26 +66191,26 @@ function scriptWitnessToWitnessStack(buffer) {
   function readVector() {
     const count = readVarInt();
     const vector = [];
-    for (let i = 0; i < count; i++) vector.push(readVarSlice());
+    for (let i2 = 0; i2 < count; i2++) vector.push(readVarSlice());
     return vector;
   }
   return readVector();
 }
 function sighashTypeToString(sighashType) {
-  let text = sighashType & Transaction2.SIGHASH_ANYONECANPAY ? "SIGHASH_ANYONECANPAY | " : "";
+  let text2 = sighashType & Transaction2.SIGHASH_ANYONECANPAY ? "SIGHASH_ANYONECANPAY | " : "";
   const sigMod = sighashType & 31;
   switch (sigMod) {
     case Transaction2.SIGHASH_ALL:
-      text += "SIGHASH_ALL";
+      text2 += "SIGHASH_ALL";
       break;
     case Transaction2.SIGHASH_SINGLE:
-      text += "SIGHASH_SINGLE";
+      text2 += "SIGHASH_SINGLE";
       break;
     case Transaction2.SIGHASH_NONE:
-      text += "SIGHASH_NONE";
+      text2 += "SIGHASH_NONE";
       break;
   }
-  return text;
+  return text2;
 }
 function addNonWitnessTxCache(cache, input, inputIndex) {
   cache.__NON_WITNESS_UTXO_BUF_CACHE[inputIndex] = input.nonWitnessUtxo;
@@ -64990,11 +66262,11 @@ function inputFinalizeGetAmts(inputs2, tx, cache, mustFinalize) {
   cache.__FEE_RATE = Math.floor(Number(fee / BigInt(bytes2)));
 }
 function nonWitnessUtxoTxFromCache(cache, input, inputIndex) {
-  const c2 = cache.__NON_WITNESS_UTXO_TX_CACHE;
-  if (!c2[inputIndex]) {
+  const c4 = cache.__NON_WITNESS_UTXO_TX_CACHE;
+  if (!c4[inputIndex]) {
     addNonWitnessTxCache(cache, input, inputIndex);
   }
-  return c2[inputIndex];
+  return c4[inputIndex];
 }
 function getUtxoForInput(inputIndex, input, cache) {
   if (input.nonWitnessUtxo) {
@@ -65133,42 +66405,42 @@ function classifyScript(script) {
   if (isP2PK(script)) return "pubkey";
   return "nonstandard";
 }
-function range4(n2) {
-  return [...Array(n2).keys()];
+function range4(n4) {
+  return [...Array(n4).keys()];
 }
 
 // node_modules/@scure/bip32/node_modules/@noble/hashes/_u64.js
 var U32_MASK642 = /* @__PURE__ */ (() => BigInt(2 ** 32 - 1))();
 var _32n2 = /* @__PURE__ */ BigInt(32);
-function fromBig2(n2, le = false) {
+function fromBig2(n4, le = false) {
   if (le)
-    return { h: Number(n2 & U32_MASK642), l: Number(n2 >> _32n2 & U32_MASK642) };
-  return { h: Number(n2 >> _32n2 & U32_MASK642) | 0, l: Number(n2 & U32_MASK642) | 0 };
+    return { h: Number(n4 & U32_MASK642), l: Number(n4 >> _32n2 & U32_MASK642) };
+  return { h: Number(n4 >> _32n2 & U32_MASK642) | 0, l: Number(n4 & U32_MASK642) | 0 };
 }
 function split3(lst, le = false) {
   const len = lst.length;
   let Ah = new Uint32Array(len);
   let Al = new Uint32Array(len);
-  for (let i = 0; i < len; i++) {
-    const { h, l } = fromBig2(lst[i], le);
-    [Ah[i], Al[i]] = [h, l];
+  for (let i2 = 0; i2 < len; i2++) {
+    const { h: h2, l } = fromBig2(lst[i2], le);
+    [Ah[i2], Al[i2]] = [h2, l];
   }
   return [Ah, Al];
 }
-var fromNumH = (n2) => n2 / 2 ** 32 | 0;
-var fromNumL = (n2) => n2 >>> 0;
-function setU64FromNum(view, byteOffset, n2, isLE2) {
-  const h = fromNumH(n2);
-  const l = fromNumL(n2);
-  view.setUint32(byteOffset, isLE2 ? l : h, isLE2);
-  view.setUint32(byteOffset + 4, isLE2 ? h : l, isLE2);
+var fromNumH = (n4) => n4 / 2 ** 32 | 0;
+var fromNumL = (n4) => n4 >>> 0;
+function setU64FromNum(view, byteOffset, n4, isLE2) {
+  const h2 = fromNumH(n4);
+  const l = fromNumL(n4);
+  view.setUint32(byteOffset, isLE2 ? l : h2, isLE2);
+  view.setUint32(byteOffset + 4, isLE2 ? h2 : l, isLE2);
 }
-var shrSH = (h, _l, s) => h >>> s;
-var shrSL = (h, l, s) => h << 32 - s | l >>> s;
-var rotrSH = (h, l, s) => h >>> s | l << 32 - s;
-var rotrSL = (h, l, s) => h << 32 - s | l >>> s;
-var rotrBH = (h, l, s) => h << 64 - s | l >>> s - 32;
-var rotrBL = (h, l, s) => h >>> s - 32 | l << 64 - s;
+var shrSH = (h2, _l, s) => h2 >>> s;
+var shrSL = (h2, l, s) => h2 << 32 - s | l >>> s;
+var rotrSH = (h2, l, s) => h2 >>> s | l << 32 - s;
+var rotrSL = (h2, l, s) => h2 << 32 - s | l >>> s;
+var rotrBH = (h2, l, s) => h2 << 64 - s | l >>> s - 32;
+var rotrBL = (h2, l, s) => h2 >>> s - 32 | l << 64 - s;
 function add(Ah, Al, Bh, Bl) {
   const l = (Al >>> 0) + (Bl >>> 0);
   return { h: Ah + Bh + (l / 2 ** 32 | 0) | 0, l: l | 0 };
@@ -65181,16 +66453,16 @@ var add5L = (Al, Bl, Cl, Dl, El) => (Al >>> 0) + (Bl >>> 0) + (Cl >>> 0) + (Dl >
 var add5H = (low, Ah, Bh, Ch, Dh, Eh) => Ah + Bh + Ch + Dh + Eh + (low / 2 ** 32 | 0) | 0;
 
 // node_modules/@scure/bip32/node_modules/@noble/hashes/utils.js
-function isBytes(a) {
-  return a instanceof Uint8Array || ArrayBuffer.isView(a) && a.constructor.name === "Uint8Array" && "BYTES_PER_ELEMENT" in a && a.BYTES_PER_ELEMENT === 1;
+function isBytes(a2) {
+  return a2 instanceof Uint8Array || ArrayBuffer.isView(a2) && a2.constructor.name === "Uint8Array" && "BYTES_PER_ELEMENT" in a2 && a2.BYTES_PER_ELEMENT === 1;
 }
 var atitle = (title) => title ? `"${title}" ` : "";
-function anumber(n2, title = "") {
-  if (typeof n2 !== "number")
-    throw new TypeError(atitle(title) + "expected number, got " + typeof n2);
-  if (!Number.isSafeInteger(n2) || n2 < 0)
-    throw new RangeError(atitle(title) + "expected integer >= 0, got " + n2);
-  return n2;
+function anumber(n4, title = "") {
+  if (typeof n4 !== "number")
+    throw new TypeError(atitle(title) + "expected number, got " + typeof n4);
+  if (!Number.isSafeInteger(n4) || n4 < 0)
+    throw new RangeError(atitle(title) + "expected integer >= 0, got " + n4);
+  return n4;
 }
 function abytes(value2, length2, title = "") {
   if (isBytes(value2) && (length2 === void 0 || value2.length === length2))
@@ -65205,12 +66477,12 @@ function abytes(value2, length2, title = "") {
     throw new TypeError(message);
   throw new RangeError(message);
 }
-function ahash(h) {
-  if (typeof h !== "function" || typeof h.create !== "function")
+function ahash(h2) {
+  if (typeof h2 !== "function" || typeof h2.create !== "function")
     throw new TypeError("expected hash wrapped by utils.createHasher");
-  anumber(h.outputLen);
-  anumber(h.blockLen);
-  if (h.outputLen < 1 || h.blockLen < 1)
+  anumber(h2.outputLen);
+  anumber(h2.blockLen);
+  if (h2.outputLen < 1 || h2.blockLen < 1)
     throw new Error("hash blockLen / outputLen must be >= 1");
 }
 var aobject = (value2, label) => {
@@ -65239,8 +66511,8 @@ function aoutput(out, instance2) {
   }
 }
 function clean(...arrays) {
-  for (let i = 0; i < arrays.length; i++) {
-    arrays[i].fill(0);
+  for (let i2 = 0; i2 < arrays.length; i2++) {
+    arrays[i2].fill(0);
   }
 }
 function createView2(arr) {
@@ -65256,14 +66528,14 @@ var hasHexBuiltin = /* @__PURE__ */ (() => (
   // @ts-ignore
   typeof Uint8Array.from([]).toHex === "function" && typeof Uint8Array.fromHex === "function"
 ))();
-var hexes2 = /* @__PURE__ */ Array.from({ length: 256 }, (_, i) => i.toString(16).padStart(2, "0"));
+var hexes2 = /* @__PURE__ */ Array.from({ length: 256 }, (_, i2) => i2.toString(16).padStart(2, "0"));
 function bytesToHex2(bytes2) {
   abytes(bytes2);
   if (hasHexBuiltin)
     return bytes2.toHex();
   let hex = "";
-  for (let i = 0; i < bytes2.length; i++) {
-    hex += hexes2[bytes2[i]];
+  for (let i2 = 0; i2 < bytes2.length; i2++) {
+    hex += hexes2[bytes2[i2]];
   }
   return hex;
 }
@@ -65289,27 +66561,27 @@ function hexToBytes2(hex) {
   const array2 = new Uint8Array(al);
   for (let ai = 0, hi = 0; ai < al; ai++, hi += 2) {
     const n1 = asciiToBase16(hex.charCodeAt(hi));
-    const n2 = asciiToBase16(hex.charCodeAt(hi + 1));
-    if (n1 === void 0 || n2 === void 0) {
+    const n22 = asciiToBase16(hex.charCodeAt(hi + 1));
+    if (n1 === void 0 || n22 === void 0) {
       const char = hex[hi] + hex[hi + 1];
       throw new RangeError('hex string expected, got non-hex character "' + char + '" at index ' + hi);
     }
-    array2[ai] = n1 * 16 + n2;
+    array2[ai] = n1 * 16 + n22;
   }
   return array2;
 }
 function concatBytes3(...arrays) {
   let sum = 0;
-  for (let i = 0; i < arrays.length; i++) {
-    const a = arrays[i];
-    abytes(a);
-    sum += a.length;
+  for (let i2 = 0; i2 < arrays.length; i2++) {
+    const a2 = arrays[i2];
+    abytes(a2);
+    sum += a2.length;
   }
   const res = new Uint8Array(sum);
-  for (let i = 0, pad = 0; i < arrays.length; i++) {
-    const a = arrays[i];
-    res.set(a, pad);
-    pad += a.length;
+  for (let i2 = 0, pad = 0; i2 < arrays.length; i2++) {
+    const a2 = arrays[i2];
+    res.set(a2, pad);
+    pad += a2.length;
   }
   return res;
 }
@@ -65349,11 +66621,11 @@ var oidNist = (suffix) => ({
 });
 
 // node_modules/@scure/bip32/node_modules/@noble/hashes/_md.js
-function Chi2(a, b2, c2) {
-  return a & b2 ^ ~a & c2;
+function Chi2(a2, b2, c4) {
+  return a2 & b2 ^ ~a2 & c4;
 }
-function Maj2(a, b2, c2) {
-  return a & b2 ^ a & c2 ^ b2 & c2;
+function Maj2(a2, b2, c4) {
+  return a2 & b2 ^ a2 & c4 ^ b2 & c4;
 }
 var HashMD = class {
   blockLen;
@@ -65426,8 +66698,8 @@ var HashMD = class {
     const state2 = this.get();
     if (len % 4 || outLen > state2.length)
       throw new Error("invalid outputLen");
-    for (let i = 0; i < outLen; i++)
-      oview.setUint32(4 * i, state2[i], isLE2);
+    for (let i2 = 0; i2 < outLen; i2++)
+      oview.setUint32(4 * i2, state2[i2], isLE2);
   }
   digest() {
     const { buffer, outputLen } = this;
@@ -65572,14 +66844,14 @@ var SHA2_32B = class extends HashMD {
     this.H = IV2[7] | 0;
   }
   get() {
-    const { A, B, C, D, E, F, G, H } = this;
-    return [A, B, C, D, E, F, G, H];
+    const { A, B, C: C2, D, E, F, G, H } = this;
+    return [A, B, C2, D, E, F, G, H];
   }
   // prettier-ignore
-  set(A, B, C, D, E, F, G, H) {
+  set(A, B, C2, D, E, F, G, H) {
     this.A = A | 0;
     this.B = B | 0;
-    this.C = C | 0;
+    this.C = C2 | 0;
     this.D = D | 0;
     this.E = E | 0;
     this.F = F | 0;
@@ -65591,39 +66863,39 @@ var SHA2_32B = class extends HashMD {
     return this._cloneIntoMeta(to);
   }
   process(view, offset) {
-    for (let i = 0; i < 16; i++, offset += 4)
-      SHA256_W2[i] = view.getUint32(offset, false);
-    for (let i = 16; i < 64; i++) {
-      const W15 = SHA256_W2[i - 15];
-      const W2 = SHA256_W2[i - 2];
+    for (let i2 = 0; i2 < 16; i2++, offset += 4)
+      SHA256_W2[i2] = view.getUint32(offset, false);
+    for (let i2 = 16; i2 < 64; i2++) {
+      const W15 = SHA256_W2[i2 - 15];
+      const W2 = SHA256_W2[i2 - 2];
       const s0 = rotr2(W15, 7) ^ rotr2(W15, 18) ^ W15 >>> 3;
       const s1 = rotr2(W2, 17) ^ rotr2(W2, 19) ^ W2 >>> 10;
-      SHA256_W2[i] = s1 + SHA256_W2[i - 7] + s0 + SHA256_W2[i - 16] | 0;
+      SHA256_W2[i2] = s1 + SHA256_W2[i2 - 7] + s0 + SHA256_W2[i2 - 16] | 0;
     }
-    let { A, B, C, D, E, F, G, H } = this;
-    for (let i = 0; i < 64; i++) {
+    let { A, B, C: C2, D, E, F, G, H } = this;
+    for (let i2 = 0; i2 < 64; i2++) {
       const sigma1 = rotr2(E, 6) ^ rotr2(E, 11) ^ rotr2(E, 25);
-      const T13 = H + sigma1 + Chi2(E, F, G) + SHA256_K2[i] + SHA256_W2[i] | 0;
+      const T13 = H + sigma1 + Chi2(E, F, G) + SHA256_K2[i2] + SHA256_W2[i2] | 0;
       const sigma0 = rotr2(A, 2) ^ rotr2(A, 13) ^ rotr2(A, 22);
-      const T22 = sigma0 + Maj2(A, B, C) | 0;
+      const T22 = sigma0 + Maj2(A, B, C2) | 0;
       H = G;
       G = F;
       F = E;
       E = D + T13 | 0;
-      D = C;
-      C = B;
+      D = C2;
+      C2 = B;
       B = A;
       A = T13 + T22 | 0;
     }
     A = A + this.A | 0;
     B = B + this.B | 0;
-    C = C + this.C | 0;
+    C2 = C2 + this.C | 0;
     D = D + this.D | 0;
     E = E + this.E | 0;
     F = F + this.F | 0;
     G = G + this.G | 0;
     H = H + this.H | 0;
-    this.set(A, B, C, D, E, F, G, H);
+    this.set(A, B, C2, D, E, F, G, H);
   }
   roundClean() {
     clean(SHA256_W2);
@@ -65720,7 +66992,7 @@ var K512 = /* @__PURE__ */ (() => split3([
   "0x597f299cfc657e2a",
   "0x5fcb6fab3ad6faec",
   "0x6c44198c4a475817"
-].map((n2) => BigInt(n2))))();
+].map((n4) => BigInt(n4))))();
 var SHA512_Kh = /* @__PURE__ */ (() => K512[0])();
 var SHA512_Kl = /* @__PURE__ */ (() => K512[1])();
 var SHA512_W_H = /* @__PURE__ */ new Uint32Array(80);
@@ -65795,32 +67067,32 @@ var SHA2_64B = class extends HashMD {
     return this._cloneIntoMeta(to);
   }
   process(view, offset) {
-    for (let i = 0; i < 16; i++, offset += 4) {
-      SHA512_W_H[i] = view.getUint32(offset);
-      SHA512_W_L[i] = view.getUint32(offset += 4);
+    for (let i2 = 0; i2 < 16; i2++, offset += 4) {
+      SHA512_W_H[i2] = view.getUint32(offset);
+      SHA512_W_L[i2] = view.getUint32(offset += 4);
     }
-    for (let i = 16; i < 80; i++) {
-      const W15h = SHA512_W_H[i - 15] | 0;
-      const W15l = SHA512_W_L[i - 15] | 0;
+    for (let i2 = 16; i2 < 80; i2++) {
+      const W15h = SHA512_W_H[i2 - 15] | 0;
+      const W15l = SHA512_W_L[i2 - 15] | 0;
       const s0h = rotrSH(W15h, W15l, 1) ^ rotrSH(W15h, W15l, 8) ^ shrSH(W15h, W15l, 7);
       const s0l = rotrSL(W15h, W15l, 1) ^ rotrSL(W15h, W15l, 8) ^ shrSL(W15h, W15l, 7);
-      const W2h = SHA512_W_H[i - 2] | 0;
-      const W2l = SHA512_W_L[i - 2] | 0;
+      const W2h = SHA512_W_H[i2 - 2] | 0;
+      const W2l = SHA512_W_L[i2 - 2] | 0;
       const s1h = rotrSH(W2h, W2l, 19) ^ rotrBH(W2h, W2l, 61) ^ shrSH(W2h, W2l, 6);
       const s1l = rotrSL(W2h, W2l, 19) ^ rotrBL(W2h, W2l, 61) ^ shrSL(W2h, W2l, 6);
-      const SUMl = add4L(s0l, s1l, SHA512_W_L[i - 7], SHA512_W_L[i - 16]);
-      const SUMh = add4H(SUMl, s0h, s1h, SHA512_W_H[i - 7], SHA512_W_H[i - 16]);
-      SHA512_W_H[i] = SUMh | 0;
-      SHA512_W_L[i] = SUMl | 0;
+      const SUMl = add4L(s0l, s1l, SHA512_W_L[i2 - 7], SHA512_W_L[i2 - 16]);
+      const SUMh = add4H(SUMl, s0h, s1h, SHA512_W_H[i2 - 7], SHA512_W_H[i2 - 16]);
+      SHA512_W_H[i2] = SUMh | 0;
+      SHA512_W_L[i2] = SUMl | 0;
     }
     let { Ah, Al, Bh, Bl, Ch, Cl, Dh, Dl, Eh, El, Fh, Fl, Gh, Gl, Hh, Hl } = this;
-    for (let i = 0; i < 80; i++) {
+    for (let i2 = 0; i2 < 80; i2++) {
       const sigma1h = rotrSH(Eh, El, 14) ^ rotrSH(Eh, El, 18) ^ rotrBH(Eh, El, 41);
       const sigma1l = rotrSL(Eh, El, 14) ^ rotrSL(Eh, El, 18) ^ rotrBL(Eh, El, 41);
       const CHIh = Eh & Fh ^ ~Eh & Gh;
       const CHIl = El & Fl ^ ~El & Gl;
-      const T1ll = add5L(Hl, sigma1l, CHIl, SHA512_Kl[i], SHA512_W_L[i]);
-      const T1h = add5H(T1ll, Hh, sigma1h, CHIh, SHA512_Kh[i], SHA512_W_H[i]);
+      const T1ll = add5L(Hl, sigma1l, CHIl, SHA512_Kl[i2], SHA512_W_L[i2]);
+      const T1h = add5H(T1ll, Hh, sigma1h, CHIh, SHA512_Kh[i2], SHA512_W_H[i2]);
       const T1l = T1ll | 0;
       const sigma0h = rotrSH(Ah, Al, 28) ^ rotrBH(Ah, Al, 34) ^ rotrBH(Ah, Al, 39);
       const sigma0l = rotrSL(Ah, Al, 28) ^ rotrBL(Ah, Al, 34) ^ rotrBL(Ah, Al, 39);
@@ -65881,8 +67153,8 @@ function aarray(item, title, inner = () => {
 }) {
   if (!Array.isArray(item))
     throw new TypeError(`"${title}" expected array, got type=${typeof item}`);
-  for (let i = 0; i < item.length; i++)
-    inner(item[i], `${title}[${i}]`);
+  for (let i2 = 0; i2 < item.length; i2++)
+    inner(item[i2], `${title}[${i2}]`);
   return item;
 }
 var abytes2 = (value2, length2, title) => abytes(value2, length2, title);
@@ -65917,13 +67189,13 @@ function abool(value2, title = "") {
     throw new TypeError(atitle2(title) + "expected boolean, got type=" + typeof value2);
   return value2;
 }
-function abignumber(n2) {
-  if (typeof n2 === "bigint") {
-    if (!isPosBig(n2))
-      throw new RangeError("positive bigint expected, got " + n2);
+function abignumber(n4) {
+  if (typeof n4 === "bigint") {
+    if (!isPosBig(n4))
+      throw new RangeError("positive bigint expected, got " + n4);
   } else
-    anumber2(n2);
-  return n2;
+    anumber2(n4);
+  return n4;
 }
 function asafenumber(value2, title = "") {
   if (typeof value2 !== "number") {
@@ -65950,41 +67222,41 @@ function bytesToNumberBE2(bytes2) {
 function bytesToNumberLE2(bytes2) {
   return hexToNumber2(bytesToHex2(copyBytes(abytes(bytes2)).reverse()));
 }
-function numberToBytesBE2(n2, len) {
+function numberToBytesBE2(n4, len) {
   anumber(len);
   if (len === 0)
     throw new Error("zero output length is invalid");
-  n2 = abignumber(n2);
+  n4 = abignumber(n4);
   const expectedLen = len * 2;
-  const hex = n2.toString(16);
+  const hex = n4.toString(16);
   if (hex.length > expectedLen)
     throw new RangeError("number is too large");
   return hexToBytes2(hex.padStart(expectedLen, "0"));
 }
-function numberToBytesLE2(n2, len) {
-  return numberToBytesBE2(n2, len).reverse();
+function numberToBytesLE2(n4, len) {
+  return numberToBytesBE2(n4, len).reverse();
 }
 function copyBytes(bytes2) {
   return Uint8Array.from(abytes2(bytes2));
 }
-function isPosBig(n2) {
-  return typeof n2 === "bigint" && _0n7 <= n2;
+function isPosBig(n4) {
+  return typeof n4 === "bigint" && _0n7 <= n4;
 }
-function inRange(n2, min, max) {
-  return isPosBig(n2) && isPosBig(min) && isPosBig(max) && min <= n2 && n2 < max;
+function inRange(n4, min, max) {
+  return isPosBig(n4) && isPosBig(min) && isPosBig(max) && min <= n4 && n4 < max;
 }
-function aInRange(title, n2, min, max) {
-  if (!inRange(n2, min, max))
-    throw new RangeError("expected valid " + title + ": " + min + " <= n < " + max + ", got " + n2);
+function aInRange(title, n4, min, max) {
+  if (!inRange(n4, min, max))
+    throw new RangeError("expected valid " + title + ": " + min + " <= n < " + max + ", got " + n4);
 }
-function bitLen2(n2) {
-  if (n2 < _0n7)
-    throw new Error("expected non-negative bigint, got " + n2);
-  return n2 === _0n7 ? 0 : n2.toString(2).length;
+function bitLen2(n4) {
+  if (n4 < _0n7)
+    throw new Error("expected non-negative bigint, got " + n4);
+  return n4 === _0n7 ? 0 : n4.toString(2).length;
 }
-var bitMask2 = (n2) => {
-  asafenumber(n2, "n");
-  return (_1n7 << BigInt(n2)) - _1n7;
+var bitMask2 = (n4) => {
+  asafenumber(n4, "n");
+  return (_1n7 << BigInt(n4)) - _1n7;
 };
 function createHmacDrbg2(hashLen, qByteLen, hmacFn) {
   anumber(hashLen, "hashLen");
@@ -65998,28 +67270,28 @@ function createHmacDrbg2(hashLen, qByteLen, hmacFn) {
   const _maxDrbgIters = 1e3;
   let v = u8n2(hashLen);
   let k = u8n2(hashLen);
-  let i = 0;
+  let i2 = 0;
   const reset = () => {
     v.fill(1);
     k.fill(0);
-    i = 0;
+    i2 = 0;
   };
-  const h = (...msgs) => hmacFn(k, concatBytes4(v, ...msgs));
+  const h2 = (...msgs) => hmacFn(k, concatBytes4(v, ...msgs));
   const reseed = (seed = NULL) => {
-    k = h(byte0, seed);
-    v = h();
+    k = h2(byte0, seed);
+    v = h2();
     if (seed.length === 0)
       return;
-    k = h(byte1, seed);
-    v = h();
+    k = h2(byte1, seed);
+    v = h2();
   };
   const gen2 = () => {
-    if (i++ >= _maxDrbgIters)
+    if (i2++ >= _maxDrbgIters)
       throw new Error("drbg: tried max amount of iterations");
     let len = 0;
     const out = [];
     while (len < qByteLen) {
-      v = h();
+      v = h2();
       const sl = v.slice();
       out.push(sl);
       len += v.length;
@@ -66071,10 +67343,10 @@ var _9n2 = /* @__PURE__ */ BigInt(9);
 var _15n = /* @__PURE__ */ BigInt(15);
 var _16n2 = /* @__PURE__ */ BigInt(16);
 var POW_WINDOWED_MIN = /* @__PURE__ */ BigInt("0x10000000000000000");
-function mod2(a, b2) {
+function mod2(a2, b2) {
   if (b2 <= _0n8)
     throw new Error("mod: expected positive modulus, got " + b2);
-  const result = a % b2;
+  const result = a2 % b2;
   return result >= _0n8 ? result : b2 + result;
 }
 function pow3(num, power, modulo) {
@@ -66109,8 +67381,8 @@ function pow3(num, power, modulo) {
   const table2 = new Array(16);
   table2[0] = _1n8;
   table2[1] = d;
-  for (let i = 2; i < 16; i++)
-    table2[i] = table2[i - 1] * d % modulo;
+  for (let i2 = 2; i2 < 16; i2++)
+    table2[i2] = table2[i2 - 1] * d % modulo;
   let p = table2[digits[digits.length - 1]];
   for (let w = digits.length - 2; w >= 0; w--) {
     p = p * p % modulo;
@@ -66140,24 +67412,24 @@ function invert2(number3, modulo) {
     throw new Error("invert: expected non-zero number");
   if (modulo <= _1n8)
     throw new Error("invert: expected modulus > 1, got " + modulo);
-  let a = mod2(number3, modulo);
+  let a2 = mod2(number3, modulo);
   let b2 = modulo;
-  let x = _0n8, u = _1n8;
-  while (a !== _0n8) {
-    const q = b2 / a;
-    const r = b2 - a * q;
-    const m = x - u * q;
-    b2 = a, a = r, x = u, u = m;
+  let x = _0n8, u3 = _1n8;
+  while (a2 !== _0n8) {
+    const q = b2 / a2;
+    const r2 = b2 - a2 * q;
+    const m = x - u3 * q;
+    b2 = a2, a2 = r2, x = u3, u3 = m;
   }
   const gcd = b2;
   if (gcd !== _1n8)
     throw new Error("invert: does not exist");
   return mod2(x, modulo);
 }
-function invertCt(a, prime) {
+function invertCt(a2, prime) {
   if (prime <= _1n8)
     throw new Error("invertCt: expected prime modulus > 1, got " + prime);
-  const an = mod2(a, prime);
+  const an = mod2(a2, prime);
   if (an === _0n8)
     throw new Error("invertCt: expected non-zero number");
   const inverse = pow3(an, prime - _2n6, prime);
@@ -66165,53 +67437,53 @@ function invertCt(a, prime) {
     throw new Error("invertCt: does not exist");
   return inverse;
 }
-function assertIsSquare(Fp2, root, n2) {
+function assertIsSquare(Fp2, root, n4) {
   const F = Fp2;
-  if (!F.eql(F.sqr(root), n2))
+  if (!F.eql(F.sqr(root), n4))
     throw new Error("Cannot find square root");
 }
 function aoddModulus(order, fnName) {
   if ((order & _1n8) === _0n8)
     throw new Error(fnName + ": expected odd modulus, got " + order);
 }
-function sqrt3mod4(Fp2, n2) {
+function sqrt3mod4(Fp2, n4) {
   const F = Fp2;
   const p1div4 = (F.ORDER + _1n8) / _4n3;
-  const root = F.pow(n2, p1div4);
-  assertIsSquare(F, root, n2);
+  const root = F.pow(n4, p1div4);
+  assertIsSquare(F, root, n4);
   return root;
 }
-function sqrt5mod8(Fp2, n2) {
+function sqrt5mod8(Fp2, n4) {
   const F = Fp2;
   const p5div8 = (F.ORDER - _5n2) / _8n2;
-  const n22 = F.mul(n2, _2n6);
+  const n22 = F.mul(n4, _2n6);
   const v = F.pow(n22, p5div8);
-  const nv = F.mul(n2, v);
-  const i = F.mul(F.mul(nv, _2n6), v);
-  const root = F.mul(nv, F.sub(i, F.ONE));
-  assertIsSquare(F, root, n2);
+  const nv = F.mul(n4, v);
+  const i2 = F.mul(F.mul(nv, _2n6), v);
+  const root = F.mul(nv, F.sub(i2, F.ONE));
+  assertIsSquare(F, root, n4);
   return root;
 }
 function sqrt9mod16(P2) {
   const Fp_ = Field2(P2);
   const tn = tonelliShanks2(P2);
   const c1 = tn(Fp_, Fp_.neg(Fp_.ONE));
-  const c2 = tn(Fp_, c1);
-  const c3 = tn(Fp_, Fp_.neg(c1));
+  const c22 = tn(Fp_, c1);
+  const c32 = tn(Fp_, Fp_.neg(c1));
   const c4 = (P2 + _7n2) / _16n2;
-  return ((Fp2, n2) => {
+  return ((Fp2, n4) => {
     const F = Fp2;
-    let tv1 = F.pow(n2, c4);
+    let tv1 = F.pow(n4, c4);
     let tv2 = F.mul(tv1, c1);
-    const tv3 = F.mul(tv1, c2);
-    const tv4 = F.mul(tv1, c3);
-    const e1 = F.eql(F.sqr(tv2), n2);
-    const e2 = F.eql(F.sqr(tv3), n2);
+    const tv3 = F.mul(tv1, c22);
+    const tv4 = F.mul(tv1, c32);
+    const e1 = F.eql(F.sqr(tv2), n4);
+    const e2 = F.eql(F.sqr(tv3), n4);
     tv1 = F.cmov(tv1, tv2, e1);
     tv2 = F.cmov(tv4, tv3, e2);
-    const e3 = F.eql(F.sqr(tv2), n2);
+    const e3 = F.eql(F.sqr(tv2), n4);
     const root = F.cmov(tv1, tv2, e3);
-    assertIsSquare(F, root, n2);
+    assertIsSquare(F, root, n4);
     return root;
   });
 }
@@ -66225,45 +67497,45 @@ function tonelliShanks2(P2) {
     Q /= _2n6;
     S2++;
   }
-  let Z = _2n6;
+  let Z2 = _2n6;
   const _Fp = Field2(P2);
-  while (FpLegendre(_Fp, Z) === 1) {
-    if (Z++ > 1e3)
+  while (FpLegendre(_Fp, Z2) === 1) {
+    if (Z2++ > 1e3)
       throw new Error("Cannot find square root: probably non-prime P");
   }
   if (S2 === 1)
     return sqrt3mod4;
-  let cc = _Fp.pow(Z, Q);
+  let cc = _Fp.pow(Z2, Q);
   const Q1div2 = (Q + _1n8) / _2n6;
-  return function tonelliSlow(Fp2, n2) {
+  return function tonelliSlow(Fp2, n4) {
     const F = Fp2;
-    if (F.is0(n2))
-      return n2;
-    if (FpLegendre(F, n2) !== 1)
+    if (F.is0(n4))
+      return n4;
+    if (FpLegendre(F, n4) !== 1)
       throw new Error("Cannot find square root");
     let M = S2;
-    let c2 = F.mul(F.ONE, cc);
-    let t = F.pow(n2, Q);
-    let R = F.pow(n2, Q1div2);
-    while (!F.eql(t, F.ONE)) {
-      if (F.is0(t))
+    let c4 = F.mul(F.ONE, cc);
+    let t2 = F.pow(n4, Q);
+    let R2 = F.pow(n4, Q1div2);
+    while (!F.eql(t2, F.ONE)) {
+      if (F.is0(t2))
         throw new Error("Cannot find square root: probably non-prime P");
-      let i = 1;
-      let t_tmp = F.sqr(t);
+      let i2 = 1;
+      let t_tmp = F.sqr(t2);
       while (!F.eql(t_tmp, F.ONE)) {
-        i++;
+        i2++;
         t_tmp = F.sqr(t_tmp);
-        if (i === M)
+        if (i2 === M)
           throw new Error("Cannot find square root");
       }
-      const exponent = _1n8 << BigInt(M - i - 1);
-      const b2 = F.pow(c2, exponent);
-      M = i;
-      c2 = F.sqr(b2);
-      t = F.mul(t, c2);
-      R = F.mul(R, b2);
+      const exponent = _1n8 << BigInt(M - i2 - 1);
+      const b2 = F.pow(c4, exponent);
+      M = i2;
+      c4 = F.sqr(b2);
+      t2 = F.mul(t2, c4);
+      R2 = F.mul(R2, b2);
     }
-    return R;
+    return R2;
   };
 }
 function FpSqrt2(P2) {
@@ -66315,27 +67587,27 @@ function FpInvertBatch2(Fp2, nums, passZero = false) {
   abool(passZero, "passZero");
   const F = Fp2;
   const inverted = new Array(nums.length).fill(passZero ? F.ZERO : void 0);
-  const multipliedAcc = nums.reduce((acc, num, i) => {
+  const multipliedAcc = nums.reduce((acc, num, i2) => {
     if (F.is0(num))
       return acc;
-    inverted[i] = acc;
+    inverted[i2] = acc;
     return F.mul(acc, num);
   }, F.ONE);
   const invertedAcc = F.inv(multipliedAcc);
-  nums.reduceRight((acc, num, i) => {
+  nums.reduceRight((acc, num, i2) => {
     if (F.is0(num))
       return acc;
-    inverted[i] = F.mul(acc, inverted[i]);
+    inverted[i2] = F.mul(acc, inverted[i2]);
     return F.mul(acc, num);
   }, invertedAcc);
   return inverted;
 }
-function FpLegendre(Fp2, n2) {
+function FpLegendre(Fp2, n4) {
   validateField2(Fp2);
   const F = Fp2;
   aoddModulus(F.ORDER, "FpLegendre");
   const p1mod2 = (F.ORDER - _1n8) / _2n6;
-  const powered = F.pow(n2, p1mod2);
+  const powered = F.pow(n4, p1mod2);
   const yes = F.eql(powered, F.ONE);
   const zero = F.eql(powered, F.ZERO);
   const no = F.eql(powered, F.neg(F.ONE));
@@ -66343,14 +67615,14 @@ function FpLegendre(Fp2, n2) {
     throw new Error("invalid Legendre symbol result");
   return yes ? 1 : zero ? 0 : -1;
 }
-function nLength2(n2, nBitLength) {
+function nLength2(n4, nBitLength) {
   if (nBitLength !== void 0)
     anumber2(nBitLength);
-  if (n2 <= _0n8)
-    throw new Error("invalid n length: expected positive n, got " + n2);
+  if (n4 <= _0n8)
+    throw new Error("invalid n length: expected positive n, got " + n4);
   if (nBitLength !== void 0 && nBitLength < 1)
     throw new Error("invalid n length: expected positive bit length, got " + nBitLength);
-  const bits = bitLen2(n2);
+  const bits = bitLen2(n4);
   if (nBitLength !== void 0 && nBitLength < bits)
     throw new Error(`invalid n length: expected nBitLength (${nBitLength}) >= bitLen(n) (${bits})`);
   const _nBitLength = nBitLength !== void 0 ? nBitLength : bits;
@@ -66487,9 +67759,9 @@ var _Field = class {
   }
   // We can't move this out because Fp6, Fp12 implement it
   // and it's unclear what to return in there.
-  cmov(a, b2, condition) {
+  cmov(a2, b2, condition) {
     abool(condition, "condition");
-    return condition ? b2 : a;
+    return condition ? b2 : a2;
   }
 };
 function Field2(ORDER, opts = {}) {
@@ -66540,11 +67812,11 @@ function validatePointCons(Point3) {
   validateField2(pc.Fp);
   validateField2(pc.Fn);
 }
-function normalizeZ(c2, points) {
-  validatePointCons(c2);
-  validateMSMPoints(points, c2);
-  const invertedZs = FpInvertBatch2(c2.Fp, points.map((p) => p.Z));
-  return points.map((p, i) => c2.fromAffine(p.toAffine(invertedZs[i])));
+function normalizeZ(c4, points) {
+  validatePointCons(c4);
+  validateMSMPoints(points, c4);
+  const invertedZs = FpInvertBatch2(c4.Fp, points.map((p) => p.Z));
+  return points.map((p, i2) => c4.fromAffine(p.toAffine(invertedZs[i2])));
 }
 function validateW(W2, bits, min = 1) {
   if (!Number.isSafeInteger(W2) || W2 < min || W2 > bits)
@@ -66568,20 +67840,20 @@ function probeRandomBytes(randomBytes7, length2) {
   }
   return randomBytes7;
 }
-function validateMSMPoints(points, c2) {
+function validateMSMPoints(points, c4) {
   aarray(points, "points");
-  points.forEach((p, i) => {
-    if (!(p instanceof c2))
-      throw new Error("invalid point at index " + i);
+  points.forEach((p, i2) => {
+    if (!(p instanceof c4))
+      throw new Error("invalid point at index " + i2);
   });
 }
 function validateMSMScalars(scalars, field, maxScalar) {
   if (!Array.isArray(scalars))
     throw new Error("array of scalars expected");
-  scalars.forEach((s, i) => {
+  scalars.forEach((s, i2) => {
     const ok = maxScalar === void 0 ? field.isValid(s) : isPosBig(s) && s < maxScalar;
     if (!ok)
-      throw new Error("invalid scalar at index " + i);
+      throw new Error("invalid scalar at index " + i2);
   });
 }
 var pointWindowSizes = /* @__PURE__ */ new WeakMap();
@@ -66590,45 +67862,45 @@ function getWindowSize(P2) {
 }
 function oddMultiples(p, size) {
   const dbl = p.double();
-  const t = [p];
+  const t2 = [p];
   for (let j = 1; j < size; j++)
-    t.push(t[j - 1].add(dbl));
-  return t;
+    t2.push(t2[j - 1].add(dbl));
+  return t2;
 }
-function wnafDigits(n2, W2) {
+function wnafDigits(n4, W2) {
   const size = 2 ** W2;
   const half = size / 2;
   const mask2 = BigInt(size - 1);
   const d = [];
-  while (n2 > _0n9) {
+  while (n4 > _0n9) {
     let w = 0;
-    if (n2 & _1n9) {
-      w = Number(n2 & mask2);
+    if (n4 & _1n9) {
+      w = Number(n4 & mask2);
       if (w >= half)
         w -= size;
-      n2 -= BigInt(w);
+      n4 -= BigInt(w);
     }
     d.push(w);
-    n2 >>= _1n9;
+    n4 >>= _1n9;
   }
   return d;
 }
-function signedWindowDigits(n2, W2, windows) {
+function signedWindowDigits(n4, W2, windows) {
   const size = 2 ** W2;
   const half = size / 2;
   const mask2 = BigInt(size - 1);
   const shiftBy = BigInt(W2);
   const d = [];
   for (let w = 0; w < windows; w++) {
-    let v = Number(n2 & mask2);
-    n2 >>= shiftBy;
+    let v = Number(n4 & mask2);
+    n4 >>= shiftBy;
     if (v > half) {
       v -= size;
-      n2 += _1n9;
+      n4 += _1n9;
     }
     d.push(v);
   }
-  if (n2 !== _0n9)
+  if (n4 !== _0n9)
     throw new Error("invalid wnaf");
   return d;
 }
@@ -66640,10 +67912,10 @@ function wnafWalk(zero, tables, digits) {
   for (let bit = max - 1; bit >= 0; bit--) {
     if (bit !== max - 1)
       acc = acc.double();
-    for (let i = 0; i < digits.length; i++) {
-      const w = digits[i][bit];
+    for (let i2 = 0; i2 < digits.length; i2++) {
+      const w = digits[i2][bit];
       if (w) {
-        const item = tables[i][Math.abs(w) - 1 >> 1];
+        const item = tables[i2][Math.abs(w) - 1 >> 1];
         acc = acc.add(w < 0 ? item.negate() : item);
       }
     }
@@ -66684,7 +67956,7 @@ var ScalarMultiplier = class {
     let base2 = point;
     for (let w = 0; w < windows; w++) {
       let acc = base2;
-      for (let i = 0; i < half; i++) {
+      for (let i2 = 0; i2 < half; i2++) {
         comp.push(acc);
         acc = acc.add(base2);
       }
@@ -66701,10 +67973,10 @@ var ScalarMultiplier = class {
    * signedWindowDigits throws if `n` exceeds the table.
    * @returns real and fake (for const-time) points
    */
-  wnafCachedCT(precomputes, n2) {
+  wnafCachedCT(precomputes, n4) {
     const { W: W2, windows, comp } = precomputes;
     const half = 2 ** (W2 - 1);
-    const digits = signedWindowDigits(n2, W2, windows);
+    const digits = signedWindowDigits(n4, W2, windows);
     let p = this.ZERO;
     let f2 = this.BASE;
     for (let w = 0; w < windows; w++) {
@@ -66712,8 +67984,8 @@ var ScalarMultiplier = class {
       const start = w * half;
       const idx = Math.abs(digit) - 1;
       let sel = comp[start];
-      for (let i = 1; i < half; i++)
-        sel = i === idx ? comp[start + i] : sel;
+      for (let i2 = 1; i2 < half; i2++)
+        sel = i2 === idx ? comp[start + i2] : sel;
       const neg = sel.negate();
       if (digit === 0)
         f2 = f2.add(comp[start]);
@@ -66755,11 +68027,11 @@ var ScalarMultiplier = class {
   // Constant-time dispatch shared by mulCT / mulCTBlinded. Un-precomputed points (W===1, e.g.
   // ECDH peer keys) skip building a throwaway cached table in favor of a small fixed-window
   // multiply. `n` must be < 2^bits.
-  runCT(point, n2, bits, transform) {
+  runCT(point, n4, bits, transform) {
     const W2 = getWindowSize(point);
     if (W2 === 1)
-      return this.fixedWindowCT(point, n2, bits);
-    return this.wnafCachedCT(this.getWnafPrecomputes(W2, point, bits, transform), n2);
+      return this.fixedWindowCT(point, n4, bits);
+    return this.wnafCachedCT(this.getWnafPrecomputes(W2, point, bits, transform), n4);
   }
   mulCT(point, scalar, transform) {
     this.validateMulInput(point, scalar);
@@ -66774,8 +68046,8 @@ var ScalarMultiplier = class {
     if (!isBytes2(blind) || blind.length !== BLIND_BYTES)
       throw new Error("randomBytes returned invalid byte array");
     blind[0] = blind[0] & 63 | 128;
-    const n2 = scalar + bytesToNumberBE2(blind) * this.Point.Fn.ORDER;
-    return this.runCT(point, n2, bits, transform);
+    const n4 = scalar + bytesToNumberBE2(blind) * this.Point.Fn.ORDER;
+    return this.runCT(point, n4, bits, transform);
   }
   /**
    * Constant-time multiplication `n*point` for an un-precomputed point, via a small fixed window.
@@ -66792,24 +68064,24 @@ var ScalarMultiplier = class {
    * @returns real point `p`; `f` duplicates it only to match {@link wnafCachedCT}'s return shape
    * (this path needs no fake accumulator — its op-count is already scalar-independent).
    */
-  fixedWindowCT(point, n2, bits) {
+  fixedWindowCT(point, n4, bits) {
     const W2 = FW_WINDOW;
     const size = 1 << W2;
     const mask2 = bitMask2(W2);
     const table2 = new Array(size);
     table2[0] = this.ZERO;
-    for (let i = 1; i < size; i++)
-      table2[i] = table2[i - 1].add(point);
+    for (let i2 = 1; i2 < size; i2++)
+      table2[i2] = table2[i2 - 1].add(point);
     const windows = Math.ceil(bits / W2);
     let acc = this.ZERO;
     for (let window = windows - 1; window >= 0; window--) {
       if (window !== windows - 1)
         for (let d = 0; d < W2; d++)
           acc = acc.double();
-      const digit = Number(n2 >> BigInt(window * W2) & mask2);
+      const digit = Number(n4 >> BigInt(window * W2) & mask2);
       let sel = table2[0];
-      for (let i = 1; i < size; i++)
-        sel = i === digit ? table2[i] : sel;
+      for (let i2 = 1; i2 < size; i2++)
+        sel = i2 === digit ? table2[i2] : sel;
       acc = acc.add(sel);
     }
     return { p: acc, f: acc };
@@ -66855,16 +68127,16 @@ var ScalarMultiplier = class {
     return getWindowSize(point) !== 1;
   }
 };
-function mulAddUnsafe(c2, points, scalars, allowOversized = false) {
-  validatePointCons(c2);
-  validateMSMPoints(points, c2);
+function mulAddUnsafe(c4, points, scalars, allowOversized = false) {
+  validatePointCons(c4);
+  validateMSMPoints(points, c4);
   abool(allowOversized, "allowOversized");
-  validateMSMScalars(scalars, c2.Fn, allowOversized ? c2.Fn.ORDER ** _4n4 : void 0);
+  validateMSMScalars(scalars, c4.Fn, allowOversized ? c4.Fn.ORDER ** _4n4 : void 0);
   if (points.length !== scalars.length)
     throw new Error("arrays of points and scalars must have equal length");
   const tables = points.map((p) => oddMultiples(p, 4));
-  const digits = scalars.map((n2) => wnafDigits(n2, 4));
-  return wnafWalk(c2.ZERO, tables, digits);
+  const digits = scalars.map((n4) => wnafDigits(n4, 4));
+  return wnafWalk(c4.ZERO, tables, digits);
 }
 function createField(order, field, isLE2) {
   if (field) {
@@ -66927,12 +68199,12 @@ var _HMAC = class {
     const blockLen = this.blockLen;
     const pad = new Uint8Array(blockLen);
     pad.set(key.length > blockLen ? hash2.create().update(key).digest() : key);
-    for (let i = 0; i < pad.length; i++)
-      pad[i] ^= 54;
+    for (let i2 = 0; i2 < pad.length; i2++)
+      pad[i2] ^= 54;
     this.iHash.update(pad);
     this.oHash = hash2.create();
-    for (let i = 0; i < pad.length; i++)
-      pad[i] ^= 54 ^ 92;
+    for (let i2 = 0; i2 < pad.length; i2++)
+      pad[i2] ^= 54 ^ 92;
     this.oHash.update(pad);
     clean(pad);
   }
@@ -67009,8 +68281,8 @@ var _DER = {
       if (len.length / 2 & 128)
         throw new E("tlv.encode: long form length too big");
       const lenLen = dataLen > 127 ? numberToHexUnpadded2(len.length / 2 | 128) : "";
-      const t = numberToHexUnpadded2(tag);
-      return t + lenLen + len + data;
+      const t2 = numberToHexUnpadded2(tag);
+      return t2 + lenLen + len + data;
     },
     // v - value, l - left bytes (unparsed)
     decode(tag, data) {
@@ -67113,20 +68385,20 @@ var DER2 = /* @__PURE__ */ (() => {
 
 // node_modules/@scure/bip32/node_modules/@noble/curves/abstract/weierstrass.js
 var divNearest2 = (num, den) => (num + (num >= 0 ? den : -den) / _2n7) / den;
-function _splitEndoScalar(k, basis, n2) {
-  aInRange("scalar", k, _0n11, n2);
+function _splitEndoScalar(k, basis, n4) {
+  aInRange("scalar", k, _0n11, n4);
   const [[a1, b1], [a2, b2]] = basis;
-  const c1 = divNearest2(b2 * k, n2);
-  const c2 = divNearest2(-b1 * k, n2);
-  let k1 = k - c1 * a1 - c2 * a2;
-  let k2 = -c1 * b1 - c2 * b2;
+  const c1 = divNearest2(b2 * k, n4);
+  const c22 = divNearest2(-b1 * k, n4);
+  let k1 = k - c1 * a1 - c22 * a2;
+  let k2 = -c1 * b1 - c22 * b2;
   const k1neg = k1 < _0n11;
   const k2neg = k2 < _0n11;
   if (k1neg)
     k1 = -k1;
   if (k2neg)
     k2 = -k2;
-  const MAX_NUM = bitMask2(Math.ceil(bitLen2(n2) / 2)) + _1n10;
+  const MAX_NUM = bitMask2(Math.ceil(bitLen2(n4) / 2)) + _1n10;
   if (k1 < _0n11 || k1 >= MAX_NUM || k2 < _0n11 || k2 >= MAX_NUM) {
     throw new Error("splitScalar (endomorphism): failed for k");
   }
@@ -67259,10 +68531,10 @@ function weierstrass2(params, extraOpts = {}) {
   const _27b2 = Fp2.mul(Fp2.sqr(CURVE.b), BigInt(27));
   if (Fp2.is0(Fp2.add(_4a3, _27b2)))
     throw new Error("bad curve params: a or b");
-  function acoord(title, n2, banZero = false) {
-    if (!Fp2.isValid(n2) || banZero && Fp2.is0(n2))
+  function acoord(title, n4, banZero = false) {
+    if (!Fp2.isValid(n4) || banZero && Fp2.is0(n4))
       throw new Error(`bad point coordinate ${title}`);
-    return typeof n2 === "object" && n2 !== null ? Fp2.create(n2) : n2;
+    return typeof n4 === "object" && n4 !== null ? Fp2.create(n4) : n4;
   }
   function aprjpoint(other) {
     if (!(other instanceof Point3))
@@ -67296,10 +68568,10 @@ function weierstrass2(params, extraOpts = {}) {
     Y;
     Z;
     /** Does NOT validate if the point is valid. Use `.assertValidity()`. */
-    constructor(X, Y, Z) {
+    constructor(X, Y2, Z2) {
       this.X = acoord("x", X);
-      this.Y = acoord("y", Y, true);
-      this.Z = acoord("z", Z);
+      this.Y = acoord("y", Y2, true);
+      this.Z = acoord("z", Z2);
       Object.freeze(this);
     }
     static CURVE() {
@@ -67518,11 +68790,11 @@ function weierstrass2(params, extraOpts = {}) {
      * parts. Used by ECDSA verification and public-key recovery for `R = u1⋅G + u2⋅P`.
      * Only for public scalars.
      */
-    mulAddUnsafe(a, other, b2) {
+    mulAddUnsafe(a2, other, b2) {
       aprjpoint(other);
       const points = [];
       const scalars = [];
-      pushWnafPair(points, scalars, this, a);
+      pushWnafPair(points, scalars, this, a2);
       pushWnafPair(points, scalars, other, b2);
       return mulAddUnsafe(Point3, points, scalars);
     }
@@ -67536,15 +68808,15 @@ function weierstrass2(params, extraOpts = {}) {
       let iz = invertedZ;
       if (iz != null && !Fp2.isValid(iz))
         throw new RangeError('"invertedZ" expected valid field element');
-      const { X, Y, Z } = p;
-      if (Fp2.eql(Z, Fp2.ONE))
-        return { x: X, y: Y };
+      const { X, Y: Y2, Z: Z2 } = p;
+      if (Fp2.eql(Z2, Fp2.ONE))
+        return { x: X, y: Y2 };
       const is0 = p.is0();
       if (iz == null)
-        iz = is0 ? Fp2.ONE : Fp2.inv(Z);
+        iz = is0 ? Fp2.ONE : Fp2.inv(Z2);
       const x = Fp2.mul(X, iz);
-      const y = Fp2.mul(Y, iz);
-      const zz = Fp2.mul(Z, iz);
+      const y = Fp2.mul(Y2, iz);
+      const zz = Fp2.mul(Z2, iz);
       if (is0)
         return { x: Fp2.ZERO, y: Fp2.ZERO };
       if (!Fp2.eql(zz, Fp2.ONE))
@@ -67715,9 +68987,9 @@ function ecdsa(Point3, hash2, ecdsaOpts = {}) {
     if (!Fp2.isOdd)
       throw new Error("Field doesn't support isOdd");
   }
-  function getRecoveryBit(x, y, r) {
+  function getRecoveryBit(x, y, r2) {
     assertFieldSignIsSupported();
-    return (x === r ? 0 : 2) | Number(Fp2.isOdd(y));
+    return (x === r2 ? 0 : 2) | Number(Fp2.isOdd(y));
   }
   function assertRecoverableCurve() {
     if (hasLargeRecoveryLifts)
@@ -67733,8 +69005,8 @@ function ecdsa(Point3, hash2, ecdsaOpts = {}) {
     r;
     s;
     recovery;
-    constructor(r, s, recovery) {
-      this.r = validateRS("r", r);
+    constructor(r2, s, recovery) {
+      this.r = validateRS("r", r2);
       this.s = validateRS("s", s);
       if (recovery != null) {
         assertRecoverableCurve();
@@ -67750,8 +69022,8 @@ function ecdsa(Point3, hash2, ecdsaOpts = {}) {
       if (format === "der") {
         if (bytes2.length > 2 * Fn2.BYTES + 16)
           throw new DER2.Err("invalid signature: DER signature too long");
-        const { r: r2, s: s2 } = DER2.toSig(abytes2(bytes2), Fn2.BYTES + 1);
-        return new Signature2(r2, s2);
+        const { r: r3, s: s2 } = DER2.toSig(abytes2(bytes2), Fn2.BYTES + 1);
+        return new Signature2(r3, s2);
       }
       if (format === "recovered") {
         recid = bytes2[0];
@@ -67759,9 +69031,9 @@ function ecdsa(Point3, hash2, ecdsaOpts = {}) {
         bytes2 = bytes2.subarray(1);
       }
       const L = lengths.signature / 2;
-      const r = bytes2.subarray(0, L);
+      const r2 = bytes2.subarray(0, L);
       const s = bytes2.subarray(L, L * 2);
-      return new Signature2(Fn2.fromBytes(r), Fn2.fromBytes(s), recid);
+      return new Signature2(Fn2.fromBytes(r2), Fn2.fromBytes(s), recid);
     }
     static fromHex(hex, format) {
       return this.fromBytes(hexToBytes3(hex), format);
@@ -67778,18 +69050,18 @@ function ecdsa(Point3, hash2, ecdsaOpts = {}) {
     // Unlike the top-level helper below, this method expects a digest that has
     // already been hashed to the curve's message representative.
     recoverPublicKey(messageHash) {
-      const { r, s } = this;
+      const { r: r2, s } = this;
       const recovery = this.assertRecovery();
-      const radj = recovery === 2 || recovery === 3 ? r + CURVE_ORDER : r;
+      const radj = recovery === 2 || recovery === 3 ? r2 + CURVE_ORDER : r2;
       if (!Fp2.isValid(radj))
         throw new Error("invalid recovery id: sig.r+curve.n != R.x");
       const x = Fp2.toBytes(radj);
-      const R = Point3.fromBytes(concatBytes4(pprefix((recovery & 1) === 0), x));
+      const R2 = Point3.fromBytes(concatBytes4(pprefix((recovery & 1) === 0), x));
       const ir = Fn2.inv(radj);
-      const h = bits2int_modN(abytes2(messageHash, void 0, "msgHash"));
-      const u1 = Fn2.create(-h * ir);
-      const u2 = Fn2.create(s * ir);
-      const Q = Point3.BASE.mulAddUnsafe(u1, R, u2);
+      const h2 = bits2int_modN(abytes2(messageHash, void 0, "msgHash"));
+      const u1 = Fn2.create(-h2 * ir);
+      const u22 = Fn2.create(s * ir);
+      const Q = Point3.BASE.mulAddUnsafe(u1, R2, u22);
       if (Q.is0())
         throw new Error("invalid recovery: point at infinify");
       Q.assertValidity();
@@ -67803,8 +69075,8 @@ function ecdsa(Point3, hash2, ecdsaOpts = {}) {
       validateSigFormat(format);
       if (format === "der")
         return hexToBytes3(DER2.hexFromSig(this));
-      const { r, s } = this;
-      const rb = Fn2.toBytes(r);
+      const { r: r2, s } = this;
+      const rb = Fn2.toBytes(r2);
       const sb = Fn2.toBytes(s);
       if (format === "recovered") {
         assertRecoverableCurve();
@@ -67856,8 +69128,8 @@ function ecdsa(Point3, hash2, ecdsaOpts = {}) {
       if (!Fn2.isValidNot0(k))
         return;
       const q = Point3.BASE.multiply(k).toAffine();
-      const r = Fn2.create(q.x);
-      if (r === _0n11)
+      const r2 = Fn2.create(q.x);
+      if (r2 === _0n11)
         return;
       let s;
       if (csprng !== void 0) {
@@ -67865,20 +69137,20 @@ function ecdsa(Point3, hash2, ecdsaOpts = {}) {
         const ibk = Fn2.inv(Fn2.mul(b2, k));
         const bm = Fn2.mul(b2, m);
         const bd = Fn2.mul(b2, d);
-        s = Fn2.create(ibk * Fn2.create(bm + bd * r));
+        s = Fn2.create(ibk * Fn2.create(bm + bd * r2));
       } else {
         const ik = invertCt(k, CURVE_ORDER);
-        s = Fn2.create(ik * Fn2.create(m + r * d));
+        s = Fn2.create(ik * Fn2.create(m + r2 * d));
       }
       if (s === _0n11)
         return;
-      let recovery = getRecoveryBit(q.x, q.y, r);
+      let recovery = getRecoveryBit(q.x, q.y, r2);
       let normS = s;
       if (lowS && isBiggerThanHalfOrder(s)) {
         normS = Fn2.neg(s);
         recovery ^= 1;
       }
-      return new Signature2(r, normS, hasLargeRecoveryLifts ? void 0 : recovery);
+      return new Signature2(r2, normS, hasLargeRecoveryLifts ? void 0 : recovery);
     }
     return { seed, k2sig };
   }
@@ -67904,19 +69176,19 @@ function ecdsa(Point3, hash2, ecdsaOpts = {}) {
         return false;
       if (lowS && sig.hasHighS())
         return false;
-      const { r, s } = sig;
-      const h = bits2int_modN(message);
+      const { r: r2, s } = sig;
+      const h2 = bits2int_modN(message);
       const is2 = Fn2.inv(s);
-      const u1 = Fn2.create(h * is2);
-      const u2 = Fn2.create(r * is2);
-      const R = Point3.BASE.mulAddUnsafe(u1, P2, u2);
-      if (R.is0())
+      const u1 = Fn2.create(h2 * is2);
+      const u22 = Fn2.create(r2 * is2);
+      const R2 = Point3.BASE.mulAddUnsafe(u1, P2, u22);
+      if (R2.is0())
         return false;
-      const q = R.toAffine();
+      const q = R2.toAffine();
       const v = Fn2.create(q.x);
-      if (v !== r)
+      if (v !== r2)
         return false;
-      if (format === "recovered" && sig.recovery !== getRecoveryBit(q.x, q.y, r))
+      if (format === "recovered" && sig.recovery !== getRecoveryBit(q.x, q.y, r2))
         return false;
       return true;
     } catch (e) {
@@ -68009,15 +69281,15 @@ var Rho160 = /* @__PURE__ */ Uint8Array.from([
   11,
   8
 ]);
-var Id160 = /* @__PURE__ */ (() => Uint8Array.from(new Array(16).fill(0).map((_, i) => i)))();
-var Pi160 = /* @__PURE__ */ (() => Id160.map((i) => (9 * i + 5) % 16))();
+var Id160 = /* @__PURE__ */ (() => Uint8Array.from(new Array(16).fill(0).map((_, i2) => i2)))();
+var Pi160 = /* @__PURE__ */ (() => Id160.map((i2) => (9 * i2 + 5) % 16))();
 var idxLR = /* @__PURE__ */ (() => {
   const L = [Id160];
-  const R = [Pi160];
-  const res = [L, R];
-  for (let i = 0; i < 4; i++)
+  const R2 = [Pi160];
+  const res = [L, R2];
+  for (let i2 = 0; i2 < 4; i2++)
     for (let j of res)
-      j.push(j[i].map((k) => Rho160[k]));
+      j.push(j[i2].map((k) => Rho160[k]));
   return res;
 })();
 var idxL2 = /* @__PURE__ */ (() => idxLR[0])();
@@ -68028,9 +69300,9 @@ var shifts160 = /* @__PURE__ */ [
   [13, 15, 14, 11, 7, 7, 6, 8, 13, 14, 13, 12, 5, 5, 6, 9],
   [14, 11, 12, 14, 8, 6, 5, 5, 15, 12, 15, 14, 9, 9, 8, 6],
   [15, 12, 13, 13, 9, 5, 8, 6, 14, 11, 12, 11, 8, 6, 5, 5]
-].map((i) => Uint8Array.from(i));
-var shiftsL160 = /* @__PURE__ */ idxL2.map((idx, i) => idx.map((j) => shifts160[i][j]));
-var shiftsR160 = /* @__PURE__ */ idxR2.map((idx, i) => idx.map((j) => shifts160[i][j]));
+].map((i2) => Uint8Array.from(i2));
+var shiftsL160 = /* @__PURE__ */ idxL2.map((idx, i2) => idx.map((j) => shifts160[i2][j]));
+var shiftsR160 = /* @__PURE__ */ idxR2.map((idx, i2) => idx.map((j) => shifts160[i2][j]));
 var Kl160 = /* @__PURE__ */ Uint32Array.from([
   0,
   1518500249,
@@ -68082,20 +69354,20 @@ var _RIPEMD160 = class extends HashMD {
     return this._cloneIntoMeta(to);
   }
   process(view, offset) {
-    for (let i = 0; i < 16; i++, offset += 4)
-      BUF_160[i] = view.getUint32(offset, true);
+    for (let i2 = 0; i2 < 16; i2++, offset += 4)
+      BUF_160[i2] = view.getUint32(offset, true);
     let al = this.h0 | 0, ar = al, bl = this.h1 | 0, br = bl, cl = this.h2 | 0, cr = cl, dl = this.h3 | 0, dr = dl, el = this.h4 | 0, er = el;
     for (let group = 0; group < 5; group++) {
       const rGroup = 4 - group;
       const hbl = Kl160[group], hbr = Kr160[group];
       const rl = idxL2[group], rr = idxR2[group];
       const sl = shiftsL160[group], sr = shiftsR160[group];
-      for (let i = 0; i < 16; i++) {
-        const tl = rotl3(al + ripemd_f(group, bl, cl, dl) + BUF_160[rl[i]] + hbl, sl[i]) + el | 0;
+      for (let i2 = 0; i2 < 16; i2++) {
+        const tl = rotl3(al + ripemd_f(group, bl, cl, dl) + BUF_160[rl[i2]] + hbl, sl[i2]) + el | 0;
         al = el, el = dl, dl = rotl3(cl, 10) | 0, cl = bl, bl = tl;
       }
-      for (let i = 0; i < 16; i++) {
-        const tr = rotl3(ar + ripemd_f(rGroup, br, cr, dr) + BUF_160[rr[i]] + hbr, sr[i]) + er | 0;
+      for (let i2 = 0; i2 < 16; i2++) {
+        const tr = rotl3(ar + ripemd_f(rGroup, br, cr, dr) + BUF_160[rr[i2]] + hbr, sr[i2]) + er | 0;
         ar = er, er = dr, dr = rotl3(cr, 10) | 0, cr = br, br = tr;
       }
     }
@@ -68114,8 +69386,8 @@ var ripemd1603 = /* @__PURE__ */ createHasher(() => new _RIPEMD160());
 
 // node_modules/@scure/base/index.js
 var freeze = (fn) => Object.freeze(fn());
-function isBytes3(a) {
-  return a instanceof Uint8Array || ArrayBuffer.isView(a) && a.constructor.name === "Uint8Array" && "BYTES_PER_ELEMENT" in a && a.BYTES_PER_ELEMENT === 1;
+function isBytes3(a2) {
+  return a2 instanceof Uint8Array || ArrayBuffer.isView(a2) && a2.constructor.name === "Uint8Array" && "BYTES_PER_ELEMENT" in a2 && a2.BYTES_PER_ELEMENT === 1;
 }
 function abytes3(b2) {
   if (!isBytes3(b2))
@@ -68131,15 +69403,15 @@ function astr(label, input) {
     throw new TypeError(`${label}: string expected`);
   return true;
 }
-function anumber3(n2, title = "number") {
-  if (typeof n2 !== "number")
-    throw new TypeError(`${title}: expected number, got ${typeof n2}`);
-  if (!Number.isSafeInteger(n2))
-    throw new RangeError(`${title}: expected safe integer, got ${n2}`);
+function anumber3(n4, title = "number") {
+  if (typeof n4 !== "number")
+    throw new TypeError(`${title}: expected number, got ${typeof n4}`);
+  if (!Number.isSafeInteger(n4))
+    throw new RangeError(`${title}: expected safe integer, got ${n4}`);
 }
 function chain(...args) {
-  const id2 = (a) => a;
-  const wrap = (a, b2) => (c2) => a(b2(c2));
+  const id2 = (a2) => a2;
+  const wrap = (a2, b2) => (c4) => a2(b2(c4));
   const encode20 = args.map((x) => x.encode).reduceRight(wrap, id2);
   const decode20 = args.map((x) => x.decode).reduce(wrap, id2);
   return { encode: encode20, decode: decode20 };
@@ -68160,8 +69432,8 @@ function charcodesToString(codes) {
   if (len <= B2S_CHUNK)
     return String.fromCharCode.apply(null, codes);
   let res = "";
-  for (let i = 0; i < len; i += B2S_CHUNK)
-    res += String.fromCharCode.apply(null, codes.subarray(i, i + B2S_CHUNK));
+  for (let i2 = 0; i2 < len; i2 += B2S_CHUNK)
+    res += String.fromCharCode.apply(null, codes.subarray(i2, i2 + B2S_CHUNK));
   return res;
 }
 function alphabet(letters, aliases) {
@@ -68170,12 +69442,12 @@ function alphabet(letters, aliases) {
     throw new Error("alphabet: max 128 letters");
   const encTable = new Uint8Array(len);
   const decTable = new Int8Array(128).fill(-1);
-  for (let i = 0; i < len; i++) {
-    const code = letters.charCodeAt(i);
-    if (letters.codePointAt(i) !== code || code > 127)
+  for (let i2 = 0; i2 < len; i2++) {
+    const code = letters.charCodeAt(i2);
+    if (letters.codePointAt(i2) !== code || code > 127)
       throw new Error("alphabet: single-char ASCII letters only");
-    encTable[i] = code;
-    decTable[code] = i;
+    encTable[i2] = code;
+    decTable[code] = i2;
   }
   if (aliases !== void 0) {
     for (const alias of Object.keys(aliases)) {
@@ -68189,12 +69461,12 @@ function alphabet(letters, aliases) {
   return {
     encode: (digits) => {
       const codes = new Uint8Array(digits.length);
-      for (let i = 0; i < digits.length; i++) {
-        const d = digits[i];
+      for (let i2 = 0; i2 < digits.length; i2++) {
+        const d = digits[i2];
         const code = encTable[d];
         if (code === void 0)
           throw new Error(`alphabet.encode: invalid digit ${d}`);
-        codes[i] = code;
+        codes[i2] = code;
       }
       return charcodesToString(codes);
     },
@@ -68202,12 +69474,12 @@ function alphabet(letters, aliases) {
       astr("decode", input);
       const slen = input.length;
       const digits = new Uint8Array(slen);
-      for (let i = 0; i < slen; i++) {
-        const code = input.charCodeAt(i);
+      for (let i2 = 0; i2 < slen; i2++) {
+        const code = input.charCodeAt(i2);
         const digit = code < 128 ? decTable[code] : -1;
         if (digit === -1)
-          throw new Error(`Unknown letter "${input[i]}". Allowed: ${letters}`);
-        digits[i] = digit;
+          throw new Error(`Unknown letter "${input[i2]}". Allowed: ${letters}`);
+        digits[i2] = digit;
       }
       return digits;
     }
@@ -68233,8 +69505,8 @@ function checksum2(len, fn) {
       const payload = data.slice(0, -len);
       const oldChecksum = data.slice(-len);
       const newChecksum = _fn(payload).slice(0, len);
-      for (let i = 0; i < len; i++)
-        if (newChecksum[i] !== oldChecksum[i])
+      for (let i2 = 0; i2 < len; i2++)
+        if (newChecksum[i2] !== oldChecksum[i2])
           throw new Error("Invalid checksum");
       return payload;
     }
@@ -68260,18 +69532,18 @@ var radixBaseN = (BASE, GROUP) => ({
     const odd = blen & 1;
     if (odd)
       limbs[0] = bytes2[0];
-    for (let i = odd, j2 = odd; i < blen; i += 2, j2++)
-      limbs[j2] = bytes2[i] << 8 | bytes2[i + 1];
+    for (let i2 = odd, j2 = odd; i2 < blen; i2 += 2, j2++)
+      limbs[j2] = bytes2[i2] << 8 | bytes2[i2 + 1];
     const groups = [];
     let pos = 0;
     while (pos < nlimbs) {
       let carry = 0;
-      for (let i = pos; i < nlimbs; i++) {
-        const cur2 = carry * 65536 + limbs[i];
+      for (let i2 = pos; i2 < nlimbs; i2++) {
+        const cur2 = carry * 65536 + limbs[i2];
         const q = Math.floor(cur2 / GROUP);
         carry = cur2 - q * GROUP;
-        limbs[i] = q;
-        if (q === 0 && i === pos)
+        limbs[i2] = q;
+        if (q === 0 && i2 === pos)
           pos++;
       }
       groups.push(carry);
@@ -68308,13 +69580,13 @@ var radixBaseN = (BASE, GROUP) => ({
       zeros2++;
     const limbs = new Uint16Array(Math.ceil(dlen * 6 / 16) + 1);
     let used = 0;
-    let i = 0;
+    let i2 = 0;
     let group = dlen % 5 || 5;
-    while (i < dlen) {
+    while (i2 < dlen) {
       let gval = 0;
       let factor = 1;
-      for (const end = i + group; i < end; i++) {
-        const d = digits[i];
+      for (const end = i2 + group; i2 < end; i2++) {
+        const d = digits[i2];
         if (d >= BASE)
           throw new Error(`invalid integer: ${d}`);
         gval = gval * BASE + d;
@@ -68380,13 +69652,13 @@ var HARDENED_OFFSET = 2147483648;
 var MAX_DEPTH = 255;
 var hash1602 = (data) => ripemd1603(sha2563(data));
 var fromU32 = (data) => createView2(data).getUint32(0, false);
-var toU32 = (n2, title = "number") => {
-  if (typeof n2 !== "number")
-    throw new TypeError(`"${title}" expected number, got type=${typeof n2}`);
-  if (!Number.isSafeInteger(n2) || n2 < 0 || n2 > 2 ** 32 - 1)
-    throw new RangeError(`"${title}" expected integer in range 0..2**32-1, got ${n2}`);
+var toU32 = (n4, title = "number") => {
+  if (typeof n4 !== "number")
+    throw new TypeError(`"${title}" expected number, got type=${typeof n4}`);
+  if (!Number.isSafeInteger(n4) || n4 < 0 || n4 > 2 ** 32 - 1)
+    throw new RangeError(`"${title}" expected integer in range 0..2**32-1, got ${n4}`);
   const buf = new Uint8Array(4);
-  createView2(buf).setUint32(0, n2, false);
+  createView2(buf).setUint32(0, n4, false);
   return buf;
 };
 var validateVersions = (versions, title = "versions") => {
@@ -68528,11 +69800,11 @@ var HDKey = class _HDKey {
       throw new Error("HDKey: path exceeds the serializable depth 255");
     }
     let child = this;
-    for (const c2 of parts) {
-      const m = /^(\d+)('?)$/.exec(c2);
+    for (const c4 of parts) {
+      const m = /^(\d+)('?)$/.exec(c4);
       const m1 = m && m[1];
       if (!m || m.length !== 3 || typeof m1 !== "string")
-        throw new Error("invalid child index: " + c2);
+        throw new Error("invalid child index: " + c4);
       let idx = +m1;
       if (!Number.isSafeInteger(idx) || idx >= HARDENED_OFFSET) {
         throw new Error("Invalid index");
@@ -68645,16 +69917,16 @@ var HDKey = class _HDKey {
 };
 
 // node_modules/@scure/bip39/node_modules/@noble/hashes/utils.js
-function isBytes4(a) {
-  return a instanceof Uint8Array || ArrayBuffer.isView(a) && a.constructor.name === "Uint8Array" && "BYTES_PER_ELEMENT" in a && a.BYTES_PER_ELEMENT === 1;
+function isBytes4(a2) {
+  return a2 instanceof Uint8Array || ArrayBuffer.isView(a2) && a2.constructor.name === "Uint8Array" && "BYTES_PER_ELEMENT" in a2 && a2.BYTES_PER_ELEMENT === 1;
 }
 var atitle3 = (title) => title ? `"${title}" ` : "";
-function anumber4(n2, title = "") {
-  if (typeof n2 !== "number")
-    throw new TypeError(atitle3(title) + "expected number, got " + typeof n2);
-  if (!Number.isSafeInteger(n2) || n2 < 0)
-    throw new RangeError(atitle3(title) + "expected integer >= 0, got " + n2);
-  return n2;
+function anumber4(n4, title = "") {
+  if (typeof n4 !== "number")
+    throw new TypeError(atitle3(title) + "expected number, got " + typeof n4);
+  if (!Number.isSafeInteger(n4) || n4 < 0)
+    throw new RangeError(atitle3(title) + "expected integer >= 0, got " + n4);
+  return n4;
 }
 function abytes4(value2, length2, title = "") {
   if (isBytes4(value2) && (length2 === void 0 || value2.length === length2))
@@ -68669,12 +69941,12 @@ function abytes4(value2, length2, title = "") {
     throw new TypeError(message);
   throw new RangeError(message);
 }
-function ahash2(h) {
-  if (typeof h !== "function" || typeof h.create !== "function")
+function ahash2(h2) {
+  if (typeof h2 !== "function" || typeof h2.create !== "function")
     throw new TypeError("expected hash wrapped by utils.createHasher");
-  anumber4(h.outputLen);
-  anumber4(h.blockLen);
-  if (h.outputLen < 1 || h.blockLen < 1)
+  anumber4(h2.outputLen);
+  anumber4(h2.blockLen);
+  if (h2.outputLen < 1 || h2.blockLen < 1)
     throw new Error("hash blockLen / outputLen must be >= 1");
 }
 var aobject3 = (value2, label) => {
@@ -68703,8 +69975,8 @@ function aoutput2(out, instance2) {
   }
 }
 function clean2(...arrays) {
-  for (let i = 0; i < arrays.length; i++) {
-    arrays[i].fill(0);
+  for (let i2 = 0; i2 < arrays.length; i2++) {
+    arrays[i2].fill(0);
   }
 }
 function createView3(arr) {
@@ -68783,12 +70055,12 @@ var _HMAC2 = class {
     const blockLen = this.blockLen;
     const pad = new Uint8Array(blockLen);
     pad.set(key.length > blockLen ? hash2.create().update(key).digest() : key);
-    for (let i = 0; i < pad.length; i++)
-      pad[i] ^= 54;
+    for (let i2 = 0; i2 < pad.length; i2++)
+      pad[i2] ^= 54;
     this.iHash.update(pad);
     this.oHash = hash2.create();
-    for (let i = 0; i < pad.length; i++)
-      pad[i] ^= 54 ^ 92;
+    for (let i2 = 0; i2 < pad.length; i2++)
+      pad[i2] ^= 54 ^ 92;
     this.oHash.update(pad);
     clean2(pad);
   }
@@ -68844,11 +70116,11 @@ var hmac3 = /* @__PURE__ */ (() => {
 function pbkdf2Init2(hash2, _password, _salt, _opts) {
   ahash2(hash2);
   const opts = checkOpts3({ dkLen: 32, asyncTick: 10 }, _opts);
-  const { c: c2, dkLen, asyncTick } = opts;
-  anumber4(c2, "c");
+  const { c: c4, dkLen, asyncTick } = opts;
+  anumber4(c4, "c");
   anumber4(dkLen, "dkLen");
   anumber4(asyncTick, "asyncTick");
-  if (c2 < 1)
+  if (c4 < 1)
     throw new Error('"c" (iterations) must be >= 1');
   if (dkLen < 1)
     throw new Error('"dkLen" must be >= 1');
@@ -68860,9 +70132,9 @@ function pbkdf2Init2(hash2, _password, _salt, _opts) {
     try {
       const DK = new Uint8Array(dkLen);
       const { iHash, oHash, outputLen } = hmac3.create(hash2, p);
-      const u = new Uint8Array(outputLen);
-      const eng = pbkdf2Engine(iHash, oHash, s, u);
-      return { c: c2, dkLen, asyncTick, DK, outputLen, eng };
+      const u3 = new Uint8Array(outputLen);
+      const eng = pbkdf2Engine(iHash, oHash, s, u3);
+      return { c: c4, dkLen, asyncTick, DK, outputLen, eng };
     } finally {
       if (typeof _salt === "string")
         clean2(s);
@@ -68872,7 +70144,7 @@ function pbkdf2Init2(hash2, _password, _salt, _opts) {
       clean2(p);
   }
 }
-function pbkdf2Engine(iHash, oHash, salt, u) {
+function pbkdf2Engine(iHash, oHash, salt, u3) {
   const counter = new Uint8Array(4);
   const view = createView3(counter);
   const salted = iHash._cloneInto().update(salt);
@@ -68882,17 +70154,17 @@ function pbkdf2Engine(iHash, oHash, salt, u) {
   return {
     u1: (ti, Ti) => {
       view.setInt32(0, ti, false);
-      salted._cloneInto(work).update(counter).digestInto(u);
-      oHash._cloneInto(work).update(u).digestInto(u);
-      Ti.set(u.subarray(0, Ti.length));
+      salted._cloneInto(work).update(counter).digestInto(u3);
+      oHash._cloneInto(work).update(u3).digestInto(u3);
+      Ti.set(u3.subarray(0, Ti.length));
     },
     // Whole `F` inner loop for the sync variant: one optimized function owns the hot loop.
-    rounds: (c2, Ti) => {
-      for (let ui = 1; ui < c2; ui++) {
-        iClone.call(iHash, work).update(u).digestInto(u);
-        oClone.call(oHash, work).update(u).digestInto(u);
-        for (let i = 0; i < Ti.length; i++)
-          Ti[i] ^= u[i];
+    rounds: (c4, Ti) => {
+      for (let ui = 1; ui < c4; ui++) {
+        iClone.call(iHash, work).update(u3).digestInto(u3);
+        oClone.call(oHash, work).update(u3).digestInto(u3);
+        for (let i2 = 0; i2 < Ti.length; i2++)
+          Ti[i2] ^= u3[i2];
       }
     },
     output: (DK) => {
@@ -68900,17 +70172,17 @@ function pbkdf2Engine(iHash, oHash, salt, u) {
       oHash.destroy();
       salted.destroy();
       work.destroy();
-      clean2(u);
+      clean2(u3);
       return DK;
     }
   };
 }
-function pbkdf23(hash2, password, salt, opts) {
-  const { c: c2, dkLen, DK, outputLen, eng } = pbkdf2Init2(hash2, password, salt, opts);
+function pbkdf23(hash2, password2, salt, opts) {
+  const { c: c4, dkLen, DK, outputLen, eng } = pbkdf2Init2(hash2, password2, salt, opts);
   for (let ti = 1, pos = 0; pos < dkLen; ti++, pos += outputLen) {
     const Ti = DK.subarray(pos, pos + outputLen);
     eng.u1(ti, Ti);
-    eng.rounds(c2, Ti);
+    eng.rounds(c4, Ti);
   }
   return eng.output(DK);
 }
@@ -68918,35 +70190,35 @@ function pbkdf23(hash2, password, salt, opts) {
 // node_modules/@scure/bip39/node_modules/@noble/hashes/_u64.js
 var U32_MASK643 = /* @__PURE__ */ (() => BigInt(2 ** 32 - 1))();
 var _32n3 = /* @__PURE__ */ BigInt(32);
-function fromBig3(n2, le = false) {
+function fromBig3(n4, le = false) {
   if (le)
-    return { h: Number(n2 & U32_MASK643), l: Number(n2 >> _32n3 & U32_MASK643) };
-  return { h: Number(n2 >> _32n3 & U32_MASK643) | 0, l: Number(n2 & U32_MASK643) | 0 };
+    return { h: Number(n4 & U32_MASK643), l: Number(n4 >> _32n3 & U32_MASK643) };
+  return { h: Number(n4 >> _32n3 & U32_MASK643) | 0, l: Number(n4 & U32_MASK643) | 0 };
 }
 function split4(lst, le = false) {
   const len = lst.length;
   let Ah = new Uint32Array(len);
   let Al = new Uint32Array(len);
-  for (let i = 0; i < len; i++) {
-    const { h, l } = fromBig3(lst[i], le);
-    [Ah[i], Al[i]] = [h, l];
+  for (let i2 = 0; i2 < len; i2++) {
+    const { h: h2, l } = fromBig3(lst[i2], le);
+    [Ah[i2], Al[i2]] = [h2, l];
   }
   return [Ah, Al];
 }
-var fromNumH2 = (n2) => n2 / 2 ** 32 | 0;
-var fromNumL2 = (n2) => n2 >>> 0;
-function setU64FromNum2(view, byteOffset, n2, isLE2) {
-  const h = fromNumH2(n2);
-  const l = fromNumL2(n2);
-  view.setUint32(byteOffset, isLE2 ? l : h, isLE2);
-  view.setUint32(byteOffset + 4, isLE2 ? h : l, isLE2);
+var fromNumH2 = (n4) => n4 / 2 ** 32 | 0;
+var fromNumL2 = (n4) => n4 >>> 0;
+function setU64FromNum2(view, byteOffset, n4, isLE2) {
+  const h2 = fromNumH2(n4);
+  const l = fromNumL2(n4);
+  view.setUint32(byteOffset, isLE2 ? l : h2, isLE2);
+  view.setUint32(byteOffset + 4, isLE2 ? h2 : l, isLE2);
 }
-var shrSH2 = (h, _l, s) => h >>> s;
-var shrSL2 = (h, l, s) => h << 32 - s | l >>> s;
-var rotrSH2 = (h, l, s) => h >>> s | l << 32 - s;
-var rotrSL2 = (h, l, s) => h << 32 - s | l >>> s;
-var rotrBH2 = (h, l, s) => h << 64 - s | l >>> s - 32;
-var rotrBL2 = (h, l, s) => h >>> s - 32 | l << 64 - s;
+var shrSH2 = (h2, _l, s) => h2 >>> s;
+var shrSL2 = (h2, l, s) => h2 << 32 - s | l >>> s;
+var rotrSH2 = (h2, l, s) => h2 >>> s | l << 32 - s;
+var rotrSL2 = (h2, l, s) => h2 << 32 - s | l >>> s;
+var rotrBH2 = (h2, l, s) => h2 << 64 - s | l >>> s - 32;
+var rotrBL2 = (h2, l, s) => h2 >>> s - 32 | l << 64 - s;
 function add2(Ah, Al, Bh, Bl) {
   const l = (Al >>> 0) + (Bl >>> 0);
   return { h: Ah + Bh + (l / 2 ** 32 | 0) | 0, l: l | 0 };
@@ -68959,11 +70231,11 @@ var add5L2 = (Al, Bl, Cl, Dl, El) => (Al >>> 0) + (Bl >>> 0) + (Cl >>> 0) + (Dl 
 var add5H2 = (low, Ah, Bh, Ch, Dh, Eh) => Ah + Bh + Ch + Dh + Eh + (low / 2 ** 32 | 0) | 0;
 
 // node_modules/@scure/bip39/node_modules/@noble/hashes/_md.js
-function Chi3(a, b2, c2) {
-  return a & b2 ^ ~a & c2;
+function Chi3(a2, b2, c4) {
+  return a2 & b2 ^ ~a2 & c4;
 }
-function Maj3(a, b2, c2) {
-  return a & b2 ^ a & c2 ^ b2 & c2;
+function Maj3(a2, b2, c4) {
+  return a2 & b2 ^ a2 & c4 ^ b2 & c4;
 }
 var HashMD2 = class {
   blockLen;
@@ -69036,8 +70308,8 @@ var HashMD2 = class {
     const state2 = this.get();
     if (len % 4 || outLen > state2.length)
       throw new Error("invalid outputLen");
-    for (let i = 0; i < outLen; i++)
-      oview.setUint32(4 * i, state2[i], isLE2);
+    for (let i2 = 0; i2 < outLen; i2++)
+      oview.setUint32(4 * i2, state2[i2], isLE2);
   }
   digest() {
     const { buffer, outputLen } = this;
@@ -69182,14 +70454,14 @@ var SHA2_32B2 = class extends HashMD2 {
     this.H = IV2[7] | 0;
   }
   get() {
-    const { A, B, C, D, E, F, G, H } = this;
-    return [A, B, C, D, E, F, G, H];
+    const { A, B, C: C2, D, E, F, G, H } = this;
+    return [A, B, C2, D, E, F, G, H];
   }
   // prettier-ignore
-  set(A, B, C, D, E, F, G, H) {
+  set(A, B, C2, D, E, F, G, H) {
     this.A = A | 0;
     this.B = B | 0;
-    this.C = C | 0;
+    this.C = C2 | 0;
     this.D = D | 0;
     this.E = E | 0;
     this.F = F | 0;
@@ -69201,39 +70473,39 @@ var SHA2_32B2 = class extends HashMD2 {
     return this._cloneIntoMeta(to);
   }
   process(view, offset) {
-    for (let i = 0; i < 16; i++, offset += 4)
-      SHA256_W3[i] = view.getUint32(offset, false);
-    for (let i = 16; i < 64; i++) {
-      const W15 = SHA256_W3[i - 15];
-      const W2 = SHA256_W3[i - 2];
+    for (let i2 = 0; i2 < 16; i2++, offset += 4)
+      SHA256_W3[i2] = view.getUint32(offset, false);
+    for (let i2 = 16; i2 < 64; i2++) {
+      const W15 = SHA256_W3[i2 - 15];
+      const W2 = SHA256_W3[i2 - 2];
       const s0 = rotr3(W15, 7) ^ rotr3(W15, 18) ^ W15 >>> 3;
       const s1 = rotr3(W2, 17) ^ rotr3(W2, 19) ^ W2 >>> 10;
-      SHA256_W3[i] = s1 + SHA256_W3[i - 7] + s0 + SHA256_W3[i - 16] | 0;
+      SHA256_W3[i2] = s1 + SHA256_W3[i2 - 7] + s0 + SHA256_W3[i2 - 16] | 0;
     }
-    let { A, B, C, D, E, F, G, H } = this;
-    for (let i = 0; i < 64; i++) {
+    let { A, B, C: C2, D, E, F, G, H } = this;
+    for (let i2 = 0; i2 < 64; i2++) {
       const sigma1 = rotr3(E, 6) ^ rotr3(E, 11) ^ rotr3(E, 25);
-      const T13 = H + sigma1 + Chi3(E, F, G) + SHA256_K3[i] + SHA256_W3[i] | 0;
+      const T13 = H + sigma1 + Chi3(E, F, G) + SHA256_K3[i2] + SHA256_W3[i2] | 0;
       const sigma0 = rotr3(A, 2) ^ rotr3(A, 13) ^ rotr3(A, 22);
-      const T22 = sigma0 + Maj3(A, B, C) | 0;
+      const T22 = sigma0 + Maj3(A, B, C2) | 0;
       H = G;
       G = F;
       F = E;
       E = D + T13 | 0;
-      D = C;
-      C = B;
+      D = C2;
+      C2 = B;
       B = A;
       A = T13 + T22 | 0;
     }
     A = A + this.A | 0;
     B = B + this.B | 0;
-    C = C + this.C | 0;
+    C2 = C2 + this.C | 0;
     D = D + this.D | 0;
     E = E + this.E | 0;
     F = F + this.F | 0;
     G = G + this.G | 0;
     H = H + this.H | 0;
-    this.set(A, B, C, D, E, F, G, H);
+    this.set(A, B, C2, D, E, F, G, H);
   }
   roundClean() {
     clean2(SHA256_W3);
@@ -69330,7 +70602,7 @@ var K5122 = /* @__PURE__ */ (() => split4([
   "0x597f299cfc657e2a",
   "0x5fcb6fab3ad6faec",
   "0x6c44198c4a475817"
-].map((n2) => BigInt(n2))))();
+].map((n4) => BigInt(n4))))();
 var SHA512_Kh2 = /* @__PURE__ */ (() => K5122[0])();
 var SHA512_Kl2 = /* @__PURE__ */ (() => K5122[1])();
 var SHA512_W_H2 = /* @__PURE__ */ new Uint32Array(80);
@@ -69405,32 +70677,32 @@ var SHA2_64B2 = class extends HashMD2 {
     return this._cloneIntoMeta(to);
   }
   process(view, offset) {
-    for (let i = 0; i < 16; i++, offset += 4) {
-      SHA512_W_H2[i] = view.getUint32(offset);
-      SHA512_W_L2[i] = view.getUint32(offset += 4);
+    for (let i2 = 0; i2 < 16; i2++, offset += 4) {
+      SHA512_W_H2[i2] = view.getUint32(offset);
+      SHA512_W_L2[i2] = view.getUint32(offset += 4);
     }
-    for (let i = 16; i < 80; i++) {
-      const W15h = SHA512_W_H2[i - 15] | 0;
-      const W15l = SHA512_W_L2[i - 15] | 0;
+    for (let i2 = 16; i2 < 80; i2++) {
+      const W15h = SHA512_W_H2[i2 - 15] | 0;
+      const W15l = SHA512_W_L2[i2 - 15] | 0;
       const s0h = rotrSH2(W15h, W15l, 1) ^ rotrSH2(W15h, W15l, 8) ^ shrSH2(W15h, W15l, 7);
       const s0l = rotrSL2(W15h, W15l, 1) ^ rotrSL2(W15h, W15l, 8) ^ shrSL2(W15h, W15l, 7);
-      const W2h = SHA512_W_H2[i - 2] | 0;
-      const W2l = SHA512_W_L2[i - 2] | 0;
+      const W2h = SHA512_W_H2[i2 - 2] | 0;
+      const W2l = SHA512_W_L2[i2 - 2] | 0;
       const s1h = rotrSH2(W2h, W2l, 19) ^ rotrBH2(W2h, W2l, 61) ^ shrSH2(W2h, W2l, 6);
       const s1l = rotrSL2(W2h, W2l, 19) ^ rotrBL2(W2h, W2l, 61) ^ shrSL2(W2h, W2l, 6);
-      const SUMl = add4L2(s0l, s1l, SHA512_W_L2[i - 7], SHA512_W_L2[i - 16]);
-      const SUMh = add4H2(SUMl, s0h, s1h, SHA512_W_H2[i - 7], SHA512_W_H2[i - 16]);
-      SHA512_W_H2[i] = SUMh | 0;
-      SHA512_W_L2[i] = SUMl | 0;
+      const SUMl = add4L2(s0l, s1l, SHA512_W_L2[i2 - 7], SHA512_W_L2[i2 - 16]);
+      const SUMh = add4H2(SUMl, s0h, s1h, SHA512_W_H2[i2 - 7], SHA512_W_H2[i2 - 16]);
+      SHA512_W_H2[i2] = SUMh | 0;
+      SHA512_W_L2[i2] = SUMl | 0;
     }
     let { Ah, Al, Bh, Bl, Ch, Cl, Dh, Dl, Eh, El, Fh, Fl, Gh, Gl, Hh, Hl } = this;
-    for (let i = 0; i < 80; i++) {
+    for (let i2 = 0; i2 < 80; i2++) {
       const sigma1h = rotrSH2(Eh, El, 14) ^ rotrSH2(Eh, El, 18) ^ rotrBH2(Eh, El, 41);
       const sigma1l = rotrSL2(Eh, El, 14) ^ rotrSL2(Eh, El, 18) ^ rotrBL2(Eh, El, 41);
       const CHIh = Eh & Fh ^ ~Eh & Gh;
       const CHIl = El & Fl ^ ~El & Gl;
-      const T1ll = add5L2(Hl, sigma1l, CHIl, SHA512_Kl2[i], SHA512_W_L2[i]);
-      const T1h = add5H2(T1ll, Hh, sigma1h, CHIh, SHA512_Kh2[i], SHA512_W_H2[i]);
+      const T1ll = add5L2(Hl, sigma1l, CHIl, SHA512_Kl2[i2], SHA512_W_L2[i2]);
+      const T1h = add5H2(T1ll, Hh, sigma1h, CHIh, SHA512_Kh2[i2], SHA512_W_H2[i2]);
       const T1l = T1ll | 0;
       const sigma0h = rotrSH2(Ah, Al, 28) ^ rotrBH2(Ah, Al, 34) ^ rotrBH2(Ah, Al, 39);
       const sigma0l = rotrSL2(Ah, Al, 28) ^ rotrBL2(Ah, Al, 34) ^ rotrBL2(Ah, Al, 39);
@@ -69489,12 +70761,12 @@ var sha5123 = /* @__PURE__ */ createHasher2(
 // node_modules/@scure/bip39/index.js
 var isJapanese = (wordlist3) => wordlist3[0] === "\u3042\u3044\u3053\u304F\u3057\u3093";
 function isWellFormedUnicode(value2) {
-  for (let i = 0; i < value2.length; i++) {
-    const current = value2.charCodeAt(i);
+  for (let i2 = 0; i2 < value2.length; i2++) {
+    const current = value2.charCodeAt(i2);
     if (current >= 55296 && current <= 56319) {
-      if (i + 1 >= value2.length)
+      if (i2 + 1 >= value2.length)
         return false;
-      const next = value2.charCodeAt(++i);
+      const next = value2.charCodeAt(++i2);
       if (next < 56320 || next > 57343)
         return false;
     } else if (current >= 56320 && current <= 57343) {
@@ -69535,10 +70807,10 @@ var calcChecksum = (entropy) => {
 function awordlist(wordlist3) {
   if (!Array.isArray(wordlist3) || wordlist3.length !== 2048 || typeof wordlist3[0] !== "string")
     throw new TypeError("Wordlist: expected array of 2048 strings");
-  wordlist3.forEach((i) => {
-    if (typeof i !== "string")
-      throw new TypeError("wordlist: non-string element: " + i);
-    if (!isWellFormedUnicode(i))
+  wordlist3.forEach((i2) => {
+    if (typeof i2 !== "string")
+      throw new TypeError("wordlist: non-string element: " + i2);
+    if (!isWellFormedUnicode(i2))
       throw new TypeError("wordlist: expected well-formed Unicode string");
   });
 }
@@ -71630,7 +72902,7 @@ zoo`.split("\n"));
 
 // ravenne.js
 var import_meta = {};
-var VERSION = "6.5.0";
+var VERSION = "8.0.0";
 process.title = "Ravenne Wallet";
 async function setupProxy() {
   try {
@@ -71638,7 +72910,7 @@ async function setupProxy() {
     if (prox) {
       const { ProxyAgent, setGlobalDispatcher } = await Promise.resolve().then(() => __toESM(require_undici(), 1));
       setGlobalDispatcher(new ProxyAgent(prox));
-      console.log(c.dim(`\u2713 proxy active: ${prox}`));
+      console.log(c3.dim(`\u2713 proxy active: ${prox}`));
     }
   } catch {
   }
@@ -71684,7 +72956,7 @@ var NET_ALIASES = {
   op: "op"
 };
 var BTC = { label: "Bitcoin", sym: "BTC", ex: "https://mempool.space", cg: "bitcoin" };
-var BTC_API = () => settings().btcTest ? "https://blockstream.info/testnet/api" : "https://blockstream.info/api";
+var BTC_API = () => settings2().btcTest ? "https://blockstream.info/testnet/api" : "https://blockstream.info/api";
 var DEFAULT_TOKENS = {
   eth: [
     { sym: "USDT", addr: "0xdAC17F958D2ee523a2206206994597C13D831ec7", dec: 6 },
@@ -71714,7 +72986,7 @@ var ERC20_ABI = [
   "function approve(address spender, uint256 amount) returns (bool)"
 ];
 var TTY = process.stdout.isTTY;
-var c = {
+var c3 = {
   vio: (s) => TTY ? `\x1B[35m${s}\x1B[0m` : s,
   ok: (s) => TTY ? `\x1B[32m${s}\x1B[0m` : s,
   err: (s) => TTY ? `\x1B[31m${s}\x1B[0m` : s,
@@ -71724,21 +72996,21 @@ var c = {
   cyan: (s) => TTY ? `\x1B[36m${s}\x1B[0m` : s,
   wht: (s) => TTY ? `\x1B[97m${s}\x1B[0m` : s
 };
-var sleep = (ms) => new Promise((r) => setTimeout(r, ms));
-var short = (a) => `${a.slice(0, 8)}\u2026${a.slice(-6)}`;
+var sleep = (ms) => new Promise((r2) => setTimeout(r2, ms));
+var short = (a2) => `${a2.slice(0, 8)}\u2026${a2.slice(-6)}`;
 var fmtUnits = (wei, dec = 18) => {
   let s = wei.toString().padStart(dec + 1, "0");
-  const i = s.slice(0, s.length - dec) || "0", d = (dec ? s.slice(-dec) : "").slice(0, 6).replace(/0+$/, "");
-  return d ? `${i}.${d}` : i;
+  const i2 = s.slice(0, s.length - dec) || "0", d = (dec ? s.slice(-dec) : "").slice(0, 6).replace(/0+$/, "");
+  return d ? `${i2}.${d}` : i2;
 };
 var fmtAmt = (wei) => fmtUnits(wei, 18);
 var fmtBtc = (sats) => {
   let s = BigInt(sats).toString().padStart(9, "0");
-  const i = s.slice(0, s.length - 8), d = s.slice(-8).replace(/0+$/, "");
-  return d ? `${i}.${d}` : i;
+  const i2 = s.slice(0, s.length - 8), d = s.slice(-8).replace(/0+$/, "");
+  return d ? `${i2}.${d}` : i2;
 };
-var usd = (n2) => new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(n2);
-var eur = (n2) => new Intl.NumberFormat("en-US", { style: "currency", currency: "EUR" }).format(n2);
+var usd = (n4) => new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(n4);
+var eur = (n4) => new Intl.NumberFormat("en-US", { style: "currency", currency: "EUR" }).format(n4);
 var dt = (iso) => new Date(iso).toLocaleString("en-GB");
 var DEFAULT_SETTINGS = {
   prices: false,
@@ -71769,9 +73041,9 @@ var BW = () => cur().btcWallets;
 var XW = () => cur().xmrWallets;
 var netKey = () => cur().network;
 var N2 = () => NET[netKey()];
-var settings = () => V().settings ??= structuredClone(DEFAULT_SETTINGS);
-var rpcUrl = (k) => settings().rpc?.[k] || NET[k].rpc;
-var explorerApi = (k) => settings().explorers?.[k] || NET[k].api;
+var settings2 = () => V().settings ??= structuredClone(DEFAULT_SETTINGS);
+var rpcUrl = (k) => settings2().rpc?.[k] || NET[k].rpc;
+var explorerApi = (k) => settings2().explorers?.[k] || NET[k].api;
 var provider = () => new JsonRpcProvider(rpcUrl(netKey()));
 var stripUsb = (p) => {
   if (!p?.profiles) return p;
@@ -71780,80 +73052,115 @@ var stripUsb = (p) => {
 };
 var save = () => encryptVault(stripUsb(state.payload), state.pass);
 async function P(questions) {
-  return (0, import_prompts.default)(questions, { onCancel: () => {
-    console.log("\nBye \u{1F44B}");
-    process.exit(0);
-  } });
+  const list = Array.isArray(questions) ? questions : [questions];
+  if (!TTY) return (0, import_prompts.default)(list, { onCancel: () => process.exit(0) });
+  const out = {};
+  for (const q of list) {
+    let v;
+    if (q.type === "select") {
+      v = await select({
+        message: q.message,
+        options: (q.choices || []).map((ch) => ({ value: ch.value, label: ch.title, hint: ch.description })),
+        initialValue: q.initial
+      });
+    } else if (q.type === "confirm") {
+      v = await select({
+        message: q.message,
+        options: [{ value: true, label: "Yes" }, { value: false, label: "No" }],
+        initialValue: q.initial === true
+      });
+    } else if (q.type === "password") {
+      v = await password({ message: q.message, mask: "\u25AA" });
+    } else if (q.type === "number") {
+      v = await text({
+        message: q.message,
+        placeholder: q.initial != null ? String(q.initial) : "",
+        validate: (x) => {
+          if ((x === "" || x == null) && q.initial != null) return void 0;
+          const n4 = Number(x);
+          if (!Number.isFinite(n4)) return "Enter a number";
+          if (q.min != null && n4 < q.min) return `Minimum: ${q.min}`;
+          if (q.max != null && n4 > q.max) return `Maximum: ${q.max}`;
+        }
+      });
+      v = v === "" || v == null ? q.initial : Number(v);
+    } else {
+      v = await text({ message: q.message, placeholder: q.placeholder, defaultValue: q.initial });
+    }
+    if (isCancel(v)) {
+      outro("Bye.");
+      process.exit(0);
+    }
+    out[q.name || "value"] = v;
+  }
+  return out;
 }
 var confirm = async (msg) => state.autoYes ? true : (await P({ type: "confirm", name: "v", message: msg, initial: false })).v;
 function banner() {
   console.clear();
   const p = state.payload ? V().active : null;
   console.log("");
-  console.log(c.bold("RAVENNE WALLET") + c.dim(`  v${VERSION}`));
-  if (p) console.log(c.dim(`wallet: `) + c.bold(p) + c.dim(` \xB7 chain: ${N2().label} \xB7 ${W().length} EVM + ${BW().length} BTC + ${XW().length} XMR`));
-  console.log(c.dim("\u2500".repeat(64)));
+  console.log(c3.bold("RAVENNE WALLET") + c3.dim(`  v${VERSION}`));
+  if (p) console.log(c3.dim(`wallet: `) + c3.bold(p) + c3.dim(` \xB7 chain: ${N2().label} \xB7 ${W().length} EVM + ${BW().length} BTC + ${XW().length} XMR`));
+  console.log(c3.dim("\u2500".repeat(64)));
 }
 function header(title) {
   const pad = Math.max(0, 44 - title.length);
   console.log(`
-${c.bold(c.vio(` \u25C6 ${title} `))}${c.dim("\u2500".repeat(pad + 6))}`);
+${c3.bold(c3.vio(` \u25C6 ${title} `))}${c3.dim("\u2500".repeat(pad + 6))}`);
 }
 function box(title, lines) {
   const inner = Math.max(title.length + 4, ...lines.map((l) => l.length), 20) + 2;
-  console.log(c.vio(`\u256D\u2500 ${title} ${"\u2500".repeat(Math.max(0, inner - title.length - 4))}\u256E`));
-  for (const l of lines) console.log(c.vio("\u2502") + " " + l.padEnd(inner - 2) + c.vio("\u2502"));
-  console.log(c.vio(`\u2570${"\u2500".repeat(inner)}\u256F`));
+  console.log(c3.vio(`\u256D\u2500 ${title} ${"\u2500".repeat(Math.max(0, inner - title.length - 4))}\u256E`));
+  for (const l of lines) console.log(c3.vio("\u2502") + " " + l.padEnd(inner - 2) + c3.vio("\u2502"));
+  console.log(c3.vio(`\u2570${"\u2500".repeat(inner)}\u256F`));
 }
 function table(headers, rows, opts = {}) {
   const aligns = opts.align || [];
-  const widths = headers.map((h, i) => Math.max(h.length, ...rows.map((r) => String(r[i] ?? "").length)));
-  const row = (cells) => "  " + cells.map((cell, i) => {
+  const widths = headers.map((h2, i2) => Math.max(h2.length, ...rows.map((r2) => String(r2[i2] ?? "").length)));
+  const row = (cells) => "  " + cells.map((cell, i2) => {
     const s = String(cell ?? "");
-    return aligns[i] === "r" ? s.padStart(widths[i]) : s.padEnd(widths[i]);
+    return aligns[i2] === "r" ? s.padStart(widths[i2]) : s.padEnd(widths[i2]);
   }).join("  ");
-  const sep = (ch) => c.dim("  " + widths.map((w) => "\u2500".repeat(w)).join(ch));
+  const sep = (ch) => c3.dim("  " + widths.map((w) => "\u2500".repeat(w)).join(ch));
   if (!rows.length) {
-    console.log(c.dim("  (nothing to show)"));
+    console.log(c3.dim("  (nothing to show)"));
     return;
   }
   console.log(sep("\u252C"));
-  console.log(c.bold(row(headers)));
+  console.log(c3.bold(row(headers)));
   console.log(sep("\u253C"));
-  rows.forEach((r) => console.log(row(r)));
+  rows.forEach((r2) => console.log(row(r2)));
   console.log(sep("\u2534"));
 }
 function statusLine() {
-  const s = `  ${c.bold("\u26D3")} ${N2().label}  ${c.dim("\xB7")}  \u{1F465} ${W().length} EVM ${BW().length ? c.dim(`+ \u20BF${BW().length} BTC`) : ""}  ${c.dim("\xB7")}  \u{1F512} ${settings().autolockMin || "off"}m  ${c.dim("\xB7")}  ${settings().btcTest ? c.warn("BTC testnet") : ""}`;
+  const s = `  ${c3.bold("\u26D3")} ${N2().label}  ${c3.dim("\xB7")}  \u{1F465} ${W().length} EVM ${BW().length ? c3.dim(`+ \u20BF${BW().length} BTC`) : ""}  ${c3.dim("\xB7")}  \u{1F512} ${settings2().autolockMin || "off"}m  ${c3.dim("\xB7")}  ${settings2().btcTest ? c3.warn("BTC testnet") : ""}`;
   console.log(s + "\n");
 }
 async function spin(label, fn) {
   if (!TTY) {
-    console.log(c.dim(`\u2022 ${label}`));
+    console.log(c3.dim(`\u2022 ${label}`));
     return fn();
   }
-  const frames = ["\u280B", "\u2819", "\u2839", "\u2838", "\u283C", "\u2834", "\u2826", "\u2827", "\u2807", "\u280F"];
-  let i = 0;
-  const iv = setInterval(() => process.stdout.write(`\r  ${c.cyan(frames[i++ % frames.length])} ${label}`), 80);
+  const sp = spinner();
+  sp.start(label);
   try {
-    const r = await fn();
-    clearInterval(iv);
-    process.stdout.write("\r\x1B[K");
-    return r;
+    const r2 = await fn();
+    sp.stop(label + "  \u2713");
+    return r2;
   } catch (e) {
-    clearInterval(iv);
-    process.stdout.write("\r\x1B[K");
+    sp.stop(label + "  \u2717");
     throw e;
   }
 }
 async function countdown(sec) {
   for (let s = sec; s > 0; s--) {
-    process.stdout.write(`\r  ${c.dim(`\u23F3 next send in ${s}s\u2026`)}`);
+    process.stdout.write(`\r  ${c3.dim(`\u23F3 next send in ${s}s\u2026`)}`);
     await sleep(1e3);
   }
   process.stdout.write("\r\x1B[K");
 }
-var keyMark = (w) => w.privateKey ? c.ok("\u25CF key") : w.ledgerPath ? c.warn("\u29C9 ledger") : c.cyan("\u25CB watch");
+var keyMark = (w) => w.privateKey ? c3.ok("\u25CF key") : w.ledgerPath ? c3.warn("\u29C9 ledger") : c3.cyan("\u25CB watch");
 var kdf = (pass, salt) => import_node_crypto.default.scryptSync(pass, salt, 32, { N: 16384, r: 8, p: 1 });
 function writeGate(pass) {
   const salt = import_node_crypto.default.randomBytes(16);
@@ -71866,30 +73173,30 @@ function gateVerify(pass) {
   return import_node_crypto.default.timingSafeEqual(kdf(pass, Buffer.from(g.salt, "hex")), Buffer.from(g.hash, "hex"));
 }
 async function initGate() {
-  console.log(c.vio("\n\u{1F510} First launch \u2014 choose your master password."));
-  console.log(c.dim("   It protects the tool AND encrypts the vault. It cannot be recovered."));
+  console.log(c3.vio("\n\u{1F510} First launch \u2014 choose your master password."));
+  console.log(c3.dim("   It protects the tool AND encrypts the vault. It cannot be recovered."));
   let pass = process.env.RAVENNE_PASS;
   if (!pass) {
-    const r = await P([
+    const r2 = await P([
       { type: "password", name: "a", message: "New master password (8 chars min.):" },
       { type: "password", name: "b", message: "Confirm password:" }
     ]);
-    if (!r.a || r.a.length < 8) {
-      console.log(c.err("Password too short."));
+    if (!r2.a || r2.a.length < 8) {
+      console.log(c3.err("Password too short."));
       process.exit(1);
     }
-    if (r.a !== r.b) {
-      console.log(c.err("Passwords do not match."));
+    if (r2.a !== r2.b) {
+      console.log(c3.err("Passwords do not match."));
       process.exit(1);
     }
-    pass = r.a;
+    pass = r2.a;
   } else if (pass.length < 8) {
-    console.log(c.err("RAVENNE_PASS too short (8 min.)."));
+    console.log(c3.err("RAVENNE_PASS too short (8 min.)."));
     process.exit(1);
   }
   writeGate(pass);
   state.pass = pass;
-  console.log(c.ok("\u2713 Master password set (access.ravenne.json \u2014 salted hash only)."));
+  console.log(c3.ok("\u2713 Master password set (access.ravenne.json \u2014 salted hash only)."));
 }
 async function unlockGate() {
   if (state.pass) return;
@@ -71897,19 +73204,19 @@ async function unlockGate() {
     await initGate();
     return;
   }
-  if (!process.env.RAVENNE_PASS) console.log(c.dim("\n\u{1F512} Ravenne is locked \u2014 enter your master password."));
-  for (let i = 0; i < 3; i++) {
+  if (!process.env.RAVENNE_PASS) console.log(c3.dim("\n\u{1F512} Ravenne is locked \u2014 enter your master password."));
+  for (let i2 = 0; i2 < 3; i2++) {
     const p = process.env.RAVENNE_PASS || (await P({ type: "password", name: "p", message: "Master password:" })).p;
     if (p && gateVerify(p)) {
       state.pass = p;
       return;
     }
-    console.log(c.err("  \u2717 Wrong password."));
+    console.log(c3.err("  \u2717 Wrong password."));
     logGateAttempt(false);
-    if (i < 2) await sleep(Math.min(8e3, 1200 * Math.pow(2, i)));
+    if (i2 < 2) await sleep(Math.min(8e3, 1200 * Math.pow(2, i2)));
   }
   logGateAttempt(true);
-  console.log(c.err("Too many failed attempts \u2014 exiting."));
+  console.log(c3.err("Too many failed attempts \u2014 exiting."));
   process.exit(1);
 }
 function logGateAttempt(locked7) {
@@ -71921,18 +73228,18 @@ function logGateAttempt(locked7) {
   } catch {
   }
 }
-async function lockSession(clear = true) {
-  if (clear) console.clear();
+async function lockSession(clear3 = true) {
+  if (clear3) console.clear();
   state.pass = null;
   state.payload = null;
-  console.log(c.vio("\u{1F512} Session locked."));
+  console.log(c3.vio("\u{1F512} Session locked."));
   await unlockGate();
   ensureVault();
 }
 var MESH_VPN = /radmin|hamachi|zerotier|tailscale|netbird|nebula|netmaker|tunngle|game ranger/i;
 var REAL_VPN = /wintun|wireguard|tap-windows|tap-|openvpn|tun0|vpn|mullvad|proton|nord|express|surfshark|cyberghost|ivpn|windscribe|private internet|hidemyass|purevpn|tunnelbear|zenmate|atlas/i;
-function classifyAdapters(text) {
-  const lines = text.split("\n").map((s) => s.trim()).filter(Boolean);
+function classifyAdapters(text2) {
+  const lines = text2.split("\n").map((s) => s.trim()).filter(Boolean);
   let mesh = null, real = null;
   for (const l of lines) {
     if (MESH_VPN.test(l)) {
@@ -71948,10 +73255,10 @@ function vpnState() {
   if (process.env.RAVENNE_FORCE_VPN === "0") return Promise.resolve({ ok: false, adapter: null });
   return new Promise((resolve) => {
     const ps = "Get-NetAdapter | Where-Object {$_.Status -eq 'Up'} | Select-Object -ExpandProperty InterfaceDescription";
-    (0, import_node_child_process.exec)(`powershell -NoProfile -Command "${ps.replace(/"/g, '\\"')}"`, { timeout: 8e3 }, (err, stdout) => {
-      if (err || !stdout) return resolve({ ok: true, adapter: "unknown (check skipped)" });
-      const { real, mesh } = classifyAdapters(stdout);
-      const meshOk = settings().meshVpnOk === true;
+    (0, import_node_child_process.exec)(`powershell -NoProfile -Command "${ps.replace(/"/g, '\\"')}"`, { timeout: 8e3 }, (err, stdout2) => {
+      if (err || !stdout2) return resolve({ ok: true, adapter: "unknown (check skipped)" });
+      const { real, mesh } = classifyAdapters(stdout2);
+      const meshOk = settings2().meshVpnOk === true;
       if (real) return resolve({ ok: true, adapter: real });
       if (mesh && meshOk) return resolve({ ok: true, adapter: mesh + " (mesh, accepted by setting)" });
       resolve({ ok: false, adapter: null, mesh });
@@ -71960,12 +73267,12 @@ function vpnState() {
 }
 async function ensureVPN() {
   if (state.flags.noVpn || process.env.RAVENNE_SKIP_VPN === "1") return;
-  if (settings().vpnCheck === false) return;
+  if (settings2().vpnCheck === false) return;
   while (true) {
     const st = await vpnState();
     if (st.ok) {
       if (state._vpnAnnounced !== true) {
-        console.log(c.ok(`\u2713 VPN detected: ${c.bold(st.adapter)}`) + c.dim(" \u2014 network layer protected.\n"));
+        console.log(c3.ok(`\u2713 VPN detected: ${c3.bold(st.adapter)}`) + c3.dim(" \u2014 network layer protected.\n"));
         state._vpnAnnounced = true;
       }
       return;
@@ -71974,8 +73281,8 @@ async function ensureVPN() {
     box("VPN REQUIRED", [
       "No anonymity VPN is active on this machine.",
       ...st.mesh ? [
-        c.dim(`Found only: ${st.mesh.slice(0, 40)}`),
-        c.dim("Mesh/LAN VPNs (Radmin, Hamachi, ZeroTier\u2026) don't hide your traffic."),
+        c3.dim(`Found only: ${st.mesh.slice(0, 40)}`),
+        c3.dim("Mesh/LAN VPNs (Radmin, Hamachi, ZeroTier\u2026) don't hide your traffic."),
         ""
       ] : [],
       "Ravenne refuses to expose your addresses and queries to",
@@ -71984,24 +73291,24 @@ async function ensureVPN() {
       "\u2192 Start your VPN (WireGuard, Proton, NordVPN\u2026), then retry."
     ]);
     if (!TTY) {
-      console.log(c.warn("  Non-interactive session \u2014 continuing WITHOUT VPN.\n"));
+      console.log(c3.warn("  Non-interactive session \u2014 continuing WITHOUT VPN.\n"));
       return;
     }
-    const { a } = await P({ type: "select", name: "a", message: "VPN:", choices: [
+    const { a: a2 } = await P({ type: "select", name: "a", message: "VPN:", choices: [
       { title: "I started my VPN \u2014 check again", value: "retry" },
       { title: "Continue WITHOUT VPN (not recommended)", value: "skip" },
       { title: "Disable this check permanently", value: "off" },
       { title: "Quit", value: "quit" }
     ] });
-    if (a === "retry") continue;
-    if (a === "skip") {
-      console.log(c.warn("Continuing without VPN \u2014 your IP is visible to RPC/explorer providers.\n"));
+    if (a2 === "retry") continue;
+    if (a2 === "skip") {
+      console.log(c3.warn("Continuing without VPN \u2014 your IP is visible to RPC/explorer providers.\n"));
       return;
     }
-    if (a === "off") {
-      settings().vpnCheck = false;
+    if (a2 === "off") {
+      settings2().vpnCheck = false;
       save();
-      console.log(c.ok("VPN check disabled (re-enable: ravenne settings vpncheck on)\n"));
+      console.log(c3.ok("VPN check disabled (re-enable: ravenne settings vpncheck on)\n"));
       return;
     }
     process.exit(0);
@@ -72011,9 +73318,9 @@ function hardenFile(p) {
   try {
     if (process.platform !== "win32") return;
     const { execSync } = require("node:child_process");
-    const u = process.env.USERNAME || "";
-    if (!u) return;
-    execSync(`icacls "${p}" /inheritance:r /grant:r "${u}:F"`, { stdio: "ignore" });
+    const u3 = process.env.USERNAME || "";
+    if (!u3) return;
+    execSync(`icacls "${p}" /inheritance:r /grant:r "${u3}:F"`, { stdio: "ignore" });
   } catch {
   }
 }
@@ -72041,16 +73348,16 @@ var emptyProfile = (name) => ({ name, wallets: [], btcWallets: [], xmrWallets: [
 var parseDuration = (s) => {
   const m = /^(\d+(?:\.\d+)?)\s*(m|h|d)?$/i.exec(String(s ?? "").trim());
   if (!m) return null;
-  const n2 = parseFloat(m[1]), u = (m[2] || "h").toLowerCase();
-  return Math.round((u === "m" ? n2 / 60 : u === "d" ? n2 * 24 : n2) * 36e5);
+  const n4 = parseFloat(m[1]), u3 = (m[2] || "h").toLowerCase();
+  return Math.round((u3 === "m" ? n4 / 60 : u3 === "d" ? n4 * 24 : n4) * 36e5);
 };
 var durLabel = (ms) => ms >= 1728e5 ? `${Math.round(ms / 36e5)}d` : ms >= 36e5 ? `${Math.round(ms / 36e5)}h` : `${Math.max(1, Math.round(ms / 6e4))}m`;
 async function purgeExpired(quiet = false) {
   const now = Date.now();
   let swept = 0, purged = 0;
   const list = cur().wallets;
-  for (let i = list.length - 1; i >= 0; i--) {
-    const w = list[i];
+  for (let i2 = list.length - 1; i2 >= 0; i2--) {
+    const w = list[i2];
     if (!w.expiresAt || w.expiresAt > now) continue;
     if (w.privateKey && mainEvm()) {
       try {
@@ -72058,23 +73365,23 @@ async function purgeExpired(quiet = false) {
         const bal = await prov.getBalance(w.address).catch(() => 0n);
         const per = await feePerTx(prov).catch(() => 0n);
         if (bal > per) {
-          console.log(c.dim(`  ... "${w.label}" expired - forwarding ${fmtAmt(bal - per)} ${NET[netKey()].sym} to main before deleting...`));
+          console.log(c3.dim(`  ... "${w.label}" expired - forwarding ${fmtAmt(bal - per)} ${NET[netKey()].sym} to main before deleting...`));
           await doSend(list.indexOf(w), mainEvm().address, bal - per, netKey());
           swept++;
         }
       } catch (e) {
-        console.log(c.warn(`  ! could not sweep "${w.label}": ${e.message.slice(0, 60)} - keys erased anyway, funds stay on-chain`));
+        console.log(c3.warn(`  ! could not sweep "${w.label}": ${e.message.slice(0, 60)} - keys erased anyway, funds stay on-chain`));
       }
     }
-    list.splice(i, 1);
+    list.splice(i2, 1);
     purged++;
   }
   if (purged) {
     save();
     if (!quiet) {
-      console.log(c.warn(`
+      console.log(c3.warn(`
 [purge] ${purged} expired temporary wallet${purged > 1 ? "s" : ""} destroyed (keys erased).`));
-      if (swept) console.log(c.ok(`   ${swept} had funds - forwarded to main first.`));
+      if (swept) console.log(c3.ok(`   ${swept} had funds - forwarded to main first.`));
     }
   }
   return purged;
@@ -72083,13 +73390,13 @@ async function cmdTemp(args) {
   if (!mainEvm()) throw new Error("No main wallet - run the setup first (ravenne setup).");
   const dur = parseDuration(args[0] ?? "24h");
   if (dur == null) throw new Error('Duration like "30m", "12h", "3d" (default 24h).');
-  let n2 = parseInt(args[1], 10) || 1;
-  n2 = Math.min(n2, 20);
+  let n4 = parseInt(args[1], 10) || 1;
+  n4 = Math.min(n4, 20);
   const expiresAt = Date.now() + dur;
   const created = [];
-  for (let i = 0; i < n2; i++) {
+  for (let i2 = 0; i2 < n4; i2++) {
     const e = newWalletEntry(state.flags.words);
-    e.label = `temp-${Date.now().toString(36).slice(-4)}-${i + 1}`;
+    e.label = `temp-${Date.now().toString(36).slice(-4)}-${i2 + 1}`;
     e.role = "receive";
     e.expiresAt = expiresAt;
     W().push(e);
@@ -72097,17 +73404,17 @@ async function cmdTemp(args) {
   }
   save();
   header(`TEMPORARY ADDRESSES - self-destruct in ${durLabel(dur)}`);
-  table(["#", "LABEL", "ADDRESS", "EXPIRES"], created.map((w, i) => [`#${W().length - n2 + i}`, w.label, w.address, new Date(expiresAt).toLocaleString("en-GB")]));
-  console.log(c.warn(`
+  table(["#", "LABEL", "ADDRESS", "EXPIRES"], created.map((w, i2) => [`#${W().length - n4 + i2}`, w.label, w.address, new Date(expiresAt).toLocaleString("en-GB")]));
+  console.log(c3.warn(`
 [!]  Give these out for ONE payment each. At expiry they are forwarded`));
-  console.log(c.warn(`     to your main wallet automatically, then the keys are erased.`));
-  console.log(c.dim(`
+  console.log(c3.warn(`     to your main wallet automatically, then the keys are erased.`));
+  console.log(c3.dim(`
   List: ravenne temp list - forward now: ravenne sweep`));
 }
 function profileSummary(name) {
   const p = V().profiles[name];
   const temp = p.wallets.filter((w) => w.expiresAt).length;
-  return `${p.wallets.length - temp} EVM + ${p.btcWallets.length} BTC + ${p.xmrWallets.length} XMR${temp ? c.dim(` - ${temp} temp`) : ""}`;
+  return `${p.wallets.length - temp} EVM + ${p.btcWallets.length} BTC + ${p.xmrWallets.length} XMR${temp ? c3.dim(` - ${temp} temp`) : ""}`;
 }
 async function cmdProfile(args) {
   const sub = args[0] || "list";
@@ -72115,9 +73422,9 @@ async function cmdProfile(args) {
     header("WALLET PROFILES");
     table(
       ["", "NAME", "CONTENTS"],
-      Object.keys(V().profiles).map((n2) => [V().active === n2 ? c.ok("active") : "", n2, profileSummary(n2)])
+      Object.keys(V().profiles).map((n4) => [V().active === n4 ? c3.ok("active") : "", n4, profileSummary(n4)])
     );
-    console.log(c.dim("\n  ravenne profile new <name> - use <name> - rename <old> <new> - delete <name>"));
+    console.log(c3.dim("\n  ravenne profile new <name> - use <name> - rename <old> <new> - delete <name>"));
     return;
   }
   if (sub === "new") {
@@ -72127,14 +73434,14 @@ async function cmdProfile(args) {
     V().profiles[name] = emptyProfile(name);
     V().active = name;
     save();
-    return console.log(c.ok(`OK Profile "${name}" created and active - empty. Run the setup: ravenne setup`));
+    return console.log(c3.ok(`OK Profile "${name}" created and active - empty. Run the setup: ravenne setup`));
   }
   if (sub === "use") {
     const name = args[1] || "";
     if (!V().profiles[name]) throw new Error(`Unknown profile: "${name}" (${Object.keys(V().profiles).join(", ")})`);
     V().active = name;
     save();
-    return console.log(c.ok(`OK Active wallet: ${name}`));
+    return console.log(c3.ok(`OK Active wallet: ${name}`));
   }
   if (sub === "rename") {
     const oldN = args[1], newN = (args[2] || "").trim();
@@ -72147,22 +73454,22 @@ async function cmdProfile(args) {
     V().profiles[newN] = p;
     if (V().active === oldN) V().active = newN;
     save();
-    return console.log(c.ok(`OK Renamed: ${oldN} -> ${newN}`));
+    return console.log(c3.ok(`OK Renamed: ${oldN} -> ${newN}`));
   }
   if (sub === "delete") {
     const name = args[1];
     if (!V().profiles[name]) throw new Error(`Unknown profile: "${name}"`);
     if (Object.keys(V().profiles).length < 2) throw new Error("Cannot delete the last profile.");
     const p = V().profiles[name];
-    console.log(c.err(`
+    console.log(c3.err(`
 [!]  Deleting "${name}" removes ${p.wallets.length} EVM + ${p.btcWallets.length} BTC + ${p.xmrWallets.length} XMR wallets from the vault.`));
-    console.log(c.err("   Funds stay on-chain - recoverable ONLY with their seeds/keystores."));
+    console.log(c3.err("   Funds stay on-chain - recoverable ONLY with their seeds/keystores."));
     const { v } = await P({ type: "text", name: "v", message: "Type the profile name to confirm:" });
     if (v !== name) return console.log("Cancelled.");
     delete V().profiles[name];
     if (V().active === name) V().active = Object.keys(V().profiles)[0];
     save();
-    return console.log(c.ok(`OK Deleted. Active wallet: ${V().active}`));
+    return console.log(c3.ok(`OK Deleted. Active wallet: ${V().active}`));
   }
   throw new Error(`Unknown profile sub-command: ${sub}`);
 }
@@ -72171,25 +73478,25 @@ async function pickProfile() {
     await purgeExpired();
     header("SELECT WALLET");
     const names2 = Object.keys(V().profiles);
-    const { a } = await P({
+    const { a: a2 } = await P({
       type: "select",
       name: "a",
       message: "Which wallet do you want to open?",
       choices: [
-        ...names2.map((n2) => ({ title: `${V().active === n2 ? "> " : "  "}${n2}`, value: n2, description: profileSummary(n2) })),
+        ...names2.map((n4) => ({ title: `${V().active === n4 ? "> " : "  "}${n4}`, value: n4, description: profileSummary(n4) })),
         { title: "+  New wallet", value: "__new", description: "Create an empty wallet and run its setup." },
         { title: "Manage (list / rename / delete)", value: "__manage", description: "See all wallets, rename or delete one." }
       ]
     });
-    if (a === "__new") {
-      const { n: n2 } = await P({ type: "text", name: "n", message: "Name of the new wallet:" });
-      const name = (n2 || "").trim();
+    if (a2 === "__new") {
+      const { n: n4 } = await P({ type: "text", name: "n", message: "Name of the new wallet:" });
+      const name = (n4 || "").trim();
       if (!/^[a-zA-Z0-9 _-]{1,24}$/.test(name)) {
-        console.log(c.err("Invalid name (1-24 chars)."));
+        console.log(c3.err("Invalid name (1-24 chars)."));
         continue;
       }
       if (V().profiles[name]) {
-        console.log(c.err("Already exists."));
+        console.log(c3.err("Already exists."));
         continue;
       }
       V().profiles[name] = emptyProfile(name);
@@ -72197,7 +73504,7 @@ async function pickProfile() {
       save();
       return;
     }
-    if (a === "__manage") {
+    if (a2 === "__manage") {
       await cmdProfile(["list"]);
       const { m } = await P({ type: "select", name: "m", message: "Manage:", choices: [
         { title: "Rename a wallet", value: "rename" },
@@ -72208,19 +73515,19 @@ async function pickProfile() {
         console.clear();
         continue;
       }
-      const { n: n2 } = await P({ type: "text", name: "n", message: m === "rename" ? "Wallet to rename:" : "Wallet to delete:" });
+      const { n: n4 } = await P({ type: "text", name: "n", message: m === "rename" ? "Wallet to rename:" : "Wallet to delete:" });
       if (m === "rename") {
         const { n2: n22 } = await P({ type: "text", name: "n2", message: "New name:" });
-        await cmdProfile(["rename", n2, n22]);
+        await cmdProfile(["rename", n4, n22]);
       } else await cmdProfile([
         "delete",
-        n2
+        n4
       ]);
-      await P({ type: "text", name: "_", message: c.dim("- Enter -") });
+      await P({ type: "text", name: "_", message: c3.dim("- Enter -") });
       console.clear();
       continue;
     }
-    V().active = a;
+    V().active = a2;
     save();
     return;
   }
@@ -72231,7 +73538,7 @@ function ensureVault() {
     try {
       state.payload = decryptVault(state.pass);
     } catch {
-      console.log(c.err("Vault password differs from the master password (gate changed?). Use: ravenne changepass"));
+      console.log(c3.err("Vault password differs from the master password (gate changed?). Use: ravenne changepass"));
       process.exit(1);
     }
   } else {
@@ -72287,16 +73594,16 @@ function ensureVault() {
 function findWallet(arg) {
   const s = String(arg).trim().replace(/^#/, "");
   if (/^\d+$/.test(s)) {
-    const i = +s;
-    return i >= 0 && i < W().length ? i : -1;
+    const i2 = +s;
+    return i2 >= 0 && i2 < W().length ? i2 : -1;
   }
   return W().findIndex((w) => w.label.toLowerCase() === s.toLowerCase());
 }
 function findBtcWallet(arg) {
   const s = String(arg).trim().replace(/^#/, "");
   if (/^\d+$/.test(s)) {
-    const i = +s;
-    return i >= 0 && i < BW().length ? i : -1;
+    const i2 = +s;
+    return i2 >= 0 && i2 < BW().length ? i2 : -1;
   }
   return BW().findIndex((w) => w.label.toLowerCase() === s.toLowerCase());
 }
@@ -72306,21 +73613,21 @@ function resolveTo(arg) {
     getAddress(s);
     return { addr: s };
   }
-  const i = findWallet(s);
-  if (i >= 0) return { idx: i, addr: W()[i].address };
-  const b2 = settings().book.find((x) => x.label.toLowerCase() === s.toLowerCase());
+  const i2 = findWallet(s);
+  if (i2 >= 0) return { idx: i2, addr: W()[i2].address };
+  const b2 = settings2().book.find((x) => x.label.toLowerCase() === s.toLowerCase());
   if (b2) return { addr: b2.address, book: b2.label };
   throw new Error(`Not found: "${arg}" (index, wallet label, address-book label or 0x\u2026 address)`);
 }
 function nextLabel() {
-  let n2 = W().length + 1;
-  while (W().some((w) => w.label === `w${n2}`)) n2++;
-  return `w${n2}`;
+  let n4 = W().length + 1;
+  while (W().some((w) => w.label === `w${n4}`)) n4++;
+  return `w${n4}`;
 }
 function nextBtcLabel() {
-  let n2 = BW().length + 1;
-  while (BW().some((w) => w.label === `btc${n2}`)) n2++;
-  return `btc${n2}`;
+  let n4 = BW().length + 1;
+  while (BW().some((w) => w.label === `btc${n4}`)) n4++;
+  return `btc${n4}`;
 }
 function newWalletEntry(words2) {
   const mnemonic = Mnemonic.fromEntropy(import_node_crypto.default.randomBytes(words2 === 24 ? 32 : 16));
@@ -72338,14 +73645,14 @@ async function getBalances(k, prov) {
   return Promise.all(W().map((w) => prov.getBalance(w.address).catch(() => null)));
 }
 async function maybePrices(netKeys) {
-  if (!settings().prices) return null;
+  if (!settings2().prices) return null;
   try {
     const ids = [.../* @__PURE__ */ new Set([...netKeys.map((k) => NET[k]?.cg).filter(Boolean), BTC.cg])].join(",");
-    const r = await fetch(
+    const r2 = await fetch(
       `https://api.coingecko.com/api/v3/simple/price?ids=${ids}&vs_currencies=usd,eur`,
       { signal: AbortSignal.timeout(8e3) }
     );
-    return await r.json();
+    return await r2.json();
   } catch {
     return null;
   }
@@ -72358,23 +73665,23 @@ var btcValue = (sats, prices) => {
   const p = prices?.[BTC.cg];
   return p ? Number(sats) / 1e8 * p.usd : null;
 };
-var printTxLink = (hash2, k) => NET[k].ex && console.log(c.dim(`   \u2197 ${NET[k].ex}/tx/${hash2}`));
-var tokensOf = (k) => settings().tokens[k] || DEFAULT_TOKENS[k] || [];
+var printTxLink = (hash2, k) => NET[k].ex && console.log(c3.dim(`   \u2197 ${NET[k].ex}/tx/${hash2}`));
+var tokensOf = (k) => settings2().tokens[k] || DEFAULT_TOKENS[k] || [];
 var ourAddressSet = () => new Set(W().map((w) => w.address.toLowerCase()));
-function btcAddressFromPhrase(phrase, i, testnet2 = false) {
-  const path2 = `m/84'/${testnet2 ? 1 : 0}'/0'/0/${i}`;
+function btcAddressFromPhrase(phrase, i2, testnet2 = false) {
+  const path2 = `m/84'/${testnet2 ? 1 : 0}'/0'/0/${i2}`;
   const hd = HDKey.fromMasterSeed(mnemonicToSeedSync(phrase)).derive(path2);
   const { address } = payments_exports.p2wpkh({ pubkey: hd.publicKey, network: testnet2 ? networks_exports.testnet : networks_exports.bitcoin });
   return { address, hd, path: path2 };
 }
-function btcEntry(phrase, i) {
-  const { address, path: path2 } = btcAddressFromPhrase(phrase, i, settings().btcTest);
-  return { label: nextBtcLabel(), address, phrase, path: path2, index: i };
+function btcEntry(phrase, i2) {
+  const { address, path: path2 } = btcAddressFromPhrase(phrase, i2, settings2().btcTest);
+  return { label: nextBtcLabel(), address, phrase, path: path2, index: i2 };
 }
 async function btcFetch(pathname, body = null) {
-  const r = await fetch(`${BTC_API()}${pathname}`, body ? { method: "POST", headers: { "Content-Type": "text/plain" }, body, signal: AbortSignal.timeout(15e3) } : { signal: AbortSignal.timeout(15e3) });
-  if (!r.ok) throw new Error(`esplora answered ${r.status}`);
-  return body ? r.text() : r.json();
+  const r2 = await fetch(`${BTC_API()}${pathname}`, body ? { method: "POST", headers: { "Content-Type": "text/plain" }, body, signal: AbortSignal.timeout(15e3) } : { signal: AbortSignal.timeout(15e3) });
+  if (!r2.ok) throw new Error(`esplora answered ${r2.status}`);
+  return body ? r2.text() : r2.json();
 }
 async function getBtcBalances() {
   return Promise.all(BW().map(async (w) => {
@@ -72387,30 +73694,30 @@ async function getBtcBalances() {
     }
   }));
 }
-async function buildBtcTx(entry, utxos, toAddr, amountSat, satPerVb, testnet2 = settings().btcTest) {
+async function buildBtcTx(entry, utxos, toAddr, amountSat, satPerVb, testnet2 = settings2().btcTest) {
   const VBYTE_IN = 68, VBYTE_OUT = 31, VBYTE_BASE = 11;
   const network = testnet2 ? networks_exports.testnet : networks_exports.bitcoin;
   const { address: changeAddr, hd } = btcAddressFromPhrase(entry.phrase, entry.index, testnet2);
-  const sorted = [...utxos].sort((a, b2) => a.value - b2.value);
+  const sorted = [...utxos].sort((a2, b2) => a2.value - b2.value);
   const picked = [];
   let acc = 0n, fee = 0n, target = BigInt(amountSat);
-  for (const u of sorted) {
-    picked.push(u);
-    acc += BigInt(u.value);
+  for (const u3 of sorted) {
+    picked.push(u3);
+    acc += BigInt(u3.value);
     fee = BigInt((VBYTE_BASE + VBYTE_IN * picked.length + VBYTE_OUT * 2) * Math.ceil(satPerVb));
     if (acc >= target + fee) break;
   }
   if (acc < target + fee) throw new Error(`Not enough UTXOs: have ${fmtBtc(acc)} BTC, need ${fmtBtc(target + fee)} BTC (amount+fee).`);
   const psbt = new Psbt2({ network });
-  for (const u of picked) {
+  for (const u3 of picked) {
     const { output: output2 } = payments_exports.p2wpkh({ address: changeAddr, network });
-    psbt.addInput({ hash: u.txid, index: u.vout, witnessUtxo: { script: output2, value: BigInt(u.value) } });
+    psbt.addInput({ hash: u3.txid, index: u3.vout, witnessUtxo: { script: output2, value: BigInt(u3.value) } });
   }
   psbt.addOutput({ address: toAddr, value: target });
   const change = acc - target - fee;
   if (change >= 546n) psbt.addOutput({ address: changeAddr, value: change });
-  const signer = { publicKey: hd.publicKey, sign: (h) => hd.sign(h) };
-  for (let i = 0; i < picked.length; i++) psbt.signInput(i, signer);
+  const signer = { publicKey: hd.publicKey, sign: (h2) => hd.sign(h2) };
+  for (let i2 = 0; i2 < picked.length; i2++) psbt.signInput(i2, signer);
   psbt.finalizeAllInputs();
   return { hex: psbt.extractTransaction().toHex(), fee, change, inputs: picked.length };
 }
@@ -72469,7 +73776,7 @@ async function doLedgerSend(fromIdx, toAddr, valueWei, netK, token = null) {
   const transport = await Transport.create();
   try {
     const app = new AppEth(transport);
-    console.log(c.warn("  \u2192 Confirm the transaction on your Ledger device\u2026"));
+    console.log(c3.warn("  \u2192 Confirm the transaction on your Ledger device\u2026"));
     const sig = await app.signTransaction(src.ledgerPath, unsigned);
     const bigh = (v) => BigInt(/^(0x)/.test(v) ? v : "0x" + v);
     const signed2 = Transaction.from({ ...txObj, signature: { v: bigh(sig.v), r: bigh(sig.r), s: bigh(sig.s) } });
@@ -72491,44 +73798,44 @@ async function doLedgerSend(fromIdx, toAddr, valueWei, netK, token = null) {
     await transport.close();
   }
 }
-var betweenSends = async (i, n2) => {
-  if (state.flags.delay > 0 && i < n2 - 1) await countdown(Math.round(state.flags.delay));
+var betweenSends = async (i2, n4) => {
+  if (state.flags.delay > 0 && i2 < n4 - 1) await countdown(Math.round(state.flags.delay));
 };
-var requireKey = (i) => {
-  const w = W()[i];
+var requireKey = (i2) => {
+  const w = W()[i2];
   if (!w.privateKey && !w.ledgerPath)
-    throw new Error(`#${i} ${w.label} is watch-only (no key held) \u2014 it cannot sign here.`);
+    throw new Error(`#${i2} ${w.label} is watch-only (no key held) \u2014 it cannot sign here.`);
 };
 async function cmdCreate(args) {
   if (state.flags.seed) return cmdCreateFromSeed(args);
-  let n2 = parseInt(args[0], 10);
-  if (!Number.isInteger(n2) || n2 < 1)
-    n2 = (await P({ type: "number", name: "v", message: "How many wallets to create?", initial: 1, min: 1, max: 100 })).v;
-  n2 = Math.min(n2, 100);
+  let n4 = parseInt(args[0], 10);
+  if (!Number.isInteger(n4) || n4 < 1)
+    n4 = (await P({ type: "number", name: "v", message: "How many wallets to create?", initial: 1, min: 1, max: 100 })).v;
+  n4 = Math.min(n4, 100);
   const created = [];
-  for (let i = 0; i < n2; i++) {
+  for (let i2 = 0; i2 < n4; i2++) {
     const e = newWalletEntry(state.flags.words);
     W().push(e);
     created.push(e);
   }
   save();
   header("NEW WALLETS");
-  console.log(c.ok(`\u2713 ${n2} wallet${n2 > 1 ? "s" : ""} created (${state.flags.words} words)`));
-  table(["#", "LABEL", "ADDRESS"], created.map((w, i) => [`#${W().length - n2 + i}`, w.label, w.address]));
-  console.log(c.dim(`
+  console.log(c3.ok(`\u2713 ${n4} wallet${n4 > 1 ? "s" : ""} created (${state.flags.words} words)`));
+  table(["#", "LABEL", "ADDRESS"], created.map((w, i2) => [`#${W().length - n4 + i2}`, w.label, w.address]));
+  console.log(c3.dim(`
 Tip: 'phrase <n>' shows a wallet's seed phrase.`));
 }
 async function cmdCreateFromSeed(args) {
-  let n2 = parseInt(args[0], 10);
+  let n4 = parseInt(args[0], 10);
   const phrase = ((await P({ type: "password", name: "p", message: "Seed phrase (hidden):" })).p || "").trim().split(/\s+/).join(" ").toLowerCase();
   if (!Mnemonic.isValidMnemonic(phrase)) throw new Error("Invalid seed phrase.");
-  if (!Number.isInteger(n2) || n2 < 1)
-    n2 = (await P({ type: "number", name: "v", message: "How many accounts from this seed?", initial: 3, min: 1, max: 50 })).v;
+  if (!Number.isInteger(n4) || n4 < 1)
+    n4 = (await P({ type: "number", name: "v", message: "How many accounts from this seed?", initial: 3, min: 1, max: 50 })).v;
   const base2 = "m/44'/60'/0'/0/";
   const created = [];
-  for (let i = 0; i < n2; i++) {
-    const w = HDNodeWallet.fromPhrase(phrase, "", `${base2}${i}`);
-    const e = { label: nextLabel(), address: w.address, privateKey: w.privateKey, phrase, seedPath: `${base2}${i}` };
+  for (let i2 = 0; i2 < n4; i2++) {
+    const w = HDNodeWallet.fromPhrase(phrase, "", `${base2}${i2}`);
+    const e = { label: nextLabel(), address: w.address, privateKey: w.privateKey, phrase, seedPath: `${base2}${i2}` };
     W().push(e);
     created.push(e);
   }
@@ -72536,9 +73843,9 @@ async function cmdCreateFromSeed(args) {
   header("ACCOUNTS FROM ONE SEED (BIP-44)");
   table(
     ["#", "LABEL", "PATH", "ADDRESS"],
-    created.map((w, i) => [`#${W().length - n2 + i}`, w.label, w.seedPath, w.address])
+    created.map((w, i2) => [`#${W().length - n4 + i2}`, w.label, w.seedPath, w.address])
   );
-  console.log(c.ok(`One seed phrase backs up ALL these wallets.`));
+  console.log(c3.ok(`One seed phrase backs up ALL these wallets.`));
 }
 async function cmdImport() {
   const mode = (await P({
@@ -72575,30 +73882,30 @@ async function cmdImport() {
     throw new Error("This wallet is already in the vault.");
   W().push(entry);
   save();
-  console.log(c.ok(`
-\u2713 Imported as ${c.bold(`#${W().length - 1}`)} ${entry.label} \u2014 ${entry.address}`));
+  console.log(c3.ok(`
+\u2713 Imported as ${c3.bold(`#${W().length - 1}`)} ${entry.label} \u2014 ${entry.address}`));
 }
 async function cmdWatch(args) {
   let [addr, label] = args;
   if (!addr || !label || !addr.startsWith("0x")) {
-    const r = await P([
+    const r2 = await P([
       { type: "text", name: "a", message: "Address to watch (0x\u2026):" },
       { type: "text", name: "l", message: "Label (e.g. cold-storage):" }
     ]);
-    addr = r.a;
-    label = r.l;
+    addr = r2.a;
+    label = r2.l;
   }
   getAddress(addr);
   if (W().some((w) => w.address.toLowerCase() === addr.toLowerCase())) throw new Error("Address already in the vault.");
   W().push({ label: label || nextLabel(), address: addr, watchOnly: true });
   save();
-  console.log(c.ok(`
-\u2713 Watch-only wallet added: ${c.bold(`#${W().length - 1}`)} ${label} ${addr}`));
-  console.log(c.dim("  Balances/statistics yes \u2014 signing no (no key held)."));
+  console.log(c3.ok(`
+\u2713 Watch-only wallet added: ${c3.bold(`#${W().length - 1}`)} ${label} ${addr}`));
+  console.log(c3.dim("  Balances/statistics yes \u2014 signing no (no key held)."));
 }
 async function cmdLedger(args) {
-  const i = parseInt(args[0], 10) || 0;
-  const ledgerPath = `m/44'/60'/${i}'/0/0`;
+  const i2 = parseInt(args[0], 10) || 0;
+  const ledgerPath = `m/44'/60'/${i2}'/0/0`;
   let Transport, AppEth;
   try {
     ({ default: Transport } = await import("@ledgerhq/hw-transport-node-hid"));
@@ -72606,7 +73913,7 @@ async function cmdLedger(args) {
   } catch {
     throw new Error("Ledger support not installed. Run:\n  npm i @ledgerhq/hw-transport-node-hid @ledgerhq/hw-app-eth\nThen connect your device and retry.");
   }
-  console.log(c.dim(`Reading address ${ledgerPath} from the device (confirm on the Ledger if asked)\u2026`));
+  console.log(c3.dim(`Reading address ${ledgerPath} from the device (confirm on the Ledger if asked)\u2026`));
   const transport = await Transport.create();
   let addr;
   try {
@@ -72615,12 +73922,12 @@ async function cmdLedger(args) {
     await transport.close();
   }
   if (W().some((w) => w.address.toLowerCase() === addr.toLowerCase())) throw new Error("Address already in the vault.");
-  const label = args[1] || `ledger-${i}`;
+  const label = args[1] || `ledger-${i2}`;
   W().push({ label, address: addr, ledgerPath });
   save();
-  console.log(c.ok(`
-\u2713 Ledger wallet added: ${c.bold(`#${W().length - 1}`)} ${label} ${addr}`));
-  console.log(c.dim("  Sends from this wallet will be signed on the device (experimental)."));
+  console.log(c3.ok(`
+\u2713 Ledger wallet added: ${c3.bold(`#${W().length - 1}`)} ${label} ${addr}`));
+  console.log(c3.dim("  Sends from this wallet will be signed on the device (experimental)."));
 }
 async function cmdList() {
   const nets = state.flags.all ? Object.keys(NET) : [netKey()];
@@ -72629,7 +73936,7 @@ async function cmdList() {
     header(`WALLETS \u2014 ${NET[k].label} (${NET[k].sym})`);
     table(
       ["#", "LABEL", "ADDRESS", `BALANCE (${NET[k].sym})`, "KEY"],
-      W().map((w, i) => [`#${i}`, w.label, w.address, bals[i] == null ? "?" : fmtAmt(bals[i]), keyMark(w)]),
+      W().map((w, i2) => [`#${i2}`, w.label, w.address, bals[i2] == null ? "?" : fmtAmt(bals[i2]), keyMark(w)]),
       { align: [null, null, null, "r"] }
     );
   }
@@ -72645,37 +73952,37 @@ async function cmdBalance() {
     grand += total;
     const v = netValue(total, k, prices);
     if (v != null) grandUsd += v;
-    const rows = W().map((w, i) => {
-      if (bals[i] == null || bals[i] === 0n) return null;
-      const wv = netValue(bals[i], k, prices);
-      return [`#${i}`, w.label, fmtAmt(bals[i]), wv != null ? `\u2248 ${usd(wv)}` : ""];
+    const rows = W().map((w, i2) => {
+      if (bals[i2] == null || bals[i2] === 0n) return null;
+      const wv = netValue(bals[i2], k, prices);
+      return [`#${i2}`, w.label, fmtAmt(bals[i2]), wv != null ? `\u2248 ${usd(wv)}` : ""];
     }).filter(Boolean);
     header(`BALANCES \u2014 ${NET[k].label} (${NET[k].sym})`);
     if (rows.length) table(["#", "LABEL", "BALANCE", "VALUE"], rows, { align: [null, null, "r", "r"] });
-    else console.log(c.dim("  (no funded wallet on this chain)"));
+    else console.log(c3.dim("  (no funded wallet on this chain)"));
     console.log(`
-   ${c.bold("TOTAL")}  ${c.ok(fmtAmt(total))} ${NET[k].sym}${v != null ? c.dim(`   \u2248 ${usd(v)} / ${eur(v * 0.92)}`) : ""}`);
+   ${c3.bold("TOTAL")}  ${c3.ok(fmtAmt(total))} ${NET[k].sym}${v != null ? c3.dim(`   \u2248 ${usd(v)} / ${eur(v * 0.92)}`) : ""}`);
   }
   if (state.flags.all) {
     if (BW().length) {
       grandUsd += await btcTotalLine(prices);
     }
     console.log(`
-${c.vio("\u03A3 ALL CHAINS")}: ${c.bold(fmtAmt(grand))} + BTC${grandUsd ? c.dim(`   \u2248 ${usd(grandUsd)}`) : ""}`);
+${c3.vio("\u03A3 ALL CHAINS")}: ${c3.bold(fmtAmt(grand))} + BTC${grandUsd ? c3.dim(`   \u2248 ${usd(grandUsd)}`) : ""}`);
   }
 }
 async function btcTotalLine(prices) {
   const bals = await spin("Fetching Bitcoin balances\u2026", () => getBtcBalances());
   const total = bals.reduce((s, b2) => b2 ? s + b2 : s, 0n);
   const v = btcValue(total, prices);
-  header(`BALANCES \u2014 ${BTC.label} (${BTC.sym})${settings().btcTest ? c.warn(" \xB7 testnet") : ""}`);
+  header(`BALANCES \u2014 ${BTC.label} (${BTC.sym})${settings2().btcTest ? c3.warn(" \xB7 testnet") : ""}`);
   table(
     ["#", "LABEL", "ADDRESS", "BALANCE (BTC)", "VALUE"],
-    BW().map((w, i) => [`#${i}`, w.label, w.address, bals[i] == null ? "?" : fmtBtc(bals[i]), bals[i] != null && v != null ? `\u2248 ${usd(btcValue(bals[i], prices))}` : ""]),
+    BW().map((w, i2) => [`#${i2}`, w.label, w.address, bals[i2] == null ? "?" : fmtBtc(bals[i2]), bals[i2] != null && v != null ? `\u2248 ${usd(btcValue(bals[i2], prices))}` : ""]),
     { align: [null, null, null, "r", "r"] }
   );
   console.log(`
-   ${c.bold("TOTAL")}  ${c.ok(fmtBtc(total))} ${BTC.sym}${v != null ? c.dim(`   \u2248 ${usd(v)} / ${eur(v * 0.92)}`) : ""}`);
+   ${c3.bold("TOTAL")}  ${c3.ok(fmtBtc(total))} ${BTC.sym}${v != null ? c3.dim(`   \u2248 ${usd(v)} / ${eur(v * 0.92)}`) : ""}`);
   return v || 0;
 }
 async function cmdDashboard() {
@@ -72685,28 +73992,28 @@ async function cmdDashboard() {
   const total = bals.reduce((s, b2) => b2 ? s + b2 : s, 0n);
   const funded = bals.filter((b2) => b2 && b2 > 0n).length;
   const v = netValue(total, k, prices);
-  const h = cur().history;
-  const fees = h.filter((x) => x.net !== "xmr").reduce((s, x) => s + parseEther(x.fee), 0n);
+  const h2 = cur().history;
+  const fees = h2.filter((x) => x.net !== "xmr").reduce((s, x) => s + parseEther(x.fee), 0n);
   box("OVERVIEW", [
     `Network      ${NET[k].label} (${NET[k].sym})`,
     `Wallets      ${W().length} EVM \xB7 ${funded} funded \xB7 ${W().filter((w) => w.watchOnly).length} watch-only`,
     `Total        ${fmtAmt(total)} ${NET[k].sym}${v != null ? `   \u2248 ${usd(v)}` : ""}`,
-    `History      ${h.length} tx sent \xB7 ${cur().chainTx.length} synced`
+    `History      ${h2.length} tx sent \xB7 ${cur().chainTx.length} synced`
   ]);
-  const sorted = bals.map((b2, i) => ({ b: b2 ?? 0n, i })).filter((x) => x.b > 0n).sort((a, b2) => b2.b > a.b ? 1 : -1).slice(0, 5);
+  const sorted = bals.map((b2, i2) => ({ b: b2 ?? 0n, i: i2 })).filter((x) => x.b > 0n).sort((a2, b2) => b2.b > a2.b ? 1 : -1).slice(0, 5);
   if (sorted.length) {
-    box("TOP WALLETS", sorted.map(({ b: b2, i }) => {
+    box("TOP WALLETS", sorted.map(({ b: b2, i: i2 }) => {
       const pct = Number(b2 * 1000n / total) / 10;
       const bar = "\u2588".repeat(Math.max(1, Math.round(pct / 5))).padEnd(10, "\u2591");
-      return `#${String(i).padEnd(3)} ${W()[i].label.padEnd(12)} ${bar} ${fmtAmt(b2).padStart(10)} ${NET[k].sym}  ${pct.toFixed(1)}%`;
+      return `#${String(i2).padEnd(3)} ${W()[i2].label.padEnd(12)} ${bar} ${fmtAmt(b2).padStart(10)} ${NET[k].sym}  ${pct.toFixed(1)}%`;
     }));
   }
   if (BW().length) {
     const bb = await getBtcBalances();
     const bt = bb.reduce((s, b2) => b2 ? s + b2 : s, 0n);
     box(
-      `BITCOIN${settings().btcTest ? " \xB7 TESTNET" : ""}`,
-      BW().map((w, i) => `#${i} ${w.label.padEnd(10)} ${w.address}  ${bb[i] == null ? "?" : fmtBtc(bb[i]).padStart(12)} BTC`)
+      `BITCOIN${settings2().btcTest ? " \xB7 TESTNET" : ""}`,
+      BW().map((w, i2) => `#${i2} ${w.label.padEnd(10)} ${w.address}  ${bb[i2] == null ? "?" : fmtBtc(bb[i2]).padStart(12)} BTC`)
     );
   }
   const all = mergedHistory().slice(0, 3);
@@ -72717,14 +74024,14 @@ async function cmdSend(args) {
   if (!W().length) throw new Error("No wallet yet \u2014 create one first.");
   let [fromA, toA, amtA] = args;
   if (fromA == null || toA == null || amtA == null) {
-    const r = await P([
+    const r2 = await P([
       { type: "text", name: "f", message: `Send from which wallet? (0-${W().length - 1})` },
       { type: "text", name: "t", message: "Send to? (index, label, book entry or 0x\u2026)" },
       { type: "text", name: "a", message: `Amount in ${state.flags.token ? state.flags.token : N2().sym} (or "max"):` }
     ]);
-    fromA = r.f;
-    toA = r.t;
-    amtA = r.a;
+    fromA = r2.f;
+    toA = r2.t;
+    amtA = r2.a;
   }
   const from = findWallet(fromA);
   if (from < 0) throw new Error(`Source wallet not found: "${fromA}"`);
@@ -72733,7 +74040,7 @@ async function cmdSend(args) {
   const prov = provider();
   let token = null;
   if (state.flags.token) {
-    token = tokensOf(netKey()).find((t) => t.sym.toLowerCase() === state.flags.token.toLowerCase());
+    token = tokensOf(netKey()).find((t2) => t2.sym.toLowerCase() === state.flags.token.toLowerCase());
     if (!token) throw new Error(`Unknown token "${state.flags.token}" on ${N2().label}. See: ravenne tokens`);
   }
   let value2, estFee;
@@ -72769,9 +74076,9 @@ async function cmdSend(args) {
     `Amount    ${amtStr} ${unit}   (est. fee ${fmtAmt(estFee)} ${N2().sym})`
   ]);
   if (!await confirm("Confirm and send?")) return console.log("Cancelled.");
-  const { hash: hash2, fee, block } = await doSend(from, to.addr, value2, netKey(), token);
-  console.log(c.ok(`
-\u2713 Confirmed in block ${block} \u2014 real fee ${fmtAmt(fee)} ${N2().sym}`));
+  const { hash: hash2, fee, block: block2 } = await doSend(from, to.addr, value2, netKey(), token);
+  console.log(c3.ok(`
+\u2713 Confirmed in block ${block2} \u2014 real fee ${fmtAmt(fee)} ${N2().sym}`));
   printTxLink(hash2, netKey());
 }
 async function cmdTokens(args) {
@@ -72786,42 +74093,42 @@ async function cmdTokens(args) {
       const realSym = await spin("Reading token on-chain\u2026", () => erc.symbol());
       dec = Number(await erc.decimals());
       if (realSym.toUpperCase() !== sym.toUpperCase())
-        console.log(c.warn(`  on-chain symbol is "${realSym}" \u2014 keeping your label "${sym}"`));
+        console.log(c3.warn(`  on-chain symbol is "${realSym}" \u2014 keeping your label "${sym}"`));
     }
-    const list2 = settings().tokens[k] ??= [...DEFAULT_TOKENS[k] || []];
-    if (list2.some((t) => t.sym.toLowerCase() === sym.toLowerCase())) throw new Error(`${sym} already exists on ${NET[k].label}.`);
+    const list2 = settings2().tokens[k] ??= [...DEFAULT_TOKENS[k] || []];
+    if (list2.some((t2) => t2.sym.toLowerCase() === sym.toLowerCase())) throw new Error(`${sym} already exists on ${NET[k].label}.`);
     list2.push({ sym: sym.toUpperCase(), addr: getAddress(addr), dec: Number(dec) });
     save();
-    return console.log(c.ok(`\u2713 ${sym} added on ${NET[k].label} (${dec} decimals)`));
+    return console.log(c3.ok(`\u2713 ${sym} added on ${NET[k].label} (${dec} decimals)`));
   }
   if (args[0] === "remove") {
-    const list2 = settings().tokens[k] || DEFAULT_TOKENS[k] || [];
-    const i = list2.findIndex((t) => t.sym.toLowerCase() === String(args[1] || "").toLowerCase());
-    if (i < 0) throw new Error(`Token not found: ${args[1]}`);
-    settings().tokens[k] = list2.filter((_, j) => j !== i);
+    const list2 = settings2().tokens[k] || DEFAULT_TOKENS[k] || [];
+    const i2 = list2.findIndex((t2) => t2.sym.toLowerCase() === String(args[1] || "").toLowerCase());
+    if (i2 < 0) throw new Error(`Token not found: ${args[1]}`);
+    settings2().tokens[k] = list2.filter((_, j) => j !== i2);
     save();
-    return console.log(c.ok(`\u2713 ${args[1]} removed from ${NET[k].label}`));
+    return console.log(c3.ok(`\u2713 ${args[1]} removed from ${NET[k].label}`));
   }
   const list = tokensOf(k);
-  if (!list.length) return console.log(c.dim(`No token configured on ${NET[k].label} \u2014 add one: tokens add <SYM> <address>`));
+  if (!list.length) return console.log(c3.dim(`No token configured on ${NET[k].label} \u2014 add one: tokens add <SYM> <address>`));
   const prov = provider();
   header(`ERC-20 TOKENS \u2014 ${NET[k].label}`);
   const rows = [];
-  for (const t of list) {
+  for (const t2 of list) {
     let total = null, holders = 0;
     try {
-      const bals = await Promise.all(W().map((w) => new Contract(t.addr, ERC20_ABI, prov).balanceOf(w.address).catch(() => null)));
+      const bals = await Promise.all(W().map((w) => new Contract(t2.addr, ERC20_ABI, prov).balanceOf(w.address).catch(() => null)));
       total = bals.reduce((s, b2) => b2 ? s + b2 : s, 0n);
       holders = bals.filter((b2) => b2 && b2 > 0n).length;
     } catch {
     }
-    rows.push([t.sym, short(t.addr), t.dec, total == null ? "?" : fmtUnits(total, t.dec), `${holders}/${W().length}`]);
+    rows.push([t2.sym, short(t2.addr), t2.dec, total == null ? "?" : fmtUnits(total, t2.dec), `${holders}/${W().length}`]);
   }
   table(["SYMBOL", "CONTRACT", "DEC", "VAULT TOTAL", "HOLDERS"], rows, { align: [null, null, null, "r"] });
-  console.log(c.dim("\n  send tokens: ravenne send 0 1 100 --token USDT \xB7 manage: tokens add/remove"));
+  console.log(c3.dim("\n  send tokens: ravenne send 0 1 100 --token USDT \xB7 manage: tokens add/remove"));
 }
 async function cmdBook(args) {
-  const book = settings().book;
+  const book = settings2().book;
   if (args[0] === "add") {
     let [, label, addr] = args;
     if (!label || !addr) throw new Error("Usage: book add <label> <0x-address>");
@@ -72830,18 +74137,18 @@ async function cmdBook(args) {
     if (book.some((b2) => b2.address.toLowerCase() === addr.toLowerCase())) throw new Error("Address already in the book.");
     book.push({ label, address: getAddress(addr) });
     save();
-    return console.log(c.ok(`\u2713 ${label} \u2192 ${addr}`));
+    return console.log(c3.ok(`\u2713 ${label} \u2192 ${addr}`));
   }
   if (args[0] === "remove") {
-    const i = book.findIndex((b2) => b2.label.toLowerCase() === String(args[1] || "").toLowerCase());
-    if (i < 0) throw new Error(`Book entry not found: ${args[1]}`);
-    book.splice(i, 1);
+    const i2 = book.findIndex((b2) => b2.label.toLowerCase() === String(args[1] || "").toLowerCase());
+    if (i2 < 0) throw new Error(`Book entry not found: ${args[1]}`);
+    book.splice(i2, 1);
     save();
-    return console.log(c.ok(`\u2713 removed "${args[1]}"`));
+    return console.log(c3.ok(`\u2713 removed "${args[1]}"`));
   }
   header("ADDRESS BOOK");
   table(["LABEL", "ADDRESS"], book.map((b2) => [b2.label, b2.address]));
-  console.log(c.dim("\n  usable in send: ravenne send 0 <label> 1.5 \xB7 manage: book add/remove"));
+  console.log(c3.dim("\n  usable in send: ravenne send 0 <label> 1.5 \xB7 manage: book add/remove"));
 }
 async function cmdSplit(args) {
   if (!W().length) throw new Error("No wallet yet \u2014 create one first.");
@@ -72851,56 +74158,56 @@ async function cmdSplit(args) {
   const from = findWallet(fromA);
   if (from < 0) throw new Error(`Wallet not found: "${fromA}"`);
   requireKey(from);
-  const n2 = Math.min(Math.max(parseInt(nA, 10) || 2, 2), 50);
+  const n4 = Math.min(Math.max(parseInt(nA, 10) || 2, 2), 50);
   const random = state.flags.random;
   const prov = provider();
   const bal = await spin("Checking balance\u2026", () => prov.getBalance(W()[from].address));
   const per = await feePerTx(prov);
-  const available = bal - per * BigInt(n2);
-  if (available <= 0n) throw new Error(`Balance too low for ${n2} shares (${fmtAmt(bal)} ${N2().sym}, needs > ${fmtAmt(per * BigInt(n2))} for fees).`);
-  const amounts = Array(n2).fill(0n);
+  const available = bal - per * BigInt(n4);
+  if (available <= 0n) throw new Error(`Balance too low for ${n4} shares (${fmtAmt(bal)} ${N2().sym}, needs > ${fmtAmt(per * BigInt(n4))} for fees).`);
+  const amounts = Array(n4).fill(0n);
   if (random) {
-    const w = Array.from({ length: n2 }, () => 5e5 + Math.floor(Math.random() * 1e6));
-    const sum = w.reduce((a, b2) => a + b2, 0);
+    const w = Array.from({ length: n4 }, () => 5e5 + Math.floor(Math.random() * 1e6));
+    const sum = w.reduce((a2, b2) => a2 + b2, 0);
     let used = 0n;
-    for (let i = 0; i < n2 - 1; i++) {
-      amounts[i] = available * BigInt(w[i]) / BigInt(sum);
-      used += amounts[i];
+    for (let i2 = 0; i2 < n4 - 1; i2++) {
+      amounts[i2] = available * BigInt(w[i2]) / BigInt(sum);
+      used += amounts[i2];
     }
-    amounts[n2 - 1] = available - used;
+    amounts[n4 - 1] = available - used;
   } else {
-    amounts.fill(available / BigInt(n2));
-    amounts[n2 - 1] = available - available / BigInt(n2) * BigInt(n2 - 1);
+    amounts.fill(available / BigInt(n4));
+    amounts[n4 - 1] = available - available / BigInt(n4) * BigInt(n4 - 1);
   }
-  header(`SPLIT \u2014 ${N2().label}${random ? c.warn(" \xB7 random amounts") : ""}`);
+  header(`SPLIT \u2014 ${N2().label}${random ? c3.warn(" \xB7 random amounts") : ""}`);
   console.log(`   Source : #${from} ${W()[from].label} ${short(W()[from].address)} \u2014 ${fmtAmt(bal)} ${N2().sym}`);
-  amounts.forEach((a, i) => console.log(`   share ${i + 1}: ${c.bold(`${fmtAmt(a)} ${N2().sym}`)}`));
-  console.log(c.dim(`   est. fee per send \u2248 ${fmtAmt(per)}${state.flags.delay ? ` \xB7 ${state.flags.delay}s delay between sends` : ""}`));
-  if (!await confirm(`Create ${n2} wallets and send shares?`)) return console.log("Cancelled.");
+  amounts.forEach((a2, i2) => console.log(`   share ${i2 + 1}: ${c3.bold(`${fmtAmt(a2)} ${N2().sym}`)}`));
+  console.log(c3.dim(`   est. fee per send \u2248 ${fmtAmt(per)}${state.flags.delay ? ` \xB7 ${state.flags.delay}s delay between sends` : ""}`));
+  if (!await confirm(`Create ${n4} wallets and send shares?`)) return console.log("Cancelled.");
   const news = [];
-  for (let i = 0; i < n2; i++) {
+  for (let i2 = 0; i2 < n4; i2++) {
     const e = newWalletEntry(state.flags.words);
     W().push(e);
     news.push(e);
   }
   save();
   let sent = 0n;
-  for (let i = 0; i < n2; i++) {
-    const value2 = i === n2 - 1 ? await new JsonRpcProvider(rpcUrl(netKey())).getBalance(W()[from].address) - per : amounts[i];
+  for (let i2 = 0; i2 < n4; i2++) {
+    const value2 = i2 === n4 - 1 ? await new JsonRpcProvider(rpcUrl(netKey())).getBalance(W()[from].address) - per : amounts[i2];
     if (value2 <= 0n) {
-      console.log(c.warn(`  \u26A0 share ${i + 1} skipped (dust)`));
+      console.log(c3.warn(`  \u26A0 share ${i2 + 1} skipped (dust)`));
       continue;
     }
-    await betweenSends(i, n2);
-    console.log(c.dim(`
-\u2192 Send ${i + 1}/${n2} \u2192 #${W().indexOf(news[i])} ${news[i].label}`));
-    const { hash: hash2, fee, block } = await doSend(from, news[i].address, value2, netKey());
+    await betweenSends(i2, n4);
+    console.log(c3.dim(`
+\u2192 Send ${i2 + 1}/${n4} \u2192 #${W().indexOf(news[i2])} ${news[i2].label}`));
+    const { hash: hash2, fee, block: block2 } = await doSend(from, news[i2].address, value2, netKey());
     sent += value2;
-    console.log(c.ok(`   \u2713 ${fmtAmt(value2)} ${N2().sym} (block ${block}, fee ${fmtAmt(fee)})`));
+    console.log(c3.ok(`   \u2713 ${fmtAmt(value2)} ${N2().sym} (block ${block2}, fee ${fmtAmt(fee)})`));
     printTxLink(hash2, netKey());
   }
-  console.log(c.ok(`
-\u2705 Split done: ${fmtAmt(sent)} ${N2().sym} spread across ${n2} new wallets.`));
+  console.log(c3.ok(`
+\u2705 Split done: ${fmtAmt(sent)} ${N2().sym} spread across ${n4} new wallets.`));
 }
 async function cmdConsolidate(args) {
   if (W().length < 2) throw new Error("Consolidation needs at least 2 wallets.");
@@ -72911,84 +74218,84 @@ async function cmdConsolidate(args) {
   const prov = provider();
   const bals = await spin("Scanning wallets\u2026", () => getBalances(netKey(), prov));
   const per = await feePerTx(prov);
-  const plan = W().map((w, i) => ({ i, w, bal: bals[i] ?? 0n, get: (bals[i] ?? 0n) > per ? bals[i] - per : 0n })).filter((x) => x.i !== target && x.get > 0n && x.w.privateKey);
+  const plan = W().map((w, i2) => ({ i: i2, w, bal: bals[i2] ?? 0n, get: (bals[i2] ?? 0n) > per ? bals[i2] - per : 0n })).filter((x) => x.i !== target && x.get > 0n && x.w.privateKey);
   if (!plan.length) throw new Error("No spendable wallet (with a key) can cover the transfer fee.");
   const total = plan.reduce((s, x) => s + x.get, 0n);
   header(`CONSOLIDATE \u2014 ${N2().label}`);
-  plan.forEach((x) => console.log(`   #${x.i} ${c.cyan(x.w.label.padEnd(12))} ${short(x.w.address)}  ${fmtAmt(x.bal).padStart(10)} \u2192 ${c.ok(fmtAmt(x.get))} ${N2().sym}`));
-  console.log(`   ${c.bold("\u2500".repeat(52))}`);
-  console.log(`   Target #${target} ${W()[target].label} ${short(W()[target].address)} will receive \u2248 ${c.bold(`${fmtAmt(total)} ${N2().sym}`)}`);
-  console.log(c.dim(`   ${plan.length} sends \xB7 fee \u2248 ${fmtAmt(per)} each${state.flags.delay ? ` \xB7 ${state.flags.delay}s delay between sends` : ""}`));
+  plan.forEach((x) => console.log(`   #${x.i} ${c3.cyan(x.w.label.padEnd(12))} ${short(x.w.address)}  ${fmtAmt(x.bal).padStart(10)} \u2192 ${c3.ok(fmtAmt(x.get))} ${N2().sym}`));
+  console.log(`   ${c3.bold("\u2500".repeat(52))}`);
+  console.log(`   Target #${target} ${W()[target].label} ${short(W()[target].address)} will receive \u2248 ${c3.bold(`${fmtAmt(total)} ${N2().sym}`)}`);
+  console.log(c3.dim(`   ${plan.length} sends \xB7 fee \u2248 ${fmtAmt(per)} each${state.flags.delay ? ` \xB7 ${state.flags.delay}s delay between sends` : ""}`));
   if (!await confirm("Start consolidation?")) return console.log("Cancelled.");
   let got = 0n, done = 0;
   for (const x of plan) {
     const bal = await prov.getBalance(x.w.address);
     const value2 = bal - per;
     if (value2 <= 0n) {
-      console.log(c.warn(`
+      console.log(c3.warn(`
 \u26A0 #${x.i} empty, skipped.`));
       continue;
     }
     await betweenSends(done, plan.length);
-    console.log(c.dim(`
+    console.log(c3.dim(`
 \u2192 #${x.i} ${x.w.label} \u2192 #${target}\u2026`));
-    const { hash: hash2, fee, block } = await doSend(x.i, W()[target].address, value2, netKey());
+    const { hash: hash2, fee, block: block2 } = await doSend(x.i, W()[target].address, value2, netKey());
     got += value2;
     done++;
-    console.log(c.ok(`   \u2713 ${fmtAmt(value2)} ${N2().sym} (block ${block}, fee ${fmtAmt(fee)})`));
+    console.log(c3.ok(`   \u2713 ${fmtAmt(value2)} ${N2().sym} (block ${block2}, fee ${fmtAmt(fee)})`));
     printTxLink(hash2, netKey());
   }
-  console.log(c.ok(`
+  console.log(c3.ok(`
 \u2705 Consolidation done: \u2248 ${fmtAmt(got)} ${N2().sym} gathered on #${target} ${W()[target].label}.`));
 }
 async function cmdStats() {
   const nets = state.flags.all ? Object.keys(NET) : [netKey()];
   const prices = await maybePrices(nets);
   header("STATISTICS");
-  console.log(`   ${state.flags.all ? "All chains" : `Chain: ${N2().label}`} \xB7 ${W().length} EVM wallet${W().length === 1 ? "" : "s"}${BW().length ? c.dim(` + ${BW().length} BTC`) : ""}`);
+  console.log(`   ${state.flags.all ? "All chains" : `Chain: ${N2().label}`} \xB7 ${W().length} EVM wallet${W().length === 1 ? "" : "s"}${BW().length ? c3.dim(` + ${BW().length} BTC`) : ""}`);
   let totalUsd = 0;
   for (const k of nets) {
     const bals = (await spin(`Fetching ${NET[k].label}\u2026`, () => getBalances(k))).map((b2) => b2 ?? 0n);
-    const total = bals.reduce((a, b2) => a + b2, 0n);
+    const total = bals.reduce((a2, b2) => a2 + b2, 0n);
     const active = bals.filter((b2) => b2 > 0n).length;
     const v = netValue(total, k, prices);
     if (v != null) totalUsd += v;
     if (state.flags.all)
       console.log(`
-   ${c.bold(NET[k].label)}: ${fmtAmt(total)} ${NET[k].sym} \u2014 ${active}/${W().length} funded${v != null ? c.dim(`  \u2248 ${usd(v)}`) : ""}`);
-    const sorted = bals.map((b2, i) => ({ b: b2, i })).filter((x) => x.b > 0n).sort((a, b2) => b2.b > a.b ? 1 : -1).slice(0, 8);
+   ${c3.bold(NET[k].label)}: ${fmtAmt(total)} ${NET[k].sym} \u2014 ${active}/${W().length} funded${v != null ? c3.dim(`  \u2248 ${usd(v)}`) : ""}`);
+    const sorted = bals.map((b2, i2) => ({ b: b2, i: i2 })).filter((x) => x.b > 0n).sort((a2, b2) => b2.b > a2.b ? 1 : -1).slice(0, 8);
     if (total > 0n) {
-      console.log(c.dim(`
+      console.log(c3.dim(`
    Distribution on ${NET[k].label}:`));
-      for (const { b: b2, i } of sorted) {
+      for (const { b: b2, i: i2 } of sorted) {
         const pct = Number(b2 * 10000n / total) / 100;
         const bar = "\u2588".repeat(Math.max(1, Math.round(pct / 4))).padEnd(14, "\u2591");
-        console.log(`      #${String(i).padEnd(3)} ${c.cyan(W()[i].label.padEnd(12))} ${bar} ${fmtAmt(b2).padStart(10)} ${NET[k].sym}  ${pct.toFixed(1)}%`);
+        console.log(`      #${String(i2).padEnd(3)} ${c3.cyan(W()[i2].label.padEnd(12))} ${bar} ${fmtAmt(b2).padStart(10)} ${NET[k].sym}  ${pct.toFixed(1)}%`);
       }
       const empty2 = W().length - active;
-      if (empty2 > 0) console.log(c.dim(`      \u2026 + ${empty2} empty wallet${empty2 > 1 ? "s" : ""}`));
+      if (empty2 > 0) console.log(c3.dim(`      \u2026 + ${empty2} empty wallet${empty2 > 1 ? "s" : ""}`));
     }
     if (!state.flags.all && total > 0n) {
-      const nums = bals.map((b2) => Number(formatEther(b2))).sort((a, b2) => a - b2);
+      const nums = bals.map((b2) => Number(formatEther(b2))).sort((a2, b2) => a2 - b2);
       const med = nums.length % 2 ? nums[(nums.length - 1) / 2] : (nums[nums.length / 2 - 1] + nums[nums.length / 2]) / 2;
       console.log(`
-   ${c.bold("Wealth")} : max ${fmtAmt(sorted[0].b)} \xB7 avg ${fmtAmt(total / BigInt(W().length))} \xB7 median ${med.toFixed(4)} ${NET[k].sym}`);
-      if (v != null) console.log(`   ${c.bold("Value")}  : ${c.ok(usd(v))} / ${c.ok(eur(v * 0.92))} ${c.dim("(indicative)")}`);
+   ${c3.bold("Wealth")} : max ${fmtAmt(sorted[0].b)} \xB7 avg ${fmtAmt(total / BigInt(W().length))} \xB7 median ${med.toFixed(4)} ${NET[k].sym}`);
+      if (v != null) console.log(`   ${c3.bold("Value")}  : ${c3.ok(usd(v))} / ${c3.ok(eur(v * 0.92))} ${c3.dim("(indicative)")}`);
     }
   }
   if (BW().length) {
     const bb = (await spin("Fetching Bitcoin\u2026", () => getBtcBalances())).map((b2) => b2 ?? 0n);
-    const bt = bb.reduce((a, b2) => a + b2, 0n);
+    const bt = bb.reduce((a2, b2) => a2 + b2, 0n);
     const bv = btcValue(bt, prices);
     if (bv != null) totalUsd += bv;
     console.log(`
-   ${c.bold("Bitcoin")} : ${fmtBtc(bt)} BTC \u2014 ${bb.filter((b2) => b2 > 0n).length}/${BW().length} funded${bv != null ? c.dim(`  \u2248 ${usd(bv)}`) : ""}${settings().btcTest ? c.warn(" (testnet)") : ""}`);
+   ${c3.bold("Bitcoin")} : ${fmtBtc(bt)} BTC \u2014 ${bb.filter((b2) => b2 > 0n).length}/${BW().length} funded${bv != null ? c3.dim(`  \u2248 ${usd(bv)}`) : ""}${settings2().btcTest ? c3.warn(" (testnet)") : ""}`);
   }
   if (state.flags.all && totalUsd) console.log(`
-   ${c.bold("Total value")}: ${c.ok(usd(totalUsd))} ${c.dim("(indicative)")}`);
-  const h = cur().history;
-  const native = h.filter((x) => !x.token && x.net !== "xmr"), tokens = h.filter((x) => x.token);
-  const xmrTx = h.filter((x) => x.net === "xmr");
+   ${c3.bold("Total value")}: ${c3.ok(usd(totalUsd))} ${c3.dim("(indicative)")}`);
+  const h2 = cur().history;
+  const native = h2.filter((x) => !x.token && x.net !== "xmr"), tokens = h2.filter((x) => x.token);
+  const xmrTx = h2.filter((x) => x.net === "xmr");
   if (native.length) {
     const byNet = {};
     for (const x of native) {
@@ -72998,27 +74305,27 @@ async function cmdStats() {
     }
     const parts = Object.entries(byNet).map(([k, v]) => `${fmtAmt(v.vol)} ${k === "btc" ? "BTC" : NET[k]?.sym || ""} (fees ${fmtAmt(v.fees)})`);
     console.log(`
-   ${c.bold("History")}: ${native.length} tx \xB7 volume ${parts.join(" \xB7 ")}`);
+   ${c3.bold("History")}: ${native.length} tx \xB7 volume ${parts.join(" \xB7 ")}`);
   }
   if (tokens.length) {
     const byTok = {};
     tokens.forEach((x) => byTok[x.token] = (byTok[x.token] || 0) + 1);
-    console.log(`   ${c.bold("Tokens")} : ${Object.entries(byTok).map(([s, n2]) => `${n2}\xD7 ${s}`).join(", ")}`);
+    console.log(`   ${c3.bold("Tokens")} : ${Object.entries(byTok).map(([s, n4]) => `${n4}\xD7 ${s}`).join(", ")}`);
   }
-  if (xmrTx.length) console.log(`   ${c.bold("Monero")} : ${xmrTx.length} tx \xB7 volume ${xmrTx.reduce((s2, x) => s2 + Number(x.amount), 0).toFixed(4)} XMR`);
-  if (cur().chainTx.length) console.log(`   ${c.bold("Synced")}: ${cur().chainTx.length} chain transactions (ravenne sync)`);
-  if (!h.length && !cur().chainTx.length) console.log(c.dim("\n   No transaction recorded yet."));
+  if (xmrTx.length) console.log(`   ${c3.bold("Monero")} : ${xmrTx.length} tx \xB7 volume ${xmrTx.reduce((s2, x) => s2 + Number(x.amount), 0).toFixed(4)} XMR`);
+  if (cur().chainTx.length) console.log(`   ${c3.bold("Synced")}: ${cur().chainTx.length} chain transactions (ravenne sync)`);
+  if (!h2.length && !cur().chainTx.length) console.log(c3.dim("\n   No transaction recorded yet."));
 }
 function mergedHistory() {
   const ours = ourAddressSet();
   const btcOurs = new Set(BW().map((w) => w.address));
   const xmrOurs = new Set(XW().map((w) => w.address));
-  const allOurs = (a) => ours.has((a || "").toLowerCase()) || btcOurs.has(a) || xmrOurs.has(a);
+  const allOurs = (a2) => ours.has((a2 || "").toLowerCase()) || btcOurs.has(a2) || xmrOurs.has(a2);
   const dirOf = (x) => allOurs(x.from) && allOurs(x.to) ? "SELF" : allOurs(x.from) ? "OUT" : allOurs(x.to) ? "IN" : "\u2014";
   const rows = [
     ...cur().history.map((x) => ({ ...x, src: "ravenne", iso: x.t })),
     ...cur().chainTx.map((x) => ({ ...x, src: "chain", iso: x.t }))
-  ].sort((a, b2) => new Date(b2.iso) - new Date(a.iso));
+  ].sort((a2, b2) => new Date(b2.iso) - new Date(a2.iso));
   return rows.map((x) => ({
     ...x,
     t: dt(x.iso),
@@ -73029,8 +74336,8 @@ function mergedHistory() {
 var chainLabel = (net) => net === "btc" ? BTC.label : net === "xmr" ? XMR.label : NET[net]?.label || net;
 async function cmdHistory() {
   const rows = mergedHistory();
-  if (!rows.length) return console.log(c.dim("No transaction recorded yet. Try: ravenne sync"));
-  header(`TRANSACTION HISTORY ${c.dim(`(${cur().history.length} sent \xB7 ${cur().chainTx.length} synced)`)}`);
+  if (!rows.length) return console.log(c3.dim("No transaction recorded yet. Try: ravenne sync"));
+  header(`TRANSACTION HISTORY ${c3.dim(`(${cur().history.length} sent \xB7 ${cur().chainTx.length} synced)`)}`);
   table(
     ["WHEN", "DIR", "CHAIN", "FROM", "TO", "AMOUNT", "FEE", "SRC"],
     rows.slice(0, 25).map((x) => [
@@ -73044,7 +74351,7 @@ async function cmdHistory() {
       x.src
     ])
   );
-  if (rows.length > 25) console.log(c.dim(`  \u2026 ${rows.length - 25} more (full list: ravenne export-csv)`));
+  if (rows.length > 25) console.log(c3.dim(`  \u2026 ${rows.length - 25} more (full list: ravenne export-csv)`));
 }
 function mergeChainTx(payload, items, netK) {
   const seen = new Set(payload.chainTx.map((x) => x.hash));
@@ -73063,7 +74370,7 @@ function mergeChainTx(payload, items, netK) {
     });
     added++;
   }
-  payload.chainTx.sort((a, b2) => new Date(b2.t) - new Date(a.t));
+  payload.chainTx.sort((a2, b2) => new Date(b2.t) - new Date(a2.t));
   payload.chainTx = payload.chainTx.slice(0, 1e3);
   return added;
 }
@@ -73073,23 +74380,23 @@ async function cmdSync() {
   let total = 0;
   for (const w of W()) {
     const items = await spin(`Syncing ${w.label}\u2026`, async () => {
-      const r = await fetch(
+      const r2 = await fetch(
         `${api}/api/v2/addresses/${w.address}/transactions?filter=to%20%7C%20from`,
         { signal: AbortSignal.timeout(12e3) }
       );
-      if (!r.ok) throw new Error(`explorer answered ${r.status}`);
-      return (await r.json()).items || [];
+      if (!r2.ok) throw new Error(`explorer answered ${r2.status}`);
+      return (await r2.json()).items || [];
     }).catch((e) => {
-      console.log(c.warn(`  \u26A0 ${w.label}: ${e.message}`));
+      console.log(c3.warn(`  \u26A0 ${w.label}: ${e.message}`));
       return null;
     });
     if (!items) continue;
     total += mergeChainTx(state.payload, items, netKey());
   }
   save();
-  console.log(c.ok(`
+  console.log(c3.ok(`
 \u2713 Sync done: ${total} new transaction${total === 1 ? "" : "s"} fetched.`));
-  console.log(c.dim("  See them with: ravenne history \xB7 export with: ravenne export-csv"));
+  console.log(c3.dim("  See them with: ravenne history \xB7 export with: ravenne export-csv"));
 }
 var csvCell = (v) => {
   const s = String(v ?? "");
@@ -73097,7 +74404,7 @@ var csvCell = (v) => {
 };
 async function cmdCsv(args) {
   const rows = mergedHistory();
-  if (!rows.length) return console.log(c.dim("Nothing to export yet."));
+  if (!rows.length) return console.log(c3.dim("Nothing to export yet."));
   const file = args[0] || import_node_path.default.join(process.cwd(), `ravenne-history-${(/* @__PURE__ */ new Date()).toISOString().slice(0, 10)}.csv`);
   const lines = rows.map((x) => [
     x.t,
@@ -73112,116 +74419,116 @@ async function cmdCsv(args) {
     x.hash
   ].map(csvCell).join(","));
   import_node_fs.default.writeFileSync(file, ["date,chain,direction,from,to,amount,symbol,fee,tx_source,hash", ...lines].join("\r\n") + "\r\n");
-  console.log(c.ok(`\u2713 ${rows.length} transactions exported to ${file}`));
+  console.log(c3.ok(`\u2713 ${rows.length} transactions exported to ${file}`));
 }
 async function cmdQr(args) {
-  let a = args[0];
-  if (a == null) a = (await P({ type: "text", name: "v", message: `Which address? (0-${W().length - 1}, btc:<n\xB0>, label, book or 0x\u2026)` })).v;
+  let a2 = args[0];
+  if (a2 == null) a2 = (await P({ type: "text", name: "v", message: `Which address? (0-${W().length - 1}, btc:<n\xB0>, label, book or 0x\u2026)` })).v;
   let addr, label;
-  if (String(a).trim().startsWith("0x")) {
-    getAddress(a);
-    addr = a;
+  if (String(a2).trim().startsWith("0x")) {
+    getAddress(a2);
+    addr = a2;
     label = "";
-  } else if (String(a).startsWith("btc:")) {
-    const i = findBtcWallet(String(a).slice(4));
-    if (i < 0) throw new Error(`BTC wallet not found: ${a}`);
-    addr = BW()[i].address;
-    label = `btc#${i} ${BW()[i].label}`;
+  } else if (String(a2).startsWith("btc:")) {
+    const i2 = findBtcWallet(String(a2).slice(4));
+    if (i2 < 0) throw new Error(`BTC wallet not found: ${a2}`);
+    addr = BW()[i2].address;
+    label = `btc#${i2} ${BW()[i2].label}`;
   } else {
-    const i = findWallet(a);
-    if (i >= 0) {
-      addr = W()[i].address;
-      label = `#${i} ${W()[i].label}`;
+    const i2 = findWallet(a2);
+    if (i2 >= 0) {
+      addr = W()[i2].address;
+      label = `#${i2} ${W()[i2].label}`;
     } else {
-      const b2 = settings().book.find((x) => x.label.toLowerCase() === String(a).toLowerCase());
-      if (!b2) throw new Error(`Not found: "${a}"`);
+      const b2 = settings2().book.find((x) => x.label.toLowerCase() === String(a2).toLowerCase());
+      if (!b2) throw new Error(`Not found: "${a2}"`);
       addr = b2.address;
       label = `${b2.label} (book)`;
     }
   }
   header("ADDRESS QR");
-  console.log(`${c.bold(label || "Address")}  ${addr}
+  console.log(`${c3.bold(label || "Address")}  ${addr}
 `);
   import_qrcode_terminal.default.generate(addr, { small: true });
 }
 async function cmdPhrase(args) {
-  let a = args[0];
-  if (a == null) a = (await P({ type: "text", name: "v", message: `Which wallet? (0-${W().length - 1} or btc:<n\xB0>)` })).v;
-  if (String(a).startsWith("btc:")) return btcPhrase(findBtcWallet(String(a).slice(4)));
-  const i = findWallet(a);
-  if (i < 0) throw new Error(`Wallet not found: "${a}"`);
-  const w = W()[i];
-  if (!w.phrase) return console.log(c.warn(`#${i} has no stored seed phrase (imported by key, watch-only or Ledger).`));
-  console.log(c.warn(`
-\u26A0  Seed phrase of #${i} ${w.label}${w.seedPath ? ` (${w.seedPath})` : ""} \u2014 never show this to anyone:`));
+  let a2 = args[0];
+  if (a2 == null) a2 = (await P({ type: "text", name: "v", message: `Which wallet? (0-${W().length - 1} or btc:<n\xB0>)` })).v;
+  if (String(a2).startsWith("btc:")) return btcPhrase(findBtcWallet(String(a2).slice(4)));
+  const i2 = findWallet(a2);
+  if (i2 < 0) throw new Error(`Wallet not found: "${a2}"`);
+  const w = W()[i2];
+  if (!w.phrase) return console.log(c3.warn(`#${i2} has no stored seed phrase (imported by key, watch-only or Ledger).`));
+  console.log(c3.warn(`
+\u26A0  Seed phrase of #${i2} ${w.label}${w.seedPath ? ` (${w.seedPath})` : ""} \u2014 never show this to anyone:`));
   if (!await confirm("Reveal anyway?")) return console.log("Cancelled.");
-  console.log(c.bold(`
+  console.log(c3.bold(`
   ${w.phrase}
 `));
   if (!state.autoYes) {
-    await P({ type: "text", name: "_", message: c.dim("Press Enter to clear the screen\u2026") });
+    await P({ type: "text", name: "_", message: c3.dim("Press Enter to clear the screen\u2026") });
     console.clear();
   }
 }
 async function cmdExport(args) {
-  let a = args[0];
-  if (a == null) a = (await P({ type: "text", name: "v", message: `Export which wallet? (0-${W().length - 1})` })).v;
-  const i = findWallet(a);
-  if (i < 0) throw new Error(`Wallet not found: "${a}"`);
-  if (!W()[i].privateKey) throw new Error(`#${i} holds no key (watch-only/Ledger) \u2014 nothing to export.`);
+  let a2 = args[0];
+  if (a2 == null) a2 = (await P({ type: "text", name: "v", message: `Export which wallet? (0-${W().length - 1})` })).v;
+  const i2 = findWallet(a2);
+  if (i2 < 0) throw new Error(`Wallet not found: "${a2}"`);
+  if (!W()[i2].privateKey) throw new Error(`#${i2} holds no key (watch-only/Ledger) \u2014 nothing to export.`);
   let pw = process.env.RAVENNE_KEYPASS || (await P({ type: "password", name: "p", message: "Keystore file password (8 chars min.):" })).p;
   if (!pw || pw.length < 8) throw new Error("Password too short (8 min.).");
-  const json = await spin("Encrypting keystore\u2026", () => new Wallet(W()[i].privateKey).encrypt(pw));
-  const file = args[1] || import_node_path.default.join(process.cwd(), `ravenne-keystore-${W()[i].address.slice(0, 10)}.json`);
+  const json = await spin("Encrypting keystore\u2026", () => new Wallet(W()[i2].privateKey).encrypt(pw));
+  const file = args[1] || import_node_path.default.join(process.cwd(), `ravenne-keystore-${W()[i2].address.slice(0, 10)}.json`);
   import_node_fs.default.writeFileSync(file, json);
-  console.log(c.ok(`\u2713 Keystore written: ${file}`));
-  console.log(c.dim("  (importable back here, or in MetaMask via 'Import wallet')"));
+  console.log(c3.ok(`\u2713 Keystore written: ${file}`));
+  console.log(c3.dim("  (importable back here, or in MetaMask via 'Import wallet')"));
 }
 async function cmdRename(args) {
-  let [a, label] = args;
-  if (a == null || !label) {
-    const r = await P([
+  let [a2, label] = args;
+  if (a2 == null || !label) {
+    const r2 = await P([
       { type: "text", name: "a", message: `Rename which wallet? (0-${W().length - 1})` },
       { type: "text", name: "l", message: "New label:" }
     ]);
-    a = r.a;
-    label = r.l;
+    a2 = r2.a;
+    label = r2.l;
   }
-  const i = findWallet(a);
-  if (i < 0) throw new Error(`Wallet not found: "${a}"`);
+  const i2 = findWallet(a2);
+  if (i2 < 0) throw new Error(`Wallet not found: "${a2}"`);
   if (!label.trim()) throw new Error("Empty label.");
-  const old = W()[i].label;
-  W()[i].label = label.trim();
+  const old = W()[i2].label;
+  W()[i2].label = label.trim();
   save();
-  console.log(c.ok(`\u2713 #${i}: ${old} \u2192 ${c.cyan(label.trim())}`));
+  console.log(c3.ok(`\u2713 #${i2}: ${old} \u2192 ${c3.cyan(label.trim())}`));
 }
 async function cmdRemove(args) {
-  let a = args[0];
-  if (a == null) a = (await P({ type: "text", name: "v", message: `Remove which wallet from the vault? (0-${W().length - 1} or btc:<n\xB0>)` })).v;
-  if (String(a).startsWith("btc:")) {
-    const i2 = findBtcWallet(String(a).slice(4));
-    if (i2 < 0) throw new Error(`BTC wallet not found: ${a}`);
-    if (!await confirm(`Remove BTC wallet #${i2} ${BW()[i2].label}?`)) return console.log("Cancelled.");
-    BW().splice(i2, 1);
+  let a2 = args[0];
+  if (a2 == null) a2 = (await P({ type: "text", name: "v", message: `Remove which wallet from the vault? (0-${W().length - 1} or btc:<n\xB0>)` })).v;
+  if (String(a2).startsWith("btc:")) {
+    const i3 = findBtcWallet(String(a2).slice(4));
+    if (i3 < 0) throw new Error(`BTC wallet not found: ${a2}`);
+    if (!await confirm(`Remove BTC wallet #${i3} ${BW()[i3].label}?`)) return console.log("Cancelled.");
+    BW().splice(i3, 1);
     save();
-    return console.log(c.ok(`\u2713 Removed from vault.`));
+    return console.log(c3.ok(`\u2713 Removed from vault.`));
   }
-  const i = findWallet(a);
-  if (i < 0) throw new Error(`Wallet not found: "${a}"`);
-  const w = W()[i];
-  console.log(c.warn(`
-\u26A0  You are about to remove #${i} ${w.label} ${w.address} from the vault.`));
+  const i2 = findWallet(a2);
+  if (i2 < 0) throw new Error(`Wallet not found: "${a2}"`);
+  const w = W()[i2];
+  console.log(c3.warn(`
+\u26A0  You are about to remove #${i2} ${w.label} ${w.address} from the vault.`));
   if (w.privateKey)
-    console.log(c.err("   Without its seed phrase, private key or a keystore elsewhere, its funds are UNRECOVERABLE."));
-  else console.log(c.dim("   (watch-only/Ledger entry \u2014 the key is not stored here, nothing to lose)"));
+    console.log(c3.err("   Without its seed phrase, private key or a keystore elsewhere, its funds are UNRECOVERABLE."));
+  else console.log(c3.dim("   (watch-only/Ledger entry \u2014 the key is not stored here, nothing to lose)"));
   if (w.phrase && await confirm("Show the seed phrase one last time before removing?"))
-    console.log(c.bold(`
+    console.log(c3.bold(`
    ${w.phrase}
 `));
-  if (!await confirm(`Really remove #${i} from the vault?`)) return console.log("Cancelled.");
-  W().splice(i, 1);
+  if (!await confirm(`Really remove #${i2} from the vault?`)) return console.log("Cancelled.");
+  W().splice(i2, 1);
   save();
-  console.log(c.ok(`\u2713 Removed from vault (indexes of the following wallets are shifted).`));
+  console.log(c3.ok(`\u2713 Removed from vault (indexes of the following wallets are shifted).`));
 }
 async function cmdNetwork(args) {
   if (args[0]) {
@@ -73229,106 +74536,106 @@ async function cmdNetwork(args) {
     if (!k) throw new Error(`Unknown network: ${args[0]} (local, eth, poly, bsc, arb, base, op)`);
     cur().network = k;
     save();
-    console.log(c.ok(`\u2713 Active chain: ${NET[k].label} (${NET[k].sym})`));
+    console.log(c3.ok(`\u2713 Active chain: ${NET[k].label} (${NET[k].sym})`));
   } else {
-    console.log(`Active chain: ${c.bold(N2().label)} (${N2().sym}) \u2014 switch: ravenne network eth|poly|bsc|arb|base|op|local`);
+    console.log(`Active chain: ${c3.bold(N2().label)} (${N2().sym}) \u2014 switch: ravenne network eth|poly|bsc|arb|base|op|local`);
   }
 }
 async function cmdRpc(args) {
-  const s = settings();
+  const s = settings2();
   if (args.length === 0) {
     header("RPC ENDPOINTS");
     table(
       ["CHAIN", "ENDPOINT", "SOURCE"],
       Object.keys(NET).map((k) => [NET[k].label, s.rpc[k] || NET[k].rpc, s.rpc[k] ? "custom" : "default"])
     );
-    console.log(c.dim("\n  set: ravenne rpc eth http://your-node:8545   \xB7   reset: ravenne rpc eth reset"));
+    console.log(c3.dim("\n  set: ravenne rpc eth http://your-node:8545   \xB7   reset: ravenne rpc eth reset"));
   } else {
     const k = NET_ALIASES[String(args[0]).toLowerCase()];
     if (!k) throw new Error(`Unknown network: ${args[0]}`);
     if (args[1] === "reset") {
       delete s.rpc[k];
       save();
-      return console.log(c.ok(`\u2713 ${NET[k].label}: back to default RPC`));
+      return console.log(c3.ok(`\u2713 ${NET[k].label}: back to default RPC`));
     }
     if (!args[1] || !/^https?:\/\//.test(args[1])) throw new Error("Provide an http(s) URL, or 'reset'.");
     s.rpc[k] = args[1];
     save();
-    console.log(c.ok(`\u2713 ${NET[k].label} \u2192 ${args[1]}`));
+    console.log(c3.ok(`\u2713 ${NET[k].label} \u2192 ${args[1]}`));
   }
 }
 async function cmdSettings(args) {
-  const s = settings();
+  const s = settings2();
   if (!args.length) {
     box("SETTINGS", [
-      `vpn check   ${s.vpnCheck ? c.ok("ON  (no connection without an active VPN)") : "OFF"}`,
+      `vpn check   ${s.vpnCheck ? c3.ok("ON  (no connection without an active VPN)") : "OFF"}`,
       `prices      ${s.prices ? "ON  (fiat values via CoinGecko)" : "OFF (no price queries \u2014 better privacy)"}`,
       `autolock    ${s.autolockMin} min of inactivity in the menu (0 = off)`,
       `btc network ${s.btcTest ? "testnet" : "mainnet"}`,
       `custom rpc  ${Object.keys(s.rpc).length} chain(s) \xB7 address book ${s.book.length} entries`
     ]);
-    console.log(c.dim("\n  ravenne settings vpncheck on|off \xB7 settings prices on|off \xB7 settings autolock <minutes>"));
+    console.log(c3.dim("\n  ravenne settings vpncheck on|off \xB7 settings prices on|off \xB7 settings autolock <minutes>"));
     return;
   }
   if (args[0] === "vpncheck") {
     s.vpnCheck = args[1] !== "off";
     save();
-    return console.log(c.ok(`\u2713 VPN requirement ${s.vpnCheck ? "enabled" : "DISABLED (not recommended)"}`));
+    return console.log(c3.ok(`\u2713 VPN requirement ${s.vpnCheck ? "enabled" : "DISABLED (not recommended)"}`));
   }
   if (args[0] === "prices") {
     s.prices = args[1] !== "off";
     save();
-    return console.log(c.ok(`\u2713 Price lookups ${s.prices ? "enabled" : "disabled"}`));
+    return console.log(c3.ok(`\u2713 Price lookups ${s.prices ? "enabled" : "disabled"}`));
   }
   if (args[0] === "autolock") {
     const m = parseInt(args[1], 10);
     if (!Number.isInteger(m) || m < 0 || m > 240) throw new Error("Minutes: 0 (off) to 240.");
     s.autolockMin = m;
     save();
-    return console.log(c.ok(`\u2713 Auto-lock after ${m === 0 ? "disabled" : `${m} min`}`));
+    return console.log(c3.ok(`\u2713 Auto-lock after ${m === 0 ? "disabled" : `${m} min`}`));
   }
   throw new Error("Unknown setting. Try: settings prices off");
 }
 async function cmdPrice() {
   const prices = await maybePrices(Object.keys(NET).filter((k) => NET[k].cg));
-  if (!prices) return console.log(c.err("Prices unavailable (offline or disabled in settings)."));
+  if (!prices) return console.log(c3.err("Prices unavailable (offline or disabled in settings)."));
   header("LIVE PRICES");
   const rows = [
     [BTC.label, BTC.sym, prices["bitcoin"]?.usd, prices["bitcoin"]?.eur],
     [XMR.label, XMR.sym, prices["monero"]?.usd, prices["monero"]?.eur],
     ...Object.keys(NET).filter((k) => NET[k].cg).map((k) => [NET[k].label, NET[k].sym, prices[NET[k].cg]?.usd, prices[NET[k].cg]?.eur])
-  ].filter((r) => r[2] != null).map((r) => [r[0], r[1], usd(r[2]), eur(r[3])]);
+  ].filter((r2) => r2[2] != null).map((r2) => [r2[0], r2[1], usd(r2[2]), eur(r2[3])]);
   table(["CHAIN", "COIN", "USD", "EUR"], rows, { align: [null, null, "r", "r"] });
-  console.log(c.dim("\n   indicative rates \u2014 crypto is volatile"));
+  console.log(c3.dim("\n   indicative rates \u2014 crypto is volatile"));
 }
 async function cmdChangePass() {
-  console.log(c.vio("\n\u{1F511} Change master password (re-encrypts the vault)."));
+  console.log(c3.vio("\n\u{1F511} Change master password (re-encrypts the vault)."));
   let old = process.env.RAVENNE_PASS || state.pass || (await P({ type: "password", name: "v", message: "Current master password:" })).v;
   if (!gateVerify(old)) throw new Error("Current password is wrong.");
-  const r = await P([
+  const r2 = await P([
     { type: "password", name: "a", message: "New master password (8 chars min.):" },
     { type: "password", name: "b", message: "Confirm new password:" }
   ]);
-  if (!r.a || r.a.length < 8) throw new Error("New password too short.");
-  if (r.a !== r.b) throw new Error("Passwords do not match.");
-  if (r.a === old) throw new Error("New password must differ from the current one.");
+  if (!r2.a || r2.a.length < 8) throw new Error("New password too short.");
+  if (r2.a !== r2.b) throw new Error("Passwords do not match.");
+  if (r2.a === old) throw new Error("New password must differ from the current one.");
   if (import_node_fs.default.existsSync(VAULT_FILE)) {
     decryptVault(old);
-    encryptVault(state.payload, r.a);
+    encryptVault(state.payload, r2.a);
   }
-  writeGate(r.a);
-  state.pass = r.a;
-  console.log(c.ok("\u2713 Master password changed (gate + vault re-encrypted)."));
+  writeGate(r2.a);
+  state.pass = r2.a;
+  console.log(c3.ok("\u2713 Master password changed (gate + vault re-encrypted)."));
 }
 async function cmdWipe() {
-  console.log(c.err("\n\u2620  WIPE destroys the vault file permanently (wallets, labels, history)."));
-  console.log(c.warn("   Your funds survive on-chain \u2014 recoverable ONLY with each wallet's seed phrase / keystore."));
-  const { v } = await P({ type: "text", name: "v", message: `Type ${c.bold("ERASE")} to confirm (required even with --yes):` });
+  console.log(c3.err("\n\u2620  WIPE destroys the vault file permanently (wallets, labels, history)."));
+  console.log(c3.warn("   Your funds survive on-chain \u2014 recoverable ONLY with each wallet's seed phrase / keystore."));
+  const { v } = await P({ type: "text", name: "v", message: `Type ${c3.bold("ERASE")} to confirm (required even with --yes):` });
   if (v !== "ERASE") return console.log("Cancelled.");
   if (import_node_fs.default.existsSync(VAULT_FILE)) {
     const size = import_node_fs.default.statSync(VAULT_FILE).size;
     const fh = import_node_fs.default.openSync(VAULT_FILE, "r+");
-    for (let i = 0; i < 3; i++) {
+    for (let i2 = 0; i2 < 3; i2++) {
       import_node_fs.default.writeSync(fh, import_node_crypto.default.randomBytes(size), 0, size, 0);
       import_node_fs.default.fsyncSync(fh);
     }
@@ -73336,83 +74643,83 @@ async function cmdWipe() {
     import_node_fs.default.unlinkSync(VAULT_FILE);
   }
   state.payload = null;
-  console.log(c.ok("\u2713 Vault wiped (3\xD7 random overwrite + delete)."));
-  console.log(c.dim("  The password gate (access.ravenne.json) is kept \u2014 relaunch to start a fresh vault."));
+  console.log(c3.ok("\u2713 Vault wiped (3\xD7 random overwrite + delete)."));
+  console.log(c3.dim("  The password gate (access.ravenne.json) is kept \u2014 relaunch to start a fresh vault."));
 }
 async function cmdBtc(args) {
   const sub = args[0] || "list";
   if (sub === "create") {
-    let n2 = parseInt(args[1], 10);
-    if (!Number.isInteger(n2) || n2 < 1)
-      n2 = (await P({ type: "number", name: "v", message: "How many Bitcoin wallets?", initial: 1, min: 1, max: 50 })).v;
+    let n4 = parseInt(args[1], 10);
+    if (!Number.isInteger(n4) || n4 < 1)
+      n4 = (await P({ type: "number", name: "v", message: "How many Bitcoin wallets?", initial: 1, min: 1, max: 50 })).v;
     const phrase = generateMnemonic(256, wordlist2);
     const created = [];
     const start = BW().filter((w) => !w.watchOnly).length;
-    for (let i = start; i < start + n2; i++) {
-      const e = btcEntry(phrase, i);
+    for (let i2 = start; i2 < start + n4; i2++) {
+      const e = btcEntry(phrase, i2);
       BW().push(e);
       created.push(e);
     }
     save();
     header("NEW BITCOIN WALLETS (BIP84 native segwit)");
-    console.log(c.ok(`\u2713 ${n2} wallet${n2 > 1 ? "s" : ""} created${settings().btcTest ? c.warn(" \xB7 TESTNET") : ""}`));
-    table(["#", "LABEL", "PATH", "ADDRESS"], created.map((w, i) => [`#${BW().length - n2 + i}`, w.label, w.path, w.address]));
-    console.log(c.warn(`
+    console.log(c3.ok(`\u2713 ${n4} wallet${n4 > 1 ? "s" : ""} created${settings2().btcTest ? c3.warn(" \xB7 TESTNET") : ""}`));
+    table(["#", "LABEL", "PATH", "ADDRESS"], created.map((w, i2) => [`#${BW().length - n4 + i2}`, w.label, w.path, w.address]));
+    console.log(c3.warn(`
 \u26A0  Backup this phrase once \u2014 it owns ALL these BTC wallets:`));
     if (!state.autoYes) {
-      if (await confirm("Reveal the seed phrase now?")) console.log(c.bold(`
+      if (await confirm("Reveal the seed phrase now?")) console.log(c3.bold(`
   ${phrase}
 `));
-      await P({ type: "text", name: "_", message: c.dim("Press Enter to clear the screen\u2026") });
+      await P({ type: "text", name: "_", message: c3.dim("Press Enter to clear the screen\u2026") });
       console.clear();
-    } else console.log(c.dim("  (use: ravenne btc phrase btc:0)"));
+    } else console.log(c3.dim("  (use: ravenne btc phrase btc:0)"));
     return;
   }
   if (sub === "watch") {
     let addr = args[1], label = args[2];
     if (!addr || !label) {
-      const r = await P([
+      const r2 = await P([
         { type: "text", name: "a", message: "Bitcoin address to watch (bc1\u2026 / tb1\u2026 / 1\u2026):" },
         { type: "text", name: "l", message: "Label:" }
       ]);
-      addr = r.a;
-      label = r.l;
+      addr = r2.a;
+      label = r2.l;
     }
     if (!/^(bc1|tb1|1|3|m|n)[a-zA-Z0-9]{25,}$/.test(addr)) throw new Error("This doesn't look like a Bitcoin address.");
     if (BW().some((w) => w.address === addr)) throw new Error("Address already in the vault.");
     BW().push({ label: label || nextBtcLabel(), address: addr, watchOnly: true });
     save();
-    return console.log(c.ok(`\u2713 Watch-only BTC wallet added: ${addr}`));
+    return console.log(c3.ok(`\u2713 Watch-only BTC wallet added: ${addr}`));
   }
   if (sub === "network") {
     if (args[1] === "test" || args[1] === "testnet") {
-      settings().btcTest = true;
+      settings2().btcTest = true;
       save();
-      return console.log(c.warn("\u2713 Bitcoin \u2192 TESTNET"));
+      return console.log(c3.warn("\u2713 Bitcoin \u2192 TESTNET"));
     }
     if (args[1] === "main" || args[1] === "mainnet") {
-      settings().btcTest = false;
+      settings2().btcTest = false;
       save();
-      return console.log(c.ok("\u2713 Bitcoin \u2192 MAINNET"));
+      return console.log(c3.ok("\u2713 Bitcoin \u2192 MAINNET"));
     }
-    return console.log(`Bitcoin network: ${settings().btcTest ? "testnet" : "mainnet"} \u2014 switch: ravenne btc network test|main`);
+    return console.log(`Bitcoin network: ${settings2().btcTest ? "testnet" : "mainnet"} \u2014 switch: ravenne btc network test|main`);
   }
   if (sub === "phrase") return btcPhrase(findBtcWallet(args[1] ?? ""));
   if (sub === "qr") {
-    const i = findBtcWallet(args[1] ?? "");
-    if (i < 0) throw new Error(`BTC wallet not found (btc:0-${BW().length - 1})`);
+    const i2 = findBtcWallet(args[1] ?? "");
+    if (i2 < 0) throw new Error(`BTC wallet not found (btc:0-${BW().length - 1})`);
     header("BTC ADDRESS QR");
-    console.log(`${c.bold(`btc#${i} ${BW()[i].label}`)}  ${BW()[i].address}
+    console.log(`${c3.bold(`btc#${i2} ${BW()[i2].label}`)}  ${BW()[i2].address}
 `);
-    return import_qrcode_terminal.default.generate(BW()[i].address, { small: true });
+    return import_qrcode_terminal.default.generate(BW()[i2].address, { small: true });
   }
   if (sub === "balance") return void await btcTotalLine(await maybePrices([netKey()]));
   if (sub === "list") {
     const bals = await spin("Fetching Bitcoin balances\u2026", () => getBtcBalances());
-    header(`BITCOIN WALLETS${settings().btcTest ? c.warn(" \xB7 TESTNET") : ""} (BIP84)`);
+    header(`BITCOIN WALLETS${settings2().btcTest ? c3.warn(" \xB7 TESTNET") : ""} (BIP84)`);
     table(
       ["#", "LABEL", "ADDRESS", "BALANCE (BTC)", "KEY"],
-      BW().map((w, i) => [`#${i}`, w.label, w.address, bals[i] == null ? "?" : fmtBtc(bals[i]), w.watchOnly ? c.cyan("\u25CB watch") : c.ok("\u25CF key")]),
+      BW().map((w, i2) => [`#${i2}`, w.label, w.address, bals[i2] == null ? "?" : fmtBtc(bals[i2]), w.watchOnly ? c3.cyan("\u25CB watch") : c3.ok("\u25CF key")]),
       { align: [null, null, null, "r"] }
     );
     return;
@@ -73421,28 +74728,28 @@ async function cmdBtc(args) {
     if (!BW().length) throw new Error("No Bitcoin wallet \u2014 create one first (ravenne btc create).");
     let [fromA, toA, amtA] = [args[1], args[2], args[3]];
     if (fromA == null || toA == null || amtA == null) {
-      const r = await P([
+      const r2 = await P([
         { type: "text", name: "f", message: `Send from which BTC wallet? (btc:0-${BW().length - 1})` },
         { type: "text", name: "t", message: "To? (bc1\u2026 address or book label)" },
         { type: "text", name: "a", message: `Amount in BTC (or "max"):` }
       ]);
-      fromA = r.f;
-      toA = r.t;
-      amtA = r.a;
+      fromA = r2.f;
+      toA = r2.t;
+      amtA = r2.a;
     }
     const from = findBtcWallet(String(fromA).startsWith("btc:") ? String(fromA).slice(4) : fromA);
     if (from < 0) throw new Error(`BTC wallet not found: "${fromA}"`);
     const src = BW()[from];
     if (src.watchOnly) throw new Error(`${src.label} is watch-only \u2014 it cannot sign.`);
     let toAddr = String(toA).trim();
-    const b2 = settings().book.find((x) => x.label.toLowerCase() === toAddr.toLowerCase());
+    const b2 = settings2().book.find((x) => x.label.toLowerCase() === toAddr.toLowerCase());
     if (b2) toAddr = b2.address;
     if (!/^(bc1|tb1|1|3|m|n)[a-zA-Z0-9]{25,}$/.test(toAddr)) throw new Error("Invalid Bitcoin recipient address.");
     const utxos = await spin("Fetching UTXOs\u2026", () => btcFetch(`/address/${src.address}/utxo`));
     if (!Array.isArray(utxos) || !utxos.length) throw new Error("No UTXO to spend (empty wallet).");
     const rates = await spin("Fetching fees\u2026", () => btcFetch("/fee-estimates"));
     const satPerVb = Math.max(2, Math.ceil(Number(rates["6"] || rates["3"] || rates["1"] || 12)));
-    const totalSat = utxos.reduce((s, u) => s + BigInt(u.value), 0n);
+    const totalSat = utxos.reduce((s, u3) => s + BigInt(u3.value), 0n);
     const maxFee = BigInt((11 + 68 * utxos.length + 62) * satPerVb);
     let amountSat;
     if (/^(max|all)$/i.test(amtA)) amountSat = totalSat - maxFee;
@@ -73453,7 +74760,7 @@ async function cmdBtc(args) {
     }
     if (amountSat <= 546n) throw new Error(`Amount too small after fees (available: ${fmtBtc(totalSat - maxFee)} BTC).`);
     const estFee = BigInt((11 + 68 * Math.min(utxos.length, Math.ceil(Number(amountSat) / 1e8) + 1) + 62) * satPerVb);
-    header(`SEND BITCOIN${settings().btcTest ? c.warn(" \xB7 TESTNET") : ""}`);
+    header(`SEND BITCOIN${settings2().btcTest ? c3.warn(" \xB7 TESTNET") : ""}`);
     box("CONFIRM", [
       `From      btc#${from} ${src.label}  ${short(src.address)}`,
       `To        ${short(toAddr)}`,
@@ -73473,16 +74780,16 @@ async function cmdBtc(args) {
       hash: txid
     });
     save();
-    console.log(c.ok(`
+    console.log(c3.ok(`
 \u2713 Broadcast! txid ${txid} (${inputs2} input${inputs2 > 1 ? "s" : ""}, fee ${fmtBtc(fee)} BTC)`));
-    console.log(c.dim(`   \u2197 ${BTC.ex}/tx/${txid}`));
+    console.log(c3.dim(`   \u2197 ${BTC.ex}/tx/${txid}`));
     return;
   }
   if (sub === "sync") {
     let total = 0;
     for (const w of BW()) {
       const txs = await spin(`Syncing ${w.label}\u2026`, () => btcFetch(`/address/${w.address}/txs`)).catch((e) => {
-        console.log(c.warn(`  \u26A0 ${w.label}: ${e.message}`));
+        console.log(c3.warn(`  \u26A0 ${w.label}: ${e.message}`));
         return null;
       });
       if (!txs) continue;
@@ -73500,22 +74807,22 @@ async function cmdBtc(args) {
       total += mergeChainTx(state.payload, items, "btc");
     }
     save();
-    return console.log(c.ok(`\u2713 Bitcoin sync done: ${total} new transaction${total === 1 ? "" : "s"}.`));
+    return console.log(c3.ok(`\u2713 Bitcoin sync done: ${total} new transaction${total === 1 ? "" : "s"}.`));
   }
   throw new Error(`Unknown 'btc' sub-command: ${sub}. Try: btc create | list | balance | send | watch | qr | phrase | sync | network`);
 }
-async function btcPhrase(i) {
-  if (i < 0) throw new Error(`BTC wallet not found (btc:0-${BW().length - 1})`);
-  const w = BW()[i];
-  if (!w.phrase) return console.log(c.warn(`btc#${i} is watch-only \u2014 no phrase stored.`));
-  console.log(c.warn(`
-\u26A0  Seed phrase of btc#${i} ${w.label} (${w.path}) \u2014 never show this to anyone:`));
+async function btcPhrase(i2) {
+  if (i2 < 0) throw new Error(`BTC wallet not found (btc:0-${BW().length - 1})`);
+  const w = BW()[i2];
+  if (!w.phrase) return console.log(c3.warn(`btc#${i2} is watch-only \u2014 no phrase stored.`));
+  console.log(c3.warn(`
+\u26A0  Seed phrase of btc#${i2} ${w.label} (${w.path}) \u2014 never show this to anyone:`));
   if (!await confirm("Reveal anyway?")) return console.log("Cancelled.");
-  console.log(c.bold(`
+  console.log(c3.bold(`
   ${w.phrase}
 `));
   if (!state.autoYes) {
-    await P({ type: "text", name: "_", message: c.dim("Press Enter to clear the screen\u2026") });
+    await P({ type: "text", name: "_", message: c3.dim("Press Enter to clear the screen\u2026") });
     console.clear();
   }
 }
@@ -73528,7 +74835,7 @@ async function buildTxPlan(fromIdx, toAddr, amountStr, token) {
   const f2 = await prov.getFeeData();
   let value2, gasLimit, tok = null;
   if (token) {
-    tok = tokensOf(netKey()).find((t) => t.sym.toLowerCase() === token.toLowerCase());
+    tok = tokensOf(netKey()).find((t2) => t2.sym.toLowerCase() === token.toLowerCase());
     if (!tok) throw new Error(`Unknown token "${token}".`);
     const erc = new Contract(tok.addr, ERC20_ABI, prov);
     value2 = /^(max|all)$/i.test(amountStr) ? await erc.balanceOf(src.address) : parseUnits(String(amountStr).replace(",", "."), tok.dec);
@@ -73559,14 +74866,14 @@ async function buildTxPlan(fromIdx, toAddr, amountStr, token) {
 async function cmdTxPrepare(args) {
   let [fromA, toA, amtA] = args;
   if (fromA == null || toA == null || amtA == null) {
-    const r = await P([
+    const r2 = await P([
       { type: "text", name: "f", message: `Sign from which wallet? (0-${W().length - 1})` },
       { type: "text", name: "t", message: "Send to? (index, label, book or 0x\u2026)" },
       { type: "text", name: "a", message: "Amount (or 'max'):" }
     ]);
-    fromA = r.f;
-    toA = r.t;
-    amtA = r.a;
+    fromA = r2.f;
+    toA = r2.t;
+    amtA = r2.a;
   }
   const from = findWallet(fromA);
   if (from < 0) throw new Error(`Wallet not found: "${fromA}"`);
@@ -73574,10 +74881,10 @@ async function cmdTxPrepare(args) {
   const plan = await spin("Building unsigned transaction\u2026", () => buildTxPlan(from, to.addr, amtA, state.flags.token));
   const file = state.flags.file || import_node_path.default.join(process.cwd(), "unsigned-tx.json");
   import_node_fs.default.writeFileSync(file, JSON.stringify(plan, null, 2));
-  console.log(c.ok(`
+  console.log(c3.ok(`
 \u2713 Unsigned transaction written: ${file}`));
-  console.log(c.dim(`  On the OFFLINE machine: ravenne tx-sign ${import_node_path.default.basename(file)} <wallet#>`));
-  console.log(c.dim("  Then back online: ravenne tx-broadcast <file>.signed.json \u2014 broadcast soon (nonce can go stale)."));
+  console.log(c3.dim(`  On the OFFLINE machine: ravenne tx-sign ${import_node_path.default.basename(file)} <wallet#>`));
+  console.log(c3.dim("  Then back online: ravenne tx-broadcast <file>.signed.json \u2014 broadcast soon (nonce can go stale)."));
 }
 async function cmdTxSign(args) {
   const file = args[0];
@@ -73589,11 +74896,11 @@ async function cmdTxSign(args) {
     const pw = (await P({ type: "password", name: "p", message: "Keystore password:" })).p;
     signer = await spin("Opening keystore\u2026", () => Wallet.fromEncryptedJson(json, pw));
   } else {
-    const i = findWallet(args[1] ?? "");
-    if (i < 0) throw new Error(`Wallet not found: "${args[1]}"`);
-    requireKey(i);
-    if (W()[i].address !== plan.from) throw new Error(`#${i} is ${W()[i].address} but the tx expects ${plan.from}.`);
-    signer = new Wallet(W()[i].privateKey);
+    const i2 = findWallet(args[1] ?? "");
+    if (i2 < 0) throw new Error(`Wallet not found: "${args[1]}"`);
+    requireKey(i2);
+    if (W()[i2].address !== plan.from) throw new Error(`#${i2} is ${W()[i2].address} but the tx expects ${plan.from}.`);
+    signer = new Wallet(W()[i2].privateKey);
   }
   const txObj = {
     chainId: plan.chainId,
@@ -73617,9 +74924,9 @@ async function cmdTxSign(args) {
   }
   const out = `${file}.signed.json`;
   import_node_fs.default.writeFileSync(out, JSON.stringify({ raw, meta }, null, 2));
-  console.log(c.ok(`
+  console.log(c3.ok(`
 \u2713 Signed transaction written: ${out}`));
-  console.log(c.dim("  Back online: ravenne tx-broadcast " + import_node_path.default.basename(out)));
+  console.log(c3.dim("  Back online: ravenne tx-broadcast " + import_node_path.default.basename(out)));
 }
 async function cmdTxBroadcast(args) {
   const file = args[0];
@@ -73641,7 +74948,7 @@ async function cmdTxBroadcast(args) {
     token: meta.token?.sym
   });
   save();
-  console.log(c.ok(`
+  console.log(c3.ok(`
 \u2713 Confirmed in block ${rc.blockNumber} \u2014 ${amount} ${meta.token?.sym || NET[meta.chain].sym} (fee ${fmtAmt(fee)})`));
   printTxLink(rc.hash, meta.chain);
 }
@@ -73652,15 +74959,15 @@ var receivingBtc = () => BW().filter((w) => w.role === "receive");
 async function cmdSetup(args) {
   if (mainEvm() && !await confirm("A main wallet already exists \u2014 run the setup again anyway?"))
     return console.log("Cancelled.");
-  let n2 = parseInt(args[0], 10);
-  if (!Number.isInteger(n2) || n2 < 1)
-    n2 = (await P({ type: "number", name: "v", message: "How many receiving addresses do you want?", initial: 5, min: 1, max: 100 })).v;
+  let n4 = parseInt(args[0], 10);
+  if (!Number.isInteger(n4) || n4 < 1)
+    n4 = (await P({ type: "number", name: "v", message: "How many receiving addresses do you want?", initial: 5, min: 1, max: 100 })).v;
   const watchOnly = !state.flags.keepKey;
   header("STEP 1/3 \u2014 YOUR MAIN SEED (write it on paper)");
-  console.log(c.warn("This 24-word phrase controls your MAIN wallets (EVM + Bitcoin)."));
-  console.log(c.err("It is " + (watchOnly ? "NOT stored in the vault (maximum security): this screen is your only copy!" : "about to be stored in the vault (encrypted, but online).") + "\n"));
+  console.log(c3.warn("This 24-word phrase controls your MAIN wallets (EVM + Bitcoin)."));
+  console.log(c3.err("It is " + (watchOnly ? "NOT stored in the vault (maximum security): this screen is your only copy!" : "about to be stored in the vault (encrypted, but online).") + "\n"));
   const mainPhrase = Mnemonic.fromEntropy(import_node_crypto.default.randomBytes(32)).phrase;
-  console.log(c.bold(`
+  console.log(c3.bold(`
   ${mainPhrase.split(" ").join(" \xB7 ")}
 `));
   if (!state.autoYes) {
@@ -73668,12 +74975,12 @@ async function cmdSetup(args) {
       console.log("Setup cancelled \u2014 nothing was created.");
       return;
     }
-    await P({ type: "text", name: "_", message: c.dim("Press Enter to clear the phrase from the screen\u2026") });
+    await P({ type: "text", name: "_", message: c3.dim("Press Enter to clear the phrase from the screen\u2026") });
     console.clear();
-  } else console.log(c.warn("  (--yes mode: copy it NOW from the output above \u2014 it will not be shown again)" + (watchOnly ? "" : "")));
+  } else console.log(c3.warn("  (--yes mode: copy it NOW from the output above \u2014 it will not be shown again)" + (watchOnly ? "" : "")));
   header("STEP 2/3 \u2014 MAIN WALLETS");
   const evmMain = HDNodeWallet.fromPhrase(mainPhrase, "", "m/44'/60'/0'/0/0");
-  const btcMain = btcAddressFromPhrase(mainPhrase, 0, settings().btcTest);
+  const btcMain = btcAddressFromPhrase(mainPhrase, 0, settings2().btcTest);
   W().push({
     label: "main",
     address: evmMain.address,
@@ -73688,56 +74995,56 @@ async function cmdSetup(args) {
     ...watchOnly ? { watchOnly: true } : { phrase: mainPhrase }
   });
   header("STEP 3/3 \u2014 RECEIVING ADDRESSES");
-  console.log(c.dim("A separate hot seed (stored encrypted in the vault) creates the receiving"));
-  console.log(c.dim("addresses. Everything they receive is forwarded to your main wallets.\n"));
+  console.log(c3.dim("A separate hot seed (stored encrypted in the vault) creates the receiving"));
+  console.log(c3.dim("addresses. Everything they receive is forwarded to your main wallets.\n"));
   const recvPhrase = Mnemonic.fromEntropy(import_node_crypto.default.randomBytes(32)).phrase;
-  settings().seeds.receive = recvPhrase;
+  settings2().seeds.receive = recvPhrase;
   const existing = receivingEvm().length;
-  for (let i = 0; i < n2; i++) {
-    const w = HDNodeWallet.fromPhrase(recvPhrase, "", `m/44'/60'/0'/0/${existing + i}`);
-    W().push({ label: `in-${existing + i + 1}`, address: w.address, privateKey: w.privateKey, role: "receive" });
-    const b2 = btcAddressFromPhrase(recvPhrase, existing + i, settings().btcTest);
-    BW().push({ label: `btc-in-${existing + i + 1}`, address: b2.address, phrase: recvPhrase, index: existing + i, role: "receive" });
+  for (let i2 = 0; i2 < n4; i2++) {
+    const w = HDNodeWallet.fromPhrase(recvPhrase, "", `m/44'/60'/0'/0/${existing + i2}`);
+    W().push({ label: `in-${existing + i2 + 1}`, address: w.address, privateKey: w.privateKey, role: "receive" });
+    const b2 = btcAddressFromPhrase(recvPhrase, existing + i2, settings2().btcTest);
+    BW().push({ label: `btc-in-${existing + i2 + 1}`, address: b2.address, phrase: recvPhrase, index: existing + i2, role: "receive" });
   }
   save();
   box("READY \u2014 YOUR SETUP", [
     `Main (keep PRIVATE)    ${evmMain.address}`,
     `Main BTC               ${btcMain.address}`,
-    `Main key               ${watchOnly ? c.ok("NOT in the vault (paper only) \u2014 a vault leak can't touch it") : "stored in vault (spendable here)"}`,
-    `Receiving addresses    ${n2} fresh EVM + ${n2} BTC (give THESE out, never the main)`,
+    `Main key               ${watchOnly ? c3.ok("NOT in the vault (paper only) \u2014 a vault leak can't touch it") : "stored in vault (spendable here)"}`,
+    `Receiving addresses    ${n4} fresh EVM + ${n4} BTC (give THESE out, never the main)`,
     `Backup                 main seed on paper \xB7 receiving seed inside the vault`,
     ``,
     `Next: 'ravenne' \u2192 Forward all to main \xB7 'ravenne auto' \u2192 automatic forwarding`
   ]);
-  console.log(c.dim("\nPrivacy: give a different receiving address to each payer, and let"));
-  console.log(c.dim("'ravenne auto' forward at random intervals \u2014 never reuse the main address publicly."));
+  console.log(c3.dim("\nPrivacy: give a different receiving address to each payer, and let"));
+  console.log(c3.dim("'ravenne auto' forward at random intervals \u2014 never reuse the main address publicly."));
 }
 async function cmdAddresses(args) {
   let add3 = parseInt(args[0], 10) || 0;
   if (add3 > 0) {
-    const phrase = settings().seeds.receive;
+    const phrase = settings2().seeds.receive;
     if (!phrase) throw new Error("No receiving seed \u2014 run 'ravenne setup' first.");
     const existing = receivingEvm().length;
-    for (let i = 0; i < Math.min(add3, 100); i++) {
-      const w = HDNodeWallet.fromPhrase(phrase, "", `m/44'/60'/0'/0/${existing + i}`);
-      W().push({ label: `in-${existing + i + 1}`, address: w.address, privateKey: w.privateKey, role: "receive" });
-      const b2 = btcAddressFromPhrase(phrase, existing + i, settings().btcTest);
-      BW().push({ label: `btc-in-${existing + i + 1}`, address: b2.address, phrase, index: existing + i, role: "receive" });
+    for (let i2 = 0; i2 < Math.min(add3, 100); i2++) {
+      const w = HDNodeWallet.fromPhrase(phrase, "", `m/44'/60'/0'/0/${existing + i2}`);
+      W().push({ label: `in-${existing + i2 + 1}`, address: w.address, privateKey: w.privateKey, role: "receive" });
+      const b2 = btcAddressFromPhrase(phrase, existing + i2, settings2().btcTest);
+      BW().push({ label: `btc-in-${existing + i2 + 1}`, address: b2.address, phrase, index: existing + i2, role: "receive" });
     }
     save();
-    console.log(c.ok(`\u2713 ${add3} fresh receiving address${add3 > 1 ? "es" : ""} added (EVM + BTC).`));
+    console.log(c3.ok(`\u2713 ${add3} fresh receiving address${add3 > 1 ? "es" : ""} added (EVM + BTC).`));
   }
   header("RECEIVING ADDRESSES \u2014 give these out");
-  console.log(c.dim("EVM (Ethereum, Polygon, BNB, Arbitrum, Base, Optimism \u2014 same address):"));
-  table(["#", "LABEL", "ADDRESS"], receivingEvm().map((w, i) => [`#${i}`, w.label, w.address]));
+  console.log(c3.dim("EVM (Ethereum, Polygon, BNB, Arbitrum, Base, Optimism \u2014 same address):"));
+  table(["#", "LABEL", "ADDRESS"], receivingEvm().map((w, i2) => [`#${i2}`, w.label, w.address]));
   if (receivingBtc().length) {
-    console.log(c.dim("\nBitcoin:"));
-    table(["#", "LABEL", "ADDRESS"], receivingBtc().map((w, i) => [`#${i}`, w.label, w.address]));
+    console.log(c3.dim("\nBitcoin:"));
+    table(["#", "LABEL", "ADDRESS"], receivingBtc().map((w, i2) => [`#${i2}`, w.label, w.address]));
   }
   const m = mainEvm();
-  if (m) console.log(c.warn(`
+  if (m) console.log(c3.warn(`
 MAIN (never publish): ${m.address}`));
-  console.log(c.dim("Add more: ravenne addresses 5 \xB7 QR: ravenne qr in-1"));
+  console.log(c3.dim("Add more: ravenne addresses 5 \xB7 QR: ravenne qr in-1"));
 }
 async function recordBtc(txid, from, to, amountSat, feeSat) {
   cur().history.push({
@@ -73757,7 +75064,7 @@ async function sweepBtcOne(idx, destAddr) {
   if (!Array.isArray(utxos) || !utxos.length) return 0n;
   const rates = await btcFetch("/fee-estimates");
   const satPerVb = Math.max(2, Math.ceil(Number(rates["6"] || rates["3"] || rates["1"] || 12)));
-  const total = utxos.reduce((s, u) => s + BigInt(u.value), 0n);
+  const total = utxos.reduce((s, u3) => s + BigInt(u3.value), 0n);
   const maxFee = BigInt((11 + 68 * utxos.length + 62) * satPerVb);
   const amount = total - maxFee;
   if (amount < 1000n) return 0n;
@@ -73778,16 +75085,16 @@ async function cmdSweep(opts = {}) {
     const prov = new JsonRpcProvider(rpcUrl(k));
     const per = await feePerTx(prov).catch(() => null);
     if (per == null) {
-      console.log(c.warn(`  \u26A0 ${NET[k].label}: RPC unreachable`));
+      console.log(c3.warn(`  \u26A0 ${NET[k].label}: RPC unreachable`));
       continue;
     }
-    const rule = k === "eth" ? settings().convert?.eth : null;
+    const rule = k === "eth" ? settings2().convert?.eth : null;
     const recv = receivingEvm();
-    for (let r = 0; r < recv.length; r++) {
-      const w = recv[r];
+    for (let r2 = 0; r2 < recv.length; r2++) {
+      const w = recv[r2];
       const idx = W().indexOf(w);
       const bal = await prov.getBalance(w.address).catch(() => 0n);
-      const mult = BigInt(settings().privacy.sweepFeeMult ?? 3);
+      const mult = BigInt(settings2().privacy.sweepFeeMult ?? 3);
       if (bal <= per * mult && !rule) continue;
       if (rule) {
         const from = resolveAsset(rule.from), to = resolveAsset(rule.to);
@@ -73795,26 +75102,26 @@ async function cmdSweep(opts = {}) {
         if (from.native) {
           if (bal <= gasBudget) continue;
           if (auto && count > 0) await countdown(5 + Math.floor(Math.random() * 25));
-          console.log(c.dim(`
+          console.log(c3.dim(`
 \u2192 ${w.label}: converting ${fmtAmt(bal - gasBudget)} ETH \u2192 ${to.sym} (Uniswap)\u2026`));
           try {
-            const { block: block2 } = await execSwap(idx, from, to, bal - gasBudget);
-            console.log(c.ok(`   \u2713 swapped (block ${block2}) \u2014 forwarding to main\u2026`));
+            const { block: block3 } = await execSwap(idx, from, to, bal - gasBudget);
+            console.log(c3.ok(`   \u2713 swapped (block ${block3}) \u2014 forwarding to main\u2026`));
           } catch (e) {
-            console.log(c.warn(`   \u26A0 swap failed (${e.shortMessage || e.message}) \u2014 forwarding as ETH instead`));
+            console.log(c3.warn(`   \u26A0 swap failed (${e.shortMessage || e.message}) \u2014 forwarding as ETH instead`));
           }
         } else {
           const erc = new Contract(from.addr, ERC20_ABI, prov);
           const tkBal = await erc.balanceOf(w.address).catch(() => 0n);
           if (tkBal <= 0n || bal <= gasBudget) continue;
           if (auto && count > 0) await countdown(5 + Math.floor(Math.random() * 25));
-          console.log(c.dim(`
+          console.log(c3.dim(`
 \u2192 ${w.label}: converting ${fmtUnits(tkBal, from.dec)} ${from.sym} \u2192 ${to.sym} (Uniswap)\u2026`));
           try {
-            const { block: block2 } = await execSwap(idx, from, to, tkBal);
-            console.log(c.ok(`   \u2713 swapped (block ${block2}) \u2014 forwarding to main\u2026`));
+            const { block: block3 } = await execSwap(idx, from, to, tkBal);
+            console.log(c3.ok(`   \u2713 swapped (block ${block3}) \u2014 forwarding to main\u2026`));
           } catch (e) {
-            console.log(c.warn(`   \u26A0 swap failed (${e.shortMessage || e.message}) \u2014 forwarding as-is`));
+            console.log(c3.warn(`   \u26A0 swap failed (${e.shortMessage || e.message}) \u2014 forwarding as-is`));
           }
         }
         const balNow = await prov.getBalance(w.address);
@@ -73826,35 +75133,35 @@ async function cmdSweep(opts = {}) {
             const { hash: hash3 } = await doSend(idx, mEvm.address, got, k, to);
             count++;
             moved += 0n;
-            console.log(c.ok(`   \u2713 ${fmtUnits(got, to.dec)} ${to.sym} \u2192 main`));
+            console.log(c3.ok(`   \u2713 ${fmtUnits(got, to.dec)} ${to.sym} \u2192 main`));
             printTxLink(hash3, k);
           }
         } else if (balNow > finalPer * 2n) {
           const { hash: hash3 } = await doSend(idx, mEvm.address, balNow - finalPer, k);
           count++;
-          console.log(c.ok(`   \u2713 ${fmtAmt(balNow - finalPer)} ETH \u2192 main`));
+          console.log(c3.ok(`   \u2713 ${fmtAmt(balNow - finalPer)} ETH \u2192 main`));
           printTxLink(hash3, k);
         }
         continue;
       }
       const net = bal - per;
-      const retain = net > 100000n ? BigInt(Math.round(Number(net) * Math.random() * (settings().privacy.retainPermille ?? 3) / 1e3)) : 0n;
+      const retain = net > 100000n ? BigInt(Math.round(Number(net) * Math.random() * (settings2().privacy.retainPermille ?? 3) / 1e3)) : 0n;
       const value2 = net - retain;
       if (auto && count > 0) await countdown(5 + Math.floor(Math.random() * 25));
-      console.log(c.dim(`
-\u2192 ${w.label} \u2192 main (${NET[k].label})  ${fmtAmt(value2)} ${NET[k].sym}${retain > 0n ? c.dim(` \xB7 ${fmtAmt(retain)} kept back`) : ""}`));
-      const { hash: hash2, fee, block } = await doSend(idx, mEvm.address, value2, k);
+      console.log(c3.dim(`
+\u2192 ${w.label} \u2192 main (${NET[k].label})  ${fmtAmt(value2)} ${NET[k].sym}${retain > 0n ? c3.dim(` \xB7 ${fmtAmt(retain)} kept back`) : ""}`));
+      const { hash: hash2, fee, block: block2 } = await doSend(idx, mEvm.address, value2, k);
       count++;
       moved += value2;
-      console.log(c.ok(`   \u2713 block ${block}, fee ${fmtAmt(fee)}`));
+      console.log(c3.ok(`   \u2713 block ${block2}, fee ${fmtAmt(fee)}`));
       printTxLink(hash2, k);
-      for (const t of tokensOf(k)) {
+      for (const t2 of tokensOf(k)) {
         try {
-          const erc = new Contract(t.addr, ERC20_ABI, prov);
+          const erc = new Contract(t2.addr, ERC20_ABI, prov);
           const tb = await erc.balanceOf(w.address);
           if (tb > 0n && bal - fee > per) {
-            const { hash: h2 } = await doSend(idx, mEvm.address, tb, k, t);
-            console.log(c.ok(`   \u2713 + ${fmtUnits(tb, t.dec)} ${t.sym} forwarded`));
+            const { hash: h2 } = await doSend(idx, mEvm.address, tb, k, t2);
+            console.log(c3.ok(`   \u2713 + ${fmtUnits(tb, t2.dec)} ${t2.sym} forwarded`));
             printTxLink(h2, k);
           }
         } catch {
@@ -73863,23 +75170,23 @@ async function cmdSweep(opts = {}) {
     }
   }
   if (mBtc && receivingBtc().length) {
-    for (let i = 0; i < receivingBtc().length; i++) {
-      const e = receivingBtc()[i];
+    for (let i2 = 0; i2 < receivingBtc().length; i2++) {
+      const e = receivingBtc()[i2];
       try {
         if (auto && count > 0) await countdown(5 + Math.floor(Math.random() * 25));
         const got = await sweepBtcOne(BW().indexOf(e), mBtc.address);
         if (got > 0n) {
           count++;
           moved += 0n;
-          console.log(c.ok(`\u2713 ${e.label} \u2192 btc-main  ${fmtBtc(got)} BTC`));
+          console.log(c3.ok(`\u2713 ${e.label} \u2192 btc-main  ${fmtBtc(got)} BTC`));
         }
       } catch (e2) {
-        console.log(c.warn(`  \u26A0 ${e.label}: ${e2.message}`));
+        console.log(c3.warn(`  \u26A0 ${e.label}: ${e2.message}`));
       }
     }
   }
-  if (!count) console.log(c.dim("\nNothing to forward \u2014 receiving wallets are empty (or below the fee threshold)."));
-  else console.log(c.ok(`
+  if (!count) console.log(c3.dim("\nNothing to forward \u2014 receiving wallets are empty (or below the fee threshold)."));
+  else console.log(c3.ok(`
 \u2705 Forwarded ${count} transaction${count > 1 ? "s" : ""} to the main wallets.`));
   return { count };
 }
@@ -73899,15 +75206,15 @@ async function cmdAuto(args) {
     try {
       await cmdSweep({ auto: true, all: true });
     } catch (e) {
-      console.log(c.err(`\u2717 ${e.message}`));
+      console.log(c3.err(`\u2717 ${e.message}`));
     }
     const waitMs = minutes * 6e4 * (0.5 + Math.random());
     const next = new Date(Date.now() + waitMs).toLocaleTimeString("en-GB");
-    console.log(c.dim(`
+    console.log(c3.dim(`
 \u{1F634} sleeping until ~${next} \u2026`));
     await sleep(waitMs);
     console.clear();
-    console.log(c.vio("\u{1FAB6}  RAVENNE \u2014 auto-forward daemon \xB7 Ctrl+C to stop"));
+    console.log(c3.vio("\u{1FAB6}  RAVENNE \u2014 auto-forward daemon \xB7 Ctrl+C to stop"));
   }
 }
 async function simpleBalances() {
@@ -73918,41 +75225,42 @@ async function simpleBalances() {
   const [mBal, ...rBals] = await spin(`Fetching ${NET[k].label}\u2026`, () => Promise.all([m, ...recv].map((w) => prov.getBalance(w.address).catch(() => null))));
   header(`BALANCES \u2014 ${NET[k].label} (${NET[k].sym})`);
   const rows = [
-    [c.bold("MAIN"), m.label, m.address, fmtAmt(mBal ?? 0n)],
-    ...recv.map((w, i) => [c.dim("in"), w.label, w.address, rBals[i] == null ? "?" : fmtAmt(rBals[i])])
+    [c3.bold("MAIN"), m.label, m.address, fmtAmt(mBal ?? 0n)],
+    ...recv.map((w, i2) => [c3.dim("in"), w.label, w.address, rBals[i2] == null ? "?" : fmtAmt(rBals[i2])])
   ];
   table(["ROLE", "LABEL", "ADDRESS", `BALANCE (${NET[k].sym})`], rows, { align: [null, null, null, "r"] });
   const waiting = rBals.reduce((s, b2) => b2 ? s + b2 : s, 0n);
   console.log(`
-   ${c.bold("Waiting on receiving")} (to be forwarded): ${c.warn(fmtAmt(waiting))} ${NET[k].sym}`);
+   ${c3.bold("Waiting on receiving")} (to be forwarded): ${c3.warn(fmtAmt(waiting))} ${NET[k].sym}`);
   if (mainBtc() && receivingBtc().length) {
     const [mb, ...rb] = await spin("Fetching Bitcoin\u2026", () => Promise.all([mainBtc(), ...receivingBtc()].map((w) => btcFetch(`/address/${w.address}`).then((j) => BigInt(j.chain_stats.funded_txo_sum) - BigInt(j.chain_stats.spent_txo_sum)).catch(() => null))));
-    header(`BITCOIN${settings().btcTest ? " \xB7 TESTNET" : ""}`);
+    header(`BITCOIN${settings2().btcTest ? " \xB7 TESTNET" : ""}`);
     table(
       ["ROLE", "LABEL", "ADDRESS", "BALANCE (BTC)"],
       [
-        [c.bold("MAIN"), mainBtc().label, mainBtc().address, fmtBtc(mb ?? 0n)],
-        ...receivingBtc().map((w, i) => [c.dim("in"), w.label, w.address, rb[i] == null ? "?" : fmtBtc(rb[i])])
-      ].map((r) => r.map((x, j) => j === 0 ? x : x)),
+        [c3.bold("MAIN"), mainBtc().label, mainBtc().address, fmtBtc(mb ?? 0n)],
+        ...receivingBtc().map((w, i2) => [c3.dim("in"), w.label, w.address, rb[i2] == null ? "?" : fmtBtc(rb[i2])])
+      ].map((r2) => r2.map((x, j) => j === 0 ? x : x)),
       { align: [null, null, null, "r"] }
     );
     const bw = rb.reduce((s, b2) => b2 ? s + b2 : s, 0n);
     console.log(`
-   Waiting on receiving: ${c.warn(fmtBtc(bw))} BTC`);
+   Waiting on receiving: ${c3.warn(fmtBtc(bw))} BTC`);
   }
 }
 async function simpleMenu() {
   banner();
+  if (TTY) intro(c3.bold("Ravenne") + c3.dim("  v" + VERSION + "  \xB7  " + V().active + "  \xB7  " + N2().label));
   if (!mainEvm()) {
-    console.log(c.vio("\n\u{1F44B} Welcome! Ravenne will set up:"));
-    console.log(`   ${c.bold("1 MAIN wallet")} \u2014 your vault, kept private (seed on paper${c.dim(", optionally not even stored here")})`);
-    console.log(`   ${c.bold("RECEIVING addresses")} \u2014 give them out; everything is forwarded to main
+    console.log(c3.vio("\n\u{1F44B} Welcome! Ravenne will set up:"));
+    console.log(`   ${c3.bold("1 MAIN wallet")} \u2014 your vault, kept private (seed on paper${c3.dim(", optionally not even stored here")})`);
+    console.log(`   ${c3.bold("RECEIVING addresses")} \u2014 give them out; everything is forwarded to main
 `);
     if (await confirm("Start the guided setup?")) {
       try {
         await cmdSetup([]);
       } catch (e) {
-        console.log(c.err(`\u2717 ${e.message}`));
+        console.log(c3.err(`\u2717 ${e.message}`));
       }
     } else {
       console.log("Run 'ravenne help' for the advanced commands. Bye \u{1F44B}");
@@ -73961,13 +75269,13 @@ async function simpleMenu() {
   }
   let lastActive = Date.now();
   while (true) {
-    if (settings().autolockMin > 0 && Date.now() - lastActive > settings().autolockMin * 6e4) {
+    if (settings2().autolockMin > 0 && Date.now() - lastActive > settings2().autolockMin * 6e4) {
       await lockSession();
       banner();
     }
-    console.log(c.dim(`  main: ${short(mainEvm().address)} \xB7 receiving: ${receivingEvm().length} EVM + ${receivingBtc().length} BTC \xB7 chain: ${N2().label}
+    console.log(c3.dim(`  main: ${short(mainEvm().address)} \xB7 receiving: ${receivingEvm().length} EVM + ${receivingBtc().length} BTC \xB7 chain: ${N2().label}
 `));
-    const { a } = await P({
+    const { a: a2 } = await P({
       type: "select",
       name: "a",
       message: "What do you want to do?",
@@ -74051,23 +75359,23 @@ async function simpleMenu() {
     });
     lastActive = Date.now();
     try {
-      if (a === "quit") {
+      if (a2 === "quit") {
         console.clear();
         console.log("Bye.");
         process.exit(0);
-      } else if (a === "addr") {
+      } else if (a2 === "addr") {
         await cmdAddresses([]);
         if (await confirm("Add new receiving addresses?")) {
-          const { n: n2 } = await P({ type: "number", name: "n", message: "How many?", initial: 3, min: 1, max: 100 });
-          await cmdAddresses([String(n2)]);
+          const { n: n4 } = await P({ type: "number", name: "n", message: "How many?", initial: 3, min: 1, max: 100 });
+          await cmdAddresses([String(n4)]);
         }
-      } else if (a === "bal") await simpleBalances();
-      else if (a === "sweep") await cmdSweep([]);
-      else if (a === "auto") {
+      } else if (a2 === "bal") await simpleBalances();
+      else if (a2 === "sweep") await cmdSweep([]);
+      else if (a2 === "auto") {
         const { m } = await P({ type: "number", name: "m", message: "Check interval in minutes (randomized)?", initial: 15, min: 1, max: 720 });
         await cmdAuto([String(m)]);
-      } else if (a === "swap") await cmdSwap([]);
-      else if (a === "chain") {
+      } else if (a2 === "swap") await cmdSwap([]);
+      else if (a2 === "chain") {
         const { k } = await P({
           type: "select",
           name: "k",
@@ -74079,9 +75387,9 @@ async function simpleMenu() {
           }))
         });
         await cmdNetwork([k]);
-      } else if (a === "set") await quickSettings();
-      else if (a === "check") await cmdCheck();
-      else if (a === "temp") {
+      } else if (a2 === "set") await quickSettings();
+      else if (a2 === "check") await cmdCheck();
+      else if (a2 === "temp") {
         const { d } = await P({
           type: "select",
           name: "d",
@@ -74095,10 +75403,10 @@ async function simpleMenu() {
           ]
         });
         await cmdTemp([d, 1]);
-      } else if (a === "switch") {
+      } else if (a2 === "switch") {
         console.clear();
         await pickProfile();
-      } else if (a === "usb") {
+      } else if (a2 === "usb") {
         const { s } = await P({
           type: "select",
           name: "s",
@@ -74112,39 +75420,39 @@ async function simpleMenu() {
         if (s === "open") await cmdUsb(["open"]);
         else if (s === "create") await cmdUsb(["create"]);
         else await cmdUsb(["close"]);
-      } else if (a === "spend") {
+      } else if (a2 === "spend") {
         const m = mainEvm();
         if (!m.privateKey) {
-          console.log(c.warn(`
+          console.log(c3.warn(`
 Main is watch-only (maximum security) \u2014 its key is not in the vault.`));
-          console.log(c.dim("  To spend from main: 'ravenne import' its paper seed on this machine,"));
-          console.log(c.dim("  or keep a separate spending wallet. Receiving wallets can always send (advanced: send)."));
+          console.log(c3.dim("  To spend from main: 'ravenne import' its paper seed on this machine,"));
+          console.log(c3.dim("  or keep a separate spending wallet. Receiving wallets can always send (advanced: send)."));
         } else {
-          const r = await P([
+          const r2 = await P([
             { type: "text", name: "t", message: "Send to? (address, wallet label or book entry)" },
             { type: "text", name: "a", message: `Amount in ${N2().sym} (or "max"):` }
           ]);
-          await cmdSend([String(W().indexOf(m)), r.t, r.a]);
+          await cmdSend([String(W().indexOf(m)), r2.t, r2.a]);
         }
-      } else if (a === "sec") await securityMenu();
-      else if (a === "adv") {
-        console.log(c.dim("\nAdvanced mode \u2014 Quit there exits the app.\n"));
+      } else if (a2 === "sec") await securityMenu();
+      else if (a2 === "adv") {
+        console.log(c3.dim("\nAdvanced mode \u2014 Quit there exits the app.\n"));
         await advancedMenu();
         return;
       }
     } catch (e) {
-      console.log(c.err(`
+      console.log(c3.err(`
 \u2717 ${e.message}`));
     }
-    await P({ type: "text", name: "_", message: c.dim("\u2014 Enter to continue \u2014") });
+    await P({ type: "text", name: "_", message: c3.dim("\u2014 Enter to continue \u2014") });
     lastActive = Date.now();
     console.clear();
-    console.log(c.vio("\u{1FAB6}  RAVENNE WALLET \u2014 simple mode"));
+    console.log(c3.vio("\u{1FAB6}  RAVENNE WALLET \u2014 simple mode"));
   }
 }
 async function securityMenu() {
   while (true) {
-    const { a } = await P({
+    const { a: a2 } = await P({
       type: "select",
       name: "a",
       message: "Backup & security:",
@@ -74192,28 +75500,28 @@ async function securityMenu() {
         { title: "\u2190  Back", value: "back" }
       ]
     });
-    if (a === "back") return;
+    if (a2 === "back") return;
     try {
-      if (a === "backup") await cmdBackup([]);
-      else if (a === "restore") await cmdRestore([(await P({ type: "text", name: "f", message: "Backup file path:" })).f]);
-      else if (a === "rawkey") await cmdExportKey([]);
-      if (a === "rseed") {
-        console.log(c.warn("\n\u26A0  This seed controls ALL receiving wallets (funds waiting to be forwarded):"));
-        if (await confirm("Reveal?")) console.log(c.bold(`
-  ${settings().seeds.receive}
+      if (a2 === "backup") await cmdBackup([]);
+      else if (a2 === "restore") await cmdRestore([(await P({ type: "text", name: "f", message: "Backup file path:" })).f]);
+      else if (a2 === "rawkey") await cmdExportKey([]);
+      if (a2 === "rseed") {
+        console.log(c3.warn("\n\u26A0  This seed controls ALL receiving wallets (funds waiting to be forwarded):"));
+        if (await confirm("Reveal?")) console.log(c3.bold(`
+  ${settings2().seeds.receive}
 `));
-      } else if (a === "mseed") {
+      } else if (a2 === "mseed") {
         const m = mainEvm();
-        if (!m?.phrase) console.log(c.warn("\nMain is watch-only \u2014 its seed exists only on your paper backup."));
-        else if (await confirm("Reveal the main seed?")) console.log(c.bold(`
+        if (!m?.phrase) console.log(c3.warn("\nMain is watch-only \u2014 its seed exists only on your paper backup."));
+        else if (await confirm("Reveal the main seed?")) console.log(c3.bold(`
   ${m.phrase}
 `));
-      } else if (a === "ks") {
+      } else if (a2 === "ks") {
         const m = mainEvm();
-        if (!m?.privateKey) console.log(c.warn("\nMain is watch-only \u2014 nothing to export."));
+        if (!m?.privateKey) console.log(c3.warn("\nMain is watch-only \u2014 nothing to export."));
         else await cmdExport([String(W().indexOf(m))]);
-      } else if (a === "pass") await cmdChangePass();
-      else if (a === "priv") box("PRIVACY \u2014 HONEST NOTES", [
+      } else if (a2 === "pass") await cmdChangePass();
+      else if (a2 === "priv") box("PRIVACY \u2014 HONEST NOTES", [
         `\u2713 fresh receiving address per payer (no address reuse)`,
         `\u2713 main address never shown to payers`,
         `\u2713 auto-forward at randomized intervals + random amounts kept back`,
@@ -74227,7 +75535,7 @@ async function securityMenu() {
         `  check your local laws \u2014 none are integrated here on purpose.`
       ]);
     } catch (e) {
-      console.log(c.err(`\u2717 ${e.message}`));
+      console.log(c3.err(`\u2717 ${e.message}`));
     }
   }
 }
@@ -74235,11 +75543,11 @@ async function cmdBackup(args) {
   if (!import_node_fs.default.existsSync(VAULT_FILE)) throw new Error("No vault yet \u2014 nothing to back up.");
   let file = args[0] || import_node_path.default.join(process.cwd(), `ravenne-backup-${(/* @__PURE__ */ new Date()).toISOString().slice(0, 19).replace(/[:T]/g, "-")}.json`);
   if (import_node_path.default.resolve(file) === import_node_path.default.resolve(VAULT_FILE)) throw new Error("Backup path must differ from the vault file.");
-  let n2 = 2;
-  while (import_node_fs.default.existsSync(file) && !args[0]) file = import_node_path.default.join(process.cwd(), `ravenne-backup-${(/* @__PURE__ */ new Date()).toISOString().slice(0, 19).replace(/[:T]/g, "-")}-${n2++}.json`);
+  let n4 = 2;
+  while (import_node_fs.default.existsSync(file) && !args[0]) file = import_node_path.default.join(process.cwd(), `ravenne-backup-${(/* @__PURE__ */ new Date()).toISOString().slice(0, 19).replace(/[:T]/g, "-")}-${n4++}.json`);
   import_node_fs.default.copyFileSync(VAULT_FILE, file);
-  console.log(c.ok(`\u2713 Vault backup written: ${file}`));
-  console.log(c.dim(`  Still AES-256-GCM encrypted with your master password \u2014 safe to store anywhere.`));
+  console.log(c3.ok(`\u2713 Vault backup written: ${file}`));
+  console.log(c3.dim(`  Still AES-256-GCM encrypted with your master password \u2014 safe to store anywhere.`));
   return file;
 }
 async function cmdRestore(args) {
@@ -74254,73 +75562,73 @@ async function cmdRestore(args) {
   } catch {
     throw new Error("This backup was encrypted with a DIFFERENT master password \u2014 cannot restore here.");
   }
-  console.log(c.warn(`
+  console.log(c3.warn(`
 \u26A0  Restoring will REPLACE the current vault (${probe.wallets.length} wallets, ${probe.btcWallets?.length || 0} BTC in the backup).`));
   if (import_node_fs.default.existsSync(VAULT_FILE)) {
     const keep = await confirm("Keep a safety copy of the current vault first? (recommended)");
     if (keep) {
       const safety = import_node_path.default.join(process.cwd(), `ravenne-pre-restore-${Date.now()}.json`);
       import_node_fs.default.copyFileSync(VAULT_FILE, safety);
-      console.log(c.ok(`\u2713 Safety copy: ${safety}`));
+      console.log(c3.ok(`\u2713 Safety copy: ${safety}`));
     }
   }
   if (!await confirm("Restore now?")) return console.log("Cancelled.");
   import_node_fs.default.copyFileSync(src, VAULT_FILE);
   state.payload = decryptVault(state.pass);
-  console.log(c.ok(`\u2713 Vault restored: ${W().length} EVM + ${BW().length} BTC wallets, ${cur().history.length} tx history.`));
+  console.log(c3.ok(`\u2713 Vault restored: ${W().length} EVM + ${BW().length} BTC wallets, ${cur().history.length} tx history.`));
 }
 async function cmdExportKey(args) {
-  let a = args[0];
-  if (a == null) a = (await P({ type: "text", name: "v", message: `Export which wallet's key? (0-${W().length - 1})` })).v;
-  const i = findWallet(a);
-  if (i < 0) throw new Error(`Wallet not found: "${a}"`);
-  if (!W()[i].privateKey) throw new Error(`#${i} holds no key (watch-only/Ledger).`);
-  console.log(c.err(`
-\u26A0  The PRIVATE KEY of #${i} ${W()[i].label} gives FULL access to its funds \u2014 no password, no delay.`));
+  let a2 = args[0];
+  if (a2 == null) a2 = (await P({ type: "text", name: "v", message: `Export which wallet's key? (0-${W().length - 1})` })).v;
+  const i2 = findWallet(a2);
+  if (i2 < 0) throw new Error(`Wallet not found: "${a2}"`);
+  if (!W()[i2].privateKey) throw new Error(`#${i2} holds no key (watch-only/Ledger).`);
+  console.log(c3.err(`
+\u26A0  The PRIVATE KEY of #${i2} ${W()[i2].label} gives FULL access to its funds \u2014 no password, no delay.`));
   if (!await confirm("I understand \u2014 reveal it anyway")) return console.log("Cancelled.");
-  console.log(c.bold(`
-  ${W()[i].privateKey}
+  console.log(c3.bold(`
+  ${W()[i2].privateKey}
 `));
   if (!state.autoYes) {
-    await P({ type: "text", name: "_", message: c.dim("Press Enter to clear the screen\u2026") });
+    await P({ type: "text", name: "_", message: c3.dim("Press Enter to clear the screen\u2026") });
     console.clear();
   }
 }
 async function cmdCheck() {
   header("DIAGNOSTICS");
   const rows = [];
-  rows.push(["Node.js", process.version, parseInt(process.version.slice(1)) >= 18 ? c.ok("ok") : c.err("\u226518 required")]);
-  rows.push(["Terminal", TTY ? "interactive (colors ok)" : "non-interactive (piped)", TTY ? c.ok("ok") : c.warn("limited")]);
+  rows.push(["Node.js", process.version, parseInt(process.version.slice(1)) >= 18 ? c3.ok("ok") : c3.err("\u226518 required")]);
+  rows.push(["Terminal", TTY ? "interactive (colors ok)" : "non-interactive (piped)", TTY ? c3.ok("ok") : c3.warn("limited")]);
   const proxy = process.env.HTTPS_PROXY || process.env.ALL_PROXY || "";
-  rows.push(["Proxy", proxy || "none set", proxy ? c.ok("routed") : c.dim("direct")]);
+  rows.push(["Proxy", proxy || "none set", proxy ? c3.ok("routed") : c3.dim("direct")]);
   const st = await vpnState();
   rows.push([
     "VPN",
     st.ok ? st.adapter.slice(0, 30) : st.mesh ? `only mesh (${st.mesh.slice(0, 18)}\u2026)` : "none detected",
-    st.ok ? c.ok("protected") : settings().vpnCheck === false ? c.warn("check OFF") : c.err("BLOCKED")
+    st.ok ? c3.ok("protected") : settings2().vpnCheck === false ? c3.warn("check OFF") : c3.err("BLOCKED")
   ]);
-  rows.push(["Gate file", import_node_fs.default.existsSync(GATE_FILE) ? "present" : "missing", import_node_fs.default.existsSync(GATE_FILE) ? c.ok("ok") : c.warn("first run")]);
-  rows.push(["Vault", import_node_fs.default.existsSync(VAULT_FILE) ? `${W().length} EVM + ${BW().length} BTC` : "not created yet", import_node_fs.default.existsSync(VAULT_FILE) ? c.ok("ok") : c.dim("\u2014")]);
+  rows.push(["Gate file", import_node_fs.default.existsSync(GATE_FILE) ? "present" : "missing", import_node_fs.default.existsSync(GATE_FILE) ? c3.ok("ok") : c3.warn("first run")]);
+  rows.push(["Vault", import_node_fs.default.existsSync(VAULT_FILE) ? `${W().length} EVM + ${BW().length} BTC` : "not created yet", import_node_fs.default.existsSync(VAULT_FILE) ? c3.ok("ok") : c3.dim("\u2014")]);
   try {
     const bn = await provider().getBlockNumber();
-    rows.push([`${N2().label} RPC`, `block #${bn}`, c.ok("reachable")]);
+    rows.push([`${N2().label} RPC`, `block #${bn}`, c3.ok("reachable")]);
   } catch {
-    rows.push([`${N2().label} RPC`, "no answer", c.err("unreachable")]);
+    rows.push([`${N2().label} RPC`, "no answer", c3.err("unreachable")]);
   }
   try {
-    const h = await btcFetch("/blocks/tip/height");
-    rows.push(["Bitcoin API", `tip #${h}`, c.ok("reachable")]);
+    const h2 = await btcFetch("/blocks/tip/height");
+    rows.push(["Bitcoin API", `tip #${h2}`, c3.ok("reachable")]);
   } catch {
-    rows.push(["Bitcoin API", "no answer", c.warn("offline?")]);
+    rows.push(["Bitcoin API", "no answer", c3.warn("offline?")]);
   }
-  rows.push(["Price lookups", settings().prices ? "ON (CoinGecko sees your IP)" : "OFF", settings().prices ? c.warn("privacy") : c.ok("private")]);
+  rows.push(["Price lookups", settings2().prices ? "ON (CoinGecko sees your IP)" : "OFF", settings2().prices ? c3.warn("privacy") : c3.ok("private")]);
   table(["CHECK", "VALUE", "STATUS"], rows);
-  console.log(c.dim("\n  Fix RPC issues: ravenne rpc <chain> <url> \xB7 privacy: ravenne settings prices off"));
+  console.log(c3.dim("\n  Fix RPC issues: ravenne rpc <chain> <url> \xB7 privacy: ravenne settings prices off"));
 }
 async function quickSettings() {
-  const s = settings();
+  const s = settings2();
   while (true) {
-    const { a } = await P({ type: "select", name: "a", message: "Settings:", choices: [
+    const { a: a2 } = await P({ type: "select", name: "a", message: "Settings:", choices: [
       {
         title: `VPN check: ${s.vpnCheck ? "ON" : "OFF"}`,
         value: "vpn",
@@ -74353,36 +75661,36 @@ async function quickSettings() {
       },
       { title: "\u2190  Back", value: "back" }
     ] });
-    if (a === "back") return;
+    if (a2 === "back") return;
     try {
-      if (a === "vpn") {
+      if (a2 === "vpn") {
         s.vpnCheck = !s.vpnCheck;
         save();
-        console.log(c.ok(`\u2713 VPN check ${s.vpnCheck ? "enabled" : "DISABLED"}`));
+        console.log(c3.ok(`\u2713 VPN check ${s.vpnCheck ? "enabled" : "DISABLED"}`));
       }
-      if (a === "mesh") {
+      if (a2 === "mesh") {
         s.meshVpnOk = !s.meshVpnOk;
         save();
-        console.log(c.ok(`\u2713 Mesh VPNs ${s.meshVpnOk ? "now accepted (less private)" : "no longer accepted"}`));
+        console.log(c3.ok(`\u2713 Mesh VPNs ${s.meshVpnOk ? "now accepted (less private)" : "no longer accepted"}`));
       }
-      if (a === "prices") {
+      if (a2 === "prices") {
         s.prices = !s.prices;
         save();
-        console.log(c.ok(`\u2713 Price lookups ${s.prices ? "enabled" : "disabled"}`));
+        console.log(c3.ok(`\u2713 Price lookups ${s.prices ? "enabled" : "disabled"}`));
       }
-      if (a === "lock") {
+      if (a2 === "lock") {
         const { m } = await P({ type: "number", name: "m", message: "Auto-lock minutes (0 = off):", initial: s.autolockMin, min: 0, max: 240 });
         s.autolockMin = m;
         save();
-        console.log(c.ok(`\u2713 Auto-lock: ${m === 0 ? "off" : `${m} min`}`));
+        console.log(c3.ok(`\u2713 Auto-lock: ${m === 0 ? "off" : `${m} min`}`));
       }
-      if (a === "sweepfee") {
+      if (a2 === "sweepfee") {
         const { m } = await P({ type: "number", name: "m", message: "Forward when balance > fee \xD7 :", initial: s.privacy.sweepFeeMult ?? 3, min: 1, max: 100 });
         s.privacy.sweepFeeMult = m;
         save();
-        console.log(c.ok(`\u2713 Sweep threshold: ${m}\xD7 fee`));
+        console.log(c3.ok(`\u2713 Sweep threshold: ${m}\xD7 fee`));
       }
-      if (a === "convert") {
+      if (a2 === "convert") {
         const { v } = await P({
           type: "select",
           name: "v",
@@ -74399,17 +75707,17 @@ async function quickSettings() {
           s.convert ??= {};
           delete s.convert.eth;
           save();
-          console.log(c.ok("\u2713 Conversion off."));
+          console.log(c3.ok("\u2713 Conversion off."));
         } else {
-          const [f2, t] = v.split(" ");
+          const [f2, t2] = v.split(" ");
           s.convert ??= {};
-          s.convert.eth = { from: f2, to: t };
+          s.convert.eth = { from: f2, to: t2 };
           save();
-          console.log(c.ok(`\u2713 Everything received on Ethereum will become ${t} before reaching main.`));
+          console.log(c3.ok(`\u2713 Everything received on Ethereum will become ${t2} before reaching main.`));
         }
       }
     } catch (e) {
-      console.log(c.err(`\u2717 ${e.message}`));
+      console.log(c3.err(`\u2717 ${e.message}`));
     }
   }
 }
@@ -74431,20 +75739,20 @@ async function cmdUsb(args) {
       e.label = "usb-main";
       e.role = "usb-main";
       wallets = [e];
-      console.log(c.warn("\n\u26A0  24-word seed of the USB wallet \u2014 shown ONCE:"));
-      if (await confirm("Reveal it now?")) console.log(c.bold(`
+      console.log(c3.warn("\n\u26A0  24-word seed of the USB wallet \u2014 shown ONCE:"));
+      if (await confirm("Reveal it now?")) console.log(c3.bold(`
   ${e.phrase}
 `));
-      else console.log(c.dim("  (the key is inside the encrypted file; keep a phrase backup anyway)"));
+      else console.log(c3.dim("  (the key is inside the encrypted file; keep a phrase backup anyway)"));
     } else wallets = [{ ...W()[+choice] }];
     let pw = process.env.RAVENNE_KEYPASS;
     if (!pw) {
-      const r = await P([
+      const r2 = await P([
         { type: "password", name: "a", message: "USB wallet password (8 chars min.):" },
         { type: "password", name: "b", message: "Confirm USB password:" }
       ]);
-      if (r.a !== r.b) throw new Error("Passwords do not match.");
-      pw = r.a;
+      if (r2.a !== r2.b) throw new Error("Passwords do not match.");
+      pw = r2.a;
     }
     if (!pw || pw.length < 8) throw new Error("Password too short (8 min.).");
     encryptVault({ kind: "usb", wallets, btcWallets: [], created: (/* @__PURE__ */ new Date()).toISOString() }, pw, file);
@@ -74452,9 +75760,9 @@ async function cmdUsb(args) {
       import_node_path.default.join(target, "README-USB.txt"),
       "Ravenne USB wallet\n==================\nThis folder holds ravenne-usb.json (AES-256-GCM encrypted).\nOpen it with:  ravenne usb open <this folder>\nNothing else is needed. Keep a paper backup of the seed phrase.\n"
     );
-    console.log(c.ok(`
+    console.log(c3.ok(`
 \u2713 USB wallet created: ${file}`));
-    console.log(c.dim("  Open it anywhere with Ravenne:  ravenne usb open " + target));
+    console.log(c3.dim("  Open it anywhere with Ravenne:  ravenne usb open " + target));
   } else if (sub === "open") {
     if (W().some((w) => w.usb)) throw new Error("A USB wallet is already mounted \u2014 close it first: ravenne usb close");
     const target = import_node_path.default.resolve(String(args[1] || (await P({ type: "text", name: "p", message: "USB folder path:" })).p).replace(/^["']|["']$/g, ""));
@@ -74462,52 +75770,52 @@ async function cmdUsb(args) {
     if (!import_node_fs.default.existsSync(file)) throw new Error(`No ${USB_FILE} found at ${target}`);
     let pw = process.env.RAVENNE_KEYPASS;
     if (!pw) pw = (await P({ type: "password", name: "p", message: "USB wallet password:" })).p;
-    let u;
+    let u3;
     try {
-      u = decryptVault(pw, file);
+      u3 = decryptVault(pw, file);
     } catch {
       throw new Error("Wrong USB password (or corrupted file).");
     }
-    u.wallets.forEach((w) => {
+    u3.wallets.forEach((w) => {
       w.usb = true;
       w.label = `usb:${w.label}`;
       W().push(w);
     });
     state.usbFile = file;
-    console.log(c.ok(`
-\u2713 USB wallet mounted (${u.wallets.length} key${u.wallets.length > 1 ? "s" : ""}, RAM only):`));
-    u.wallets.forEach((w, i) => console.log(`   ${c.bold(`#${W().length - u.wallets.length + i}`)} ${w.label}  ${w.address}`));
-    console.log(c.dim("  Spend from these indexes like any wallet. Unmount: ravenne usb close"));
+    console.log(c3.ok(`
+\u2713 USB wallet mounted (${u3.wallets.length} key${u3.wallets.length > 1 ? "s" : ""}, RAM only):`));
+    u3.wallets.forEach((w, i2) => console.log(`   ${c3.bold(`#${W().length - u3.wallets.length + i2}`)} ${w.label}  ${w.address}`));
+    console.log(c3.dim("  Spend from these indexes like any wallet. Unmount: ravenne usb close"));
   } else if (sub === "close") {
-    const n2 = W().filter((w) => w.usb).length;
-    if (!n2) return console.log(c.dim("No USB wallet mounted."));
-    for (let i = W().length - 1; i >= 0; i--) if (W()[i].usb) W().splice(i, 1);
+    const n4 = W().filter((w) => w.usb).length;
+    if (!n4) return console.log(c3.dim("No USB wallet mounted."));
+    for (let i2 = W().length - 1; i2 >= 0; i2--) if (W()[i2].usb) W().splice(i2, 1);
     state.usbFile = null;
-    console.log(c.ok(`\u2713 USB wallet unmounted \u2014 ${n2} key${n2 > 1 ? "s" : ""} purged from memory (nothing was written to disk).`));
+    console.log(c3.ok(`\u2713 USB wallet unmounted \u2014 ${n4} key${n4 > 1 ? "s" : ""} purged from memory (nothing was written to disk).`));
   } else if (sub === "status") {
     const mounted = W().filter((w) => w.usb);
-    console.log(mounted.length ? c.ok(`USB wallet mounted: ${mounted.map((w) => w.label).join(", ")} (from ${state.usbFile})`) : c.dim("No USB wallet mounted. Create one: ravenne usb create E:\\"));
+    console.log(mounted.length ? c3.ok(`USB wallet mounted: ${mounted.map((w) => w.label).join(", ")} (from ${state.usbFile})`) : c3.dim("No USB wallet mounted. Create one: ravenne usb create E:\\"));
   } else throw new Error(`Unknown usb sub-command: ${sub} (create | open | close | status)`);
 }
 var XMR = { label: "Monero", sym: "XMR", ex: "https://xmrchain.net", cg: "monero" };
-var XMR_DAEMON = () => settings().xmrDaemon || (settings().xmrStage ? "https://stagenet-community.xmr.tw:18081" : "http://xmr-node.cakewallet.com:18081");
-var XMR_RPC = () => settings().xmrRpc || "http://127.0.0.1:18083";
+var XMR_DAEMON = () => settings2().xmrDaemon || (settings2().xmrStage ? "https://stagenet-community.xmr.tw:18081" : "http://xmr-node.cakewallet.com:18081");
+var XMR_RPC = () => settings2().xmrRpc || "http://127.0.0.1:18083";
 var XMR_DIR = import_node_path.default.join(HERE, "tools", "monero");
 var PICONERO = 1000000000000n;
-var fmtXmr = (a) => {
-  const n2 = BigInt(a);
-  const i = n2 / PICONERO, d = (n2 % PICONERO).toString().padStart(12, "0").slice(0, 7).replace(/0+$/, "");
-  return d ? `${i}.${d}` : `${i}`;
+var fmtXmr = (a2) => {
+  const n4 = BigInt(a2);
+  const i2 = n4 / PICONERO, d = (n4 % PICONERO).toString().padStart(12, "0").slice(0, 7).replace(/0+$/, "");
+  return d ? `${i2}.${d}` : `${i2}`;
 };
 var parseXmr = (s) => {
-  const [i, d = ""] = String(s).replace(",", ".").split(".");
-  return BigInt(i || "0") * PICONERO + BigInt((d + "000000000000").slice(0, 12));
+  const [i2, d = ""] = String(s).replace(",", ".").split(".");
+  return BigInt(i2 || "0") * PICONERO + BigInt((d + "000000000000").slice(0, 12));
 };
-var findXmrWallet = (a) => {
-  const s = String(a).trim().replace(/^#/, "").replace(/^xmr:/, "");
+var findXmrWallet = (a2) => {
+  const s = String(a2).trim().replace(/^#/, "").replace(/^xmr:/, "");
   if (/^\d+$/.test(s)) {
-    const i = +s;
-    return i >= 0 && i < XW().length ? i : -1;
+    const i2 = +s;
+    return i2 >= 0 && i2 < XW().length ? i2 : -1;
   }
   return XW().findIndex((w) => w.label.toLowerCase() === s.toLowerCase());
 };
@@ -74533,26 +75841,26 @@ async function xmrKeysLib() {
   }
 }
 async function xmrDaemonHeight() {
-  const r = await fetch(`${XMR_DAEMON()}/json_rpc`, {
+  const r2 = await fetch(`${XMR_DAEMON()}/json_rpc`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ jsonrpc: "2.0", id: "0", method: "get_info" }),
     signal: AbortSignal.timeout(15e3)
   });
-  const j = await r.json();
+  const j = await r2.json();
   if (!j?.result?.height) throw new Error("daemon unreachable");
   return j.result.height;
 }
 async function xmrRpcCall(method, params = {}) {
   const headers = { "Content-Type": "application/json" };
-  if (settings().xmrRpcAuth) headers.Authorization = "Basic " + Buffer.from(settings().xmrRpcAuth).toString("base64");
-  const r = await fetch(`${XMR_RPC()}/json_rpc`, {
+  if (settings2().xmrRpcAuth) headers.Authorization = "Basic " + Buffer.from(settings2().xmrRpcAuth).toString("base64");
+  const r2 = await fetch(`${XMR_RPC()}/json_rpc`, {
     method: "POST",
     headers,
     body: JSON.stringify({ jsonrpc: "2.0", id: "0", method, params }),
     signal: AbortSignal.timeout(3e5)
   });
-  const j = await r.json();
+  const j = await r2.json();
   if (j.error) throw new Error(j.error.message || JSON.stringify(j.error));
   return j.result;
 }
@@ -74568,7 +75876,7 @@ async function xmrRequireEngine() {
 }
 async function xmrOpenWallet(w) {
   const pw = import_node_crypto.default.randomBytes(12).toString("hex");
-  const files = settings().xmrFiles ??= {};
+  const files = settings2().xmrFiles ??= {};
   await xmrRpcCall("close_wallet").catch(() => {
   });
   if (files[w.address]) {
@@ -74598,17 +75906,17 @@ async function xmrOpenWallet(w) {
 }
 async function xmrNewEntry(role = "receive") {
   const m = await xmrKeysLib();
-  const NETC = settings().xmrStage ? m.MoneroNetworkType.STAGENET : m.MoneroNetworkType.MAINNET;
+  const NETC = settings2().xmrStage ? m.MoneroNetworkType.STAGENET : m.MoneroNetworkType.MAINNET;
   const w = await m.MoneroWalletKeys.createWallet({ networkType: NETC, language: "English" });
   let restoreHeight = 0;
   try {
     restoreHeight = Math.max(0, await xmrDaemonHeight() - 100);
   } catch {
-    console.log(c.warn("  \u26A0 daemon unreachable \u2014 restore height 0 (first sync will be slow)"));
+    console.log(c3.warn("  \u26A0 daemon unreachable \u2014 restore height 0 (first sync will be slow)"));
   }
-  const n2 = XW().filter((x) => x.role === "receive").length;
+  const n4 = XW().filter((x) => x.role === "receive").length;
   return {
-    label: role === "main" ? "xmr-main" : `xmr-in-${n2 + 1}`,
+    label: role === "main" ? "xmr-main" : `xmr-in-${n4 + 1}`,
     role,
     address: await w.getPrimaryAddress(),
     viewKey: await w.getPrivateViewKey(),
@@ -74620,59 +75928,59 @@ async function xmrNewEntry(role = "receive") {
 async function cmdXmr(args) {
   const sub = args[0] || "list";
   if (sub === "create") {
-    let n2 = parseInt(args[1], 10);
-    if (!Number.isInteger(n2) || n2 < 1)
-      n2 = (await P({ type: "number", name: "v", message: "How many Monero addresses?", initial: 3, min: 1, max: 100 })).v;
+    let n4 = parseInt(args[1], 10);
+    if (!Number.isInteger(n4) || n4 < 1)
+      n4 = (await P({ type: "number", name: "v", message: "How many Monero addresses?", initial: 3, min: 1, max: 100 })).v;
     const created = [];
     if (!XW().some((w) => w.role === "main")) {
       const e = await xmrNewEntry("main");
       XW().push(e);
       created.push(e);
     }
-    for (let i = 0; i < n2; i++) {
+    for (let i2 = 0; i2 < n4; i2++) {
       const e = await xmrNewEntry("receive");
       XW().push(e);
       created.push(e);
     }
     save();
-    header(`MONERO \u2014 ${settings().xmrStage ? c.warn("STAGENET") : "MAINNET"}`);
-    console.log(c.ok(`\u2713 ${created.length} wallet${created.length > 1 ? "s" : ""} created (keys local, restore height from remote node)`));
+    header(`MONERO \u2014 ${settings2().xmrStage ? c3.warn("STAGENET") : "MAINNET"}`);
+    console.log(c3.ok(`\u2713 ${created.length} wallet${created.length > 1 ? "s" : ""} created (keys local, restore height from remote node)`));
     table(
       ["#", "LABEL", "ROLE", "ADDRESS"],
-      created.map((w, i) => [`#${XW().length - created.length + i}`, w.label, w.role, w.address])
+      created.map((w, i2) => [`#${XW().length - created.length + i2}`, w.label, w.role, w.address])
     );
     const main2 = created.find((x) => x.role === "main");
     if (main2) {
-      console.log(c.warn(`
+      console.log(c3.warn(`
 \u26A0  The FIRST wallet is your Monero MAIN \u2014 backup this 25-word seed on paper:`));
       if (!state.autoYes) {
-        if (await confirm("Reveal it now?")) console.log(c.bold(`
+        if (await confirm("Reveal it now?")) console.log(c3.bold(`
   ${main2.seed}
 `));
-        await P({ type: "text", name: "_", message: c.dim("Press Enter to clear the screen\u2026") });
+        await P({ type: "text", name: "_", message: c3.dim("Press Enter to clear the screen\u2026") });
         console.clear();
-      } else console.log(c.dim(`  (--yes mode: copy the seed NOW from 'xmr phrase xmr:0' \u2014 it stays in the encrypted vault)`));
+      } else console.log(c3.dim(`  (--yes mode: copy the seed NOW from 'xmr phrase xmr:0' \u2014 it stays in the encrypted vault)`));
     }
-    console.log(c.dim("Balance & sends need the wallet engine: ravenne xmr install \u2192 ravenne xmr engine"));
+    console.log(c3.dim("Balance & sends need the wallet engine: ravenne xmr install \u2192 ravenne xmr engine"));
     return;
   }
   if (sub === "list") {
-    header(`MONERO${settings().xmrStage ? c.warn(" \xB7 STAGENET") : ""}`);
+    header(`MONERO${settings2().xmrStage ? c3.warn(" \xB7 STAGENET") : ""}`);
     let engine = false;
     try {
       await xmrRpcCall("get_version");
       engine = true;
     } catch {
     }
-    console.log(c.dim(`  engine: ${engine ? c.ok("running at " + XMR_RPC()) : c.warn("not running (xmr install \u2192 xmr engine, or xmr connect)")}
+    console.log(c3.dim(`  engine: ${engine ? c3.ok("running at " + XMR_RPC()) : c3.warn("not running (xmr install \u2192 xmr engine, or xmr connect)")}
 `));
-    if (!XW().length) return console.log(c.dim("  No Monero wallet yet \u2014 ravenne xmr create"));
+    if (!XW().length) return console.log(c3.dim("  No Monero wallet yet \u2014 ravenne xmr create"));
     if (!engine) {
       table(
         ["#", "LABEL", "ROLE", "ADDRESS", "RESTORE HT"],
-        XW().map((w, i) => [`#${i}`, w.label, w.role, w.address, w.restoreHeight])
+        XW().map((w, i2) => [`#${i2}`, w.label, w.role, w.address, w.restoreHeight])
       );
-      return console.log(c.dim("\n  Start the engine to see balances."));
+      return console.log(c3.dim("\n  Start the engine to see balances."));
     }
     const rows = [];
     for (const w of XW()) {
@@ -74692,29 +76000,29 @@ async function cmdXmr(args) {
     await xmrRequireEngine();
     let [fromA, toA, amtA] = [args[1], args[2], args[3]];
     if (fromA == null || toA == null || amtA == null) {
-      const r = await P([
+      const r2 = await P([
         { type: "text", name: "f", message: `From which XMR wallet? (0-${XW().length - 1})` },
         { type: "text", name: "t", message: "To? (xmr address, index or label)" },
         { type: "text", name: "a", message: "Amount in XMR (or max):" }
       ]);
-      fromA = r.f;
-      toA = r.t;
-      amtA = r.a;
+      fromA = r2.f;
+      toA = r2.t;
+      amtA = r2.a;
     }
     const from = findXmrWallet(fromA);
     if (from < 0) throw new Error(`XMR wallet not found: "${fromA}"`);
     const src = XW()[from];
     if (!src.spendKey) throw new Error(`${src.label} is watch-only \u2014 it cannot sign.`);
     let toAddr = String(toA).trim();
-    const i = findXmrWallet(toAddr);
-    if (i >= 0) toAddr = XW()[i].address;
+    const i2 = findXmrWallet(toAddr);
+    if (i2 >= 0) toAddr = XW()[i2].address;
     if (!/^[48][1-9A-HJ-NP-Za-km-z]{94,105}$/.test(toAddr)) throw new Error("Invalid Monero address.");
     await xmrOpenWallet(src);
     const bal = await xmrRpcCall("get_balance", { account_index: 0 });
     const atomic = /^max$/i.test(amtA) ? bal.unlocked_balance : parseXmr(amtA);
     if (atomic <= 0n) throw new Error("Invalid amount.");
     if (bal.unlocked_balance <= atomic) throw new Error(`Insufficient unlocked balance: ${fmtXmr(bal.unlocked_balance)} XMR.`);
-    box("SEND MONERO" + (settings().xmrStage ? " \xB7 STAGENET" : ""), [
+    box("SEND MONERO" + (settings2().xmrStage ? " \xB7 STAGENET" : ""), [
       `From      xmr#${from} ${src.label}  ${short(src.address)}`,
       `To        ${short(toAddr)}`,
       `Amount    ${fmtXmr(atomic)} XMR`
@@ -74731,10 +76039,10 @@ async function cmdXmr(args) {
       hash: res.tx_hash
     });
     save();
-    console.log(c.ok(`
+    console.log(c3.ok(`
 \u2713 Sent! tx ${res.tx_hash.slice(0, 18)}\u2026 (fee ${fmtXmr(res.fee)} XMR)`));
-    if (XMR.ex) console.log(c.dim(`   \u2197 ${XMR.ex}/tx/${res.tx_hash}`));
-    console.log(c.dim("  (explorer shows the tx once mined \u2014 amounts stay hidden forever)"));
+    if (XMR.ex) console.log(c3.dim(`   \u2197 ${XMR.ex}/tx/${res.tx_hash}`));
+    console.log(c3.dim("  (explorer shows the tx once mined \u2014 amounts stay hidden forever)"));
     return;
   }
   if (sub === "forward") {
@@ -74742,7 +76050,7 @@ async function cmdXmr(args) {
     const main2 = XW().find((w) => w.role === "main");
     if (!main2) throw new Error("No XMR main \u2014 xmr create first.");
     const recv = XW().filter((w) => w.role === "receive");
-    if (!recv.length) return console.log(c.dim("No receiving XMR wallets."));
+    if (!recv.length) return console.log(c3.dim("No receiving XMR wallets."));
     let done = 0;
     for (const w of recv) {
       if (done > 0) await countdown(5 + Math.floor(Math.random() * 25));
@@ -74750,105 +76058,105 @@ async function cmdXmr(args) {
         await xmrOpenWallet(w);
         const bal = await xmrRpcCall("get_balance", { account_index: 0 });
         if (bal.unlocked_balance < 500000000000n) continue;
-        console.log(c.dim(`\u2192 ${w.label} \u2192 xmr-main: ${fmtXmr(bal.unlocked_balance)} XMR\u2026`));
+        console.log(c3.dim(`\u2192 ${w.label} \u2192 xmr-main: ${fmtXmr(bal.unlocked_balance)} XMR\u2026`));
         const res = await xmrRpcCall("sweep_all", { address: main2.address, priority: 0, get_tx_key: true });
-        (Array.isArray(res.tx_hash_list) ? res.tx_hash_list : [res.tx_hash]).forEach((h) => cur().history.push({
+        (Array.isArray(res.tx_hash_list) ? res.tx_hash_list : [res.tx_hash]).forEach((h2) => cur().history.push({
           t: (/* @__PURE__ */ new Date()).toISOString(),
           net: "xmr",
           from: w.address,
           to: main2.address,
           amount: fmtXmr(bal.unlocked_balance),
           fee: fmtXmr(res.fee_list?.[0] ?? 0),
-          hash: h
+          hash: h2
         }));
         save();
         done++;
-        console.log(c.ok(`   \u2713 forwarded (tx ${(Array.isArray(res.tx_hash_list) ? res.tx_hash_list[0] : res.tx_hash)?.slice(0, 16)}\u2026)`));
+        console.log(c3.ok(`   \u2713 forwarded (tx ${(Array.isArray(res.tx_hash_list) ? res.tx_hash_list[0] : res.tx_hash)?.slice(0, 16)}\u2026)`));
       } catch (e) {
-        console.log(c.warn(`  \u26A0 ${w.label}: ${e.message.slice(0, 60)}`));
+        console.log(c3.warn(`  \u26A0 ${w.label}: ${e.message.slice(0, 60)}`));
       }
     }
-    return done ? console.log(c.ok(`
-\u2705 ${done} XMR wallet${done > 1 ? "s" : ""} forwarded to xmr-main.`)) : console.log(c.dim("\nNothing to forward (all dust/empty)."));
+    return done ? console.log(c3.ok(`
+\u2705 ${done} XMR wallet${done > 1 ? "s" : ""} forwarded to xmr-main.`)) : console.log(c3.dim("\nNothing to forward (all dust/empty)."));
   }
   if (sub === "watch") {
     let addr = args[1], vk = args[2], label = args[3];
     if (!addr || !vk) {
-      const r = await P([
+      const r2 = await P([
         { type: "text", name: "a", message: "Monero address (4\u2026/8\u2026/5\u2026):" },
         { type: "text", name: "v", message: "Private VIEW key (read-only \u2014 never the spend key):" },
         { type: "text", name: "l", message: "Label:" }
       ]);
-      addr = r.a;
-      vk = r.v;
-      label = r.l;
+      addr = r2.a;
+      vk = r2.v;
+      label = r2.l;
     }
     if (!/^[485][1-9A-HJ-NP-Za-km-z]{94,105}$/.test(addr)) throw new Error("Invalid Monero address.");
     XW().push({ label: label || `xmr-watch-${XW().length + 1}`, role: "watch", address: addr, viewKey: vk, restoreHeight: 0 });
     save();
-    return console.log(c.ok(`\u2713 Watch-only XMR wallet added (balance via engine, sends disabled).`));
+    return console.log(c3.ok(`\u2713 Watch-only XMR wallet added (balance via engine, sends disabled).`));
   }
   if (sub === "phrase") {
-    const i = findXmrWallet(args[1] ?? "");
-    if (i < 0) throw new Error(`XMR wallet not found.`);
-    const w = XW()[i];
-    if (!w.seed) return console.log(c.warn("Watch-only wallet \u2014 no seed stored."));
-    console.log(c.warn(`
-\u26A0  Monero seed of #${i} ${w.label} \u2014 never show this to anyone:`));
+    const i2 = findXmrWallet(args[1] ?? "");
+    if (i2 < 0) throw new Error(`XMR wallet not found.`);
+    const w = XW()[i2];
+    if (!w.seed) return console.log(c3.warn("Watch-only wallet \u2014 no seed stored."));
+    console.log(c3.warn(`
+\u26A0  Monero seed of #${i2} ${w.label} \u2014 never show this to anyone:`));
     if (!await confirm("Reveal anyway?")) return console.log("Cancelled.");
-    console.log(c.bold(`
+    console.log(c3.bold(`
   ${w.seed}
 `));
     if (!state.autoYes) {
-      await P({ type: "text", name: "_", message: c.dim("Press Enter to clear the screen\u2026") });
+      await P({ type: "text", name: "_", message: c3.dim("Press Enter to clear the screen\u2026") });
       console.clear();
     }
     return;
   }
   if (sub === "remove") {
-    const i = findXmrWallet(args[1] ?? "");
-    if (i < 0) throw new Error(`XMR wallet not found.`);
-    if (!await confirm(`Remove XMR wallet #${i} ${XW()[i].label}?`)) return console.log("Cancelled.");
-    XW().splice(i, 1);
+    const i2 = findXmrWallet(args[1] ?? "");
+    if (i2 < 0) throw new Error(`XMR wallet not found.`);
+    if (!await confirm(`Remove XMR wallet #${i2} ${XW()[i2].label}?`)) return console.log("Cancelled.");
+    XW().splice(i2, 1);
     save();
-    return console.log(c.ok("\u2713 Removed (indexes shifted)."));
+    return console.log(c3.ok("\u2713 Removed (indexes shifted)."));
   }
   if (sub === "install") {
     import_node_fs.default.mkdirSync(XMR_DIR, { recursive: true });
     const exe = import_node_path.default.join(XMR_DIR, "monero-wallet-rpc.exe");
-    if (import_node_fs.default.existsSync(exe) && !args[1]) return console.log(c.ok(`\u2713 Engine already installed: ${exe}`));
-    console.log(c.dim("Fetching official hash list from getmonero.org\u2026"));
+    if (import_node_fs.default.existsSync(exe) && !args[1]) return console.log(c3.ok(`\u2713 Engine already installed: ${exe}`));
+    console.log(c3.dim("Fetching official hash list from getmonero.org\u2026"));
     const hl = await (await fetch("https://www.getmonero.org/downloads/hashes.txt", { signal: AbortSignal.timeout(2e4) })).text();
     const line = hl.split("\n").find((l) => /monero-win-x64-v[\d.]+\.zip/.test(l));
     if (!line) throw new Error("hash list unavailable \u2014 download manually from getmonero.org/downloads");
     const [hash2, zipName] = line.trim().split(/\s+/).reverse();
     const zip = import_node_path.default.join(XMR_DIR, zipName);
-    console.log(c.dim(`Downloading ${zipName} (~87 MB, official build)\u2026`));
+    console.log(c3.dim(`Downloading ${zipName} (~87 MB, official build)\u2026`));
     const buf = Buffer.from(await (await fetch(`https://downloads.getmonero.org/cli/${zipName}`, { signal: AbortSignal.timeout(6e5) })).arrayBuffer());
     const got = import_node_crypto.default.createHash("sha256").update(buf).digest("hex");
     if (got !== hash2) throw new Error(`SHA-256 MISMATCH (got ${got}) \u2014 download NOT trusted, nothing extracted.`);
     import_node_fs.default.writeFileSync(zip, buf);
-    console.log(c.ok(`\u2713 SHA-256 verified against getmonero.org: ${got.slice(0, 24)}\u2026`));
+    console.log(c3.ok(`\u2713 SHA-256 verified against getmonero.org: ${got.slice(0, 24)}\u2026`));
     const { execSync } = await import("node:child_process");
     execSync(
       `python -c "import zipfile,shutil;z=zipfile.ZipFile(r'${zip.replace(/\\/g, "/")}');src=[n for n in z.namelist() if n.endswith('monero-wallet-rpc.exe')][0];z.extract(src);shutil.move(src,'monero-wallet-rpc.exe')"`,
       { cwd: XMR_DIR, stdio: "ignore" }
     );
     import_node_fs.default.unlinkSync(zip);
-    console.log(c.ok(`\u2713 monero-wallet-rpc installed: ${exe}`));
-    console.log(c.warn(`
+    console.log(c3.ok(`\u2713 monero-wallet-rpc installed: ${exe}`));
+    console.log(c3.warn(`
 \u26A0  Windows Defender often flags the OFFICIAL Monero binary as a false positive`));
-    console.log(c.warn(`   (PUA/CryptoMiner heuristics). If the file disappears, restore it from Defender`));
-    console.log(c.warn(`   protection history and add "${XMR_DIR}" to exclusions. The SHA-256 was verified`));
-    console.log(c.warn(`   against getmonero.org \u2014 the binary is authentic. Verify yourself if unsure.`));
-    console.log(c.dim("\nStart it: ravenne xmr engine"));
+    console.log(c3.warn(`   (PUA/CryptoMiner heuristics). If the file disappears, restore it from Defender`));
+    console.log(c3.warn(`   protection history and add "${XMR_DIR}" to exclusions. The SHA-256 was verified`));
+    console.log(c3.warn(`   against getmonero.org \u2014 the binary is authentic. Verify yourself if unsure.`));
+    console.log(c3.dim("\nStart it: ravenne xmr engine"));
     return;
   }
   if (sub === "engine") {
     const exe = import_node_path.default.join(XMR_DIR, "monero-wallet-rpc.exe");
     if (!import_node_fs.default.existsSync(exe)) throw new Error("Engine not installed \u2014 ravenne xmr install (or 'xmr connect' to a remote one).");
     const auth = `${import_node_crypto.default.randomBytes(6).toString("hex")}:${import_node_crypto.default.randomBytes(8).toString("hex")}`;
-    settings().xmrRpcAuth = auth;
+    settings2().xmrRpcAuth = auth;
     save();
     import_node_fs.default.mkdirSync(import_node_path.default.join(XMR_DIR, "wallets"), { recursive: true });
     const { spawn } = await import("node:child_process");
@@ -74872,55 +76180,55 @@ async function cmdXmr(args) {
     child.unref();
     await sleep(4e3);
     await xmrRpcCall("get_version");
-    return console.log(c.ok(`\u2713 Engine running (localhost:18083, private login) \u2014 daemon: ${XMR_DAEMON()}`));
+    return console.log(c3.ok(`\u2713 Engine running (localhost:18083, private login) \u2014 daemon: ${XMR_DAEMON()}`));
   }
   if (sub === "connect") {
     if (!args[1] || args[1] === "reset") {
-      delete settings().xmrRpc;
-      delete settings().xmrRpcAuth;
+      delete settings2().xmrRpc;
+      delete settings2().xmrRpcAuth;
       save();
-      return console.log(c.ok(`\u2713 Engine endpoint reset to default ${XMR_RPC()}`));
+      return console.log(c3.ok(`\u2713 Engine endpoint reset to default ${XMR_RPC()}`));
     }
     if (!/^https?:\/\//.test(args[1])) throw new Error("Usage: xmr connect http://host:18083 [user:pass]");
-    settings().xmrRpc = args[1];
-    settings().xmrRpcAuth = args[2] || null;
+    settings2().xmrRpc = args[1];
+    settings2().xmrRpcAuth = args[2] || null;
     save();
     try {
       await xmrRpcCall("get_version");
-      console.log(c.ok(`\u2713 Connected to wallet engine at ${args[1]}`));
+      console.log(c3.ok(`\u2713 Connected to wallet engine at ${args[1]}`));
     } catch {
-      console.log(c.warn(`\u26A0 Saved ${args[1]} \u2014 but no engine answered yet.`));
+      console.log(c3.warn(`\u26A0 Saved ${args[1]} \u2014 but no engine answered yet.`));
     }
     return;
   }
   if (sub === "node") {
     if (!args[1] || args[1] === "reset") {
-      delete settings().xmrDaemon;
+      delete settings2().xmrDaemon;
       save();
-      return console.log(c.ok(`\u2713 Daemon reset to ${XMR_DAEMON()}`));
+      return console.log(c3.ok(`\u2713 Daemon reset to ${XMR_DAEMON()}`));
     }
-    settings().xmrDaemon = args[1].replace(/\/json_rpc\/?$/, "");
+    settings2().xmrDaemon = args[1].replace(/\/json_rpc\/?$/, "");
     save();
     try {
-      const h = await xmrDaemonHeight();
-      console.log(c.ok(`\u2713 Remote daemon: ${args[1]} (height ${h})`));
+      const h2 = await xmrDaemonHeight();
+      console.log(c3.ok(`\u2713 Remote daemon: ${args[1]} (height ${h2})`));
     } catch {
-      console.log(c.warn(`\u26A0 Saved ${args[1]} \u2014 but it did not answer get_info.`));
+      console.log(c3.warn(`\u26A0 Saved ${args[1]} \u2014 but it did not answer get_info.`));
     }
     return;
   }
   if (sub === "network") {
     if (args[1] === "stage" || args[1] === "test") {
-      settings().xmrStage = true;
+      settings2().xmrStage = true;
       save();
-      return console.log(c.warn("\u2713 Monero \u2192 STAGENET (practice, fake XMR)"));
+      return console.log(c3.warn("\u2713 Monero \u2192 STAGENET (practice, fake XMR)"));
     }
     if (args[1] === "main") {
-      settings().xmrStage = false;
+      settings2().xmrStage = false;
       save();
-      return console.log(c.ok("\u2713 Monero \u2192 MAINNET"));
+      return console.log(c3.ok("\u2713 Monero \u2192 MAINNET"));
     }
-    return console.log(`Monero network: ${settings().xmrStage ? "stagenet" : "mainnet"} \u2014 switch: ravenne xmr network stage|main`);
+    return console.log(`Monero network: ${settings2().xmrStage ? "stagenet" : "mainnet"} \u2014 switch: ravenne xmr network stage|main`);
   }
   if (sub === "status") {
     let ok = false;
@@ -74929,7 +76237,7 @@ async function cmdXmr(args) {
       ok = true;
     } catch {
     }
-    return console.log(ok ? c.ok(`Engine: ${XMR_RPC()} \xB7 ${XW().length} XMR wallets`) : c.dim(`No engine at ${XMR_RPC()} \xB7 ${XW().length} XMR wallets \xB7 install: xmr install`));
+    return console.log(ok ? c3.ok(`Engine: ${XMR_RPC()} \xB7 ${XW().length} XMR wallets`) : c3.dim(`No engine at ${XMR_RPC()} \xB7 ${XW().length} XMR wallets \xB7 install: xmr install`));
   }
   throw new Error(`Unknown xmr sub-command: ${sub} (create | list | send | forward | watch | phrase | remove | install | engine | connect | node | network | status)`);
 }
@@ -74946,9 +76254,9 @@ var V2_ABI = [
 function resolveAsset(s) {
   s = String(s).trim();
   if (/^eth$/i.test(s)) return { native: true, sym: "ETH", dec: 18 };
-  const t = tokensOf("eth").find((x) => x.sym.toLowerCase() === s.toLowerCase()) || (s.startsWith("0x") ? { sym: short(s), addr: getAddress(s), dec: null } : null);
-  if (!t) throw new Error(`Unknown asset "${s}" (ETH, USDT, USDC or a token address).`);
-  return { ...t, native: false };
+  const t2 = tokensOf("eth").find((x) => x.sym.toLowerCase() === s.toLowerCase()) || (s.startsWith("0x") ? { sym: short(s), addr: getAddress(s), dec: null } : null);
+  if (!t2) throw new Error(`Unknown asset "${s}" (ETH, USDT, USDC or a token address).`);
+  return { ...t2, native: false };
 }
 async function execSwap(idx, from, to, amountIn) {
   const signer = new Wallet(W()[idx].privateKey).connect(provider());
@@ -74985,15 +76293,15 @@ async function execSwap(idx, from, to, amountIn) {
   return { block: rc.blockNumber, fee, hash: rc.hash };
 }
 async function cmdConvert(args) {
-  const rules = settings().convert ??= {};
+  const rules = settings2().convert ??= {};
   if (args.length === 0 || args[0] === "list") {
     header("CONVERT-ON-FORWARD RULES");
-    const entries = Object.entries(rules).filter(([, r]) => r);
-    if (!entries.length) console.log(c.dim("  No rule \u2014 funds are forwarded as-is."));
-    else table(["CHAIN", "INCOMING", "FORWARDED AS"], entries.map(([k2, r]) => [NET[k2].label, r.from, r.to]));
-    console.log(c.dim("\n  Set: ravenne convert eth ETH USDT   \xB7   Clear: ravenne convert eth off"));
-    console.log(c.dim("  Applies to 'sweep' and the 'auto' daemon: incoming funds are swapped via"));
-    console.log(c.dim("  Uniswap BEFORE reaching the main wallet (Ethereum mainnet only)."));
+    const entries = Object.entries(rules).filter(([, r2]) => r2);
+    if (!entries.length) console.log(c3.dim("  No rule \u2014 funds are forwarded as-is."));
+    else table(["CHAIN", "INCOMING", "FORWARDED AS"], entries.map(([k2, r2]) => [NET[k2].label, r2.from, r2.to]));
+    console.log(c3.dim("\n  Set: ravenne convert eth ETH USDT   \xB7   Clear: ravenne convert eth off"));
+    console.log(c3.dim("  Applies to 'sweep' and the 'auto' daemon: incoming funds are swapped via"));
+    console.log(c3.dim("  Uniswap BEFORE reaching the main wallet (Ethereum mainnet only)."));
     return;
   }
   const k = NET_ALIASES[String(args[0]).toLowerCase()];
@@ -75001,30 +76309,30 @@ async function cmdConvert(args) {
   if (args[1] === "off" || args[1] === "none") {
     delete rules[k];
     save();
-    return console.log(c.ok(`\u2713 ${NET[k].label}: conversion disabled \u2014 funds forwarded as-is.`));
+    return console.log(c3.ok(`\u2713 ${NET[k].label}: conversion disabled \u2014 funds forwarded as-is.`));
   }
   if (k !== "eth") throw new Error("Conversion runs on Uniswap (Ethereum mainnet only).");
   const from = resolveAsset(args[1]), to = resolveAsset(args[2] ?? "");
   if (from.native && to.native) throw new Error("ETH \u2192 ETH makes no sense.");
   rules[k] = { from: from.sym, to: to.sym };
   save();
-  console.log(c.ok(`\u2713 ${NET[k].label}: everything received will be converted ${from.sym} \u2192 ${to.sym} before reaching main.`));
-  console.log(c.dim("  Each conversion pays the 0.3% pool fee + gas \u2014 sensible for meaningful amounts."));
+  console.log(c3.ok(`\u2713 ${NET[k].label}: everything received will be converted ${from.sym} \u2192 ${to.sym} before reaching main.`));
+  console.log(c3.dim("  Each conversion pays the 0.3% pool fee + gas \u2014 sensible for meaningful amounts."));
 }
 async function cmdSwap(args) {
   if (netKey() !== "eth") throw new Error("Swaps run on Ethereum mainnet \u2014 switch first: ravenne network eth");
   let [fromA, toA, amtA, fromIdxA] = args;
   if (!fromA || !toA || !amtA) {
-    const r = await P([
+    const r2 = await P([
       { type: "text", name: "f", message: "Swap from: ETH, USDT, USDC or 0x\u2026" },
       { type: "text", name: "t", message: "Swap to:   ETH, USDT, USDC or 0x\u2026" },
       { type: "text", name: "a", message: "Amount to swap:" },
       { type: "text", name: "w", message: `From which wallet? (0-${W().length - 1})` }
     ]);
-    fromA = r.f;
-    toA = r.t;
-    amtA = r.a;
-    fromIdxA = r.w;
+    fromA = r2.f;
+    toA = r2.t;
+    amtA = r2.a;
+    fromIdxA = r2.w;
   }
   const from = resolveAsset(fromA), to = resolveAsset(toA);
   if (from.native && to.native) throw new Error("ETH \u2192 ETH makes no sense.");
@@ -75057,11 +76365,11 @@ async function cmdSwap(args) {
     `Fees      0.3% pool fee + gas \xB7 deadline 20 min`
   ]);
   if (!await confirm("Confirm the swap?")) return console.log("Cancelled.");
-  const { block, fee, hash: hash2 } = await execSwap(idx, from, to, amountIn);
-  console.log(c.ok(`
-\u2713 Swap confirmed in block ${block} \u2014 gas ${fmtAmt(fee)} ETH`));
+  const { block: block2, fee, hash: hash2 } = await execSwap(idx, from, to, amountIn);
+  console.log(c3.ok(`
+\u2713 Swap confirmed in block ${block2} \u2014 gas ${fmtAmt(fee)} ETH`));
   printTxLink(hash2, "eth");
-  console.log(c.dim("  New balance: ravenne tokens \xB7 ravenne balance"));
+  console.log(c3.dim("  New balance: ravenne tokens \xB7 ravenne balance"));
 }
 var MENU_ACTIONS = {
   dashboard: cmdDashboard,
@@ -75159,9 +76467,9 @@ var MENU_TITLES = {
   lock: "Lock session",
   wipe: "Wipe vault"
 };
-async function runAction(a) {
+async function runAction(a2) {
   try {
-    if (a === "network") {
+    if (a2 === "network") {
       const { k } = await P({
         type: "select",
         name: "k",
@@ -75169,7 +76477,7 @@ async function runAction(a) {
         choices: Object.entries(NET).map(([k2, v]) => ({ title: `${v.label} (${v.sym})`, value: k2 }))
       });
       await cmdNetwork([k]);
-    } else if (a === "create") {
+    } else if (a2 === "create") {
       const mode = (await P({
         type: "select",
         name: "m",
@@ -75177,16 +76485,16 @@ async function runAction(a) {
         choices: [{ title: "Fresh random wallets", value: "fresh" }, { title: "Multiple accounts from ONE seed (BIP-44)", value: "seed" }]
       })).m;
       await cmdCreate(mode === "seed" ? ["--seed"] : []);
-    } else if (a === "rpc") await cmdRpc([]);
-    else if (a === "lock") {
+    } else if (a2 === "rpc") await cmdRpc([]);
+    else if (a2 === "lock") {
       await lockSession();
       banner();
-    } else if (a?.startsWith("btc-")) await cmdBtc([a.slice(4)]);
-    else if (a?.startsWith("xmr-")) await cmdXmr([a.slice(4)]);
-    else await (MENU_ACTIONS[a] || (() => {
+    } else if (a2?.startsWith("btc-")) await cmdBtc([a2.slice(4)]);
+    else if (a2?.startsWith("xmr-")) await cmdXmr([a2.slice(4)]);
+    else await (MENU_ACTIONS[a2] || (() => {
     }))([]);
   } catch (e) {
-    console.log(c.err(`
+    console.log(c3.err(`
 \u2717 ${e.message}`));
   }
 }
@@ -75261,14 +76569,14 @@ async function advancedMenu() {
     "xmr-network": "Monero mainnet or stagenet (fake XMR for practice)."
   };
   while (true) {
-    if (settings().autolockMin > 0 && Date.now() - lastActive > settings().autolockMin * 6e4) await lockSession();
+    if (settings2().autolockMin > 0 && Date.now() - lastActive > settings2().autolockMin * 6e4) await lockSession();
     statusLine();
     const { cat } = await P({
       type: "select",
       name: "cat",
       message: "Main menu:",
       choices: [
-        ...Object.keys(MENU).map((t) => ({ title: t, value: t, description: CAT_DESC[t] })),
+        ...Object.keys(MENU).map((t2) => ({ title: t2, value: t2, description: CAT_DESC[t2] })),
         { title: "Quit", value: "__quit", description: "Clear the screen and exit." }
       ]
     });
@@ -75279,7 +76587,7 @@ async function advancedMenu() {
       process.exit(0);
     }
     while (true) {
-      const { a } = await P({
+      const { a: a2 } = await P({
         type: "select",
         name: "a",
         message: `${cat}  \u2192`,
@@ -75289,13 +76597,13 @@ async function advancedMenu() {
         ]
       });
       lastActive = Date.now();
-      if (a === "__back") break;
-      await runAction(a);
+      if (a2 === "__back") break;
+      await runAction(a2);
       if (!state.payload) ensureVault();
-      await P({ type: "text", name: "_", message: c.dim("\u2014 Enter to continue \u2014") });
+      await P({ type: "text", name: "_", message: c3.dim("\u2014 Enter to continue \u2014") });
       lastActive = Date.now();
       console.clear();
-      console.log(c.vio("RAVENNE WALLET"));
+      console.log(c3.vio("RAVENNE WALLET"));
     }
   }
 }
@@ -75469,22 +76777,22 @@ var ROUTES = {
 function parseArgs(argv) {
   const flags = { yes: false, all: false, random: false, delay: 0, words: 12, seed: false, token: null, file: null, keystore: null, keepKey: false, profile: null };
   const args = [];
-  for (let i = 0; i < argv.length; i++) {
-    const a = argv[i];
-    if (a === "--yes" || a === "-y") flags.yes = true;
-    else if (a === "--all" || a === "-a") flags.all = true;
-    else if (a === "--random" || a === "-r") flags.random = true;
-    else if (a === "--seed") flags.seed = true;
-    else if (a === "--keep-key") flags.keepKey = true;
-    else if (a === "--delay") flags.delay = parseFloat(argv[++i]) || 0;
-    else if (a === "--words") flags.words = parseInt(argv[++i], 10) === 24 ? 24 : 12;
-    else if (a === "--token") flags.token = argv[++i];
-    else if (a === "--file") flags.file = argv[++i];
-    else if (a === "--keystore") flags.keystore = argv[++i];
-    else if (a === "--no-vpn") flags.noVpn = true;
-    else if (a === "--profile") flags.profile = argv[++i];
-    else if (a.startsWith("--")) {
-    } else args.push(a);
+  for (let i2 = 0; i2 < argv.length; i2++) {
+    const a2 = argv[i2];
+    if (a2 === "--yes" || a2 === "-y") flags.yes = true;
+    else if (a2 === "--all" || a2 === "-a") flags.all = true;
+    else if (a2 === "--random" || a2 === "-r") flags.random = true;
+    else if (a2 === "--seed") flags.seed = true;
+    else if (a2 === "--keep-key") flags.keepKey = true;
+    else if (a2 === "--delay") flags.delay = parseFloat(argv[++i2]) || 0;
+    else if (a2 === "--words") flags.words = parseInt(argv[++i2], 10) === 24 ? 24 : 12;
+    else if (a2 === "--token") flags.token = argv[++i2];
+    else if (a2 === "--file") flags.file = argv[++i2];
+    else if (a2 === "--keystore") flags.keystore = argv[++i2];
+    else if (a2 === "--no-vpn") flags.noVpn = true;
+    else if (a2 === "--profile") flags.profile = argv[++i2];
+    else if (a2.startsWith("--")) {
+    } else args.push(a2);
   }
   return { args, flags };
 }
@@ -75500,7 +76808,7 @@ async function main() {
     if (TTY && !state.autoYes && !state.flags.profile) await pickProfile();
     else if (state.flags.profile) {
       if (!V().profiles[state.flags.profile]) {
-        console.log(c.err(`Unknown profile: ${state.flags.profile}`));
+        console.log(c3.err(`Unknown profile: ${state.flags.profile}`));
         process.exit(1);
       }
       V().active = state.flags.profile;
@@ -75522,7 +76830,7 @@ async function main() {
   }
   const fn = ROUTES[args[0]];
   if (!fn) {
-    console.log(c.err(`Unknown command: ${args[0]}
+    console.log(c3.err(`Unknown command: ${args[0]}
 `));
     console.log(HELP);
     process.exit(1);
@@ -75532,7 +76840,7 @@ async function main() {
   await ensureVPN();
   if (state.flags.profile) {
     if (!V().profiles[state.flags.profile]) {
-      console.log(c.err(`Unknown profile: ${state.flags.profile}`));
+      console.log(c3.err(`Unknown profile: ${state.flags.profile}`));
       process.exit(1);
     }
     V().active = state.flags.profile;
@@ -75541,15 +76849,15 @@ async function main() {
   await fn(args.slice(1));
 }
 var isMain = (() => {
-  const a = process.argv[1] || "";
+  const a2 = process.argv[1] || "";
   try {
-    if (import_meta.url === (0, import_node_url.pathToFileURL)(a).href) return true;
+    if (import_meta.url === (0, import_node_url.pathToFileURL)(a2).href) return true;
   } catch {
   }
-  return /ravenne\.(mjs|cjs|exe)$/i.test(import_node_path.default.basename(a));
+  return /ravenne\.(mjs|cjs|exe)$/i.test(import_node_path.default.basename(a2));
 })();
 if (isMain) main().catch((e) => {
-  console.error(c.err(`
+  console.error(c3.err(`
 \u2717 ${e.shortMessage || e.message}`));
   process.exit(1);
 });

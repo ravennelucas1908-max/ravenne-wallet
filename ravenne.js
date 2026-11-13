@@ -11,6 +11,7 @@ import {
   formatEther, parseEther, parseUnits, getAddress,
 } from "ethers";
 import prompts from "prompts";
+import * as clack from "@clack/prompts";
 import qrcode from "qrcode-terminal";
 import fs from "node:fs";
 import path from "node:path";
@@ -24,7 +25,7 @@ import { HDKey } from "@scure/bip32";
 import { generateMnemonic, mnemonicToSeedSync, validateMnemonic } from "@scure/bip39";
 import { wordlist } from "@scure/bip39/wordlists/english.js";
 
-const VERSION = "6.5.0";
+const VERSION = "8.0.0";
 process.title = "Ravenne Wallet";
 
 /* Network-layer privacy: when HTTPS_PROXY / ALL_PROXY is set, route ALL outgoing
@@ -156,8 +157,49 @@ export const stripUsb = p => {
 };
 const save   = () => encryptVault(stripUsb(state.payload), state.pass);
 
+/* Interface interactive — @clack/prompts (flèches, hints, masques, spinners).
+   En session non-TTY (scripts/CI), repli sur la lib prompts d'origine. */
 async function P(questions) {
-  return prompts(questions, { onCancel: () => { console.log("\nBye 👋"); process.exit(0); } });
+  const list = Array.isArray(questions) ? questions : [questions];
+  if (!TTY) return prompts(list, { onCancel: () => process.exit(0) });
+  const out = {};
+  for (const q of list) {
+    let v;
+    if (q.type === "select") {
+      v = await clack.select({
+        message: q.message,
+        options: (q.choices || []).map(ch => ({ value: ch.value, label: ch.title, hint: ch.description })),
+        initialValue: q.initial,
+      });
+    } else if (q.type === "confirm") {
+      /* sémantique conservée : défaut NON sauf initial===true (actions destructives) */
+      v = await clack.select({
+        message: q.message,
+        options: [{ value: true, label: "Yes" }, { value: false, label: "No" }],
+        initialValue: q.initial === true,
+      });
+    } else if (q.type === "password") {
+      v = await clack.password({ message: q.message, mask: "▪" });
+    } else if (q.type === "number") {
+      v = await clack.text({
+        message: q.message,
+        placeholder: q.initial != null ? String(q.initial) : "",
+        validate: x => {
+          if ((x === "" || x == null) && q.initial != null) return undefined;
+          const n = Number(x);
+          if (!Number.isFinite(n)) return "Enter a number";
+          if (q.min != null && n < q.min) return `Minimum: ${q.min}`;
+          if (q.max != null && n > q.max) return `Maximum: ${q.max}`;
+        },
+      });
+      v = v === "" || v == null ? q.initial : Number(v);
+    } else {
+      v = await clack.text({ message: q.message, placeholder: q.placeholder, defaultValue: q.initial });
+    }
+    if (clack.isCancel(v)) { clack.outro("Bye."); process.exit(0); }
+    out[q.name || "value"] = v;
+  }
+  return out;
 }
 const confirm = async msg =>
   state.autoYes ? true : (await P({ type: "confirm", name: "v", message: msg, initial: false })).v;
@@ -199,11 +241,10 @@ function statusLine() {
 }
 async function spin(label, fn) {
   if (!TTY) { console.log(c.dim(`• ${label}`)); return fn(); }
-  const frames = ["⠋","⠙","⠹","⠸","⠼","⠴","⠦","⠧","⠇","⠏"];
-  let i = 0;
-  const iv = setInterval(() => process.stdout.write(`\r  ${c.cyan(frames[i++ % frames.length])} ${label}`), 80);
-  try { const r = await fn(); clearInterval(iv); process.stdout.write("\r\x1b[K"); return r; }
-  catch (e) { clearInterval(iv); process.stdout.write("\r\x1b[K"); throw e; }
+  const sp = clack.spinner();
+  sp.start(label);
+  try { const r = await fn(); sp.stop(label + "  ✓"); return r; }
+  catch (e) { sp.stop(label + "  ✗"); throw e; }
 }
 async function countdown(sec) {
   for (let s = sec; s > 0; s--) {
@@ -1992,6 +2033,7 @@ async function simpleBalances() {
 
 async function simpleMenu() {
   banner();
+  if (TTY) clack.intro(c.bold("Ravenne") + c.dim("  v" + VERSION + "  ·  " + V().active + "  ·  " + N().label));
   if (!mainEvm()) {
     console.log(c.vio("\n👋 Welcome! Ravenne will set up:"));
     console.log(`   ${c.bold("1 MAIN wallet")} — your vault, kept private (seed on paper${c.dim(", optionally not even stored here")})`);
