@@ -64,7 +64,9 @@ fn load_ui_config() -> Option<Value> {
 #[tauri::command]
 fn save_ui_config(config: Value) -> Result<(), String> {
     fs::write(config_path(), serde_json::to_string_pretty(&config).map_err(|e| e.to_string())?)
-        .map_err(|e| e.to_string())
+        .map_err(|e| e.to_string())?;
+    harden(&config_path());
+    Ok(())
 }
 
 /* ---------- HWID : SHA-256(salt + MachineGuid + baseboard + disque systeme) ---------- */
@@ -156,7 +158,19 @@ fn check_local_flag() -> Option<String> {
 
 #[tauri::command]
 fn write_local_flag(hwid: String) -> Result<(), String> {
-    fs::write(flag_path(), hwid.trim()).map_err(|e| e.to_string())
+    fs::write(flag_path(), hwid.trim()).map_err(|e| e.to_string())?;
+    harden(&flag_path());
+    Ok(())
+}
+
+fn harden(p: &Path) {
+    let user = std::env::var("USERNAME").unwrap_or_default();
+    if user.is_empty() { return; }
+    let _ = std::process::Command::new("icacls")
+        .arg(p)
+        .args(["/inheritance:r", &format!("{}:F", user)])
+        .creation_flags(0x08000000)
+        .output();
 }
 
 /* ---------- webhook Discord (embeds propres) ---------- */

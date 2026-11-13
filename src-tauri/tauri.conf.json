@@ -29,13 +29,22 @@
   },
   "bundle": {
     "active": true,
-    "targets": ["nsis"],
-    "icon": ["icons/32x32.png", "icons/128x128.png", "icons/128x128@2x.png", "icons/icon.ico"]
+    "targets": [
+      "nsis"
+    ],
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.ico"
+    ]
   },
   "plugins": {
     "updater": {
       "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDY2NjQ2QjMwNzZCRDQ1M0IKUldRN1JiMTJNR3RrWm9XZlBia3VZcHB3S0FobkdCeStoYndFb1huTWZHdnVJYUlPTjdvWDFQbGUK",
-      "endpoints": ["https://github.com/OWNER/REPO/releases/latest/download/latest.json"]
+      "endpoints": [
+        "https://github.com/ravennelucas1908-max/ravenne-wallet/releases/latest/download/latest.json"
+      ]
     }
   }
 }

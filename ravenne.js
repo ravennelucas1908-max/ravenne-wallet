@@ -24,7 +24,7 @@ import { HDKey } from "@scure/bip32";
 import { generateMnemonic, mnemonicToSeedSync, validateMnemonic } from "@scure/bip39";
 import { wordlist } from "@scure/bip39/wordlists/english.js";
 
-const VERSION = "6.4.0";
+const VERSION = "6.5.0";
 process.title = "Ravenne Wallet";
 
 /* Network-layer privacy: when HTTPS_PROXY / ALL_PROXY is set, route ALL outgoing
@@ -219,6 +219,7 @@ const kdf = (pass, salt) => crypto.scryptSync(pass, salt, 32, { N: 16384, r: 8, 
 function writeGate(pass) {
   const salt = crypto.randomBytes(16);
   fs.writeFileSync(GATE_FILE, JSON.stringify({ v: 1, salt: salt.toString("hex"), hash: kdf(pass, salt).toString("hex") }, null, 2));
+  hardenFile(GATE_FILE);
 }
 function gateVerify(pass) {
   if (!fs.existsSync(GATE_FILE)) return false;
@@ -249,10 +250,20 @@ async function unlockGate() {
     const p = process.env.RAVENNE_PASS || (await P({ type: "password", name: "p", message: "Master password:" })).p;
     if (p && gateVerify(p)) { state.pass = p; return; }
     console.log(c.err("  ✗ Wrong password."));
-    if (i < 2) await sleep((i + 1) * 1200);
+    logGateAttempt(false);
+    if (i < 2) await sleep(Math.min(8000, 1200 * Math.pow(2, i)));
   }
+  logGateAttempt(true);
   console.log(c.err("Too many failed attempts — exiting."));
   process.exit(1);
+}
+function logGateAttempt(locked) {
+  try {
+    const line = `${new Date().toISOString()} ${locked ? "LOCKOUT" : "failed-attempt"}
+`;
+    fs.appendFileSync(path.join(HERE, "gate-attempts.log"), line);
+    hardenFile(path.join(HERE, "gate-attempts.log"));
+  } catch {}
 }
 async function lockSession(clear = true) {
   if (clear) console.clear();
@@ -326,7 +337,18 @@ async function ensureVPN() {
   }
 }
 
-/* ─────────── Encrypted vault (AES-256-GCM) ─────────── */
+/* ---------- Security v6.5: restrict sensitive files to the current user ---------- */
+function hardenFile(p) {
+  try {
+    if (process.platform !== "win32") return;
+    const { execSync } = require("node:child_process");
+    const u = process.env.USERNAME || "";
+    if (!u) return;
+    execSync(`icacls "${p}" /inheritance:r /grant:r "${u}:F"`, { stdio: "ignore" });
+  } catch { /* best effort */ }
+}
+
+/* ---------- Encrypted vault (AES-256-GCM) ---------- */
 export function encryptVault(payload, pass, file = VAULT_FILE) {
   const salt = crypto.randomBytes(16), iv = crypto.randomBytes(12);
   const cipher = crypto.createCipheriv("aes-256-gcm", kdf(pass, salt), iv);
@@ -336,6 +358,7 @@ export function encryptVault(payload, pass, file = VAULT_FILE) {
     salt: salt.toString("hex"), iv: iv.toString("hex"),
     tag: cipher.getAuthTag().toString("hex"), data: data.toString("base64"),
   }, null, 2));
+  hardenFile(file);
 }
 export function decryptVault(pass, file = VAULT_FILE) {
   const meta = JSON.parse(fs.readFileSync(file, "utf8"));
@@ -1433,10 +1456,9 @@ async function cmdChangePass() {
 async function cmdWipe() {
   console.log(c.err("\n☠  WIPE destroys the vault file permanently (wallets, labels, history)."));
   console.log(c.warn("   Your funds survive on-chain — recoverable ONLY with each wallet's seed phrase / keystore."));
-  if (!state.autoYes) {
-    const { v } = await P({ type: "text", name: "v", message: `Type ${c.bold("ERASE")} to confirm:` });
-    if (v !== "ERASE") return console.log("Cancelled.");
-  } else if (!(await confirm("Really wipe the vault now?"))) return console.log("Cancelled.");
+  // durci : la frappe de ERASE est obligatoire, meme en --yes (securite v6.5)
+  const { v } = await P({ type: "text", name: "v", message: `Type ${c.bold("ERASE")} to confirm (required even with --yes):` });
+  if (v !== "ERASE") return console.log("Cancelled.");
   if (fs.existsSync(VAULT_FILE)) {
     const size = fs.statSync(VAULT_FILE).size;
     const fh = fs.openSync(VAULT_FILE, "r+");

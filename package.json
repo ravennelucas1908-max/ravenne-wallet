@@ -1,6 +1,6 @@
 {
   "name": "ravenne-wallet",
-  "version": "7.0.0",
+  "version": "6.5.0",
   "description": "Un wallet crypto **simple et local** : tout se passe dans ton navigateur, aucune donnée n'est envoyée sur un serveur.",
   "main": "ravenne.js",
   "scripts": {
