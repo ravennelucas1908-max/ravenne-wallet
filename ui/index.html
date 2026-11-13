@@ -6,8 +6,8 @@
 <title>Ravenne Wallet</title>
 <link rel="icon" href="data:,">
 <link rel="stylesheet" href="./styles.css">
-<script src="https://cdn.jsdelivr.net/npm/ethers@6.13.4/dist/ethers.umd.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
+<script src="./vendor/ethers.umd.min.js"></script>
+<script src="./vendor/qrcode.min.js"></script>
 </head>
 <body>
 
@@ -54,20 +54,20 @@
 <section class="screen" id="s-mode">
   <h1 style="margin-bottom:36px">Ravenne Wallet</h1>
   <div class="mode-cards stagger">
+    <div class="card hoverable mode-card" id="mode-app" style="--i:0">
       <div class="ic">◆</div>
       <h2>Application</h2>
       <p class="dim">Visual wallet — balances, send, swap</p>
       <div class="glowline"></div>
     </div>
-  </div>
-  <button class="btn" id="mode-quit" style="margin-top:40px;opacity:.65">Quit</button>
-    <div class="card hoverable mode-card" id="mode-app" style="--i:0">
+    <div class="card hoverable mode-card" id="mode-terminal" style="--i:1">
       <div class="ic">⌨</div>
       <h2>Terminal</h2>
       <p class="dim">Full CLI — menus, every command</p>
       <div class="glowline"></div>
     </div>
-    <div class="card hoverable mode-card" id="mode-terminal" style="--i:1">
+  </div>
+  <button class="btn" id="mode-quit" style="margin-top:40px;opacity:.65">Quit</button>
 </section>
 
 <!-- ═══ 4. MOT DE PASSE (déverrouille le vault du CLI) ═══ -->

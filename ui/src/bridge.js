@@ -1,3 +1,20 @@
+// first-line crash reporting: even a pre-boot crash becomes visible
+(function () {
+  try { document.title = "RV: bridge loading…"; } catch {}
+  function showErr(m) {
+    try { document.title = "ERR: " + m.slice(0, 90); } catch {}
+    try {
+      const d = document.createElement("div");
+      d.style.cssText = "position:fixed;inset:12px;z-index:9999;background:#2a1516;color:#f3c6c6;" +
+        "border:1px solid #b06a6a;border-radius:10px;padding:14px;font:12px monospace;white-space:pre-wrap";
+      d.textContent = m;
+      document.body.appendChild(d);
+    } catch {}
+  }
+  window.addEventListener("error", e => showErr("[load] " + e.message + " @ " + (e.filename||"") + ":" + e.lineno));
+  window.addEventListener("unhandledrejection", e => showErr("[promise] " + String(e.reason && e.reason.stack || e.reason).slice(0, 400)));
+})();
+
 // Bridge: Tauri IPC when running in the shell, a complete MOCK when opened
 // standalone in a browser (so every screen is testable without Rust).
 

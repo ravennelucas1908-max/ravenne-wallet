@@ -73,6 +73,7 @@ function go(id) {
 
 /* ═══════════ 1. CONFIG (première exécution) ═══════════ */
 async function screenConfig() {
+  try { document.title = "RV: first-run configuration"; } catch {}
   go("s-config");
   const saved = await bridge.invoke("load_ui_config");
   if (saved) { state.config = saved; return screenGate(); }
@@ -98,16 +99,20 @@ async function screenConfig() {
 
 /* ═══════════ 2. GATE HWID ═══════════ */
 async function screenGate() {
+  try { document.title = "RV: gate — checking machine…"; } catch {}
   go("s-gate");
   $("gate-computing").classList.remove("hidden");
   $("gate-denied").classList.add("hidden");
-  const info = await bridge.invoke("get_hwid");
+  let info;
+  try { info = await bridge.invoke("get_hwid"); }
+  catch (e) { uiLog("get_hwid failed: " + e); info = { hwid: "unavailable", grouped: "(fingerprint error)", machine: "?", user: "?", os: "?" }; }
   state.hwid = info;
   $("gate-hwid").textContent = info.grouped;
 
   // flag local présent → passage silencieux définitif
-  const flag = await bridge.invoke("check_local_flag");
-  if (flag === info.hwid) return screenMode();
+  let flag = null;
+  try { flag = await bridge.invoke("check_local_flag"); } catch (e) { uiLog("flag read failed: " + e); }
+  if (flag === info.hwid) { uiLog("gate: local flag ok"); return screenMode(); }
 
   // mode dev (config) : saute le verrou machine pour tester sans gist
   if (state.config.dev === true) {
@@ -118,12 +123,18 @@ async function screenGate() {
   // whitelist distante (cache en secours hors ligne)
   let list = null, offline = false;
   try { list = await bridge.invoke("fetch_whitelist", { url: state.config.whitelist }); }
-  catch { list = await bridge.invoke("cached_whitelist"); offline = true; }
+  catch (e) {
+    uiLog("whitelist fetch failed: " + e);
+    try { list = await bridge.invoke("cached_whitelist"); } catch {}
+    offline = true;
+  }
 
   const known = !!list?.machines?.some(m => m.id === info.hwid);
   if (known) {
-    await bridge.invoke("write_local_flag", { hwid: info.hwid });
-    await bridge.invoke("send_webhook", { url: state.config.webhook, kind: "authorized", label: "", hwid: info.hwid });
+    try { await bridge.invoke("write_local_flag", { hwid: info.hwid }); } catch (e) { uiLog("flag write failed: " + e); }
+    try { await bridge.invoke("send_webhook", { url: state.config.webhook, kind: "authorized", label: "", hwid: info.hwid }); }
+    catch (e) { uiLog("webhook (authorized) failed: " + e); }
+    uiLog("gate: authorized via whitelist");
     return screenMode();                                    // silencieux aux prochaines fois
   }
 
@@ -131,7 +142,9 @@ async function screenGate() {
   $("gate-computing").classList.add("hidden");
   $("gate-denied").classList.remove("hidden");
   M.reveal($("gate-denied"));
-  bridge.invoke("send_webhook", { url: state.config.webhook, kind: "denied", label: "", hwid: info.hwid });
+  uiLog("gate: machine not whitelisted (offline=" + offline + ")");
+  bridge.invoke("send_webhook", { url: state.config.webhook, kind: "denied", label: "", hwid: info.hwid })
+    .catch(e => uiLog("webhook (denied) failed: " + e));
   $("gate-neterr").textContent = offline ? "Whitelist unreachable — cached list used; unknown machines stay blocked." : "";
   $("gate-copy").onclick = async () => {
     await bridge.invoke("clipboard_copy_autoclear", { text: info.hwid, clear_after_secs: settings.clipboardClearSecs });
@@ -143,6 +156,7 @@ async function screenGate() {
 
 /* ═══════════ 3. CHOIX DE MODE ═══════════ */
 async function screenMode() {
+  try { document.title = "RV: ready — choose a mode"; } catch {}
   go("s-mode");
   const cards = document.querySelectorAll(".mode-card");
   M.stagger(cards[0].parentElement);                       // spec #3
@@ -594,7 +608,7 @@ document.addEventListener("keydown", e => {
 function setTab(name) {
   document.querySelector(`.tab[data-tab="${name}"]`)?.click();
 }
-$(btn-settings).onclick = () => setTab(settings);
+$("btn-settings").onclick = () => setTab("settings");
 
 /* ── updater (auto, non bloquant) ── */
 async function updateBadge() {
@@ -619,18 +633,40 @@ async function checkUpdates(silent) {
 }
 
 /* ── boot ── */
+function paintError(msg) {
+  let d = document.getElementById("fatal-err");
+  if (!d) {
+    d = document.createElement("div");
+    d.id = "fatal-err";
+    d.style.cssText = "position:fixed;inset:auto 12px 12px 12px;z-index:999;background:#2a1516;color:#f3c6c6;" +
+      "border:1px solid #b06a6a;border-radius:10px;padding:12px;font-family:monospace;font-size:12px;white-space:pre-wrap;max-height:40vh;overflow:auto";
+    document.body.appendChild(d);
+  }
+  d.textContent += msg + "\n";
+}
+function uiLog(line) {
+  try { bridge.invoke("ui_log", { line }); } catch {}
+  console.error("[ravenne]", line);
+}
 (async () => {
-  window.addEventListener("unhandledrejection", e =>
-    console.error("[ravenne] unhandled rejection:", String(e.reason)));
-  window.addEventListener("error", e => console.error("[ravenne] error:", e.message));
+  window.addEventListener("unhandledrejection", e => {
+    const m = "[unhandled rejection] " + String(e.reason && e.reason.stack || e.reason);
+    uiLog(m); paintError(m);
+  });
+  window.addEventListener("error", e => {
+    const m = "[error] " + e.message + " @ " + (e.filename || "") + ":" + e.lineno;
+    uiLog(m); paintError(m);
+  });
   try {
     await boot();
   } catch (e) {
-    window.__bootErr = String(e && e.stack || e);
-    console.error("[ravenne] boot failed:", window.__bootErr);
+    const m = "[boot failed] " + String(e && e.stack || e);
+    uiLog(m); paintError(m);
   }
 })();
 async function boot() {
+  try { document.title = "RV: booting…"; } catch {}
+  uiLog("boot start, bridge real=" + bridge.REAL);
   applySettings();
   const info = await bridge.invoke("app_info");
   if (!bridge.REAL) document.title = "Ravenne Wallet (mock)";

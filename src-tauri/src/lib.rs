@@ -104,6 +104,13 @@ fn hardware_fingerprint() -> (String, String, String, String) {
     (guid, board, disk, host)
 }
 
+#[tauri::command]
+fn get_hwid_debug() -> Value {
+    let (guid, board, disk, _) = hardware_fingerprint();
+    json!({ "guid": guid, "board": board, "disk": disk.trim(),
+            "len_board": board.len(), "len_disk": disk.trim().len() })
+}
+
 fn hwid_hex() -> String {
     let (guid, board, disk, _) = hardware_fingerprint();
     let mut h = Sha256::new();
@@ -409,7 +416,7 @@ pub fn run() {
             send_webhook, gate_verify, vault_unlock, vault_write_encrypted,
             vault_backup, vault_restore, vault_wipe,
             clipboard_copy, clipboard_copy_autoclear, open_terminal,
-            set_close_to_tray, emit_lock,
+            set_close_to_tray, emit_lock, ui_log, get_hwid_debug,
         ])
         .on_window_event(|window, event| {
             if let tauri::WindowEvent::CloseRequested { api, .. } = event {
@@ -445,6 +452,15 @@ pub fn run() {
         })
         .run(tauri::generate_context!())
         .expect("error while running Ravenne");
+}
+
+
+#[tauri::command]
+fn ui_log(line: String) {
+    let p = base_dir().join("ui-errors.log");
+    let ts = std::time::SystemTime::now().duration_since(std::time::UNIX_EPOCH).unwrap_or_default().as_millis();
+    let _ = fs::OpenOptions::new().create(true).append(true).open(&p)
+        .and_then(|mut f| { use std::io::Write; writeln!(f, "[{}] {}", ts, line) });
 }
 
 #[tauri::command]

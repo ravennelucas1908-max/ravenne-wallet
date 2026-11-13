@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "ui:bundle": "esbuild ui/src/app.js --bundle --outfile=ui/app.min.js --log-level=error",
     "ui:dev": "tauri dev",
-    "ui:build": "tauri build"
+    "ui:build": "tauri build",
+    "ui:serve": "python -m http.server 1420 --directory ui"
   },
   "keywords": [],
   "author": "",

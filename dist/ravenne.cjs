@@ -71630,7 +71630,7 @@ zoo`.split("\n"));
 
 // ravenne.js
 var import_meta = {};
-var VERSION = "6.4.0";
+var VERSION = "6.5.0";
 process.title = "Ravenne Wallet";
 async function setupProxy() {
   try {
@@ -71858,6 +71858,7 @@ var kdf = (pass, salt) => import_node_crypto.default.scryptSync(pass, salt, 32, 
 function writeGate(pass) {
   const salt = import_node_crypto.default.randomBytes(16);
   import_node_fs.default.writeFileSync(GATE_FILE, JSON.stringify({ v: 1, salt: salt.toString("hex"), hash: kdf(pass, salt).toString("hex") }, null, 2));
+  hardenFile(GATE_FILE);
 }
 function gateVerify(pass) {
   if (!import_node_fs.default.existsSync(GATE_FILE)) return false;
@@ -71904,10 +71905,21 @@ async function unlockGate() {
       return;
     }
     console.log(c.err("  \u2717 Wrong password."));
-    if (i < 2) await sleep((i + 1) * 1200);
+    logGateAttempt(false);
+    if (i < 2) await sleep(Math.min(8e3, 1200 * Math.pow(2, i)));
   }
+  logGateAttempt(true);
   console.log(c.err("Too many failed attempts \u2014 exiting."));
   process.exit(1);
+}
+function logGateAttempt(locked7) {
+  try {
+    const line = `${(/* @__PURE__ */ new Date()).toISOString()} ${locked7 ? "LOCKOUT" : "failed-attempt"}
+`;
+    import_node_fs.default.appendFileSync(import_node_path.default.join(HERE, "gate-attempts.log"), line);
+    hardenFile(import_node_path.default.join(HERE, "gate-attempts.log"));
+  } catch {
+  }
 }
 async function lockSession(clear = true) {
   if (clear) console.clear();
@@ -71995,6 +72007,16 @@ async function ensureVPN() {
     process.exit(0);
   }
 }
+function hardenFile(p) {
+  try {
+    if (process.platform !== "win32") return;
+    const { execSync } = require("node:child_process");
+    const u = process.env.USERNAME || "";
+    if (!u) return;
+    execSync(`icacls "${p}" /inheritance:r /grant:r "${u}:F"`, { stdio: "ignore" });
+  } catch {
+  }
+}
 function encryptVault(payload, pass, file = VAULT_FILE) {
   const salt = import_node_crypto.default.randomBytes(16), iv = import_node_crypto.default.randomBytes(12);
   const cipher = import_node_crypto.default.createCipheriv("aes-256-gcm", kdf(pass, salt), iv);
@@ -72007,6 +72029,7 @@ function encryptVault(payload, pass, file = VAULT_FILE) {
     tag: cipher.getAuthTag().toString("hex"),
     data: data.toString("base64")
   }, null, 2));
+  hardenFile(file);
 }
 function decryptVault(pass, file = VAULT_FILE) {
   const meta = JSON.parse(import_node_fs.default.readFileSync(file, "utf8"));
@@ -73300,10 +73323,8 @@ async function cmdChangePass() {
 async function cmdWipe() {
   console.log(c.err("\n\u2620  WIPE destroys the vault file permanently (wallets, labels, history)."));
   console.log(c.warn("   Your funds survive on-chain \u2014 recoverable ONLY with each wallet's seed phrase / keystore."));
-  if (!state.autoYes) {
-    const { v } = await P({ type: "text", name: "v", message: `Type ${c.bold("ERASE")} to confirm:` });
-    if (v !== "ERASE") return console.log("Cancelled.");
-  } else if (!await confirm("Really wipe the vault now?")) return console.log("Cancelled.");
+  const { v } = await P({ type: "text", name: "v", message: `Type ${c.bold("ERASE")} to confirm (required even with --yes):` });
+  if (v !== "ERASE") return console.log("Cancelled.");
   if (import_node_fs.default.existsSync(VAULT_FILE)) {
     const size = import_node_fs.default.statSync(VAULT_FILE).size;
     const fh = import_node_fs.default.openSync(VAULT_FILE, "r+");

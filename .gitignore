@@ -13,3 +13,7 @@ machines.json
 dist/
 build/
 .video_agent/
+ui-errors.log
+gate-attempts.log
+.whitelist-cache.json
+authorized.flag
