@@ -147,7 +147,7 @@ async function screenGate() {
     .catch(e => uiLog("webhook (denied) failed: " + e));
   $("gate-neterr").textContent = offline ? "Whitelist unreachable — cached list used; unknown machines stay blocked." : "";
   $("gate-copy").onclick = async () => {
-    await bridge.invoke("clipboard_copy_autoclear", { text: info.hwid, clear_after_secs: settings.clipboardClearSecs });
+    await bridge.invoke("clipboard_copy_autoclear", { text: info.hwid, clearAfterSecs: settings.clipboardClearSecs });
     M.pulse($("gate-copy"));
     toast("HWID copied (auto-clear " + settings.clipboardClearSecs + "s)", true);
   };
@@ -172,23 +172,100 @@ async function screenMode() {
 async function screenPass() {
   go("s-pass");
   $("pass-input").value = "";
+  const pass2 = $("pass-input2");
+  if (pass2) pass2.value = "";
   $("pass-err").textContent = "";
+  const creating = !(await bridge.invoke("vault_exists").catch(() => true));
+  $("pass-title").textContent = creating ? "Create your vault" : "Unlock";
+  const sub = $("pass-sub");
+  sub.innerHTML = creating
+    ? "No vault on this machine yet. Choose a master password — it encrypts <span class=\"mono\">vault.ravenne.json</span> and cannot be recovered."
+    : "The master password decrypts <span class=\"mono\">vault.ravenne.json</span> — the same file the CLI uses.";
+  $("pass-go").textContent = creating ? "Create vault" : "Unlock";
+  const p2 = $("pass-input2");
+  if (p2) p2.classList.toggle("hidden", !creating);
+  let confirmed = false;
   const submit = async () => {
     const pw = $("pass-input").value;
-    if (!pw) return;
-    if (!(await bridge.invoke("gate_verify", { password: pw }))) {
-      $("pass-err").textContent = "Wrong password.";
-      return;
+    if (!pw || pw.length < 8) { $("pass-err").textContent = "8 characters minimum."; return; }
+    if (creating && !confirmed) {
+      const pw2 = p2 ? p2.value : "";
+      if (pw2 !== pw) { $("pass-err").textContent = "Passwords do not match."; return; }
+      confirmed = true;
     }
+    $("pass-err").textContent = "";
+    $("pass-go").disabled = true;
     try {
+      if (creating) {
+        const container = { profiles: { default: { name: "default", wallets: [], btcWallets: [], xmrWallets: [], history: [], chainTx: [], network: "eth" } }, active: "default" };
+        await bridge.invoke("vault_write_encrypted", { password: pw, payload: container });
+        state.password = pw;
+        state.vault = await bridge.invoke("vault_unlock", { password: pw });
+        screenSetup();
+        return;
+      }
+      if (!(await bridge.invoke("gate_verify", { password: pw }))) {
+        $("pass-err").textContent = "Wrong password.";
+        return;
+      }
       state.password = pw;
       state.vault = await bridge.invoke("vault_unlock", { password: pw });
+      // coffre vide -> mini-setup directement (comme le CLI)
+      if (cur() && cur().wallets.length === 0) return screenSetup();
       screenWallet();
-    } catch { $("pass-err").textContent = "Vault decryption failed."; }
+    } catch (e) {
+      $("pass-err").textContent = String(e) === "WRONG_PASSWORD" ? "Wrong password." : "Vault error: " + String(e).slice(0, 60);
+    } finally { $("pass-go").disabled = false; }
   };
   $("pass-go").onclick = submit;
   $("pass-input").onkeydown = e => { if (e.key === "Enter") submit(); };
+  if (p2) p2.onkeydown = e => { if (e.key === "Enter") submit(); };
   $("pass-input").focus();
+}
+
+/* ── mini-setup : main + receiving addresses, depuis le GUI ── */
+async function screenSetup() {
+  const pane = $("tab-overview");
+  document.querySelectorAll(".tabpane").forEach(p => p.classList.add("hidden"));
+  document.querySelectorAll(".tab").forEach(b => b.style.display = "none");
+  pane.classList.remove("hidden");
+  pane.innerHTML = "";
+  const card = el("div", "card reveal", '<h3>Welcome — let\'s create your wallet</h3>' +
+    '<p class="dim" style="margin:8px 0 16px;line-height:1.6">One <b>MAIN</b> wallet you keep private, and <b>receiving addresses</b> that forward to it.<br><span class="warn">Write the main seed on paper — shown once.</span></p>' +
+    '<label class="lbl">Receiving addresses</label><input type="number" id="su-n" value="3" min="1" max="20">' +
+    '<button class="btn primary" id="su-go" style="width:100%;margin-top:16px">Generate wallets</button>' +
+    '<div id="su-out" style="margin-top:16px"></div>');
+  pane.appendChild(card);
+  card.querySelector("#su-go").onclick = async () => {
+    const n = Math.max(1, Math.min(20, +card.querySelector("#su-n").value || 3));
+    const btn = card.querySelector("#su-go");
+    btn.disabled = true; btn.textContent = "Generating…";
+    const w = window.ethers.Wallet.createRandom();
+    const main = { label: "main", role: "main", address: w.address, privateKey: w.privateKey, phrase: w.mnemonic.phrase };
+    const recvSeed = window.ethers.Wallet.createRandom().mnemonic.phrase;
+    const recv = [];
+    for (let i = 0; i < n; i++) {
+      const rw = window.ethers.HDNodeWallet.fromPhrase(recvSeed, "", "m/44'/60'/0'/0/" + i);
+      recv.push({ label: "in-" + (i + 1), role: "receive", address: rw.address, privateKey: rw.privateKey, phrase: recvSeed });
+    }
+    cur().wallets.push(main, ...recv);
+    await persist();
+    const out = card.querySelector("#su-out");
+    out.innerHTML = '<h4 class="warn">Main seed — write it on paper NOW (shown once)</h4>' +
+      '<div class="mono" style="background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:12px;margin:10px 0;word-break:break-all">' + esc(main.phrase) + '</div>';
+    const ack = el("label", "row", '<input type="checkbox" id="su-ack"><span>I wrote it down somewhere safe</span>');
+    out.appendChild(ack);
+    const done = el("button", "btn primary", "Open my wallet");
+    done.style.marginTop = "12px"; done.disabled = true;
+    done.onclick = () => {
+      document.querySelectorAll(".tab").forEach(b => { b.style.display = ""; b.style.borderColor = ""; });
+      document.querySelector('.tab[data-tab="overview"]')?.click();
+      screenWallet();
+    };
+    ack.querySelector("input").onchange = e => done.disabled = !e.target.checked;
+    out.appendChild(done);
+    M.pulse(card);
+  };
 }
 
 function lockApp() {
@@ -225,6 +302,9 @@ const active = () => state.vault.profiles[state.vault.active];
 const mainEvm = () => active().wallets.find(w => w.role === "main");
 const recvEvm = () => active().wallets.filter(w => w.role === "receive");
 const balances = {};   // cache solde par adresse
+const _providers = {}; // un provider réutilisé par chaîne (perf)
+const getProv = k => (_providers[k] ||= new window.ethers.JsonRpcProvider(EVM[k].rpc, undefined, { staticNetwork: true }));
+const _balCache = { ts: 0, data: {} };   // TTL 30 s — plus de lag au retour sur l'onglet
 
 function renderProfileMenu() {
   const names = Object.keys(state.vault.profiles);
@@ -254,7 +334,7 @@ function renderProfileMenu() {
     renderProfileMenu(); renderOverview();
   };
   menu.appendChild(add);
-  if (!M.prefers) $("profile-btn").onclick = () => $("profile-dd").classList.toggle("open");
+  $("profile-btn").onclick = () => $("profile-dd").classList.toggle("open");
 }
 async function persist() {
   await bridge.invoke("vault_write_encrypted", { password: state.password, payload: state.vault });
@@ -276,7 +356,7 @@ async function renderOverview() {
     c.appendChild(el("div", "balance-val mono", "loading…"));
     grid.appendChild(c);
     try {
-      const prov = new window.ethers.JsonRpcProvider(EVM[k].rpc);
+      const prov = getProv(k);
       const bals = await Promise.all(cur().wallets.map(w => prov.getBalance(w.address).catch(() => null)));
       const total = bals.reduce((s, b) => b ? s + b : s, 0n);
       c.lastChild.textContent = `${fmt18(total)} ${EVM[k].sym}`;
@@ -319,7 +399,7 @@ function renderReceive() {
   const row = el("div", "row");
   const copy = el("button", "btn primary", "Copy");
   copy.onclick = async () => {
-    await bridge.invoke("clipboard_copy_autoclear", { text: w.address, clear_after_secs: settings.clipboardClearSecs });
+    await bridge.invoke("clipboard_copy_autoclear", { text: w.address, clearAfterSecs: settings.clipboardClearSecs });
     M.pulse(copy); toast(`Copied — clipboard clears in ${settings.clipboardClearSecs}s`, true);
   };
   row.appendChild(copy);
@@ -372,7 +452,7 @@ function renderSend() {
     const to = card.querySelector("#snd-to").value.trim();
     const amt = card.querySelector("#snd-amt").value.trim();
     try {
-      const prov = new window.ethers.JsonRpcProvider(EVM[cur().network].rpc);
+      const prov = getProv(cur().network);
       const signer = new window.ethers.Wallet(from.privateKey, prov);
       const bal = await prov.getBalance(from.address);
       const fee = 21000n * 2n * (await prov.getFeeData()).maxFeePerGas ?? 0n;
@@ -423,7 +503,7 @@ function renderSwap() {
       const ROUTER = "0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D";
       const WETH = "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2";
       const USDT = "0xdAC17F958D2ee523a2206206994597C13D831ec7";
-      const prov = new window.ethers.JsonRpcProvider(EVM.eth.rpc);
+      const prov = getProv("eth");
       const r = new window.ethers.Contract(ROUTER,
         ["function getAmountsOut(uint,address[]) view returns (uint[])"], prov);
       const amt = window.ethers.parseEther(card.querySelector("#sw-amt").value.replace(",", "."));
@@ -632,6 +712,14 @@ async function checkUpdates(silent) {
   } else if (!silent) toast("You are up to date", true);
 }
 
+/* ── titlebar (decorations:false) ── */
+function wireTitlebar() {
+  "use strict";
+  document.getElementById("tb-min").onclick = () => winCtrl("min");
+  document.getElementById("tb-max").onclick = () => winCtrl("max");
+  document.getElementById("tb-close").onclick = () => winCtrl("close");
+}
+
 /* ── boot ── */
 function paintError(msg) {
   let d = document.getElementById("fatal-err");
@@ -666,6 +754,7 @@ function uiLog(line) {
 })();
 async function boot() {
   try { document.title = "RV: booting…"; } catch {}
+  wireTitlebar();
   uiLog("boot start, bridge real=" + bridge.REAL);
   applySettings();
   const info = await bridge.invoke("app_info");

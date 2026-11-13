@@ -10,6 +10,14 @@
 <script src="./vendor/qrcode.min.js"></script>
 </head>
 <body>
+<header id="titlebar" data-tauri-drag-region>
+  <span class="tb-title" data-tauri-drag-region>◆ Ravenne Wallet</span>
+  <div class="tb-btns">
+    <button class="tb-btn" id="tb-min" title="Minimize">&#x2500;</button>
+    <button class="tb-btn" id="tb-max" title="Maximize">&#x25A1;</button>
+    <button class="tb-btn tb-close" id="tb-close" title="Close (to tray)">&#x2715;</button>
+  </div>
+</header>
 
 <!-- ═══ 1. CONFIGURATION PROPRIÉTAIRE (première exécution) ═══ -->
 <section class="screen" id="s-config">
@@ -78,6 +86,7 @@
     <p class="dim" id="pass-sub" style="margin:8px 0 20px;line-height:1.6">
       The master password decrypts <span class="mono">vault.ravenne.json</span> — the same file the CLI uses.</p>
     <input type="password" id="pass-input" placeholder="Master password" autocomplete="off">
+    <input type="password" id="pass-input2" placeholder="Confirm password" autocomplete="off" class="hidden">
     <div class="err" id="pass-err" style="height:18px;margin-top:8px;font-size:12px"></div>
     <button class="btn primary" id="pass-go" style="width:100%;margin-top:6px">Unlock</button>
   </div>

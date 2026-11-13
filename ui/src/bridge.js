@@ -134,3 +134,17 @@ function openReleases(repo) {
 }
 
 export const bridge = { REAL, invoke, checkUpdate, installUpdate, openReleases, mockPassword: MOCK_PASSWORD };
+
+/* ── window controls (custom titlebar) ── */
+export async function winCtrl(action) {
+  if (REAL) {
+    try {
+      const { getCurrentWindow } = await import("@tauri-apps/api/window");
+      const w = getCurrentWindow();
+      if (action === "min") await w.minimize();
+      else if (action === "max") await w.toggleMaximize();
+      else if (action === "close") await w.close();
+      else if (action === "hide") await w.hide();
+    } catch (e) { console.warn("winCtrl", e); }
+  } else console.log("[mock] window:", action);
+}

@@ -289,6 +289,10 @@ fn rand_bytes16() -> [u8; 16] {
     b
 }
 
+
+#[tauri::command]
+fn vault_exists() -> bool { vault_path().exists() }
+
 #[tauri::command]
 fn vault_backup(dest: Option<String>) -> Result<String, String> {
     let p = vault_path();
@@ -416,7 +420,7 @@ pub fn run() {
             send_webhook, gate_verify, vault_unlock, vault_write_encrypted,
             vault_backup, vault_restore, vault_wipe,
             clipboard_copy, clipboard_copy_autoclear, open_terminal,
-            set_close_to_tray, emit_lock, ui_log, get_hwid_debug,
+            set_close_to_tray, emit_lock, ui_log, get_hwid_debug, vault_exists,
         ])
         .on_window_event(|window, event| {
             if let tauri::WindowEvent::CloseRequested { api, .. } = event {
