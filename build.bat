@@ -64,7 +64,7 @@ if exist dist\access.ravenne.json del /q dist\access.ravenne.json
 echo         OK: dist contains no keys, no vault, no password.
 
 echo   [7/7] Creating zip...
-powershell -NoProfile -Command "Compress-Archive -Path 'dist\*' -DestinationPath ('ravenne-wallet-v' + '%VER%' + '.zip') -Force"
+python -c "import zipfile,glob,os;z=zipfile.ZipFile('ravenne-wallet-v%VER%.zip','w',zipfile.ZIP_DEFLATED);[z.write(f,os.path.basename(f)) for f in glob.glob(os.path.join('dist','*'))];z.close()"
 if errorlevel 1 goto err
 
 echo.

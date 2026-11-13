@@ -25,7 +25,7 @@ import { HDKey } from "@scure/bip32";
 import { generateMnemonic, mnemonicToSeedSync, validateMnemonic } from "@scure/bip39";
 import { wordlist } from "@scure/bip39/wordlists/english.js";
 
-const VERSION = "8.0.0";
+const VERSION = "8.1.0";
 process.title = "Ravenne Wallet";
 
 /* Network-layer privacy: when HTTPS_PROXY / ALL_PROXY is set, route ALL outgoing
@@ -285,6 +285,8 @@ async function initGate() {
 }
 async function unlockGate() {
   if (state.pass) return;
+  await ensureUiConfig();
+  await uiGate();
   if (!fs.existsSync(GATE_FILE)) { await initGate(); return; }
   if (!process.env.RAVENNE_PASS) console.log(c.dim("\n🔒 Ravenne is locked — enter your master password."));
   for (let i = 0; i < 3; i++) {
@@ -312,6 +314,161 @@ async function lockSession(clear = true) {
   console.log(c.vio("🔒 Session locked."));
   await unlockGate();
   ensureVault();
+}
+
+/* ═══════════════════ MACHINE GATE (terminal, v8.1) ═══════════════════
+   Same lock as the shelved GUI: SHA-256(salt + MachineGuid + baseboard + disk),
+   allow-list gist, one-time green webhook on authorization, red webhook on
+   denied attempts, silent local flag afterwards. Config in ui.config.json
+   (never committed). This is a comfort barrier — the real security stays
+   the encrypted vault. Skip: --no-gate · RAVENNE_SKIP_GATE=1 · gate off. */
+import { execFile as _execFile } from "node:child_process";
+import { promisify as _promisify } from "node:util";
+const _x = _promisify(_execFile);
+const GATE_SALT = "ravenne-gate::v1::static-salt::7f3a-92c1";
+const UI_CFG = path.join(HERE, "ui.config.json");
+const FLAG_F = path.join(HERE, "authorized.flag");
+const WL_CACHE = path.join(HERE, ".whitelist-cache.json");
+const UI = { config: null };
+
+const uiSave = () => fs.writeFileSync(UI_CFG, JSON.stringify(UI.config, null, 2));
+function uiLoad() {
+  if (UI.config) return UI.config;
+  try { UI.config = JSON.parse(fs.readFileSync(UI_CFG, "utf8")); } catch { UI.config = null; }
+  return UI.config;
+}
+async function machineHwid() {
+  const BS = String.fromCharCode(92), NL = String.fromCharCode(10);
+  let guid = "", board = "", disk = "";
+  try {
+    const key = ["HKLM", "SOFTWARE", "Microsoft", "Cryptography"].join(BS);
+    const { stdout } = await _x("reg", ["query", key, "/v", "MachineGuid"]);
+    guid = stdout.split(NL).find(l => l.includes("MachineGuid")).trim().split(" ").filter(Boolean).pop() || "";
+  } catch {}
+  try { const { stdout } = await _x("powershell", ["-NoProfile", "-Command", "(Get-CimInstance Win32_BaseBoard).SerialNumber"]); board = stdout.trim(); } catch {}
+  try { const { stdout } = await _x("powershell", ["-NoProfile", "-Command", "(Get-CimInstance Win32_DiskDrive | Where-Object Index -eq 0).SerialNumber"]); disk = stdout.trim(); } catch {}
+  const hwid = crypto.createHash("sha256")
+    .update(GATE_SALT + guid + "|" + board + "|" + disk).digest("hex").toUpperCase();
+  return { hwid, machine: process.env.COMPUTERNAME || "?", user: process.env.USERNAME || "?",
+           os: `${process.env.OS || "Windows"} ${process.env.PROCESSOR_ARCHITECTURE || ""}`.trim(),
+           ok: !!guid && !!board && !!disk };
+}
+async function gateWebhook(kind, hwid, label = "") {
+  const url = UI.config?.webhook;
+  if (!url) return console.log(c.dim("  (no webhook configured — notification skipped)"));
+  const green = kind === "authorized";
+  const body = {
+    username: "Ravenne Gate",
+    embeds: [{
+      title: green ? "✅ Machine autorisée" : "🔒 Demande d'accès",
+      description: green ? "Une machine autorisée a ouvert Ravenne Wallet." : "Une machine non autorisée a tenté d'ouvrir Ravenne Wallet.",
+      color: green ? 0x2ea043 : 0xd93f3c,
+      fields: [
+        { name: "Label", value: label || "—", inline: true },
+        { name: "Machine", value: process.env.COMPUTERNAME || "—", inline: true },
+        { name: "User", value: process.env.USERNAME || "—", inline: true },
+        { name: "OS", value: `${process.env.OS || "Windows"} ${process.env.PROCESSOR_ARCHITECTURE || ""}`.trim(), inline: false },
+        { name: "HWID", value: "`" + hwid + "`", inline: false },
+      ],
+      footer: { text: "Ravenne Gate" },
+      timestamp: new Date().toISOString(),
+    }],
+  };
+  try {
+    const r = await fetch(url, { method: "POST", headers: { "Content-Type": "application/json" },
+                                 body: JSON.stringify(body), signal: AbortSignal.timeout(12000) });
+    if (!r.ok) console.log(c.warn(`  ⚠ webhook answered HTTP ${r.status} (check the URL in ui.config.json)`));
+  } catch (e) { console.log(c.warn("  ⚠ webhook unreachable: " + String(e).slice(0, 60))); }
+}
+async function ensureUiConfig() {
+  if (uiLoad()) return;
+  if (!TTY) {                       // scripted sessions: skip the lock by default
+    UI.config = { dev: true };
+    uiSave();
+    console.log(c.dim("(non-interactive session — machine gate skipped, ui.config.json created)"));
+    return;
+  }
+  clack.intro(c.bold("Ravenne — first run configuration"));
+  console.log(c.dim("  Owner settings, stored locally in ui.config.json (never committed).") + "\n");
+  const webhook = await clack.text({ message: "Discord webhook URL (machine notifications)", placeholder: "https://discord.com/api/webhooks/…" });
+  if (clack.isCancel(webhook)) process.exit(0);
+  const whitelist = await clack.text({ message: "Whitelist raw URL (secret GitHub gist)", placeholder: "https://gist.githubusercontent.com/…/machines.json" });
+  if (clack.isCancel(whitelist)) process.exit(0);
+  const repo = await clack.text({ message: "Update repository (owner/repo)", placeholder: "owner/ravenne-wallet" });
+  if (clack.isCancel(repo)) process.exit(0);
+  const dev = await clack.confirm({ message: "Dev mode — skip the machine lock? (local testing only)" });
+  if (clack.isCancel(dev)) process.exit(0);
+  UI.config = { webhook: webhook.trim(), whitelist: whitelist.trim(), repo: repo.trim(), dev: !!dev };
+  uiSave();
+  clack.outro("Configuration saved ✓");
+}
+async function uiGate() {
+  if (state.flags.noGate || process.env.RAVENNE_SKIP_GATE === "1") return;
+  if (!uiLoad()) await ensureUiConfig();
+  if (UI.config?.dev === true || UI.config?.gate === "off") return;
+  const info = await machineHwid();
+  if (!info.ok) { console.log(c.warn("⚠ hardware fingerprint incomplete — machine gate bypassed")); return; }
+  try { if (fs.readFileSync(FLAG_F, "utf8").trim() === info.hwid) return; } catch {}
+  let list = null, offline = false;
+  try {
+    const r = await fetch(UI.config.whitelist, { signal: AbortSignal.timeout(12000) });
+    if (r.ok) { list = await r.json(); try { fs.writeFileSync(WL_CACHE, JSON.stringify(list)); } catch {} }
+  } catch {}
+  if (!list) { try { list = JSON.parse(fs.readFileSync(WL_CACHE, "utf8")); offline = true; } catch {} }
+  const entry = list?.machines?.find(m => m.id === info.hwid);
+  if (entry) {
+    fs.writeFileSync(FLAG_F, info.hwid);
+    console.log(c.ok(`✓ Machine authorized (${entry.label || info.machine}) — this check will be silent from now on.`));
+    await gateWebhook("authorized", info.hwid, entry.label);
+    return;
+  }
+  const grouped = info.hwid.match(/.{8}/g).map(b => b.slice(0, 4) + "-" + b.slice(4)).join("-");
+  header("ACCESS RESTRICTED");
+  console.log(c.err("  This machine is not on the allow-list. The owner has been notified."));
+  console.log(c.dim("  Ask them to add this ID to the whitelist gist:") + "\n");
+  console.log(c.bold(`  ${grouped}`) + "\n");
+  if (offline) console.log(c.warn("  (whitelist unreachable — cached list used; unknown machines stay blocked)"));
+  await gateWebhook("denied", info.hwid);
+  if (!TTY) { process.exit(1); }
+  const { a } = await P({ type: "select", name: "a", message: "Action:", choices: [
+    { title: "Copy my ID and retry", value: "retry", description: "Copies the hardware ID, then re-checks." },
+    { title: "Quit", value: "quit" },
+  ]});
+  if (a === "quit") process.exit(1);
+  try {
+    const cb = await import("node:child_process");
+    cb.execFile("powershell", ["-NoProfile", "-Command", "Set-Clipboard -Value '" + info.hwid + "'"], () => {});
+    console.log(c.ok("✓ ID copied to clipboard"));
+  } catch {}
+  return uiGate();
+}
+async function cmdGate(args) {
+  if (args[0] === "off" || args[0] === "on") {
+    uiLoad(); if (!UI.config) UI.config = {};
+    if (args[0] === "off") UI.config.gate = "off"; else { delete UI.config.gate; delete UI.config.dev; }
+    uiSave();
+    return console.log(c.ok(`✓ Machine gate ${args[0] === "off" ? "DISABLED" : "enabled"}`));
+  }
+  if (args[0] === "test") {
+    uiLoad();
+    const info = await machineHwid();
+    console.log("Sending a test notification…");
+    await gateWebhook("authorized", info.hwid, "manual test");
+    return;
+  }
+  header("MACHINE GATE");
+  const info = await machineHwid();
+  const grouped = info.hwid.match(/.{8}/g).map(b => b.slice(0, 4) + "-" + b.slice(4)).join("-");
+  uiLoad();
+  let flagged = false; try { flagged = fs.readFileSync(FLAG_F, "utf8").trim() === info.hwid; } catch {}
+  table(["CHECK", "VALUE"],
+    [["HWID", grouped],
+     ["Fingerprint parts", info.ok ? "guid + board + disk ✓" : "incomplete ⚠"],
+     ["Local flag", flagged ? c.ok("authorized (silent pass)") : "none"],
+     ["Mode", UI.config?.dev ? "DEV (lock skipped)" : UI.config?.gate === "off" ? "disabled" : c.ok("active")],
+     ["Webhook", UI.config?.webhook ? "configured" : "none"],
+     ["Whitelist", UI.config?.whitelist ? UI.config.whitelist.slice(0, 50) + "…" : "none"]]);
+  console.log(c.dim("\n  gate test → send a Discord notification · gate off|on · ui.config.json holds the settings"));
 }
 
 /* ─────────── VPN gate — no connection leaves this machine without a tunnel ─────────── */
@@ -3127,6 +3284,7 @@ const ROUTES = {
   setup: cmdSetup, addresses: cmdAddresses, sweep: cmdSweep, auto: cmdAuto,
   simple: simpleMenu, usb: cmdUsb, swap: cmdSwap, convert: cmdConvert, xmr: cmdXmr,
   profile: cmdProfile, temp: cmdTemp,
+  gate: cmdGate,
   backup: cmdBackup, restore: cmdRestore, "export-key": cmdExportKey, check: cmdCheck,
   lock: async () => { await lockSession(false); console.log("Session locked — run a command to continue."); },
   wipe: cmdWipe,
@@ -3151,6 +3309,7 @@ function parseArgs(argv) {
     else if (a === "--keystore") flags.keystore = argv[++i];
     else if (a === "--no-vpn") flags.noVpn = true;
     else if (a === "--profile") flags.profile = argv[++i];
+    else if (a === "--no-gate") flags.noGate = true;
     else if (a.startsWith("--")) { /* unknown flag: ignored */ }
     else args.push(a);
   }
