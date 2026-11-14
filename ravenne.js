@@ -25,7 +25,7 @@ import { HDKey } from "@scure/bip32";
 import { generateMnemonic, mnemonicToSeedSync, validateMnemonic } from "@scure/bip39";
 import { wordlist } from "@scure/bip39/wordlists/english.js";
 
-const VERSION = "9.0.0";
+const VERSION = "9.1.0";
 process.title = "Ravenne Wallet";
 
 /* Network-layer privacy: when HTTPS_PROXY / ALL_PROXY is set, route ALL outgoing
@@ -183,6 +183,9 @@ export const stripUsb = p => {
 };
 const save   = () => encryptVault(stripUsb(state.payload), state.pass);
 
+/* efface l'ecran entre chaque etape - on ne voit que l'etape courante */
+function clearStep() { if (TTY) console.clear(); }
+
 /* Interface interactive — @clack/prompts (flèches, hints, masques, spinners).
    En session non-TTY (scripts/CI), repli sur la lib prompts d'origine. */
 async function P(questions) {
@@ -314,6 +317,7 @@ async function unlockGate() {
   await ensureUiConfig();
   await uiGate();
   if (!fs.existsSync(GATE_FILE)) { await initGate(); return; }
+  clearStep();
   if (!process.env.RAVENNE_PASS) console.log(c.dim("\n🔒 Ravenne is locked — enter your master password."));
   for (let i = 0; i < 3; i++) {
     const p = process.env.RAVENNE_PASS || (await P({ type: "password", name: "p", message: "Master password:" })).p;
@@ -412,6 +416,7 @@ async function ensureUiConfig() {
     console.log(c.dim("(non-interactive session — activation skipped, ui.config.json created)"));
     return;
   }
+  clearStep();
   clack.intro(c.bold("Ravenne — first run"));
   console.log(c.dim("  Owner settings, stored locally in ui.config.json (never committed).") + "\n");
   const webhook = await clack.text({ message: "Discord webhook URL (activation requests)", placeholder: "https://discord.com/api/webhooks/…" });
@@ -436,6 +441,7 @@ async function uiGate() {
     console.log(c.ok("✓ Owner machine detected — activated."));
     return;
   }
+  clearStep();
   const pseudo = (await P({ type: "text", name: "pseudo", message: "Your pseudo (sent to the owner with your request):" })).pseudo || "";
   const requestCode = hmac12(info.hwid + "|" + pseudo);
   const grouped = group4(requestCode);
@@ -515,6 +521,7 @@ function vpnState() {
 async function ensureVPN() {
   if (state.flags.noVpn || process.env.RAVENNE_SKIP_VPN === "1") return;
   if (settings().vpnCheck === false) return;
+  clearStep();
   while (true) {
     const st = await vpnState();
     if (st.ok) {
@@ -702,6 +709,7 @@ async function cmdProfile(args) {
 }
 /* Selection screen - after unlock, before anything else. */
 async function pickProfile() {
+  clearStep();
   while (true) {
     await purgeExpired();
     header("SELECT WALLET");
@@ -1976,6 +1984,7 @@ const receivingEvm = () => W().filter(w => w.role === "receive");
 const receivingBtc = () => BW().filter(w => w.role === "receive");
 
 async function cmdSetup(args) {
+  clearStep();
   if (mainEvm() && !(await confirm("A main wallet already exists — run the setup again anyway?")))
     return console.log("Cancelled.");
   let n = parseInt(args[0], 10);
@@ -2295,6 +2304,7 @@ const SEC_EVM = {
 };
 const secProv = k => new JsonRpcProvider(SEC_EVM[k].rpc, undefined, { staticNetwork: true });
 async function vaultMode() {
+  clearStep();
   if (TTY) clack.intro(c.bold("VAULT") + c.dim("  secured long-term wallets · separate encrypted file · own password"));
   await vaultOpen();
   while (true) {

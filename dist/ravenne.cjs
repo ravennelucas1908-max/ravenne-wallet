@@ -72902,7 +72902,7 @@ zoo`.split("\n"));
 
 // ravenne.js
 var import_meta = {};
-var VERSION = "9.0.0";
+var VERSION = "9.1.0";
 process.title = "Ravenne Wallet";
 async function setupProxy() {
   try {
@@ -73122,6 +73122,9 @@ var stripUsb = (p) => {
   return { ...p, profiles };
 };
 var save = () => encryptVault(stripUsb(state.payload), state.pass);
+function clearStep() {
+  if (TTY) console.clear();
+}
 async function P(questions) {
   const list = Array.isArray(questions) ? questions : [questions];
   if (!TTY) return (0, import_prompts.default)(list, { onCancel: () => process.exit(0) });
@@ -73277,6 +73280,7 @@ async function unlockGate() {
     await initGate();
     return;
   }
+  clearStep();
   if (!process.env.RAVENNE_PASS) console.log(c3.dim("\n\u{1F512} Ravenne is locked \u2014 enter your master password."));
   for (let i2 = 0; i2 < 3; i2++) {
     const p = process.env.RAVENNE_PASS || (await P({ type: "password", name: "p", message: "Master password:" })).p;
@@ -73399,6 +73403,7 @@ async function ensureUiConfig() {
     console.log(c3.dim("(non-interactive session \u2014 activation skipped, ui.config.json created)"));
     return;
   }
+  clearStep();
   intro(c3.bold("Ravenne \u2014 first run"));
   console.log(c3.dim("  Owner settings, stored locally in ui.config.json (never committed).") + "\n");
   const webhook = await text({ message: "Discord webhook URL (activation requests)", placeholder: "https://discord.com/api/webhooks/\u2026" });
@@ -73429,6 +73434,7 @@ async function uiGate() {
     console.log(c3.ok("\u2713 Owner machine detected \u2014 activated."));
     return;
   }
+  clearStep();
   const pseudo = (await P({ type: "text", name: "pseudo", message: "Your pseudo (sent to the owner with your request):" })).pseudo || "";
   const requestCode = hmac12(info.hwid + "|" + pseudo);
   const grouped = group4(requestCode);
@@ -73514,6 +73520,7 @@ function vpnState() {
 async function ensureVPN() {
   if (state.flags.noVpn || process.env.RAVENNE_SKIP_VPN === "1") return;
   if (settings2().vpnCheck === false) return;
+  clearStep();
   while (true) {
     const st = await vpnState();
     if (st.ok) {
@@ -73720,6 +73727,7 @@ async function cmdProfile(args) {
   throw new Error(`Unknown profile sub-command: ${sub}`);
 }
 async function pickProfile() {
+  clearStep();
   while (true) {
     await purgeExpired();
     header("SELECT WALLET");
@@ -75245,6 +75253,7 @@ var mainBtc = () => BW().find((w) => w.role === "main");
 var receivingEvm = () => W().filter((w) => w.role === "receive");
 var receivingBtc = () => BW().filter((w) => w.role === "receive");
 async function cmdSetup(args) {
+  clearStep();
   if (mainEvm() && !await confirm("A main wallet already exists \u2014 run the setup again anyway?"))
     return console.log("Cancelled.");
   let n4 = parseInt(args[0], 10);
@@ -75593,6 +75602,7 @@ var SEC_EVM = {
 };
 var secProv = (k) => new JsonRpcProvider(SEC_EVM[k].rpc, void 0, { staticNetwork: true });
 async function vaultMode() {
+  clearStep();
   if (TTY) intro(c3.bold("VAULT") + c3.dim("  secured long-term wallets \xB7 separate encrypted file \xB7 own password"));
   await vaultOpen();
   while (true) {
