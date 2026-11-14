@@ -72902,7 +72902,7 @@ zoo`.split("\n"));
 
 // ravenne.js
 var import_meta = {};
-var VERSION = "9.1.0";
+var VERSION = "9.2.0";
 process.title = "Ravenne Wallet";
 async function setupProxy() {
   try {
@@ -73570,10 +73570,9 @@ async function ensureVPN() {
 function hardenFile(p) {
   try {
     if (process.platform !== "win32") return;
-    const { execSync } = require("node:child_process");
     const u3 = process.env.USERNAME || "";
     if (!u3) return;
-    execSync(`icacls "${p}" /inheritance:r /grant:r "${u3}:F"`, { stdio: "ignore" });
+    _execSync(`icacls "${p}" /inheritance:r /grant:r "${u3}:F"`, { stdio: "ignore" });
   } catch {
   }
 }
@@ -75275,35 +75274,49 @@ async function cmdSetup(args) {
     await P({ type: "text", name: "_", message: c3.dim("Press Enter to clear the phrase from the screen\u2026") });
     console.clear();
   } else console.log(c3.warn("  (--yes mode: copy it NOW from the output above \u2014 it will not be shown again)" + (watchOnly ? "" : "")));
+  clearStep();
   header("STEP 2/3 \u2014 MAIN WALLETS");
-  const evmMain = HDNodeWallet.fromPhrase(mainPhrase, "", "m/44'/60'/0'/0/0");
-  const btcMain = btcAddressFromPhrase(mainPhrase, 0, settings2().btcTest);
-  W().push({
-    label: "main",
-    address: evmMain.address,
-    role: "main",
-    ...watchOnly ? { watchOnly: true } : { privateKey: evmMain.privateKey, phrase: mainPhrase }
+  let evmMain, btcMain;
+  await spin("Generating your main wallets\u2026", async () => {
+    await sleep(400);
+    evmMain = HDNodeWallet.fromPhrase(mainPhrase, "", "m/44'/60'/0'/0/0");
+    btcMain = btcAddressFromPhrase(mainPhrase, 0, settings2().btcTest);
+    W().push({
+      label: "main",
+      address: evmMain.address,
+      role: "main",
+      ...watchOnly ? { watchOnly: true } : { privateKey: evmMain.privateKey, phrase: mainPhrase }
+    });
+    BW().push({
+      label: "btc-main",
+      address: btcMain.address,
+      role: "main",
+      index: 0,
+      ...watchOnly ? { watchOnly: true } : { phrase: mainPhrase }
+    });
   });
-  BW().push({
-    label: "btc-main",
-    address: btcMain.address,
-    role: "main",
-    index: 0,
-    ...watchOnly ? { watchOnly: true } : { phrase: mainPhrase }
-  });
+  clearStep();
   header("STEP 3/3 \u2014 RECEIVING ADDRESSES");
   console.log(c3.dim("A separate hot seed (stored encrypted in the vault) creates the receiving"));
-  console.log(c3.dim("addresses. Everything they receive is forwarded to your main wallets.\n"));
-  const recvPhrase = Mnemonic.fromEntropy(import_node_crypto.default.randomBytes(32)).phrase;
-  settings2().seeds.receive = recvPhrase;
-  const existing = receivingEvm().length;
-  for (let i2 = 0; i2 < n4; i2++) {
-    const w = HDNodeWallet.fromPhrase(recvPhrase, "", `m/44'/60'/0'/0/${existing + i2}`);
-    W().push({ label: `in-${existing + i2 + 1}`, address: w.address, privateKey: w.privateKey, role: "receive" });
-    const b2 = btcAddressFromPhrase(recvPhrase, existing + i2, settings2().btcTest);
-    BW().push({ label: `btc-in-${existing + i2 + 1}`, address: b2.address, phrase: recvPhrase, index: existing + i2, role: "receive" });
-  }
+  console.log(c3.dim("addresses. Everything they receive is forwarded to your main wallets."));
+  await spin("Creating your receiving addresses\u2026", async () => {
+    await sleep(300);
+    const recvPhrase = Mnemonic.fromEntropy(import_node_crypto.default.randomBytes(32)).phrase;
+    settings2().seeds.receive = recvPhrase;
+    const existing = receivingEvm().length;
+    for (let i2 = 0; i2 < n4; i2++) {
+      const w = HDNodeWallet.fromPhrase(recvPhrase, "", `m/44'/60'/0'/0/${existing + i2}`);
+      W().push({ label: `in-${existing + i2 + 1}`, address: w.address, privateKey: w.privateKey, role: "receive" });
+      const b2 = btcAddressFromPhrase(recvPhrase, existing + i2, settings2().btcTest);
+      BW().push({ label: `btc-in-${existing + i2 + 1}`, address: b2.address, phrase: recvPhrase, index: existing + i2, role: "receive" });
+      await sleep(120);
+    }
+  });
   save();
+  clearStep();
+  await spin("Finalizing\u2026", async () => {
+    await sleep(500);
+  });
   box("READY \u2014 YOUR SETUP", [
     `Main (keep PRIVATE)    ${evmMain.address}`,
     `Main BTC               ${btcMain.address}`,
@@ -75315,10 +75328,18 @@ async function cmdSetup(args) {
   ]);
   console.log(c3.dim("\nPrivacy: give a different receiving address to each payer, and let"));
   console.log(c3.dim("'ravenne auto' forward at random intervals \u2014 never reuse the main address publicly."));
-  console.log(c3.dim("\nRestarting Ravenne\u2026"));
-  const { spawn } = await import("node:child_process");
-  spawn(process.execPath, process.argv.slice(1), { detached: true, stdio: "ignore" }).unref();
-  process.exit(0);
+  {
+    if (!TTY) {
+      console.log(c3.dim("Setup complete \u2014 relaunch Ravenne to continue."));
+      return;
+    }
+    const sp2 = spinner();
+    sp2.start("Restarting Ravenne\u2026");
+    await sleep(900);
+    const target = process.pkg ? [process.execPath] : [process.execPath, process.argv[1]];
+    _spawn(target[0], target.slice(1), { detached: true, stdio: "ignore" }).unref();
+    process.exit(0);
+  }
 }
 async function cmdAddresses(args) {
   let add3 = parseInt(args[0], 10) || 0;
@@ -76625,7 +76646,6 @@ async function cmdXmr(args) {
     settings2().xmrRpcAuth = auth;
     save();
     import_node_fs.default.mkdirSync(import_node_path.default.join(XMR_DIR, "wallets"), { recursive: true });
-    const { spawn } = await import("node:child_process");
     const child = spawn(
       exe,
       [
