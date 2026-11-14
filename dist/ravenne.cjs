@@ -72961,7 +72961,7 @@ zoo`.split("\n"));
 var import_node_child_process2 = require("node:child_process");
 var import_node_util3 = require("node:util");
 var import_meta = {};
-var VERSION = "8.1.0";
+var VERSION = "8.2.0";
 process.title = "Ravenne Wallet";
 async function setupProxy() {
   try {
@@ -72987,13 +72987,67 @@ var HERE = hereDir();
 var VAULT_FILE = import_node_path.default.join(HERE, "vault.ravenne.json");
 var GATE_FILE = import_node_path.default.join(HERE, "access.ravenne.json");
 var NET = {
-  local: { label: "Local (test)", rpc: "http://127.0.0.1:8545", sym: "ETH", ex: null, cg: null, api: null },
-  eth: { label: "Ethereum", rpc: "https://ethereum-rpc.publicnode.com", sym: "ETH", ex: "https://etherscan.io", cg: "ethereum", api: "https://eth.blockscout.com" },
-  poly: { label: "Polygon", rpc: "https://polygon-bor-rpc.publicnode.com", sym: "POL", ex: "https://polygonscan.com", cg: "polygon-ecosystem-token", api: "https://polygon.blockscout.com" },
-  bsc: { label: "BNB Chain", rpc: "https://bsc-rpc.publicnode.com", sym: "BNB", ex: "https://bscscan.com", cg: "binancecoin", api: "https://bsc.blockscout.com" },
-  arb: { label: "Arbitrum", rpc: "https://arbitrum-one-rpc.publicnode.com", sym: "ETH", ex: "https://arbiscan.io", cg: "ethereum", api: "https://arbitrum.blockscout.com" },
-  base: { label: "Base", rpc: "https://base-rpc.publicnode.com", sym: "ETH", ex: "https://basescan.org", cg: "ethereum", api: "https://base.blockscout.com" },
-  op: { label: "Optimism", rpc: "https://optimism-rpc.publicnode.com", sym: "ETH", ex: "https://optimistic.etherscan.io", cg: "ethereum", api: "https://optimism.blockscout.com" }
+  local: { label: "Local (test)", rpc: "http://127.0.0.1:8545", rpcs: null, cid: 1337, sym: "ETH", ex: null, cg: null, api: null },
+  eth: {
+    label: "Ethereum",
+    rpc: "https://ethereum-rpc.publicnode.com",
+    sym: "ETH",
+    ex: "https://etherscan.io",
+    cg: "ethereum",
+    api: "https://eth.blockscout.com",
+    cid: 1,
+    rpcs: ["https://ethereum-rpc.publicnode.com", "https://1rpc.io/eth"]
+  },
+  poly: {
+    label: "Polygon",
+    rpc: "https://polygon-bor-rpc.publicnode.com",
+    sym: "POL",
+    ex: "https://polygonscan.com",
+    cg: "polygon-ecosystem-token",
+    api: "https://polygon.blockscout.com",
+    cid: 137,
+    rpcs: ["https://polygon-bor-rpc.publicnode.com", "https://1rpc.io/matic"]
+  },
+  bsc: {
+    label: "BNB Chain",
+    rpc: "https://bsc-rpc.publicnode.com",
+    sym: "BNB",
+    ex: "https://bscscan.com",
+    cg: "binancecoin",
+    api: "https://bsc.blockscout.com",
+    cid: 56,
+    rpcs: ["https://bsc-rpc.publicnode.com", "https://bsc-dataseed.bnbchain.org", "https://1rpc.io/bnb"]
+  },
+  arb: {
+    label: "Arbitrum",
+    rpc: "https://arbitrum-one-rpc.publicnode.com",
+    sym: "ETH",
+    ex: "https://arbiscan.io",
+    cg: "ethereum",
+    api: "https://arbitrum.blockscout.com",
+    cid: 42161,
+    rpcs: ["https://arbitrum-one-rpc.publicnode.com", "https://arb1.arbitrum.io/rpc", "https://1rpc.io/arb"]
+  },
+  base: {
+    label: "Base",
+    rpc: "https://base-rpc.publicnode.com",
+    sym: "ETH",
+    ex: "https://basescan.org",
+    cg: "ethereum",
+    api: "https://base.blockscout.com",
+    cid: 8453,
+    rpcs: ["https://base-rpc.publicnode.com", "https://mainnet.base.org", "https://1rpc.io/base"]
+  },
+  op: {
+    label: "Optimism",
+    rpc: "https://optimism-rpc.publicnode.com",
+    sym: "ETH",
+    ex: "https://optimistic.etherscan.io",
+    cg: "ethereum",
+    api: "https://optimism.blockscout.com",
+    cid: 10,
+    rpcs: ["https://optimism-rpc.publicnode.com", "https://mainnet.optimism.io", "https://1rpc.io/op"]
+  }
 };
 var NET_ALIASES = {
   local: "local",
@@ -73101,9 +73155,26 @@ var XW = () => cur().xmrWallets;
 var netKey = () => cur().network;
 var N2 = () => NET[netKey()];
 var settings2 = () => V().settings ??= structuredClone(DEFAULT_SETTINGS);
-var rpcUrl = (k) => settings2().rpc?.[k] || NET[k].rpc;
-var explorerApi = (k) => settings2().explorers?.[k] || NET[k].api;
-var provider = () => new JsonRpcProvider(rpcUrl(netKey()));
+var rpcUrl = (k) => settings2().rpc?.[k] || (settings2().privacy?.rpcRotation !== false && NET[k].rpcs?.length ? NET[k].rpcs[Math.floor(Math.random() * NET[k].rpcs.length)] : NET[k].rpc);
+var makeProvider = (k = netKey()) => new JsonRpcProvider(rpcUrl(k), NET[k].cid, { staticNetwork: true });
+async function rpcCall(k, method, params, timeoutMs = 6e3) {
+  const pool = settings2().privacy?.rpcRotation !== false && NET[k].rpcs?.length ? [...NET[k].rpcs].sort(() => Math.random() - 0.5) : [rpcUrl(k)];
+  for (const url of pool) {
+    try {
+      const r2 = await fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ jsonrpc: "2.0", id: Date.now(), method, params }),
+        signal: AbortSignal.timeout(timeoutMs)
+      });
+      const j = await r2.json();
+      if (j?.result !== void 0) return j.result;
+    } catch {
+    }
+  }
+  throw new Error(`RPC ${NET[k].label}: all endpoints failed`);
+}
+var provider = () => makeProvider(netKey());
 var stripUsb = (p) => {
   if (!p?.profiles) return p;
   const profiles = Object.fromEntries(Object.entries(p.profiles).map(([k, v]) => [k, { ...v, wallets: v.wallets.filter((w) => !w.usb), btcWallets: v.btcWallets.filter((w) => !w.usb) }]));
@@ -73625,7 +73696,7 @@ async function purgeExpired(quiet = false) {
     if (!w.expiresAt || w.expiresAt > now) continue;
     if (w.privateKey && mainEvm()) {
       try {
-        const prov = new JsonRpcProvider(rpcUrl(netKey()));
+        const prov = makeProvider();
         const bal = await prov.getBalance(w.address).catch(() => 0n);
         const per = await feePerTx(prov).catch(() => 0n);
         if (bal > per) {
@@ -73905,8 +73976,19 @@ async function feePerTx(prov, gas = 21000n) {
   return gas * 30n * 10n ** 9n;
 }
 async function getBalances(k, prov) {
-  prov = prov || new JsonRpcProvider(rpcUrl(k));
-  return Promise.all(W().map((w) => prov.getBalance(w.address).catch(() => null)));
+  if (prov && !settings2().privacy?.queryJitter) {
+    return Promise.all(W().map((w) => prov.getBalance(w.address).catch(() => null)));
+  }
+  const out = [];
+  for (const w of W()) {
+    try {
+      out.push(BigInt(await rpcCall(k, "eth_getBalance", [w.address, "latest"])));
+    } catch {
+      out.push(null);
+    }
+    if (settings2().privacy?.queryJitter) await sleep(40 + Math.floor(Math.random() * 120));
+  }
+  return out;
 }
 async function maybePrices(netKeys) {
   if (!settings2().prices) return null;
@@ -73984,6 +74066,35 @@ async function buildBtcTx(entry, utxos, toAddr, amountSat, satPerVb, testnet2 = 
   for (let i2 = 0; i2 < picked.length; i2++) psbt.signInput(i2, signer);
   psbt.finalizeAllInputs();
   return { hex: psbt.extractTransaction().toHex(), fee, change, inputs: picked.length };
+}
+function poisoningCheck(addr) {
+  const known = [
+    ...W().map((w) => w.address),
+    ...BW().map((w) => w.address),
+    ...settings2().book.map((b2) => b2.address)
+  ].filter(Boolean).map((a2) => a2.toLowerCase());
+  const t2 = addr.toLowerCase();
+  if (known.includes(t2)) return null;
+  const twin = known.find((k) => (k.slice(0, 8) === t2.slice(0, 8) || k.slice(-8) === t2.slice(-8)) && k !== t2);
+  return twin || null;
+}
+async function guardRecipient(addr) {
+  const twin = poisoningCheck(addr);
+  if (!twin) return;
+  header("ADDRESS POISONING ALERT");
+  console.log(c3.err("  The recipient looks like one of your known addresses but is NOT it:"));
+  console.log(c3.dim("  yours:    ") + twin);
+  console.log(c3.dim("  requested: ") + addr.toLowerCase());
+  console.log(c3.warn("  Scammers send look-alike addresses to hijack copy-paste. Verify on another channel."));
+  if (!TTY) {
+    console.log(c3.err("  Blocked in non-interactive mode."));
+    process.exit(1);
+  }
+  const { v } = await P({ type: "text", name: "v", message: "Type POISON-OK if you are 100% sure:" });
+  if (v !== "POISON-OK") {
+    console.log("Cancelled.");
+    process.exit(0);
+  }
 }
 async function doSend(fromIdx, toAddr, valueWei, netK, token = null) {
   const src = W()[fromIdx];
@@ -74301,6 +74412,7 @@ async function cmdSend(args) {
   if (from < 0) throw new Error(`Source wallet not found: "${fromA}"`);
   requireKey(from);
   const to = resolveTo(toA);
+  if (to.addr.startsWith("0x")) await guardRecipient(to.addr);
   const prov = provider();
   let token = null;
   if (state.flags.token) {
@@ -74457,7 +74569,7 @@ async function cmdSplit(args) {
   save();
   let sent = 0n;
   for (let i2 = 0; i2 < n4; i2++) {
-    const value2 = i2 === n4 - 1 ? await new JsonRpcProvider(rpcUrl(netKey())).getBalance(W()[from].address) - per : amounts[i2];
+    const value2 = i2 === n4 - 1 ? await makeProvider().getBalance(W()[from].address) - per : amounts[i2];
     if (value2 <= 0n) {
       console.log(c3.warn(`  \u26A0 share ${i2 + 1} skipped (dust)`));
       continue;
@@ -74832,6 +74944,7 @@ async function cmdSettings(args) {
   const s = settings2();
   if (!args.length) {
     box("SETTINGS", [
+      `privacy     rotation RPC ${s.privacy?.rpcRotation !== false ? "ON" : "OFF"} \xB7 jitter ${s.privacy?.queryJitter ? "ON" : "OFF"}`,
       `vpn check   ${s.vpnCheck ? c3.ok("ON  (no connection without an active VPN)") : "OFF"}`,
       `prices      ${s.prices ? "ON  (fiat values via CoinGecko)" : "OFF (no price queries \u2014 better privacy)"}`,
       `autolock    ${s.autolockMin} min of inactivity in the menu (0 = off)`,
@@ -75346,7 +75459,7 @@ async function cmdSweep(opts = {}) {
   let moved = 0n, count = 0;
   const pending = [];
   for (const k of chains) {
-    const prov = new JsonRpcProvider(rpcUrl(k));
+    const prov = makeProvider(k);
     const per = await feePerTx(prov).catch(() => null);
     if (per == null) {
       console.log(c3.warn(`  \u26A0 ${NET[k].label}: RPC unreachable`));
@@ -75914,6 +76027,16 @@ async function quickSettings() {
         description: "Menu re-asks the master password after this idle time (0 = never)."
       },
       {
+        title: `RPC rotation: ${s.privacy?.rpcRotation !== false ? "ON" : "OFF"}`,
+        value: "rot",
+        description: "Each query picks a random free RPC \u2014 no single provider sees all your addresses."
+      },
+      {
+        title: `Query jitter: ${s.privacy?.queryJitter ? "ON" : "OFF"}`,
+        value: "jit",
+        description: "Random small delays between address lookups (slower, breaks burst correlation)."
+      },
+      {
         title: `Sweep threshold: ${s.privacy.sweepFeeMult ?? 3}\xD7 fee`,
         value: "sweepfee",
         description: "Receiving wallets are forwarded once they hold more than fee \xD7 this number."
@@ -75947,6 +76070,18 @@ async function quickSettings() {
         s.autolockMin = m;
         save();
         console.log(c3.ok(`\u2713 Auto-lock: ${m === 0 ? "off" : `${m} min`}`));
+      }
+      if (a2 === "rot") {
+        s.privacy ??= {};
+        s.privacy.rpcRotation = s.privacy.rpcRotation === false ? true : false;
+        save();
+        console.log(c3.ok(`\u2713 RPC rotation ${s.privacy.rpcRotation === false ? "OFF" : "ON"}`));
+      }
+      if (a2 === "jit") {
+        s.privacy ??= {};
+        s.privacy.queryJitter = !s.privacy.queryJitter;
+        save();
+        console.log(c3.ok(`\u2713 Query jitter ${s.privacy.queryJitter ? "ON" : "OFF"}`));
       }
       if (a2 === "sweepfee") {
         const { m } = await P({ type: "number", name: "m", message: "Forward when balance > fee \xD7 :", initial: s.privacy.sweepFeeMult ?? 3, min: 1, max: 100 });
@@ -76967,7 +77102,7 @@ Offline signing (air-gapped, EVM)
 Security & privacy
   changepass \xB7 lock \xB7 wipe     Master password \xB7 session lock \xB7 secure erase
   rpc [chain] [url|reset]      Use your own node (IP privacy)
-  settings                     Prices on/off \xB7 auto-lock minutes
+  settings                     Prices, rotation RPC, jitter, sweep threshold, auto-lock
   network [chain]              eth \xB7 poly \xB7 bsc \xB7 arb \xB7 base \xB7 op \xB7 local
 
 Flags: --yes \xB7 --all \xB7 --random \xB7 --delay <s> \xB7 --words 24 \xB7 --seed
