@@ -1,0 +1,123 @@
+/* ═══════════════════ VAULT SECURE (v9) ═══════════════════
+   The long-term wallets, in a SEPARATE encrypted file with its OWN password.
+   On disk: mnemonics (phrases) only — private keys are derived in memory when
+   needed and never persisted. File: vault.secure.json (AES-256-GCM, scrypt). */
+const SEC_PATH = path.join(HERE, "vault.secure.json");
+const vaultState = { pass: null, data: null };
+
+function secEncrypt(data, pass) {
+  const salt = crypto.randomBytes(16), iv = crypto.randomBytes(12);
+  const cipher = crypto.createCipheriv("aes-256-gcm", kdf(pass, salt), iv);
+  const sealed = Buffer.concat([cipher.update(JSON.stringify(data), "utf8"), cipher.final()]);
+  const tag = sealed.slice(sealed.length - 16), ct = sealed.slice(0, sealed.length - 16);
+  fs.writeFileSync(SEC_PATH, JSON.stringify({
+    app: "ravenne-secure", v: 1, salt: salt.toString("hex"), iv: iv.toString("hex"),
+    tag: tag.toString("hex"), data: ct.toString("base64"),
+  }, null, 2));
+  hardenFile(SEC_PATH);
+}
+function secDecrypt(pass) {
+  const meta = JSON.parse(fs.readFileSync(SEC_PATH, "utf8"));
+  const d = crypto.createDecipheriv("aes-256-gcm", kdf(pass, Buffer.from(meta.salt, "hex")), Buffer.from(meta.iv, "hex"));
+  d.setAuthTag(Buffer.from(meta.tag, "hex"));
+  return JSON.parse(Buffer.concat([d.update(Buffer.from(meta.data, "base64")), d.final()]).toString("utf8"));
+}
+async function vaultOpen() {
+  if (vaultState.data) return vaultState.data;
+  if (!fs.existsSync(SEC_PATH)) {
+    const r = await P([
+      { type: "password", name: "a", message: "New VAULT password (8 chars min.):" },
+      { type: "password", name: "b", message: "Confirm VAULT password:" },
+    ]);
+    if (!r.a || r.a.length < 8) throw new Error("Password too short.");
+    if (r.a !== r.b) throw new Error("Passwords do not match.");
+    vaultState.pass = r.a;
+    vaultState.data = { wallets: [] };
+    secEncrypt(vaultState.data, r.a);
+    console.log(c.ok("✓ Secure vault created (vault.secure.json — separate from the main vault)."));
+    return vaultState.data;
+  }
+  const pw = await P({ type: "password", name: "p", message: "VAULT password (separate from the master password):" });
+  vaultState.pass = pw.p;
+  vaultState.data = secDecrypt(pw.p);
+  return vaultState.data;
+}
+function secDerive(w) {
+  return HDNodeWallet.fromPhrase(w.phrase, "", w.path || "m/44'/60'/0'/0/0");
+}
+const SEC_EVM = {
+  eth:  { rpc: "https://ethereum-rpc.publicnode.com", sym: "ETH", ex: "https://etherscan.io" },
+  poly: { rpc: "https://polygon-bor-rpc.publicnode.com", sym: "POL", ex: "https://polygonscan.com" },
+  bsc:  { rpc: "https://bsc-rpc.publicnode.com", sym: "BNB", ex: "https://bscscan.com" },
+};
+const secProv = k => new JsonRpcProvider(SEC_EVM[k].rpc, undefined, { staticNetwork: true });
+async function vaultMode() {
+  if (TTY) clack.intro(c.bold("VAULT") + c.dim("  secured long-term wallets · separate encrypted file · own password"));
+  await vaultOpen();
+  while (true) {
+    const a = await clack.select({ message: "Vault", options: [
+      { value: "list", label: "List / balances", hint: "addresses + balances on Ethereum" },
+      { value: "add", label: "Add a secured wallet", hint: "new 24-word seed — stored WITHOUT its private key" },
+      { value: "send", label: "Send from a vault wallet", hint: "key derived in memory, never written" },
+      { value: "seed", label: "Reveal a seed phrase", hint: "paper backup — shown once per session" },
+      { value: "back", label: "Back", hint: "lock the vault and return" },
+    ]});
+    if (clack.isCancel(a)) continue;
+    if (a === "back") { vaultState.data = null; vaultState.pass = null; clack.outro("Vault locked."); return; }
+    try {
+      if (a === "list") {
+        const sp = clack.spinner(); sp.start("Fetching balances…");
+        const rows = [];
+        for (const w of vaultState.data.wallets) {
+          try {
+            const b = await secProv("eth").getBalance(w.address);
+            rows.push([w.label, w.address, fmtAmt(b) + " ETH"]);
+          } catch { rows.push([w.label, w.address, "?"]); }
+        }
+        sp.stop("Balances ✓");
+        table(["LABEL", "ADDRESS", "BALANCE"], rows, { align: [null, null, "r"] });
+        if (!vaultState.data.wallets.length) console.log(c.dim("  (empty — add a secured wallet)"));
+      } else if (a === "add") {
+        const { l } = await P({ type: "text", name: "l", message: "Label for this wallet:" });
+        const label = (l || "").trim() || ("vault-" + (vaultState.data.wallets.length + 1));
+        const phrase = Mnemonic.fromEntropy(crypto.randomBytes(32)).phrase;
+        const addr = HDNodeWallet.fromPhrase(phrase).address;
+        vaultState.data.wallets.push({ label, address: addr, phrase, path: "m/44'/60'/0'/0/0" });
+        secEncrypt(vaultState.data, vaultState.pass);
+        console.log(c.ok(`✓ Secured wallet "${label}" added — ${addr}`));
+        console.log(c.warn("⚠  24-word seed (shown once — the private key is NOT stored anywhere):"));
+        console.log(c.bold("  " + phrase + "\n"));
+        if (TTY) { await P({ type: "text", name: "_", message: c.dim("Press Enter to clear…") }); console.clear(); }
+      } else if (a === "send") {
+        const wsel = vaultState.data.wallets;
+        if (!wsel.length) { console.log(c.dim("No vault wallet yet.")); continue; }
+        const r = await P([
+          { type: "text", name: "f", message: `From which vault wallet? (0-${wsel.length - 1})` },
+          { type: "text", name: "t", message: "To (0x address):" },
+          { type: "text", name: "a", message: "Amount in ETH (or max):" },
+        ]);
+        const idx = parseInt(r.f, 10);
+        if (!Number.isInteger(idx) || idx < 0 || idx >= wsel.length) throw new Error("Wallet not found.");
+        const to = getAddress(String(r.t).trim());
+        const prov = secProv("eth");
+        const signer = secDerive(wsel[idx]).connect(prov);
+        const bal = await prov.getBalance(wsel[idx].address);
+        const per = 21000n * ((await prov.getFeeData()).maxFeePerGas ?? 2n * 10n ** 9n);
+        const value = /^(max|all)$/i.test(r.a) ? bal - per : parseEther(String(r.a).replace(",", "."));
+        if (value <= 0n) throw new Error("Invalid amount.");
+        if (bal <= value + per) throw new Error(`Insufficient: ${fmtAmt(bal)} ETH (fee ≈ ${fmtAmt(per)}).`);
+        const tx = await spin("Signing in memory & broadcasting…", () => signer.sendTransaction({ to, value }));
+        const rc = await spin("Waiting for confirmation…", () => tx.wait());
+        console.log(c.ok(`✓ Sent — fee ${fmtAmt(BigInt(rc.gasUsed) * BigInt(rc.effectiveGasPrice ?? 0n))} ETH`));
+        printTxLink(rc.hash, "eth");
+      } else if (a === "seed") {
+        const r = await P({ type: "text", name: "v", message: `Which wallet? (0-${vaultState.data.wallets.length - 1})` });
+        const w = vaultState.data.wallets[parseInt(r.v, 10)];
+        if (!w) continue;
+        console.log(c.warn(`\n⚠  Seed of "${w.label}" — never share it:`));
+        console.log(c.bold("  " + w.phrase + "\n"));
+        if (TTY) { await P({ type: "text", name: "_", message: c.dim("Press Enter to clear…") }); console.clear(); }
+      }
+    } catch (e) { console.log(c.err("✗ " + (e.message || e))); }
+  }
+}

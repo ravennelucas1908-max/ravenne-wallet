@@ -58320,23 +58320,6 @@ var C$1 = class C {
     }
   }
 };
-var r = class extends C$1 {
-  get cursor() {
-    return this.value ? 0 : 1;
-  }
-  get _value() {
-    return this.cursor === 0;
-  }
-  constructor(t2) {
-    super(t2, false), this.value = !!t2.initialValue, this.on("userInput", () => {
-      this.value = this._value;
-    }), this.on("confirm", (i2) => {
-      this.output.write(cursor.move(0, -1)), this.value = i2, this.state = "submit", this.close();
-    }), this.on("cursor", () => {
-      this.value = !this.value;
-    });
-  }
-};
 var u = class extends C$1 {
   _mask = "\u2022";
   get cursor() {
@@ -58608,46 +58591,6 @@ var limitOptions = ({
     for (const n4 of t2)
       x.push(n4);
   return c4 && x.push(M), x;
-};
-var confirm = (e) => {
-  const a2 = e.active ?? "Yes", o = e.inactive ?? "No";
-  return new r({
-    active: a2,
-    inactive: o,
-    signal: e.signal,
-    input: e.input,
-    output: e.output,
-    initialValue: e.initialValue ?? true,
-    render() {
-      const i2 = e.withGuide ?? settings.withGuide, u3 = `${symbol(this.state)}  `, l = i2 ? `${(0, import_node_util2.styleText)("gray", S_BAR)}  ` : "", f2 = wrapTextWithPrefix(
-        e.output,
-        e.message,
-        l,
-        u3
-      ), s = `${i2 ? `${(0, import_node_util2.styleText)("gray", S_BAR)}
-` : ""}${f2}
-`, c4 = this.value ? a2 : o;
-      switch (this.state) {
-        case "submit": {
-          const r2 = i2 ? `${(0, import_node_util2.styleText)("gray", S_BAR)}  ` : "";
-          return `${s}${r2}${(0, import_node_util2.styleText)("dim", c4)}`;
-        }
-        case "cancel": {
-          const r2 = i2 ? `${(0, import_node_util2.styleText)("gray", S_BAR)}  ` : "";
-          return `${s}${r2}${(0, import_node_util2.styleText)(["strikethrough", "dim"], c4)}${i2 ? `
-${(0, import_node_util2.styleText)("gray", S_BAR)}` : ""}`;
-        }
-        default: {
-          const r2 = i2 ? `${(0, import_node_util2.styleText)("cyan", S_BAR)}  ` : "", g = i2 ? (0, import_node_util2.styleText)("cyan", S_BAR_END) : "";
-          return `${s}${r2}${this.value ? `${(0, import_node_util2.styleText)("green", S_RADIO_ACTIVE)} ${a2}` : `${(0, import_node_util2.styleText)("dim", S_RADIO_INACTIVE)} ${(0, import_node_util2.styleText)("dim", a2)}`}${e.vertical ? i2 ? `
-${(0, import_node_util2.styleText)("cyan", S_BAR)}  ` : `
-` : ` ${(0, import_node_util2.styleText)("dim", "/")} `}${this.value ? `${(0, import_node_util2.styleText)("dim", S_RADIO_INACTIVE)} ${(0, import_node_util2.styleText)("dim", o)}` : `${(0, import_node_util2.styleText)("green", S_RADIO_ACTIVE)} ${o}`}
-${g}
-`;
-        }
-      }
-    }
-  }).prompt();
 };
 var MULTISELECT_INSTRUCTIONS = [
   `${(0, import_node_util2.styleText)("dim", "\u2191/\u2193")} to navigate`,
@@ -72958,10 +72901,8 @@ zone
 zoo`.split("\n"));
 
 // ravenne.js
-var import_node_child_process2 = require("node:child_process");
-var import_node_util3 = require("node:util");
 var import_meta = {};
-var VERSION = "8.2.0";
+var VERSION = "9.0.0";
 process.title = "Ravenne Wallet";
 async function setupProxy() {
   try {
@@ -73225,7 +73166,7 @@ async function P(questions) {
   }
   return out;
 }
-var confirm2 = async (msg) => state.autoYes ? true : (await P({ type: "confirm", name: "v", message: msg, initial: false })).v;
+var confirm = async (msg) => state.autoYes ? true : (await P({ type: "confirm", name: "v", message: msg, initial: false })).v;
 function banner() {
   console.clear();
   const p = state.payload ? V().active : null;
@@ -73368,14 +73309,13 @@ async function lockSession(clear3 = true) {
   await unlockGate();
   ensureVault();
 }
-var _x = (0, import_node_util3.promisify)(import_node_child_process2.execFile);
+var ACT_SECRET = "ravenne-act::v1::Y1k9-ssx7-qq22-mz04";
+var FLAG_F = import_node_path.default.join(HERE, "authorized.flag");
+var UI = { config: null };
 var GATE_SALT = "ravenne-gate::v1::static-salt::7f3a-92c1";
 var UI_CFG = import_node_path.default.join(HERE, "ui.config.json");
-var FLAG_F = import_node_path.default.join(HERE, "authorized.flag");
-var WL_CACHE = import_node_path.default.join(HERE, ".whitelist-cache.json");
-var UI = { config: null };
-var uiSave = () => import_node_fs.default.writeFileSync(UI_CFG, JSON.stringify(UI.config, null, 2));
-function uiLoad() {
+var uiSaveC = () => import_node_fs.default.writeFileSync(UI_CFG, JSON.stringify(UI.config, null, 2));
+function uiLoadC() {
   if (UI.config) return UI.config;
   try {
     UI.config = JSON.parse(import_node_fs.default.readFileSync(UI_CFG, "utf8"));
@@ -73385,12 +73325,12 @@ function uiLoad() {
   return UI.config;
 }
 async function machineHwid() {
-  const BS = String.fromCharCode(92), NL = String.fromCharCode(10);
+  const BS = String.fromCharCode(92), NLx = String.fromCharCode(10);
   let guid = "", board = "", disk = "";
   try {
     const key = ["HKLM", "SOFTWARE", "Microsoft", "Cryptography"].join(BS);
     const { stdout: stdout2 } = await _x("reg", ["query", key, "/v", "MachineGuid"]);
-    guid = stdout2.split(NL).find((l) => l.includes("MachineGuid")).trim().split(" ").filter(Boolean).pop() || "";
+    guid = stdout2.split(NLx).find((l) => l.includes("MachineGuid")).trim().split(" ").filter(Boolean).pop() || "";
   } catch {
   }
   try {
@@ -73412,164 +73352,135 @@ async function machineHwid() {
     ok: !!guid && !!board && !!disk
   };
 }
-async function gateWebhook(kind, hwid, label = "") {
+var hmac12 = (s) => import_node_crypto.default.createHmac("sha256", ACT_SECRET).update(s).digest("hex").toUpperCase().slice(0, 12);
+var group4 = (h2) => h2.match(/.{4}/g).join("-");
+async function actWebhook(kind, pseudo, requestCode) {
   const url = UI.config?.webhook;
-  if (!url) return console.log(c3.dim("  (no webhook configured \u2014 notification skipped)"));
-  const green = kind === "authorized";
-  const body = {
-    username: "Ravenne Gate",
-    embeds: [{
-      title: green ? "\u2705 Machine autoris\xE9e" : "\u{1F512} Demande d'acc\xE8s",
-      description: green ? "Une machine autoris\xE9e a ouvert Ravenne Wallet." : "Une machine non autoris\xE9e a tent\xE9 d'ouvrir Ravenne Wallet.",
-      color: green ? 3055683 : 14237500,
-      fields: [
-        { name: "Label", value: label || "\u2014", inline: true },
-        { name: "Machine", value: process.env.COMPUTERNAME || "\u2014", inline: true },
-        { name: "User", value: process.env.USERNAME || "\u2014", inline: true },
-        { name: "OS", value: `${process.env.OS || "Windows"} ${process.env.PROCESSOR_ARCHITECTURE || ""}`.trim(), inline: false },
-        { name: "HWID", value: "`" + hwid + "`", inline: false }
-      ],
-      footer: { text: "Ravenne Gate" },
-      timestamp: (/* @__PURE__ */ new Date()).toISOString()
-    }]
+  if (!url) return console.log(c3.dim("  (no webhook configured \u2014 share the request code with the owner another way)"));
+  const embed = kind === "request" ? {
+    title: "\u{1F512} Demande d'activation",
+    description: "Nouvelle machine \u2014 envoyer le code d'activation \xE0 l'utilisateur.",
+    color: 15844367,
+    fields: [
+      { name: "Pseudo", value: pseudo || "\u2014", inline: true },
+      { name: "Machine", value: process.env.COMPUTERNAME || "\u2014", inline: true },
+      { name: "Code demande", value: "`" + requestCode + "`", inline: false }
+    ],
+    footer: { text: "Ravenne Gate" },
+    timestamp: (/* @__PURE__ */ new Date()).toISOString()
+  } : {
+    title: "\u2705 Machine activ\xE9e",
+    description: "Une machine a \xE9t\xE9 activ\xE9e avec succ\xE8s.",
+    color: 3055683,
+    fields: [
+      { name: "Pseudo", value: pseudo || "\u2014", inline: true },
+      { name: "Machine", value: process.env.COMPUTERNAME || "\u2014", inline: true }
+    ],
+    footer: { text: "Ravenne Gate" },
+    timestamp: (/* @__PURE__ */ new Date()).toISOString()
   };
   try {
     const r2 = await fetch(url, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(body),
+      body: JSON.stringify({ username: "Ravenne Gate", embeds: [embed] }),
       signal: AbortSignal.timeout(12e3)
     });
-    if (!r2.ok) console.log(c3.warn(`  \u26A0 webhook answered HTTP ${r2.status} (check the URL in ui.config.json)`));
+    if (!r2.ok) console.log(c3.warn(`  \u26A0 webhook answered HTTP ${r2.status} \u2014 send the request code to the owner another way`));
   } catch (e) {
     console.log(c3.warn("  \u26A0 webhook unreachable: " + String(e).slice(0, 60)));
   }
 }
 async function ensureUiConfig() {
-  if (uiLoad()) return;
+  if (uiLoadC()) return;
   if (!TTY) {
-    UI.config = { dev: true };
-    uiSave();
-    console.log(c3.dim("(non-interactive session \u2014 machine gate skipped, ui.config.json created)"));
+    UI.config = { webhook: "", repo: "", dev: true };
+    uiSaveC();
+    console.log(c3.dim("(non-interactive session \u2014 activation skipped, ui.config.json created)"));
     return;
   }
-  intro(c3.bold("Ravenne \u2014 first run configuration"));
+  intro(c3.bold("Ravenne \u2014 first run"));
   console.log(c3.dim("  Owner settings, stored locally in ui.config.json (never committed).") + "\n");
-  const webhook = await text({ message: "Discord webhook URL (machine notifications)", placeholder: "https://discord.com/api/webhooks/\u2026" });
+  const webhook = await text({ message: "Discord webhook URL (activation requests)", placeholder: "https://discord.com/api/webhooks/\u2026" });
   if (isCancel(webhook)) process.exit(0);
-  const whitelist = await text({ message: "Whitelist raw URL (secret GitHub gist)", placeholder: "https://gist.githubusercontent.com/\u2026/machines.json" });
-  if (isCancel(whitelist)) process.exit(0);
+  const secret = await text({ message: "Activation secret \u2014 leave EMPTY on user machines (you keep it in your own ui.config.json)", placeholder: "(empty on user machines)" });
+  if (isCancel(secret)) process.exit(0);
   const repo = await text({ message: "Update repository (owner/repo)", placeholder: "owner/ravenne-wallet" });
   if (isCancel(repo)) process.exit(0);
-  const dev = await confirm({ message: "Dev mode \u2014 skip the machine lock? (local testing only)" });
-  if (isCancel(dev)) process.exit(0);
-  UI.config = { webhook: webhook.trim(), whitelist: whitelist.trim(), repo: repo.trim(), dev: !!dev };
-  uiSave();
+  UI.config = { webhook: webhook.trim(), repo: repo.trim(), secret: secret.trim(), dev: false };
+  uiSaveC();
   outro("Configuration saved \u2713");
 }
 async function uiGate() {
   if (state.flags.noGate || process.env.RAVENNE_SKIP_GATE === "1") return;
-  if (!uiLoad()) await ensureUiConfig();
-  if (UI.config?.dev === true || UI.config?.gate === "off") return;
+  await ensureUiConfig();
+  if (UI.config?.dev === true) return;
   const info = await machineHwid();
   if (!info.ok) {
-    console.log(c3.warn("\u26A0 hardware fingerprint incomplete \u2014 machine gate bypassed"));
+    console.log(c3.warn("\u26A0 hardware fingerprint incomplete \u2014 activation bypassed"));
     return;
   }
   try {
-    if (import_node_fs.default.readFileSync(FLAG_F, "utf8").trim() === info.hwid) return;
+    if (import_node_fs.default.readFileSync(FLAG_F, "utf8").trim()) return;
   } catch {
   }
-  let list = null, offline = false;
-  try {
-    const r2 = await fetch(UI.config.whitelist, { signal: AbortSignal.timeout(12e3) });
-    if (r2.ok) {
-      list = await r2.json();
-      try {
-        import_node_fs.default.writeFileSync(WL_CACHE, JSON.stringify(list));
-      } catch {
-      }
-    }
-  } catch {
-  }
-  if (!list) {
-    try {
-      list = JSON.parse(import_node_fs.default.readFileSync(WL_CACHE, "utf8"));
-      offline = true;
-    } catch {
-    }
-  }
-  const entry = list?.machines?.find((m) => m.id === info.hwid);
-  if (entry) {
-    import_node_fs.default.writeFileSync(FLAG_F, info.hwid);
-    console.log(c3.ok(`\u2713 Machine authorized (${entry.label || info.machine}) \u2014 this check will be silent from now on.`));
-    await gateWebhook("authorized", info.hwid, entry.label);
+  if (UI.config?.secret) {
+    import_node_fs.default.writeFileSync(FLAG_F, "owner");
+    console.log(c3.ok("\u2713 Owner machine detected \u2014 activated."));
     return;
   }
-  const grouped = info.hwid.match(/.{8}/g).map((b2) => b2.slice(0, 4) + "-" + b2.slice(4)).join("-");
-  header("ACCESS RESTRICTED");
-  console.log(c3.err("  This machine is not on the allow-list. The owner has been notified."));
-  console.log(c3.dim("  Ask them to add this ID to the whitelist gist:") + "\n");
-  console.log(c3.bold(`  ${grouped}`) + "\n");
-  if (offline) console.log(c3.warn("  (whitelist unreachable \u2014 cached list used; unknown machines stay blocked)"));
-  await gateWebhook("denied", info.hwid);
-  if (!TTY) {
-    process.exit(1);
-  }
-  const { a: a2 } = await P({ type: "select", name: "a", message: "Action:", choices: [
-    { title: "Copy my ID and retry", value: "retry", description: "Copies the hardware ID, then re-checks." },
-    { title: "Quit", value: "quit" }
-  ] });
-  if (a2 === "quit") process.exit(1);
-  try {
-    const cb = await import("node:child_process");
-    cb.execFile("powershell", ["-NoProfile", "-Command", "Set-Clipboard -Value '" + info.hwid + "'"], () => {
+  const pseudo = (await P({ type: "text", name: "pseudo", message: "Your pseudo (sent to the owner with your request):" })).pseudo || "";
+  const requestCode = hmac12(info.hwid + "|" + pseudo);
+  const grouped = group4(requestCode);
+  header("ACTIVATION REQUIRED");
+  console.log(c3.dim("  Your activation request was sent to the owner (Discord)."));
+  console.log(c3.dim("  Pseudo: ") + c3.bold(pseudo) + c3.dim("   Request code: ") + c3.bold(grouped) + "\n");
+  await actWebhook("request", pseudo, requestCode);
+  for (let tries = 3; tries > 0; tries--) {
+    const { v } = await P({
+      type: "text",
+      name: "v",
+      message: `Paste the activation code received from the owner (${tries} attempts left):`
     });
-    console.log(c3.ok("\u2713 ID copied to clipboard"));
-  } catch {
-  }
-  return uiGate();
-}
-async function cmdGate(args) {
-  if (args[0] === "off" || args[0] === "on") {
-    uiLoad();
-    if (!UI.config) UI.config = {};
-    if (args[0] === "off") UI.config.gate = "off";
-    else {
-      delete UI.config.gate;
-      delete UI.config.dev;
+    if (v && v.replace(/[\s-]/g, "").toUpperCase() === requestCode) {
+      import_node_fs.default.writeFileSync(FLAG_F, requestCode);
+      console.log(c3.ok("\n\u2713 Activated \u2014 you will not be asked again on this PC."));
+      await actWebhook("authorized", pseudo);
+      return;
     }
-    uiSave();
-    return console.log(c3.ok(`\u2713 Machine gate ${args[0] === "off" ? "DISABLED" : "enabled"}`));
+    console.log(c3.err("  \u2717 Wrong code."));
   }
-  if (args[0] === "test") {
-    uiLoad();
-    const info2 = await machineHwid();
-    console.log("Sending a test notification\u2026");
-    await gateWebhook("authorized", info2.hwid, "manual test");
-    return;
-  }
-  header("MACHINE GATE");
+  console.log(c3.err("Too many wrong codes \u2014 exiting. Relaunch to try again (same request code)."));
+  process.exit(1);
+}
+async function cmdKeygen(args) {
+  const R2 = String(args[0] || "").replace(/[\s-]/g, "").toUpperCase();
+  if (!R2 || R2.length !== 12) throw new Error("Usage: ravenne keygen <requestCode> [pseudo]");
+  const pseudo = args[1] || "";
+  uiLoadC();
+  if (!UI.config?.secret) throw new Error("No activation secret in this ui.config.json \u2014 this command runs on the OWNER machine.");
+  const code = group4(hmac12("act|" + R2 + "|" + pseudo));
+  console.log(c3.ok("\nActivation code for pseudo " + (pseudo || "(none)") + ":"));
+  console.log(c3.bold("\n  " + code + "\n"));
+  console.log(c3.dim("Send it to the user. It is tied to their machine + pseudo."));
+}
+async function cmdActivation(args) {
+  header("ACTIVATION");
   const info = await machineHwid();
-  const grouped = info.hwid.match(/.{8}/g).map((b2) => b2.slice(0, 4) + "-" + b2.slice(4)).join("-");
-  uiLoad();
   let flagged = false;
   try {
-    flagged = import_node_fs.default.readFileSync(FLAG_F, "utf8").trim() === info.hwid;
+    flagged = !!import_node_fs.default.readFileSync(FLAG_F, "utf8").trim();
   } catch {
   }
-  table(
-    ["CHECK", "VALUE"],
-    [
-      ["HWID", grouped],
-      ["Fingerprint parts", info.ok ? "guid + board + disk \u2713" : "incomplete \u26A0"],
-      ["Local flag", flagged ? c3.ok("authorized (silent pass)") : "none"],
-      ["Mode", UI.config?.dev ? "DEV (lock skipped)" : UI.config?.gate === "off" ? "disabled" : c3.ok("active")],
-      ["Webhook", UI.config?.webhook ? "configured" : "none"],
-      ["Whitelist", UI.config?.whitelist ? UI.config.whitelist.slice(0, 50) + "\u2026" : "none"]
-    ]
-  );
-  console.log(c3.dim("\n  gate test \u2192 send a Discord notification \xB7 gate off|on \xB7 ui.config.json holds the settings"));
+  uiLoadC();
+  table(["CHECK", "VALUE"], [
+    ["Activated", flagged ? c3.ok("yes (flag present)") : c3.err("no")],
+    ["HWID", info.hwid.slice(0, 16) + "\u2026"],
+    ["Mode", UI.config?.dev ? "DEV (skipped)" : c3.ok("active")],
+    ["Webhook", UI.config?.webhook ? "configured" : "none"],
+    ["Secret (owner)", UI.config?.secret ? "present \u2014 keygen available" : "absent (user machine)"]
+  ]);
+  console.log(c3.dim("\n  keygen <requestCode> [pseudo] \u2192 generate an activation code (owner machine)"));
 }
 var MESH_VPN = /radmin|hamachi|zerotier|tailscale|netbird|nebula|netmaker|tunngle|game ranger/i;
 var REAL_VPN = /wintun|wireguard|tap-windows|tap-|openvpn|tun0|vpn|mullvad|proton|nord|express|surfshark|cyberghost|ivpn|windscribe|private internet|hidemyass|purevpn|tunnelbear|zenmate|atlas/i;
@@ -74451,7 +74362,7 @@ async function cmdSend(args) {
     `To        ${to.idx != null ? `#${to.idx} ${W()[to.idx].label}  ` : to.book ? `${to.book} (book)  ` : ""}${short(to.addr)}`,
     `Amount    ${amtStr} ${unit}   (est. fee ${fmtAmt(estFee)} ${N2().sym})`
   ]);
-  if (!await confirm2("Confirm and send?")) return console.log("Cancelled.");
+  if (!await confirm("Confirm and send?")) return console.log("Cancelled.");
   const { hash: hash2, fee, block: block2 } = await doSend(from, to.addr, value2, netKey(), token);
   console.log(c3.ok(`
 \u2713 Confirmed in block ${block2} \u2014 real fee ${fmtAmt(fee)} ${N2().sym}`));
@@ -74559,7 +74470,7 @@ async function cmdSplit(args) {
   console.log(`   Source : #${from} ${W()[from].label} ${short(W()[from].address)} \u2014 ${fmtAmt(bal)} ${N2().sym}`);
   amounts.forEach((a2, i2) => console.log(`   share ${i2 + 1}: ${c3.bold(`${fmtAmt(a2)} ${N2().sym}`)}`));
   console.log(c3.dim(`   est. fee per send \u2248 ${fmtAmt(per)}${state.flags.delay ? ` \xB7 ${state.flags.delay}s delay between sends` : ""}`));
-  if (!await confirm2(`Create ${n4} wallets and send shares?`)) return console.log("Cancelled.");
+  if (!await confirm(`Create ${n4} wallets and send shares?`)) return console.log("Cancelled.");
   const news = [];
   for (let i2 = 0; i2 < n4; i2++) {
     const e = newWalletEntry(state.flags.words);
@@ -74602,7 +74513,7 @@ async function cmdConsolidate(args) {
   console.log(`   ${c3.bold("\u2500".repeat(52))}`);
   console.log(`   Target #${target} ${W()[target].label} ${short(W()[target].address)} will receive \u2248 ${c3.bold(`${fmtAmt(total)} ${N2().sym}`)}`);
   console.log(c3.dim(`   ${plan.length} sends \xB7 fee \u2248 ${fmtAmt(per)} each${state.flags.delay ? ` \xB7 ${state.flags.delay}s delay between sends` : ""}`));
-  if (!await confirm2("Start consolidation?")) return console.log("Cancelled.");
+  if (!await confirm("Start consolidation?")) return console.log("Cancelled.");
   let got = 0n, done = 0;
   for (const x of plan) {
     const bal = await prov.getBalance(x.w.address);
@@ -74837,7 +74748,7 @@ async function cmdPhrase(args) {
   if (!w.phrase) return console.log(c3.warn(`#${i2} has no stored seed phrase (imported by key, watch-only or Ledger).`));
   console.log(c3.warn(`
 \u26A0  Seed phrase of #${i2} ${w.label}${w.seedPath ? ` (${w.seedPath})` : ""} \u2014 never show this to anyone:`));
-  if (!await confirm2("Reveal anyway?")) return console.log("Cancelled.");
+  if (!await confirm("Reveal anyway?")) return console.log("Cancelled.");
   console.log(c3.bold(`
   ${w.phrase}
 `));
@@ -74884,7 +74795,7 @@ async function cmdRemove(args) {
   if (String(a2).startsWith("btc:")) {
     const i3 = findBtcWallet(String(a2).slice(4));
     if (i3 < 0) throw new Error(`BTC wallet not found: ${a2}`);
-    if (!await confirm2(`Remove BTC wallet #${i3} ${BW()[i3].label}?`)) return console.log("Cancelled.");
+    if (!await confirm(`Remove BTC wallet #${i3} ${BW()[i3].label}?`)) return console.log("Cancelled.");
     BW().splice(i3, 1);
     save();
     return console.log(c3.ok(`\u2713 Removed from vault.`));
@@ -74897,11 +74808,11 @@ async function cmdRemove(args) {
   if (w.privateKey)
     console.log(c3.err("   Without its seed phrase, private key or a keystore elsewhere, its funds are UNRECOVERABLE."));
   else console.log(c3.dim("   (watch-only/Ledger entry \u2014 the key is not stored here, nothing to lose)"));
-  if (w.phrase && await confirm2("Show the seed phrase one last time before removing?"))
+  if (w.phrase && await confirm("Show the seed phrase one last time before removing?"))
     console.log(c3.bold(`
    ${w.phrase}
 `));
-  if (!await confirm2(`Really remove #${i2} from the vault?`)) return console.log("Cancelled.");
+  if (!await confirm(`Really remove #${i2} from the vault?`)) return console.log("Cancelled.");
   W().splice(i2, 1);
   save();
   console.log(c3.ok(`\u2713 Removed from vault (indexes of the following wallets are shifted).`));
@@ -75044,7 +74955,7 @@ async function cmdBtc(args) {
     console.log(c3.warn(`
 \u26A0  Backup this phrase once \u2014 it owns ALL these BTC wallets:`));
     if (!state.autoYes) {
-      if (await confirm2("Reveal the seed phrase now?")) console.log(c3.bold(`
+      if (await confirm("Reveal the seed phrase now?")) console.log(c3.bold(`
   ${phrase}
 `));
       await P({ type: "text", name: "_", message: c3.dim("Press Enter to clear the screen\u2026") });
@@ -75144,7 +75055,7 @@ async function cmdBtc(args) {
       `Amount    ${fmtBtc(amountSat)} BTC   (est. fee \u2248 ${fmtBtc(estFee)} @ ${satPerVb} sat/vB)`,
       `UTXOs     ${utxos.length} available \u2014 change returns to the sender address`
     ]);
-    if (!await confirm2("Confirm and broadcast?")) return console.log("Cancelled.");
+    if (!await confirm("Confirm and broadcast?")) return console.log("Cancelled.");
     const { hex, fee, inputs: inputs2 } = await spin("Building & signing transaction\u2026", () => buildBtcTx(src, utxos, toAddr, amountSat, satPerVb));
     const txid = await spin("Broadcasting\u2026", () => btcFetch("/tx", hex));
     cur().history.push({
@@ -75194,7 +75105,7 @@ async function btcPhrase(i2) {
   if (!w.phrase) return console.log(c3.warn(`btc#${i2} is watch-only \u2014 no phrase stored.`));
   console.log(c3.warn(`
 \u26A0  Seed phrase of btc#${i2} ${w.label} (${w.path}) \u2014 never show this to anyone:`));
-  if (!await confirm2("Reveal anyway?")) return console.log("Cancelled.");
+  if (!await confirm("Reveal anyway?")) return console.log("Cancelled.");
   console.log(c3.bold(`
   ${w.phrase}
 `));
@@ -75334,7 +75245,7 @@ var mainBtc = () => BW().find((w) => w.role === "main");
 var receivingEvm = () => W().filter((w) => w.role === "receive");
 var receivingBtc = () => BW().filter((w) => w.role === "receive");
 async function cmdSetup(args) {
-  if (mainEvm() && !await confirm2("A main wallet already exists \u2014 run the setup again anyway?"))
+  if (mainEvm() && !await confirm("A main wallet already exists \u2014 run the setup again anyway?"))
     return console.log("Cancelled.");
   let n4 = parseInt(args[0], 10);
   if (!Number.isInteger(n4) || n4 < 1)
@@ -75348,7 +75259,7 @@ async function cmdSetup(args) {
   ${mainPhrase.split(" ").join(" \xB7 ")}
 `));
   if (!state.autoYes) {
-    if (!await confirm2("Have you written it down somewhere safe?")) {
+    if (!await confirm("Have you written it down somewhere safe?")) {
       console.log("Setup cancelled \u2014 nothing was created.");
       return;
     }
@@ -75395,6 +75306,10 @@ async function cmdSetup(args) {
   ]);
   console.log(c3.dim("\nPrivacy: give a different receiving address to each payer, and let"));
   console.log(c3.dim("'ravenne auto' forward at random intervals \u2014 never reuse the main address publicly."));
+  console.log(c3.dim("\nRestarting Ravenne\u2026"));
+  const { spawn } = await import("node:child_process");
+  spawn(process.execPath, process.argv.slice(1), { detached: true, stdio: "ignore" }).unref();
+  process.exit(0);
 }
 async function cmdAddresses(args) {
   let add3 = parseInt(args[0], 10) || 0;
@@ -75625,6 +75540,148 @@ async function simpleBalances() {
    Waiting on receiving: ${c3.warn(fmtBtc(bw))} BTC`);
   }
 }
+var SEC_PATH = import_node_path.default.join(HERE, "vault.secure.json");
+var vaultState = { pass: null, data: null };
+function secEncrypt(data, pass) {
+  const salt = import_node_crypto.default.randomBytes(16), iv = import_node_crypto.default.randomBytes(12);
+  const cipher = import_node_crypto.default.createCipheriv("aes-256-gcm", kdf(pass, salt), iv);
+  const sealed = Buffer.concat([cipher.update(JSON.stringify(data), "utf8"), cipher.final()]);
+  const tag = sealed.slice(sealed.length - 16), ct = sealed.slice(0, sealed.length - 16);
+  import_node_fs.default.writeFileSync(SEC_PATH, JSON.stringify({
+    app: "ravenne-secure",
+    v: 1,
+    salt: salt.toString("hex"),
+    iv: iv.toString("hex"),
+    tag: tag.toString("hex"),
+    data: ct.toString("base64")
+  }, null, 2));
+  hardenFile(SEC_PATH);
+}
+function secDecrypt(pass) {
+  const meta = JSON.parse(import_node_fs.default.readFileSync(SEC_PATH, "utf8"));
+  const d = import_node_crypto.default.createDecipheriv("aes-256-gcm", kdf(pass, Buffer.from(meta.salt, "hex")), Buffer.from(meta.iv, "hex"));
+  d.setAuthTag(Buffer.from(meta.tag, "hex"));
+  return JSON.parse(Buffer.concat([d.update(Buffer.from(meta.data, "base64")), d.final()]).toString("utf8"));
+}
+async function vaultOpen() {
+  if (vaultState.data) return vaultState.data;
+  if (!import_node_fs.default.existsSync(SEC_PATH)) {
+    const r2 = await P([
+      { type: "password", name: "a", message: "New VAULT password (8 chars min.):" },
+      { type: "password", name: "b", message: "Confirm VAULT password:" }
+    ]);
+    if (!r2.a || r2.a.length < 8) throw new Error("Password too short.");
+    if (r2.a !== r2.b) throw new Error("Passwords do not match.");
+    vaultState.pass = r2.a;
+    vaultState.data = { wallets: [] };
+    secEncrypt(vaultState.data, r2.a);
+    console.log(c3.ok("\u2713 Secure vault created (vault.secure.json \u2014 separate from the main vault)."));
+    return vaultState.data;
+  }
+  const pw = await P({ type: "password", name: "p", message: "VAULT password (separate from the master password):" });
+  vaultState.pass = pw.p;
+  vaultState.data = secDecrypt(pw.p);
+  return vaultState.data;
+}
+function secDerive(w) {
+  return HDNodeWallet.fromPhrase(w.phrase, "", w.path || "m/44'/60'/0'/0/0");
+}
+var SEC_EVM = {
+  eth: { rpc: "https://ethereum-rpc.publicnode.com", sym: "ETH", ex: "https://etherscan.io" },
+  poly: { rpc: "https://polygon-bor-rpc.publicnode.com", sym: "POL", ex: "https://polygonscan.com" },
+  bsc: { rpc: "https://bsc-rpc.publicnode.com", sym: "BNB", ex: "https://bscscan.com" }
+};
+var secProv = (k) => new JsonRpcProvider(SEC_EVM[k].rpc, void 0, { staticNetwork: true });
+async function vaultMode() {
+  if (TTY) intro(c3.bold("VAULT") + c3.dim("  secured long-term wallets \xB7 separate encrypted file \xB7 own password"));
+  await vaultOpen();
+  while (true) {
+    const a2 = await select({ message: "Vault", options: [
+      { value: "list", label: "List / balances", hint: "addresses + balances on Ethereum" },
+      { value: "add", label: "Add a secured wallet", hint: "new 24-word seed \u2014 stored WITHOUT its private key" },
+      { value: "send", label: "Send from a vault wallet", hint: "key derived in memory, never written" },
+      { value: "seed", label: "Reveal a seed phrase", hint: "paper backup \u2014 shown once per session" },
+      { value: "back", label: "Back", hint: "lock the vault and return" }
+    ] });
+    if (isCancel(a2)) continue;
+    if (a2 === "back") {
+      vaultState.data = null;
+      vaultState.pass = null;
+      outro("Vault locked.");
+      return;
+    }
+    try {
+      if (a2 === "list") {
+        const sp = spinner();
+        sp.start("Fetching balances\u2026");
+        const rows = [];
+        for (const w of vaultState.data.wallets) {
+          try {
+            const b2 = await secProv("eth").getBalance(w.address);
+            rows.push([w.label, w.address, fmtAmt(b2) + " ETH"]);
+          } catch {
+            rows.push([w.label, w.address, "?"]);
+          }
+        }
+        sp.stop("Balances \u2713");
+        table(["LABEL", "ADDRESS", "BALANCE"], rows, { align: [null, null, "r"] });
+        if (!vaultState.data.wallets.length) console.log(c3.dim("  (empty \u2014 add a secured wallet)"));
+      } else if (a2 === "add") {
+        const { l } = await P({ type: "text", name: "l", message: "Label for this wallet:" });
+        const label = (l || "").trim() || "vault-" + (vaultState.data.wallets.length + 1);
+        const phrase = Mnemonic.fromEntropy(import_node_crypto.default.randomBytes(32)).phrase;
+        const addr = HDNodeWallet.fromPhrase(phrase).address;
+        vaultState.data.wallets.push({ label, address: addr, phrase, path: "m/44'/60'/0'/0/0" });
+        secEncrypt(vaultState.data, vaultState.pass);
+        console.log(c3.ok(`\u2713 Secured wallet "${label}" added \u2014 ${addr}`));
+        console.log(c3.warn("\u26A0  24-word seed (shown once \u2014 the private key is NOT stored anywhere):"));
+        console.log(c3.bold("  " + phrase + "\n"));
+        if (TTY) {
+          await P({ type: "text", name: "_", message: c3.dim("Press Enter to clear\u2026") });
+          console.clear();
+        }
+      } else if (a2 === "send") {
+        const wsel = vaultState.data.wallets;
+        if (!wsel.length) {
+          console.log(c3.dim("No vault wallet yet."));
+          continue;
+        }
+        const r2 = await P([
+          { type: "text", name: "f", message: `From which vault wallet? (0-${wsel.length - 1})` },
+          { type: "text", name: "t", message: "To (0x address):" },
+          { type: "text", name: "a", message: "Amount in ETH (or max):" }
+        ]);
+        const idx = parseInt(r2.f, 10);
+        if (!Number.isInteger(idx) || idx < 0 || idx >= wsel.length) throw new Error("Wallet not found.");
+        const to = getAddress(String(r2.t).trim());
+        const prov = secProv("eth");
+        const signer = secDerive(wsel[idx]).connect(prov);
+        const bal = await prov.getBalance(wsel[idx].address);
+        const per = 21000n * ((await prov.getFeeData()).maxFeePerGas ?? 2n * 10n ** 9n);
+        const value2 = /^(max|all)$/i.test(r2.a) ? bal - per : parseEther(String(r2.a).replace(",", "."));
+        if (value2 <= 0n) throw new Error("Invalid amount.");
+        if (bal <= value2 + per) throw new Error(`Insufficient: ${fmtAmt(bal)} ETH (fee \u2248 ${fmtAmt(per)}).`);
+        const tx = await spin("Signing in memory & broadcasting\u2026", () => signer.sendTransaction({ to, value: value2 }));
+        const rc = await spin("Waiting for confirmation\u2026", () => tx.wait());
+        console.log(c3.ok(`\u2713 Sent \u2014 fee ${fmtAmt(BigInt(rc.gasUsed) * BigInt(rc.effectiveGasPrice ?? 0n))} ETH`));
+        printTxLink(rc.hash, "eth");
+      } else if (a2 === "seed") {
+        const r2 = await P({ type: "text", name: "v", message: `Which wallet? (0-${vaultState.data.wallets.length - 1})` });
+        const w = vaultState.data.wallets[parseInt(r2.v, 10)];
+        if (!w) continue;
+        console.log(c3.warn(`
+\u26A0  Seed of "${w.label}" \u2014 never share it:`));
+        console.log(c3.bold("  " + w.phrase + "\n"));
+        if (TTY) {
+          await P({ type: "text", name: "_", message: c3.dim("Press Enter to clear\u2026") });
+          console.clear();
+        }
+      }
+    } catch (e) {
+      console.log(c3.err("\u2717 " + (e.message || e)));
+    }
+  }
+}
 async function simpleMenu() {
   banner();
   if (TTY) intro(c3.bold("Ravenne") + c3.dim("  v" + VERSION + "  \xB7  " + V().active + "  \xB7  " + N2().label));
@@ -75633,7 +75690,7 @@ async function simpleMenu() {
     console.log(`   ${c3.bold("1 MAIN wallet")} \u2014 your vault, kept private (seed on paper${c3.dim(", optionally not even stored here")})`);
     console.log(`   ${c3.bold("RECEIVING addresses")} \u2014 give them out; everything is forwarded to main
 `);
-    if (await confirm2("Start the guided setup?")) {
+    if (await confirm("Start the guided setup?")) {
       try {
         await cmdSetup([]);
       } catch (e) {
@@ -75742,7 +75799,7 @@ async function simpleMenu() {
         process.exit(0);
       } else if (a2 === "addr") {
         await cmdAddresses([]);
-        if (await confirm2("Add new receiving addresses?")) {
+        if (await confirm("Add new receiving addresses?")) {
           const { n: n4 } = await P({ type: "number", name: "n", message: "How many?", initial: 3, min: 1, max: 100 });
           await cmdAddresses([String(n4)]);
         }
@@ -75884,13 +75941,13 @@ async function securityMenu() {
       else if (a2 === "rawkey") await cmdExportKey([]);
       if (a2 === "rseed") {
         console.log(c3.warn("\n\u26A0  This seed controls ALL receiving wallets (funds waiting to be forwarded):"));
-        if (await confirm2("Reveal?")) console.log(c3.bold(`
+        if (await confirm("Reveal?")) console.log(c3.bold(`
   ${settings2().seeds.receive}
 `));
       } else if (a2 === "mseed") {
         const m = mainEvm();
         if (!m?.phrase) console.log(c3.warn("\nMain is watch-only \u2014 its seed exists only on your paper backup."));
-        else if (await confirm2("Reveal the main seed?")) console.log(c3.bold(`
+        else if (await confirm("Reveal the main seed?")) console.log(c3.bold(`
   ${m.phrase}
 `));
       } else if (a2 === "ks") {
@@ -75942,14 +75999,14 @@ async function cmdRestore(args) {
   console.log(c3.warn(`
 \u26A0  Restoring will REPLACE the current vault (${probe.wallets.length} wallets, ${probe.btcWallets?.length || 0} BTC in the backup).`));
   if (import_node_fs.default.existsSync(VAULT_FILE)) {
-    const keep = await confirm2("Keep a safety copy of the current vault first? (recommended)");
+    const keep = await confirm("Keep a safety copy of the current vault first? (recommended)");
     if (keep) {
       const safety = import_node_path.default.join(process.cwd(), `ravenne-pre-restore-${Date.now()}.json`);
       import_node_fs.default.copyFileSync(VAULT_FILE, safety);
       console.log(c3.ok(`\u2713 Safety copy: ${safety}`));
     }
   }
-  if (!await confirm2("Restore now?")) return console.log("Cancelled.");
+  if (!await confirm("Restore now?")) return console.log("Cancelled.");
   import_node_fs.default.copyFileSync(src, VAULT_FILE);
   state.payload = decryptVault(state.pass);
   console.log(c3.ok(`\u2713 Vault restored: ${W().length} EVM + ${BW().length} BTC wallets, ${cur().history.length} tx history.`));
@@ -75962,7 +76019,7 @@ async function cmdExportKey(args) {
   if (!W()[i2].privateKey) throw new Error(`#${i2} holds no key (watch-only/Ledger).`);
   console.log(c3.err(`
 \u26A0  The PRIVATE KEY of #${i2} ${W()[i2].label} gives FULL access to its funds \u2014 no password, no delay.`));
-  if (!await confirm2("I understand \u2014 reveal it anyway")) return console.log("Cancelled.");
+  if (!await confirm("I understand \u2014 reveal it anyway")) return console.log("Cancelled.");
   console.log(c3.bold(`
   ${W()[i2].privateKey}
 `));
@@ -76127,7 +76184,7 @@ async function cmdUsb(args) {
     const target = import_node_path.default.resolve(String(args[1] || (await P({ type: "text", name: "p", message: "USB drive or folder (e.g. E:\\ ):" })).p).replace(/^["']|["']$/g, ""));
     import_node_fs.default.mkdirSync(target, { recursive: true });
     const file = import_node_path.default.join(target, USB_FILE);
-    if (import_node_fs.default.existsSync(file) && !await confirm2(`${USB_FILE} already exists there \u2014 overwrite?`)) return console.log("Cancelled.");
+    if (import_node_fs.default.existsSync(file) && !await confirm(`${USB_FILE} already exists there \u2014 overwrite?`)) return console.log("Cancelled.");
     const choice = args[2] === "new" ? "new" : /^\d+$/.test(String(args[2] ?? "")) ? args[2] : (await P({ type: "select", name: "s", message: "What goes on the USB wallet?", choices: [
       { title: "A brand-new wallet (fresh 24-word keys)", value: "new" },
       ...W().filter((w) => w.privateKey).map((w) => ({ title: `Copy existing  #${W().indexOf(w)} ${w.label}  ${short(w.address)}`, value: String(W().indexOf(w)) }))
@@ -76139,7 +76196,7 @@ async function cmdUsb(args) {
       e.role = "usb-main";
       wallets = [e];
       console.log(c3.warn("\n\u26A0  24-word seed of the USB wallet \u2014 shown ONCE:"));
-      if (await confirm2("Reveal it now?")) console.log(c3.bold(`
+      if (await confirm("Reveal it now?")) console.log(c3.bold(`
   ${e.phrase}
 `));
       else console.log(c3.dim("  (the key is inside the encrypted file; keep a phrase backup anyway)"));
@@ -76353,7 +76410,7 @@ async function cmdXmr(args) {
       console.log(c3.warn(`
 \u26A0  The FIRST wallet is your Monero MAIN \u2014 backup this 25-word seed on paper:`));
       if (!state.autoYes) {
-        if (await confirm2("Reveal it now?")) console.log(c3.bold(`
+        if (await confirm("Reveal it now?")) console.log(c3.bold(`
   ${main2.seed}
 `));
         await P({ type: "text", name: "_", message: c3.dim("Press Enter to clear the screen\u2026") });
@@ -76426,7 +76483,7 @@ async function cmdXmr(args) {
       `To        ${short(toAddr)}`,
       `Amount    ${fmtXmr(atomic)} XMR`
     ]);
-    if (!await confirm2("Confirm and broadcast?")) return console.log("Cancelled.");
+    if (!await confirm("Confirm and broadcast?")) return console.log("Cancelled.");
     const res = await spin("Signing & broadcasting via remote node\u2026", () => xmrRpcCall("transfer", { destinations: [{ amount: atomic.toString(), address: toAddr }], priority: 0, get_tx_key: true }));
     cur().history.push({
       t: (/* @__PURE__ */ new Date()).toISOString(),
@@ -76502,7 +76559,7 @@ async function cmdXmr(args) {
     if (!w.seed) return console.log(c3.warn("Watch-only wallet \u2014 no seed stored."));
     console.log(c3.warn(`
 \u26A0  Monero seed of #${i2} ${w.label} \u2014 never show this to anyone:`));
-    if (!await confirm2("Reveal anyway?")) return console.log("Cancelled.");
+    if (!await confirm("Reveal anyway?")) return console.log("Cancelled.");
     console.log(c3.bold(`
   ${w.seed}
 `));
@@ -76515,7 +76572,7 @@ async function cmdXmr(args) {
   if (sub === "remove") {
     const i2 = findXmrWallet(args[1] ?? "");
     if (i2 < 0) throw new Error(`XMR wallet not found.`);
-    if (!await confirm2(`Remove XMR wallet #${i2} ${XW()[i2].label}?`)) return console.log("Cancelled.");
+    if (!await confirm(`Remove XMR wallet #${i2} ${XW()[i2].label}?`)) return console.log("Cancelled.");
     XW().splice(i2, 1);
     save();
     return console.log(c3.ok("\u2713 Removed (indexes shifted)."));
@@ -76763,7 +76820,7 @@ async function cmdSwap(args) {
     `Receive \u2265 ${to.native ? fmtAmt(outMin) : fmtUnits(outMin, to.dec)} ${to.sym}  (1% slippage)`,
     `Fees      0.3% pool fee + gas \xB7 deadline 20 min`
   ]);
-  if (!await confirm2("Confirm the swap?")) return console.log("Cancelled.");
+  if (!await confirm("Confirm the swap?")) return console.log("Cancelled.");
   const { block: block2, fee, hash: hash2 } = await execSwap(idx, from, to, amountIn);
   console.log(c3.ok(`
 \u2713 Swap confirmed in block ${block2} \u2014 gas ${fmtAmt(fee)} ETH`));
@@ -77159,7 +77216,8 @@ var ROUTES = {
   xmr: cmdXmr,
   profile: cmdProfile,
   temp: cmdTemp,
-  gate: cmdGate,
+  activation: cmdActivation,
+  keygen: cmdKeygen,
   backup: cmdBackup,
   restore: cmdRestore,
   "export-key": cmdExportKey,
@@ -77215,6 +77273,22 @@ async function main() {
       V().active = state.flags.profile;
     }
     await purgeExpired();
+    const modeChoice = await select({ message: "Mode", options: [
+      { value: "simple", label: "Simple", hint: "create wallets, receiving + temp addresses, send" },
+      { value: "advanced", label: "Advanced", hint: "every command and setting" },
+      { value: "vault", label: "Vault", hint: "secured long-term wallets - separate file, own password, no keys on disk" }
+    ] });
+    if (isCancel(modeChoice)) {
+      outro("Bye.");
+      process.exit(0);
+    }
+    console.clear();
+    if (modeChoice === "vault") {
+      await ensureUiConfig();
+      await uiGate();
+      return vaultMode();
+    }
+    if (modeChoice === "advanced") return advancedMenu();
     return simpleMenu();
   }
   if (args[0] === "menu") {

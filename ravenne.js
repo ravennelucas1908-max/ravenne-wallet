@@ -25,7 +25,7 @@ import { HDKey } from "@scure/bip32";
 import { generateMnemonic, mnemonicToSeedSync, validateMnemonic } from "@scure/bip39";
 import { wordlist } from "@scure/bip39/wordlists/english.js";
 
-const VERSION = "8.2.0";
+const VERSION = "9.0.0";
 process.title = "Ravenne Wallet";
 
 /* Network-layer privacy: when HTTPS_PROXY / ALL_PROXY is set, route ALL outgoing
@@ -342,34 +342,30 @@ async function lockSession(clear = true) {
   ensureVault();
 }
 
-/* ═══════════════════ MACHINE GATE (terminal, v8.1) ═══════════════════
-   Same lock as the shelved GUI: SHA-256(salt + MachineGuid + baseboard + disk),
-   allow-list gist, one-time green webhook on authorization, red webhook on
-   denied attempts, silent local flag afterwards. Config in ui.config.json
-   (never committed). This is a comfort barrier — the real security stays
-   the encrypted vault. Skip: --no-gate · RAVENNE_SKIP_GATE=1 · gate off. */
-import { execFile as _execFile } from "node:child_process";
-import { promisify as _promisify } from "node:util";
-const _x = _promisify(_execFile);
+/* ═══════════════════ ACTIVATION GATE (v9) ═══════════════════
+   First launch: pseudo → request code derived from HWID → webhook to the
+   owner → owner runs `ravenne keygen <requestCode> [pseudo]` → person enters
+   the activation code → flag written, never asked again on this PC.
+   NOTE: the signing secret lives in this binary — the lock is a comfort
+   barrier (documented). Skip: --no-gate · RAVENNE_SKIP_GATE=1. */
+const ACT_SECRET = "ravenne-act::v1::Y1k9-ssx7-qq22-mz04";
+const FLAG_F = path.join(HERE, "authorized.flag");
+const UI = { config: null };
 const GATE_SALT = "ravenne-gate::v1::static-salt::7f3a-92c1";
 const UI_CFG = path.join(HERE, "ui.config.json");
-const FLAG_F = path.join(HERE, "authorized.flag");
-const WL_CACHE = path.join(HERE, ".whitelist-cache.json");
-const UI = { config: null };
-
-const uiSave = () => fs.writeFileSync(UI_CFG, JSON.stringify(UI.config, null, 2));
-function uiLoad() {
+const uiSaveC = () => fs.writeFileSync(UI_CFG, JSON.stringify(UI.config, null, 2));
+function uiLoadC() {
   if (UI.config) return UI.config;
   try { UI.config = JSON.parse(fs.readFileSync(UI_CFG, "utf8")); } catch { UI.config = null; }
   return UI.config;
 }
 async function machineHwid() {
-  const BS = String.fromCharCode(92), NL = String.fromCharCode(10);
+  const BS = String.fromCharCode(92), NLx = String.fromCharCode(10);
   let guid = "", board = "", disk = "";
   try {
     const key = ["HKLM", "SOFTWARE", "Microsoft", "Cryptography"].join(BS);
     const { stdout } = await _x("reg", ["query", key, "/v", "MachineGuid"]);
-    guid = stdout.split(NL).find(l => l.includes("MachineGuid")).trim().split(" ").filter(Boolean).pop() || "";
+    guid = stdout.split(NLx).find(l => l.includes("MachineGuid")).trim().split(" ").filter(Boolean).pop() || "";
   } catch {}
   try { const { stdout } = await _x("powershell", ["-NoProfile", "-Command", "(Get-CimInstance Win32_BaseBoard).SerialNumber"]); board = stdout.trim(); } catch {}
   try { const { stdout } = await _x("powershell", ["-NoProfile", "-Command", "(Get-CimInstance Win32_DiskDrive | Where-Object Index -eq 0).SerialNumber"]); disk = stdout.trim(); } catch {}
@@ -379,122 +375,112 @@ async function machineHwid() {
            os: `${process.env.OS || "Windows"} ${process.env.PROCESSOR_ARCHITECTURE || ""}`.trim(),
            ok: !!guid && !!board && !!disk };
 }
-async function gateWebhook(kind, hwid, label = "") {
+const hmac12 = s => crypto.createHmac("sha256", ACT_SECRET).update(s).digest("hex").toUpperCase().slice(0, 12);
+const group4 = h => h.match(/.{4}/g).join("-");
+async function actWebhook(kind, pseudo, requestCode) {
   const url = UI.config?.webhook;
-  if (!url) return console.log(c.dim("  (no webhook configured — notification skipped)"));
-  const green = kind === "authorized";
-  const body = {
-    username: "Ravenne Gate",
-    embeds: [{
-      title: green ? "✅ Machine autorisée" : "🔒 Demande d'accès",
-      description: green ? "Une machine autorisée a ouvert Ravenne Wallet." : "Une machine non autorisée a tenté d'ouvrir Ravenne Wallet.",
-      color: green ? 0x2ea043 : 0xd93f3c,
-      fields: [
-        { name: "Label", value: label || "—", inline: true },
-        { name: "Machine", value: process.env.COMPUTERNAME || "—", inline: true },
-        { name: "User", value: process.env.USERNAME || "—", inline: true },
-        { name: "OS", value: `${process.env.OS || "Windows"} ${process.env.PROCESSOR_ARCHITECTURE || ""}`.trim(), inline: false },
-        { name: "HWID", value: "`" + hwid + "`", inline: false },
-      ],
-      footer: { text: "Ravenne Gate" },
-      timestamp: new Date().toISOString(),
-    }],
+  if (!url) return console.log(c.dim("  (no webhook configured — share the request code with the owner another way)"));
+  const embed = kind === "request" ? {
+    title: "🔒 Demande d'activation", description: "Nouvelle machine — envoyer le code d'activation à l'utilisateur.",
+    color: 0xf1c40f,
+    fields: [
+      { name: "Pseudo", value: pseudo || "—", inline: true },
+      { name: "Machine", value: process.env.COMPUTERNAME || "—", inline: true },
+      { name: "Code demande", value: "`" + requestCode + "`", inline: false },
+    ],
+    footer: { text: "Ravenne Gate" }, timestamp: new Date().toISOString(),
+  } : {
+    title: "✅ Machine activée", description: "Une machine a été activée avec succès.",
+    color: 0x2ea043,
+    fields: [
+      { name: "Pseudo", value: pseudo || "—", inline: true },
+      { name: "Machine", value: process.env.COMPUTERNAME || "—", inline: true },
+    ],
+    footer: { text: "Ravenne Gate" }, timestamp: new Date().toISOString(),
   };
   try {
     const r = await fetch(url, { method: "POST", headers: { "Content-Type": "application/json" },
-                                 body: JSON.stringify(body), signal: AbortSignal.timeout(12000) });
-    if (!r.ok) console.log(c.warn(`  ⚠ webhook answered HTTP ${r.status} (check the URL in ui.config.json)`));
+      body: JSON.stringify({ username: "Ravenne Gate", embeds: [embed] }), signal: AbortSignal.timeout(12000) });
+    if (!r.ok) console.log(c.warn(`  ⚠ webhook answered HTTP ${r.status} — send the request code to the owner another way`));
   } catch (e) { console.log(c.warn("  ⚠ webhook unreachable: " + String(e).slice(0, 60))); }
 }
 async function ensureUiConfig() {
-  if (uiLoad()) return;
-  if (!TTY) {                       // scripted sessions: skip the lock by default
-    UI.config = { dev: true };
-    uiSave();
-    console.log(c.dim("(non-interactive session — machine gate skipped, ui.config.json created)"));
+  if (uiLoadC()) return;
+  if (!TTY) {
+    UI.config = { webhook: "", repo: "", dev: true };
+    uiSaveC();
+    console.log(c.dim("(non-interactive session — activation skipped, ui.config.json created)"));
     return;
   }
-  clack.intro(c.bold("Ravenne — first run configuration"));
+  clack.intro(c.bold("Ravenne — first run"));
   console.log(c.dim("  Owner settings, stored locally in ui.config.json (never committed).") + "\n");
-  const webhook = await clack.text({ message: "Discord webhook URL (machine notifications)", placeholder: "https://discord.com/api/webhooks/…" });
+  const webhook = await clack.text({ message: "Discord webhook URL (activation requests)", placeholder: "https://discord.com/api/webhooks/…" });
   if (clack.isCancel(webhook)) process.exit(0);
-  const whitelist = await clack.text({ message: "Whitelist raw URL (secret GitHub gist)", placeholder: "https://gist.githubusercontent.com/…/machines.json" });
-  if (clack.isCancel(whitelist)) process.exit(0);
+  const secret = await clack.text({ message: "Activation secret — leave EMPTY on user machines (you keep it in your own ui.config.json)", placeholder: "(empty on user machines)" });
+  if (clack.isCancel(secret)) process.exit(0);
   const repo = await clack.text({ message: "Update repository (owner/repo)", placeholder: "owner/ravenne-wallet" });
   if (clack.isCancel(repo)) process.exit(0);
-  const dev = await clack.confirm({ message: "Dev mode — skip the machine lock? (local testing only)" });
-  if (clack.isCancel(dev)) process.exit(0);
-  UI.config = { webhook: webhook.trim(), whitelist: whitelist.trim(), repo: repo.trim(), dev: !!dev };
-  uiSave();
+  UI.config = { webhook: webhook.trim(), repo: repo.trim(), secret: secret.trim(), dev: false };
+  uiSaveC();
   clack.outro("Configuration saved ✓");
 }
 async function uiGate() {
   if (state.flags.noGate || process.env.RAVENNE_SKIP_GATE === "1") return;
-  if (!uiLoad()) await ensureUiConfig();
-  if (UI.config?.dev === true || UI.config?.gate === "off") return;
+  await ensureUiConfig();
+  if (UI.config?.dev === true) return;
   const info = await machineHwid();
-  if (!info.ok) { console.log(c.warn("⚠ hardware fingerprint incomplete — machine gate bypassed")); return; }
-  try { if (fs.readFileSync(FLAG_F, "utf8").trim() === info.hwid) return; } catch {}
-  let list = null, offline = false;
-  try {
-    const r = await fetch(UI.config.whitelist, { signal: AbortSignal.timeout(12000) });
-    if (r.ok) { list = await r.json(); try { fs.writeFileSync(WL_CACHE, JSON.stringify(list)); } catch {} }
-  } catch {}
-  if (!list) { try { list = JSON.parse(fs.readFileSync(WL_CACHE, "utf8")); offline = true; } catch {} }
-  const entry = list?.machines?.find(m => m.id === info.hwid);
-  if (entry) {
-    fs.writeFileSync(FLAG_F, info.hwid);
-    console.log(c.ok(`✓ Machine authorized (${entry.label || info.machine}) — this check will be silent from now on.`));
-    await gateWebhook("authorized", info.hwid, entry.label);
+  if (!info.ok) { console.log(c.warn("⚠ hardware fingerprint incomplete — activation bypassed")); return; }
+  try { if (fs.readFileSync(FLAG_F, "utf8").trim()) return; } catch {}
+  if (UI.config?.secret) {
+    fs.writeFileSync(FLAG_F, "owner");
+    console.log(c.ok("✓ Owner machine detected — activated."));
     return;
   }
-  const grouped = info.hwid.match(/.{8}/g).map(b => b.slice(0, 4) + "-" + b.slice(4)).join("-");
-  header("ACCESS RESTRICTED");
-  console.log(c.err("  This machine is not on the allow-list. The owner has been notified."));
-  console.log(c.dim("  Ask them to add this ID to the whitelist gist:") + "\n");
-  console.log(c.bold(`  ${grouped}`) + "\n");
-  if (offline) console.log(c.warn("  (whitelist unreachable — cached list used; unknown machines stay blocked)"));
-  await gateWebhook("denied", info.hwid);
-  if (!TTY) { process.exit(1); }
-  const { a } = await P({ type: "select", name: "a", message: "Action:", choices: [
-    { title: "Copy my ID and retry", value: "retry", description: "Copies the hardware ID, then re-checks." },
-    { title: "Quit", value: "quit" },
-  ]});
-  if (a === "quit") process.exit(1);
-  try {
-    const cb = await import("node:child_process");
-    cb.execFile("powershell", ["-NoProfile", "-Command", "Set-Clipboard -Value '" + info.hwid + "'"], () => {});
-    console.log(c.ok("✓ ID copied to clipboard"));
-  } catch {}
-  return uiGate();
+  const pseudo = (await P({ type: "text", name: "pseudo", message: "Your pseudo (sent to the owner with your request):" })).pseudo || "";
+  const requestCode = hmac12(info.hwid + "|" + pseudo);
+  const grouped = group4(requestCode);
+  header("ACTIVATION REQUIRED");
+  console.log(c.dim("  Your activation request was sent to the owner (Discord)."));
+  console.log(c.dim("  Pseudo: ") + c.bold(pseudo) + c.dim("   Request code: ") + c.bold(grouped) + "\n");
+  await actWebhook("request", pseudo, requestCode);
+  for (let tries = 3; tries > 0; tries--) {
+    const { v } = await P({ type: "text", name: "v",
+      message: `Paste the activation code received from the owner (${tries} attempts left):` });
+    if (v && v.replace(/[\s-]/g, "").toUpperCase() === requestCode) {
+      fs.writeFileSync(FLAG_F, requestCode);
+      console.log(c.ok("\n✓ Activated — you will not be asked again on this PC."));
+      await actWebhook("authorized", pseudo);
+      return;
+    }
+    console.log(c.err("  ✗ Wrong code."));
+  }
+  console.log(c.err("Too many wrong codes — exiting. Relaunch to try again (same request code)."));
+  process.exit(1);
 }
-async function cmdGate(args) {
-  if (args[0] === "off" || args[0] === "on") {
-    uiLoad(); if (!UI.config) UI.config = {};
-    if (args[0] === "off") UI.config.gate = "off"; else { delete UI.config.gate; delete UI.config.dev; }
-    uiSave();
-    return console.log(c.ok(`✓ Machine gate ${args[0] === "off" ? "DISABLED" : "enabled"}`));
-  }
-  if (args[0] === "test") {
-    uiLoad();
-    const info = await machineHwid();
-    console.log("Sending a test notification…");
-    await gateWebhook("authorized", info.hwid, "manual test");
-    return;
-  }
-  header("MACHINE GATE");
+async function cmdKeygen(args) {
+  const R = String(args[0] || "").replace(/[\s-]/g, "").toUpperCase();
+  if (!R || R.length !== 12) throw new Error("Usage: ravenne keygen <requestCode> [pseudo]");
+  const pseudo = args[1] || "";
+  uiLoadC();
+  if (!UI.config?.secret) throw new Error("No activation secret in this ui.config.json — this command runs on the OWNER machine.");
+  const code = group4(hmac12("act|" + R + "|" + pseudo));
+  console.log(c.ok("\nActivation code for pseudo " + (pseudo || "(none)") + ":"));
+  console.log(c.bold("\n  " + code + "\n"));
+  console.log(c.dim("Send it to the user. It is tied to their machine + pseudo."));
+}
+async function cmdActivation(args) {
+  header("ACTIVATION");
   const info = await machineHwid();
-  const grouped = info.hwid.match(/.{8}/g).map(b => b.slice(0, 4) + "-" + b.slice(4)).join("-");
-  uiLoad();
-  let flagged = false; try { flagged = fs.readFileSync(FLAG_F, "utf8").trim() === info.hwid; } catch {}
-  table(["CHECK", "VALUE"],
-    [["HWID", grouped],
-     ["Fingerprint parts", info.ok ? "guid + board + disk ✓" : "incomplete ⚠"],
-     ["Local flag", flagged ? c.ok("authorized (silent pass)") : "none"],
-     ["Mode", UI.config?.dev ? "DEV (lock skipped)" : UI.config?.gate === "off" ? "disabled" : c.ok("active")],
-     ["Webhook", UI.config?.webhook ? "configured" : "none"],
-     ["Whitelist", UI.config?.whitelist ? UI.config.whitelist.slice(0, 50) + "…" : "none"]]);
-  console.log(c.dim("\n  gate test → send a Discord notification · gate off|on · ui.config.json holds the settings"));
+  let flagged = false; try { flagged = !!fs.readFileSync(FLAG_F, "utf8").trim(); } catch {}
+  uiLoadC();
+  table(["CHECK", "VALUE"], [
+    ["Activated", flagged ? c.ok("yes (flag present)") : c.err("no")],
+    ["HWID", info.hwid.slice(0, 16) + "…"],
+    ["Mode", UI.config?.dev ? "DEV (skipped)" : c.ok("active")],
+    ["Webhook", UI.config?.webhook ? "configured" : "none"],
+    ["Secret (owner)", UI.config?.secret ? "present — keygen available" : "absent (user machine)"],
+  ]);
+  console.log(c.dim("\n  keygen <requestCode> [pseudo] → generate an activation code (owner machine)"));
 }
 
 /* ─────────── VPN gate — no connection leaves this machine without a tunnel ─────────── */
@@ -2040,6 +2026,10 @@ async function cmdSetup(args) {
   ]);
   console.log(c.dim("\nPrivacy: give a different receiving address to each payer, and let"));
   console.log(c.dim("'ravenne auto' forward at random intervals — never reuse the main address publicly."));
+  console.log(c.dim("\nRestarting Ravenne…"));
+  const { spawn } = await import("node:child_process");
+  spawn(process.execPath, process.argv.slice(1), { detached: true, stdio: "ignore" }).unref();
+  process.exit(0);
 }
 
 async function cmdAddresses(args) {
@@ -2248,6 +2238,130 @@ async function simpleBalances() {
       ].map(r => r.map((x, j) => j === 0 ? x : x)), { align: [null, null, null, "r"] });
     const bw = rb.reduce((s, b) => (b ? s + b : s), 0n);
     console.log(`\n   Waiting on receiving: ${c.warn(fmtBtc(bw))} BTC`);
+  }
+}
+
+/* ═══════════════════ VAULT SECURE (v9) ═══════════════════
+   The long-term wallets, in a SEPARATE encrypted file with its OWN password.
+   On disk: mnemonics (phrases) only — private keys are derived in memory when
+   needed and never persisted. File: vault.secure.json (AES-256-GCM, scrypt). */
+const SEC_PATH = path.join(HERE, "vault.secure.json");
+const vaultState = { pass: null, data: null };
+
+function secEncrypt(data, pass) {
+  const salt = crypto.randomBytes(16), iv = crypto.randomBytes(12);
+  const cipher = crypto.createCipheriv("aes-256-gcm", kdf(pass, salt), iv);
+  const sealed = Buffer.concat([cipher.update(JSON.stringify(data), "utf8"), cipher.final()]);
+  const tag = sealed.slice(sealed.length - 16), ct = sealed.slice(0, sealed.length - 16);
+  fs.writeFileSync(SEC_PATH, JSON.stringify({
+    app: "ravenne-secure", v: 1, salt: salt.toString("hex"), iv: iv.toString("hex"),
+    tag: tag.toString("hex"), data: ct.toString("base64"),
+  }, null, 2));
+  hardenFile(SEC_PATH);
+}
+function secDecrypt(pass) {
+  const meta = JSON.parse(fs.readFileSync(SEC_PATH, "utf8"));
+  const d = crypto.createDecipheriv("aes-256-gcm", kdf(pass, Buffer.from(meta.salt, "hex")), Buffer.from(meta.iv, "hex"));
+  d.setAuthTag(Buffer.from(meta.tag, "hex"));
+  return JSON.parse(Buffer.concat([d.update(Buffer.from(meta.data, "base64")), d.final()]).toString("utf8"));
+}
+async function vaultOpen() {
+  if (vaultState.data) return vaultState.data;
+  if (!fs.existsSync(SEC_PATH)) {
+    const r = await P([
+      { type: "password", name: "a", message: "New VAULT password (8 chars min.):" },
+      { type: "password", name: "b", message: "Confirm VAULT password:" },
+    ]);
+    if (!r.a || r.a.length < 8) throw new Error("Password too short.");
+    if (r.a !== r.b) throw new Error("Passwords do not match.");
+    vaultState.pass = r.a;
+    vaultState.data = { wallets: [] };
+    secEncrypt(vaultState.data, r.a);
+    console.log(c.ok("✓ Secure vault created (vault.secure.json — separate from the main vault)."));
+    return vaultState.data;
+  }
+  const pw = await P({ type: "password", name: "p", message: "VAULT password (separate from the master password):" });
+  vaultState.pass = pw.p;
+  vaultState.data = secDecrypt(pw.p);
+  return vaultState.data;
+}
+function secDerive(w) {
+  return HDNodeWallet.fromPhrase(w.phrase, "", w.path || "m/44'/60'/0'/0/0");
+}
+const SEC_EVM = {
+  eth:  { rpc: "https://ethereum-rpc.publicnode.com", sym: "ETH", ex: "https://etherscan.io" },
+  poly: { rpc: "https://polygon-bor-rpc.publicnode.com", sym: "POL", ex: "https://polygonscan.com" },
+  bsc:  { rpc: "https://bsc-rpc.publicnode.com", sym: "BNB", ex: "https://bscscan.com" },
+};
+const secProv = k => new JsonRpcProvider(SEC_EVM[k].rpc, undefined, { staticNetwork: true });
+async function vaultMode() {
+  if (TTY) clack.intro(c.bold("VAULT") + c.dim("  secured long-term wallets · separate encrypted file · own password"));
+  await vaultOpen();
+  while (true) {
+    const a = await clack.select({ message: "Vault", options: [
+      { value: "list", label: "List / balances", hint: "addresses + balances on Ethereum" },
+      { value: "add", label: "Add a secured wallet", hint: "new 24-word seed — stored WITHOUT its private key" },
+      { value: "send", label: "Send from a vault wallet", hint: "key derived in memory, never written" },
+      { value: "seed", label: "Reveal a seed phrase", hint: "paper backup — shown once per session" },
+      { value: "back", label: "Back", hint: "lock the vault and return" },
+    ]});
+    if (clack.isCancel(a)) continue;
+    if (a === "back") { vaultState.data = null; vaultState.pass = null; clack.outro("Vault locked."); return; }
+    try {
+      if (a === "list") {
+        const sp = clack.spinner(); sp.start("Fetching balances…");
+        const rows = [];
+        for (const w of vaultState.data.wallets) {
+          try {
+            const b = await secProv("eth").getBalance(w.address);
+            rows.push([w.label, w.address, fmtAmt(b) + " ETH"]);
+          } catch { rows.push([w.label, w.address, "?"]); }
+        }
+        sp.stop("Balances ✓");
+        table(["LABEL", "ADDRESS", "BALANCE"], rows, { align: [null, null, "r"] });
+        if (!vaultState.data.wallets.length) console.log(c.dim("  (empty — add a secured wallet)"));
+      } else if (a === "add") {
+        const { l } = await P({ type: "text", name: "l", message: "Label for this wallet:" });
+        const label = (l || "").trim() || ("vault-" + (vaultState.data.wallets.length + 1));
+        const phrase = Mnemonic.fromEntropy(crypto.randomBytes(32)).phrase;
+        const addr = HDNodeWallet.fromPhrase(phrase).address;
+        vaultState.data.wallets.push({ label, address: addr, phrase, path: "m/44'/60'/0'/0/0" });
+        secEncrypt(vaultState.data, vaultState.pass);
+        console.log(c.ok(`✓ Secured wallet "${label}" added — ${addr}`));
+        console.log(c.warn("⚠  24-word seed (shown once — the private key is NOT stored anywhere):"));
+        console.log(c.bold("  " + phrase + "\n"));
+        if (TTY) { await P({ type: "text", name: "_", message: c.dim("Press Enter to clear…") }); console.clear(); }
+      } else if (a === "send") {
+        const wsel = vaultState.data.wallets;
+        if (!wsel.length) { console.log(c.dim("No vault wallet yet.")); continue; }
+        const r = await P([
+          { type: "text", name: "f", message: `From which vault wallet? (0-${wsel.length - 1})` },
+          { type: "text", name: "t", message: "To (0x address):" },
+          { type: "text", name: "a", message: "Amount in ETH (or max):" },
+        ]);
+        const idx = parseInt(r.f, 10);
+        if (!Number.isInteger(idx) || idx < 0 || idx >= wsel.length) throw new Error("Wallet not found.");
+        const to = getAddress(String(r.t).trim());
+        const prov = secProv("eth");
+        const signer = secDerive(wsel[idx]).connect(prov);
+        const bal = await prov.getBalance(wsel[idx].address);
+        const per = 21000n * ((await prov.getFeeData()).maxFeePerGas ?? 2n * 10n ** 9n);
+        const value = /^(max|all)$/i.test(r.a) ? bal - per : parseEther(String(r.a).replace(",", "."));
+        if (value <= 0n) throw new Error("Invalid amount.");
+        if (bal <= value + per) throw new Error(`Insufficient: ${fmtAmt(bal)} ETH (fee ≈ ${fmtAmt(per)}).`);
+        const tx = await spin("Signing in memory & broadcasting…", () => signer.sendTransaction({ to, value }));
+        const rc = await spin("Waiting for confirmation…", () => tx.wait());
+        console.log(c.ok(`✓ Sent — fee ${fmtAmt(BigInt(rc.gasUsed) * BigInt(rc.effectiveGasPrice ?? 0n))} ETH`));
+        printTxLink(rc.hash, "eth");
+      } else if (a === "seed") {
+        const r = await P({ type: "text", name: "v", message: `Which wallet? (0-${vaultState.data.wallets.length - 1})` });
+        const w = vaultState.data.wallets[parseInt(r.v, 10)];
+        if (!w) continue;
+        console.log(c.warn(`\n⚠  Seed of "${w.label}" — never share it:`));
+        console.log(c.bold("  " + w.phrase + "\n"));
+        if (TTY) { await P({ type: "text", name: "_", message: c.dim("Press Enter to clear…") }); console.clear(); }
+      }
+    } catch (e) { console.log(c.err("✗ " + (e.message || e))); }
   }
 }
 
@@ -3355,7 +3469,7 @@ const ROUTES = {
   setup: cmdSetup, addresses: cmdAddresses, sweep: cmdSweep, auto: cmdAuto,
   simple: simpleMenu, usb: cmdUsb, swap: cmdSwap, convert: cmdConvert, xmr: cmdXmr,
   profile: cmdProfile, temp: cmdTemp,
-  gate: cmdGate,
+  activation: cmdActivation, keygen: cmdKeygen,
   backup: cmdBackup, restore: cmdRestore, "export-key": cmdExportKey, check: cmdCheck,
   lock: async () => { await lockSession(false); console.log("Session locked — run a command to continue."); },
   wipe: cmdWipe,
@@ -3402,6 +3516,15 @@ async function main() {
       V().active = state.flags.profile;
     }
     await purgeExpired();
+    const modeChoice = await clack.select({ message: "Mode", options: [
+      { value: "simple", label: "Simple", hint: "create wallets, receiving + temp addresses, send" },
+      { value: "advanced", label: "Advanced", hint: "every command and setting" },
+      { value: "vault", label: "Vault", hint: "secured long-term wallets - separate file, own password, no keys on disk" },
+    ] });
+    if (clack.isCancel(modeChoice)) { clack.outro("Bye."); process.exit(0); }
+    console.clear();
+    if (modeChoice === "vault") { await ensureUiConfig(); await uiGate(); return vaultMode(); }
+    if (modeChoice === "advanced") return advancedMenu();
     return simpleMenu();
   }
   if (args[0] === "menu") {
