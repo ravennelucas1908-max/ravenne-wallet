@@ -4960,15 +4960,15 @@ var require_QRMath = __commonJS({
 var require_QRPolynomial = __commonJS({
   "node_modules/qrcode-terminal/vendor/QRCode/QRPolynomial.js"(exports2, module2) {
     var QRMath = require_QRMath();
-    function QRPolynomial(num, shift) {
+    function QRPolynomial(num, shift2) {
       if (num.length === void 0) {
-        throw new Error(num.length + "/" + shift);
+        throw new Error(num.length + "/" + shift2);
       }
       var offset = 0;
       while (offset < num.length && num[offset] === 0) {
         offset++;
       }
-      this.num = new Array(num.length - offset + shift);
+      this.num = new Array(num.length - offset + shift2);
       for (var i2 = 0; i2 < num.length - offset; i2++) {
         this.num[i2] = num[i2 + offset];
       }
@@ -40221,7 +40221,7 @@ var crypto = nc && typeof nc === "object" && "webcrypto" in nc ? nc.webcrypto : 
 var u8a = (a2) => a2 instanceof Uint8Array;
 var u32 = (arr) => new Uint32Array(arr.buffer, arr.byteOffset, Math.floor(arr.byteLength / 4));
 var createView = (arr) => new DataView(arr.buffer, arr.byteOffset, arr.byteLength);
-var rotr = (word, shift) => word << 32 - shift | word >>> shift;
+var rotr = (word, shift2) => word << 32 - shift2 | word >>> shift2;
 var isLE = new Uint8Array(new Uint32Array([287454020]).buffer)[0] === 68;
 if (!isLE)
   throw new Error("Non little-endian hardware is not supported");
@@ -40340,9 +40340,9 @@ function keccakP(s, rounds = 24) {
     let curH = s[2];
     let curL = s[3];
     for (let t2 = 0; t2 < 24; t2++) {
-      const shift = SHA3_ROTL[t2];
-      const Th = rotlH(curH, curL, shift);
-      const Tl = rotlL(curH, curL, shift);
+      const shift2 = SHA3_ROTL[t2];
+      const Th = rotlH(curH, curL, shift2);
+      const Tl = rotlL(curH, curL, shift2);
       const PI = SHA3_PI[t2];
       curH = s[PI];
       curL = s[PI + 1];
@@ -40631,7 +40631,7 @@ var Kr = /* @__PURE__ */ new Uint32Array([
   2053994217,
   0
 ]);
-var rotl = (word, shift) => word << shift | word >>> 32 - shift;
+var rotl = (word, shift2) => word << shift2 | word >>> 32 - shift2;
 function f(group, x, y, z) {
   if (group === 0)
     return x ^ y ^ z;
@@ -66518,11 +66518,11 @@ function clean(...arrays) {
 function createView2(arr) {
   return new DataView(arr.buffer, arr.byteOffset, arr.byteLength);
 }
-function rotr2(word, shift) {
-  return word << 32 - shift | word >>> shift;
+function rotr2(word, shift2) {
+  return word << 32 - shift2 | word >>> shift2;
 }
-function rotl3(word, shift) {
-  return word << shift | word >>> 32 - shift >>> 0;
+function rotl3(word, shift2) {
+  return word << shift2 | word >>> 32 - shift2 >>> 0;
 }
 var hasHexBuiltin = /* @__PURE__ */ (() => (
   // @ts-ignore
@@ -69982,8 +69982,8 @@ function clean2(...arrays) {
 function createView3(arr) {
   return new DataView(arr.buffer, arr.byteOffset, arr.byteLength);
 }
-function rotr3(word, shift) {
-  return word << 32 - shift | word >>> shift;
+function rotr3(word, shift2) {
+  return word << 32 - shift2 | word >>> shift2;
 }
 function utf8ToBytes3(str) {
   if (typeof str !== "string")
@@ -73170,24 +73170,52 @@ async function P(questions) {
   return out;
 }
 var confirm = async (msg) => state.autoYes ? true : (await P({ type: "confirm", name: "v", message: msg, initial: false })).v;
+var stripA = (s) => s.replace(/\x1b\[[0-9;]*m/g, "");
+var termW = () => TTY && process.stdout.columns || 0;
+var padMargin = (blockW) => {
+  const w = termW();
+  return TTY && w > blockW + 2 ? Math.max(0, Math.floor((w - blockW) / 2)) : 0;
+};
+var shift = (lines, blockW) => {
+  const p = " ".repeat(padMargin(blockW));
+  return lines.map((l) => p + l);
+};
+var centerLine = (s) => {
+  const w = termW(), vis = stripA(s).length;
+  if (!(TTY && w > vis + 2)) return s;
+  return " ".repeat(Math.max(0, Math.floor((w - vis) / 2))) + s;
+};
+var WATERMARK = [
+  "\u2588\u2588\u2588\u2588\u2588\u2588\u2557\u2591\u2591\u2588\u2588\u2588\u2588\u2588\u2557\u2591\u2588\u2588\u2557\u2591\u2591\u2591\u2588\u2588\u2557\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2557\u2588\u2588\u2588\u2557\u2591\u2591\u2588\u2588\u2557\u2588\u2588\u2588\u2557\u2591\u2591\u2588\u2588\u2557\u2591\u2588\u2588\u2588\u2588\u2588\u2588\u2557\u2591\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2557",
+  "\u2588\u2588\u2554\u2550\u2550\u2588\u2588\u2557\u2588\u2588\u2554\u2550\u2550\u2588\u2588\u2557\u2588\u2588\u2551\u2591\u2591\u2591\u2588\u2588\u2551\u2588\u2588\u2554\u2550\u2550\u2550\u2550\u255D\u2588\u2588\u2588\u2588\u2557\u2591\u2588\u2588\u2551\u2588\u2588\u2588\u2588\u2557\u2591\u2588\u2588\u2551\u2588\u2588\u2554\u2550\u2550\u2550\u2550\u255D\u2591\u2588\u2588\u2554\u2550\u2550\u2550\u2550\u255D",
+  "\u2588\u2588\u2588\u2588\u2588\u2588\u2554\u255D\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2551\u2588\u2588\u2551\u2591\u2591\u2591\u2588\u2588\u2551\u2588\u2588\u2588\u2588\u2588\u2557\u2591\u2591\u2588\u2588\u2554\u2588\u2588\u2557\u2588\u2588\u2551\u2588\u2588\u2554\u2588\u2588\u2557\u2588\u2588\u2551\u2588\u2588\u2551\u2591\u2591\u2588\u2588\u2557\u2591\u2588\u2588\u2588\u2588\u2588\u2557\u2591\u2591",
+  "\u2588\u2588\u2554\u2550\u2550\u2588\u2588\u2557\u2588\u2588\u2554\u2550\u2550\u2588\u2588\u2551\u2588\u2588\u2551\u2591\u2591\u2591\u2588\u2588\u2551\u2588\u2588\u2554\u2550\u2550\u255D\u2591\u2591\u2588\u2588\u2551\u255A\u2588\u2588\u2588\u2588\u2551\u2588\u2588\u2551\u255A\u2588\u2588\u2588\u2588\u2551\u2588\u2588\u2551\u2591\u2591\u2588\u2588\u2551\u2591\u2588\u2588\u2554\u2550\u2550\u255D\u2591\u2591",
+  "\u2588\u2588\u2551\u2591\u2591\u2588\u2588\u2551\u2588\u2588\u2551\u2591\u2591\u2588\u2588\u2551\u2588\u2588\u2588\u2588\u2588\u2588\u2554\u255D\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2557\u2588\u2588\u2551\u2591\u255A\u2588\u2588\u2588\u2551\u2588\u2588\u2551\u2591\u255A\u2588\u2588\u2588\u2551\u255A\u2588\u2588\u2588\u2588\u2588\u2588\u2554\u255D\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2557",
+  "\u255A\u2550\u255D\u2591\u2591\u255A\u2550\u255D\u255A\u2550\u255D\u2591\u2591\u255A\u2550\u255D\u255A\u2550\u2550\u2550\u2550\u2550\u255D\u2591\u255A\u2550\u2550\u2550\u2550\u2550\u2550\u255D\u255A\u2550\u255D\u2591\u2591\u255A\u2550\u2550\u255D\u255A\u2550\u255D\u2591\u2591\u255A\u2550\u2550\u255D\u2591\u255A\u2550\u2550\u2550\u2550\u2550\u255D\u2591\u255A\u2550\u2550\u2550\u2550\u2550\u2550\u255D"
+];
 function banner() {
   console.clear();
   const p = state.payload ? V().active : null;
   console.log("");
-  console.log(c3.bold("RAVENNE WALLET") + c3.dim(`  v${VERSION}`));
-  if (p) console.log(c3.dim(`wallet: `) + c3.bold(p) + c3.dim(` \xB7 chain: ${N2().label} \xB7 ${W().length} EVM + ${BW().length} BTC + ${XW().length} XMR`));
-  console.log(c3.dim("\u2500".repeat(64)));
+  for (const l of WATERMARK) console.log(c3.dim(centerLine(l)));
+  console.log("");
+  console.log(centerLine(c3.bold("RAVENNE WALLET") + c3.dim(`  v${VERSION}`)));
+  if (p) console.log(centerLine(c3.dim(`wallet: `) + c3.bold(p) + c3.dim(` \xB7 chain: ${N2().label} \xB7 ${W().length} EVM + ${BW().length} BTC + ${XW().length} XMR`)));
+  console.log(centerLine(c3.dim("\u2500".repeat(56))));
 }
 function header(title) {
   const pad = Math.max(0, 44 - title.length);
-  console.log(`
-${c3.bold(c3.vio(` \u25C6 ${title} `))}${c3.dim("\u2500".repeat(pad + 6))}`);
+  console.log("");
+  console.log(centerLine(`${c3.bold(c3.vio(` \u25C6 ${title} `))}${c3.dim("\u2500".repeat(pad + 6))}`));
 }
 function box(title, lines) {
-  const inner = Math.max(title.length + 4, ...lines.map((l) => l.length), 20) + 2;
-  console.log(c3.vio(`\u256D\u2500 ${title} ${"\u2500".repeat(Math.max(0, inner - title.length - 4))}\u256E`));
-  for (const l of lines) console.log(c3.vio("\u2502") + " " + l.padEnd(inner - 2) + c3.vio("\u2502"));
-  console.log(c3.vio(`\u2570${"\u2500".repeat(inner)}\u256F`));
+  const inner = Math.max(title.length + 4, ...lines.map((l) => stripA(l).length), 20) + 2;
+  const rendered = [
+    c3.vio(`\u256D\u2500 ${title} ${"\u2500".repeat(Math.max(0, inner - title.length - 4))}\u256E`),
+    ...lines.map((l) => c3.vio("\u2502") + " " + l.padEnd(inner - 2) + c3.vio("\u2502")),
+    c3.vio(`\u2570${"\u2500".repeat(inner)}\u256F`)
+  ];
+  for (const l of shift(rendered, inner + 2)) console.log(l);
 }
 function table(headers, rows, opts = {}) {
   const aligns = opts.align || [];
@@ -73201,15 +73229,13 @@ function table(headers, rows, opts = {}) {
     console.log(c3.dim("  (nothing to show)"));
     return;
   }
-  console.log(sep("\u252C"));
-  console.log(c3.bold(row(headers)));
-  console.log(sep("\u253C"));
-  rows.forEach((r2) => console.log(row(r2)));
-  console.log(sep("\u2534"));
+  const blockW = widths.reduce((a2, b2) => a2 + b2, 0) + (widths.length - 1) * 2 + 2;
+  const rendered = [sep("\u252C"), c3.bold(row(headers)), sep("\u253C"), ...rows.map((r2) => row(r2)), sep("\u2534")];
+  for (const l of shift(rendered, blockW)) console.log(l);
 }
 function statusLine() {
   const s = `  ${c3.bold("\u26D3")} ${N2().label}  ${c3.dim("\xB7")}  \u{1F465} ${W().length} EVM ${BW().length ? c3.dim(`+ \u20BF${BW().length} BTC`) : ""}  ${c3.dim("\xB7")}  \u{1F512} ${settings2().autolockMin || "off"}m  ${c3.dim("\xB7")}  ${settings2().btcTest ? c3.warn("BTC testnet") : ""}`;
-  console.log(s + "\n");
+  console.log(centerLine(s) + "\n");
 }
 async function spin(label, fn) {
   if (!TTY) {

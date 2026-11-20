@@ -234,23 +234,48 @@ const confirm = async msg =>
   state.autoYes ? true : (await P({ type: "confirm", name: "v", message: msg, initial: false })).v;
 
 /* ─────────── Pretty UI v4 ─────────── */
+/* ── centrage : colonne de contenu au milieu du terminal ── */
+const stripA = s => s.replace(/\x1b\[[0-9;]*m/g, "");
+const termW = () => (TTY && process.stdout.columns) || 0;
+const padMargin = blockW => { const w = termW(); return (TTY && w > blockW + 2) ? Math.max(0, Math.floor((w - blockW) / 2)) : 0; };
+const shift = (lines, blockW) => { const p = " ".repeat(padMargin(blockW)); return lines.map(l => p + l); };
+const centerLine = s => {
+  const w = termW(), vis = stripA(s).length;
+  if (!(TTY && w > vis + 2)) return s;
+  return " ".repeat(Math.max(0, Math.floor((w - vis) / 2))) + s;
+};
+const WATERMARK = [
+  "██████╗░░█████╗░██╗░░░██╗███████╗███╗░░██╗███╗░░██╗░██████╗░███████╗",
+  "██╔══██╗██╔══██╗██║░░░██║██╔════╝████╗░██║████╗░██║██╔════╝░██╔════╝",
+  "██████╔╝███████║██║░░░██║█████╗░░██╔██╗██║██╔██╗██║██║░░██╗░█████╗░░",
+  "██╔══██╗██╔══██║██║░░░██║██╔══╝░░██║╚████║██║╚████║██║░░██║░██╔══╝░░",
+  "██║░░██║██║░░██║██████╔╝███████╗██║░╚███║██║░╚███║╚██████╔╝███████╗",
+  "╚═╝░░╚═╝╚═╝░░╚═╝╚═════╝░╚══════╝╚═╝░░╚══╝╚═╝░░╚══╝░╚═════╝░╚══════╝",
+];
+
 function banner() {
   console.clear();
   const p = state.payload ? V().active : null;
   console.log("");
-  console.log(c.bold("RAVENNE WALLET") + c.dim(`  v${VERSION}`));
-  if (p) console.log(c.dim(`wallet: `) + c.bold(p) + c.dim(` · chain: ${N().label} · ${W().length} EVM + ${BW().length} BTC + ${XW().length} XMR`));
-  console.log(c.dim("─".repeat(64)));
+  for (const l of WATERMARK) console.log(c.dim(centerLine(l)));
+  console.log("");
+  console.log(centerLine(c.bold("RAVENNE WALLET") + c.dim(`  v${VERSION}`)));
+  if (p) console.log(centerLine(c.dim(`wallet: `) + c.bold(p) + c.dim(` · chain: ${N().label} · ${W().length} EVM + ${BW().length} BTC + ${XW().length} XMR`)));
+  console.log(centerLine(c.dim("─".repeat(56))));
 }
 function header(title) {
   const pad = Math.max(0, 44 - title.length);
-  console.log(`\n${c.bold(c.vio(` ◆ ${title} `))}${c.dim("─".repeat(pad + 6))}`);
+  console.log("");
+  console.log(centerLine(`${c.bold(c.vio(` ◆ ${title} `))}${c.dim("─".repeat(pad + 6))}`));
 }
 function box(title, lines) {
-  const inner = Math.max(title.length + 4, ...lines.map(l => l.length), 20) + 2;
-  console.log(c.vio(`╭─ ${title} ${"─".repeat(Math.max(0, inner - title.length - 4))}╮`));
-  for (const l of lines) console.log(c.vio("│") + " " + l.padEnd(inner - 2) + c.vio("│"));
-  console.log(c.vio(`╰${"─".repeat(inner)}╯`));
+  const inner = Math.max(title.length + 4, ...lines.map(l => stripA(l).length), 20) + 2;
+  const rendered = [
+    c.vio(`╭─ ${title} ${"─".repeat(Math.max(0, inner - title.length - 4))}╮`),
+    ...lines.map(l => c.vio("│") + " " + l.padEnd(inner - 2) + c.vio("│")),
+    c.vio(`╰${"─".repeat(inner)}╯`),
+  ];
+  for (const l of shift(rendered, inner + 2)) console.log(l);
 }
 function table(headers, rows, opts = {}) {
   const aligns = opts.align || [];
@@ -261,12 +286,13 @@ function table(headers, rows, opts = {}) {
   }).join("  ");
   const sep = ch => c.dim("  " + widths.map(w => "─".repeat(w)).join(ch));
   if (!rows.length) { console.log(c.dim("  (nothing to show)")); return; }
-  console.log(sep("┬")); console.log(c.bold(row(headers))); console.log(sep("┼"));
-  rows.forEach(r => console.log(row(r))); console.log(sep("┴"));
+  const blockW = widths.reduce((a, b) => a + b, 0) + (widths.length - 1) * 2 + 2;
+  const rendered = [sep("┬"), c.bold(row(headers)), sep("┼"), ...rows.map(r => row(r)), sep("┴")];
+  for (const l of shift(rendered, blockW)) console.log(l);
 }
 function statusLine() {
   const s = `  ${c.bold("⛓")} ${N().label}  ${c.dim("·")}  👥 ${W().length} EVM ${BW().length ? c.dim(`+ ₿${BW().length} BTC`) : ""}  ${c.dim("·")}  🔒 ${settings().autolockMin || "off"}m  ${c.dim("·")}  ${settings().btcTest ? c.warn("BTC testnet") : ""}`;
-  console.log(s + "\n");
+  console.log(centerLine(s) + "\n");
 }
 async function spin(label, fn) {
   if (!TTY) { console.log(c.dim(`• ${label}`)); return fn(); }
